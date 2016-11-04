@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 
@@ -23,6 +25,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public interface NewsOpenListener{
         public void sectionItemOpen(int sectionID, int positionID);
         public void setSectionItemsCount(int count);
+        public void setSectionNewsLinks(ArrayList<String> links);
     }
 
 
@@ -48,8 +51,29 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        ArrayList<String> newsLink = new ArrayList<>();
+
+        if(data != null && data.moveToFirst()){
+            int idIndex = 0;
+
+            switch (sectionID){
+                case R.id.nav_news:
+                    idIndex = data.getColumnIndex(News._ID);
+                    break;
+                case R.id.nav_memuar:
+                    idIndex = data.getColumnIndex(Memuar._ID);
+                    break;
+            }
+
+            do {
+                newsLink.add(data.getString(idIndex));
+            }while(data.moveToNext());
+
+            data.moveToFirst();
+        }
         adapter.swapCursor(data);
         newsOpenListener.setSectionItemsCount((data != null) ? data.getCount() : 0);
+        newsOpenListener.setSectionNewsLinks(newsLink);
     }
 
     @Override

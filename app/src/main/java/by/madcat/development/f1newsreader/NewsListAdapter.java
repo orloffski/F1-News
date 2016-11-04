@@ -39,11 +39,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         cursor.moveToPosition(position);
         switch (sectionID){
             case R.id.nav_news:
-                holder.setRowID(cursor.getLong(cursor.getColumnIndex(News._ID)));
+                holder.setRowID(position);
                 holder.textView.setText(cursor.getString(cursor.getColumnIndex(News.COLUMN_DATE)));
                 break;
             case R.id.nav_memuar:
-                holder.setRowID(cursor.getLong(cursor.getColumnIndex(Memuar._ID)));
+                holder.setRowID(position);
                 holder.textView.setText(cursor.getString(cursor.getColumnIndex(Memuar.COLUMN_DATE)));
                 break;
         }

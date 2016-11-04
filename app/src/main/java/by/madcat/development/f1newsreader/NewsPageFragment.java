@@ -18,13 +18,11 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String SECTION_ID = "section_id";
-    private static final String POSITION_ID = "position_id";
+    private static final String NEWS_URI = "news_uri";
 
     private static final int LOADER = 0;
 
     private int sectionID;
-    private int positionID;
-
     private Uri newsUri;
 
     private TextView title;
@@ -35,13 +33,13 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     public NewsPageFragment() {
     }
 
-    public static NewsPageFragment newInstance(int sectionID, int positionID) {
+    public static NewsPageFragment newInstance(Uri newsUri, int sectionID) {
 
 
         NewsPageFragment fragment = new NewsPageFragment();
         Bundle args = new Bundle();
+        args.putParcelable(NEWS_URI, newsUri);
         args.putInt(SECTION_ID, sectionID);
-        args.putInt(POSITION_ID, positionID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,8 +48,8 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            newsUri = getArguments().getParcelable(NEWS_URI);
             sectionID = getArguments().getInt(SECTION_ID);
-            positionID = getArguments().getInt(POSITION_ID);
         }
     }
 
@@ -64,15 +62,6 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         text = (TextView) view.findViewById(R.id.content_text);
         link = (TextView) view.findViewById(R.id.content_link);
         image = (TextView) view.findViewById(R.id.content_image);
-
-        switch (sectionID){
-            case R.id.nav_news:
-                newsUri = News.buildNewsUri(positionID);
-                break;
-            case R.id.nav_memuar:
-                newsUri = Memuar.buildMemuarUri(positionID);
-                break;
-        }
 
         getLoaderManager().initLoader(LOADER, null, this);
 

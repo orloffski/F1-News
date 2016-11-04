@@ -8,15 +8,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsListFragment.NewsOpenListener{
 
-        private int sectionItemsCount;
+    private int sectionItemsCount;
+    private ArrayList<String> links;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +94,17 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void sectionItemOpen(int sectionID, int positionID) {
-        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, sectionID, positionID, sectionItemsCount);
+        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, sectionID, positionID, sectionItemsCount, links);
         startActivity(intent);
     }
 
     @Override
     public void setSectionItemsCount(int count) {
         this.sectionItemsCount = count;
+    }
+
+    @Override
+    public void setSectionNewsLinks(ArrayList<String> links) {
+        this.links = links;
     }
 }

@@ -46,7 +46,7 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
             cv.put(News.COLUMN_TITLE, "news title " + i);
             cv.put(News.COLUMN_NEWS, "full news text " + i);
             cv.put(News.COLUMN_LINK_NEWS, "news link " + i);
-            cv.put(News.COLUMN_DATE, String.valueOf(i) + ".01.2016");
+            cv.put(News.COLUMN_DATE, i + ".01.2016");
             cv.put(News.COLUMN_IMAGE, "news image " + i);
 
             sqLiteDatabase.insert(News.TABLE_NAME, null, cv);
@@ -57,7 +57,7 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
             cv.put(Memuar.COLUMN_TITLE, "Memuar title " + i);
             cv.put(Memuar.COLUMN_NEWS, "full Memuar text " + i);
             cv.put(Memuar.COLUMN_LINK_NEWS, "Memuar link " + i);
-            cv.put(Memuar.COLUMN_DATE, String.valueOf(i) + ".01.2016");
+            cv.put(Memuar.COLUMN_DATE, ((i < 10) ? "0" + i : i) + ".01.2016");
             cv.put(Memuar.COLUMN_IMAGE, "Memuar image " + i);
 
             sqLiteDatabase.insert(Memuar.TABLE_NAME, null, cv);
