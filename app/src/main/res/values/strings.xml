@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">F1NewsReader</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_memuar_title">Статьи</string>
+    <string name="nav_news_title">Новости</string>
+
+    <string name="invalid_query_uri">Invalid query Uri:</string>
+    <string name="invalid_delete_uri">Invalid delete Uri:</string>
+    <string name="invalid_insert_uri">Invalid insert Uri:</string>
+    <string name="invalid_update_uri">Invalid update Uri:</string>
+    <string name="insert_failed">Insert failed: s</string>
+</resources>
