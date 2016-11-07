@@ -39,4 +39,9 @@ public class DatabaseDescription {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
+
+    public enum Sections{
+        NEWS,
+        MEMUAR
+    }
 }

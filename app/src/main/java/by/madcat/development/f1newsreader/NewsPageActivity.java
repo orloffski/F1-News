@@ -4,15 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
-
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class NewsPageActivity extends AppCompatActivity {
 
@@ -25,8 +20,6 @@ public class NewsPageActivity extends AppCompatActivity {
     private int positionID;
     private int itemsCount;
     private ArrayList<String> links;
-
-    private Uri newsUri;
 
     private NewsPageAdapter pagerAdapter;
 
@@ -41,7 +34,7 @@ public class NewsPageActivity extends AppCompatActivity {
         links = getIntent().getStringArrayListExtra(SECTION_LINKS);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount);
+        pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, sectionID, links);
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(positionID);
     }
@@ -53,33 +46,5 @@ public class NewsPageActivity extends AppCompatActivity {
         intent.putExtra(SECTION_ITEMS_COUNT, itemsCount);
         intent.putStringArrayListExtra(SECTION_LINKS, links);
         return intent;
-    }
-
-    private class NewsPageAdapter extends FragmentStatePagerAdapter {
-
-        private int count;
-
-        public NewsPageAdapter(FragmentManager fm, int itemsCount) {
-            super(fm);
-            this.count = itemsCount;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (sectionID){
-                case R.id.nav_news:
-                    newsUri = News.buildNewsUri(Long.parseLong(links.get(position)));
-                    break;
-                case R.id.nav_memuar:
-                    newsUri = Memuar.buildMemuarUri(Long.parseLong(links.get(position)));
-                    break;
-            }
-            return NewsPageFragment.newInstance(newsUri, sectionID);
-        }
-
-        @Override
-        public int getCount() {
-            return count;
-        }
     }
 }
