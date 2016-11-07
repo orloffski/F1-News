@@ -12,6 +12,8 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
+import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsListFragment.NewsOpenListener{
@@ -36,11 +38,11 @@ public class NewsListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null)
-            openSectionNews(R.id.nav_news);
+            openSectionNews(NewsTypes.NEWS);
         else{
             NewsListFragment fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
-            int sectionID = fragment.getArguments().getInt(fragment.SECTION_ID);
-            setActivityTitle(sectionID);
+            NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
+            setActivityTitle(type);
         }
     }
 
@@ -60,10 +62,10 @@ public class NewsListActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.nav_news:
-                openSectionNews(R.id.nav_news);
+                openSectionNews(NewsTypes.NEWS);
                 break;
             case R.id.nav_memuar:
-                openSectionNews(R.id.nav_memuar);
+                openSectionNews(NewsTypes.MEMUAR);
                 break;
         }
 
@@ -72,20 +74,20 @@ public class NewsListActivity extends AppCompatActivity
         return true;
     }
 
-    private void openSectionNews(int sectionID){
-        NewsListFragment fragment = NewsListFragment.newInstance(sectionID);
+    private void openSectionNews(NewsTypes type){
+        NewsListFragment fragment = NewsListFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment).commit();
 
-        setActivityTitle(sectionID);
+        setActivityTitle(type);
     }
 
-    private void setActivityTitle(int sectionID){
+    private void setActivityTitle(NewsTypes type){
         String title = null;
-        switch (sectionID){
-            case R.id.nav_news:
+        switch (type){
+            case NEWS:
                 title = getString(R.string.nav_news_title);
                 break;
-            case R.id.nav_memuar:
+            case MEMUAR:
                 title = getString(R.string.nav_memuar_title);
                 break;
         }
@@ -93,8 +95,8 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void sectionItemOpen(int sectionID, int positionID) {
-        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, sectionID, positionID, sectionItemsCount, links);
+    public void sectionItemOpen(NewsTypes type, int positionID) {
+        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, type, positionID, sectionItemsCount, links);
         startActivity(intent);
     }
 

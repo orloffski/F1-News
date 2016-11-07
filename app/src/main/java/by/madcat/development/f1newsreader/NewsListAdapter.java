@@ -9,23 +9,17 @@ import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
-/**
- * Created by orlof on 04.11.2016.
- */
-
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder>{
 
     public interface ClickListener{
-        void onClick(int sectionID, int positionID);
+        void onClick(int positionID);
     }
 
     private Cursor cursor;
     private final ClickListener clickListener;
-    private int sectionID;
 
-    public NewsListAdapter(ClickListener clickListener, int sectionID){
+    public NewsListAdapter(ClickListener clickListener){
         this.clickListener = clickListener;
-        this.sectionID = sectionID;
     }
 
     @Override
@@ -37,17 +31,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         cursor.moveToPosition(position);
-        switch (sectionID){
-            case R.id.nav_news:
-                holder.setRowID(position);
-                holder.textView.setText(cursor.getString(cursor.getColumnIndex(News.COLUMN_DATE)));
-                break;
-            case R.id.nav_memuar:
-                holder.setRowID(position);
-                holder.textView.setText(cursor.getString(cursor.getColumnIndex(Memuar.COLUMN_DATE)));
-                break;
-        }
-
+        holder.setRowID(position);
+        holder.textView.setText(cursor.getString(cursor.getColumnIndex(News.COLUMN_DATE)));
     }
 
     @Override
@@ -66,14 +51,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    switch (sectionID){
-                        case R.id.nav_news:
-                            clickListener.onClick(sectionID, (int)rowID);
-                            break;
-                        case R.id.nav_memuar:
-                            clickListener.onClick(sectionID, (int)rowID);
-                            break;
-                    }
+                    clickListener.onClick((int)rowID);
                 }
             });
         }

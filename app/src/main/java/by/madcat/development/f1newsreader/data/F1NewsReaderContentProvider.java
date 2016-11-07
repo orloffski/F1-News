@@ -24,8 +24,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
     static {
         uriMatcher.addURI(DatabaseDescription.AUTHORITY, News.TABLE_NAME + "/#", ONE_NEWS);
         uriMatcher.addURI(DatabaseDescription.AUTHORITY, News.TABLE_NAME, NEWS);
-        uriMatcher.addURI(DatabaseDescription.AUTHORITY, Memuar.TABLE_NAME + "/#", ONE_MEMUAR);
-        uriMatcher.addURI(DatabaseDescription.AUTHORITY, Memuar.TABLE_NAME, MEMUARS);
     }
 
     public F1NewsReaderContentProvider() {
@@ -40,10 +38,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
             case ONE_NEWS:
                 id = uri.getLastPathSegment();
                 numberOfRowsDeleted = dbHelper.getWritableDatabase().delete(News.TABLE_NAME, News._ID + "=" + id, selectionArgs);
-                break;
-            case ONE_MEMUAR:
-                id = uri.getLastPathSegment();
-                numberOfRowsDeleted = dbHelper.getWritableDatabase().delete(Memuar.TABLE_NAME, Memuar._ID + "=" + id, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.invalid_delete_uri) + uri);
@@ -67,14 +61,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
                 rowId = dbHelper.getWritableDatabase().insert(News.TABLE_NAME, null, values);
                 if(rowId > 0){
                     newUri = News.buildNewsUri(rowId);
-                    getContext().getContentResolver().notifyChange(uri, null);
-                }else
-                    throw new SQLException(getContext().getString(R.string.insert_failed) + uri);
-                break;
-            case MEMUARS:
-                rowId = dbHelper.getWritableDatabase().insert(Memuar.TABLE_NAME, null, values);
-                if(rowId > 0){
-                    newUri = Memuar.buildMemuarUri(rowId);
                     getContext().getContentResolver().notifyChange(uri, null);
                 }else
                     throw new SQLException(getContext().getString(R.string.insert_failed) + uri);
@@ -105,13 +91,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
                 queryBuilder.setTables(News.TABLE_NAME);
                 queryBuilder.appendWhere(News._ID + "=" + uri.getLastPathSegment());
                 break;
-            case MEMUARS:
-                queryBuilder.setTables(Memuar.TABLE_NAME);
-                break;
-            case ONE_MEMUAR:
-                queryBuilder.setTables(Memuar.TABLE_NAME);
-                queryBuilder.appendWhere(Memuar._ID + "=" + uri.getLastPathSegment());
-                break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.invalid_query_uri) + uri);
         }
@@ -132,10 +111,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
             case ONE_NEWS:
                 id = uri.getLastPathSegment();
                 numberOfRowsUpdated = dbHelper.getWritableDatabase().update(News.TABLE_NAME, values, News._ID + "=" + id, selectionArgs);
-                break;
-            case ONE_MEMUAR:
-                id = uri.getLastPathSegment();
-                numberOfRowsUpdated = dbHelper.getWritableDatabase().update(Memuar.TABLE_NAME, values, Memuar._ID + "=" + id, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.invalid_update_uri) + uri);

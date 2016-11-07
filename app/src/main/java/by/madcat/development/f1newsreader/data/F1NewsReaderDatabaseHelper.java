@@ -22,21 +22,12 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
                         News._ID + " integer primary key, " +
                         News.COLUMN_TITLE + " TEXT, " +
                         News.COLUMN_NEWS + " TEXT, " +
+                        News.COLUMN_NEWS_TYPE + " TEXT, " +
                         News.COLUMN_LINK_NEWS + " TEXT, " +
                         News.COLUMN_DATE + " TEXT, " +
                         News.COLUMN_IMAGE + " TEXT);";
 
-        final String CREATE_MEMUAR_TABLE =
-                "CREATE TABLE " + Memuar.TABLE_NAME + "(" +
-                        Memuar._ID + " integer primary key, " +
-                        Memuar.COLUMN_TITLE + " TEXT, " +
-                        Memuar.COLUMN_NEWS + " TEXT, " +
-                        Memuar.COLUMN_LINK_NEWS + " TEXT, " +
-                        Memuar.COLUMN_DATE + " TEXT, " +
-                        Memuar.COLUMN_IMAGE + " TEXT);";
-
         sqLiteDatabase.execSQL(CREATE_NEWS_TABLE);
-        sqLiteDatabase.execSQL(CREATE_MEMUAR_TABLE);
 
         // фэйковые данные для теста
         ContentValues cv = new ContentValues();
@@ -45,6 +36,7 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
             cv.clear();
             cv.put(News.COLUMN_TITLE, "news title " + i);
             cv.put(News.COLUMN_NEWS, "full news text " + i);
+            cv.put(News.COLUMN_NEWS_TYPE, String.valueOf(NewsTypes.NEWS));
             cv.put(News.COLUMN_LINK_NEWS, "news link " + i);
             cv.put(News.COLUMN_DATE, i + ".01.2016");
             cv.put(News.COLUMN_IMAGE, "news image " + i);
@@ -54,13 +46,14 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
 
         for(int i = 1; i <= 31; i++){
             cv.clear();
-            cv.put(Memuar.COLUMN_TITLE, "Memuar title " + i);
-            cv.put(Memuar.COLUMN_NEWS, "full Memuar text " + i);
-            cv.put(Memuar.COLUMN_LINK_NEWS, "Memuar link " + i);
-            cv.put(Memuar.COLUMN_DATE, ((i < 10) ? "0" + i : i) + ".01.2016");
-            cv.put(Memuar.COLUMN_IMAGE, "Memuar image " + i);
+            cv.put(News.COLUMN_TITLE, "Memuar title " + i);
+            cv.put(News.COLUMN_NEWS, "full Memuar text " + i);
+            cv.put(News.COLUMN_NEWS_TYPE, String.valueOf(NewsTypes.MEMUAR));
+            cv.put(News.COLUMN_LINK_NEWS, "Memuar link " + i);
+            cv.put(News.COLUMN_DATE, ((i < 10) ? "0" + i : i) + ".01.2016");
+            cv.put(News.COLUMN_IMAGE, "Memuar image " + i);
 
-            sqLiteDatabase.insert(Memuar.TABLE_NAME, null, cv);
+            sqLiteDatabase.insert(News.TABLE_NAME, null, cv);
         }
         // конец фэйковых данных
     }

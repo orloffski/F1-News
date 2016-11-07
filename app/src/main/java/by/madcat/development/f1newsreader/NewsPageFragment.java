@@ -17,12 +17,10 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String SECTION_ID = "section_id";
     private static final String NEWS_URI = "news_uri";
 
     private static final int LOADER = 0;
 
-    private int sectionID;
     private Uri newsUri;
 
     private TextView title;
@@ -33,13 +31,10 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     public NewsPageFragment() {
     }
 
-    public static NewsPageFragment newInstance(Uri newsUri, int sectionID) {
-
-
+    public static NewsPageFragment newInstance(Uri newsUri) {
         NewsPageFragment fragment = new NewsPageFragment();
         Bundle args = new Bundle();
         args.putParcelable(NEWS_URI, newsUri);
-        args.putInt(SECTION_ID, sectionID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +44,6 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             newsUri = getArguments().getParcelable(NEWS_URI);
-            sectionID = getArguments().getInt(SECTION_ID);
         }
     }
 
@@ -92,25 +86,10 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data != null && data.moveToFirst()){
-            int titleIndex = 0;
-            int newsIndex = 0;
-            int linkIndex = 0;
-            int imageIndex = 0;
-
-            switch (sectionID){
-                case R.id.nav_news:
-                    titleIndex = data.getColumnIndex(News.COLUMN_TITLE);
-                    newsIndex = data.getColumnIndex(News.COLUMN_NEWS);
-                    linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
-                    imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
-                    break;
-                case R.id.nav_memuar:
-                    titleIndex = data.getColumnIndex(Memuar.COLUMN_TITLE);
-                    newsIndex = data.getColumnIndex(Memuar.COLUMN_NEWS);
-                    linkIndex = data.getColumnIndex(Memuar.COLUMN_LINK_NEWS);
-                    imageIndex = data.getColumnIndex(Memuar.COLUMN_IMAGE);
-                    break;
-            }
+            int titleIndex = data.getColumnIndex(News.COLUMN_TITLE);
+            int newsIndex = data.getColumnIndex(News.COLUMN_NEWS);
+            int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
+            int imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
 
             title.setText(data.getString(titleIndex));
             text.setText(data.getString(newsIndex));

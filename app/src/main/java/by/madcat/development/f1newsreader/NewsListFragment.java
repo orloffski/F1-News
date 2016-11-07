@@ -23,17 +23,16 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 public class NewsListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public interface NewsOpenListener{
-        public void sectionItemOpen(int sectionID, int positionID);
+        public void sectionItemOpen(NewsTypes type, int positionID);
         public void setSectionItemsCount(int count);
         public void setSectionNewsLinks(ArrayList<String> links);
     }
 
 
-    public static final String SECTION_ID = "section_id";
+    public static final String NEWS_TYPE = "news_type";
     private static final int NEWS_LOADER = 0;
-    private static final int MEMUAR_LOADER = 1;
 
-    private int sectionID;
+    private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
 
@@ -41,9 +40,17 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id){
             case NEWS_LOADER:
-                return new CursorLoader(getActivity(), News.CONTENT_URI, null, null, null, News.COLUMN_DATE + " COLLATE NOCASE DESC");
-            case MEMUAR_LOADER:
-                return new CursorLoader(getActivity(), Memuar.CONTENT_URI, null, null, null, Memuar.COLUMN_DATE + " COLLATE NOCASE DESC");
+                String selection = News.COLUMN_NEWS_TYPE + "=?";
+                String[] selectionArgs = new String[]{};
+                switch (type){
+                    case NEWS:
+                        selectionArgs = new String[] {String.valueOf(NewsTypes.NEWS)};
+                        break;
+                    case MEMUAR:
+                        selectionArgs = new String[] {String.valueOf(NewsTypes.MEMUAR)};
+                        break;
+                }
+                return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
             default:
                 return null;
         }
@@ -54,16 +61,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
         ArrayList<String> newsLink = new ArrayList<>();
 
         if(data != null && data.moveToFirst()){
-            int idIndex = 0;
-
-            switch (sectionID){
-                case R.id.nav_news:
-                    idIndex = data.getColumnIndex(News._ID);
-                    break;
-                case R.id.nav_memuar:
-                    idIndex = data.getColumnIndex(Memuar._ID);
-                    break;
-            }
+            int idIndex = data.getColumnIndex(News._ID);
 
             do {
                 newsLink.add(data.getString(idIndex));
@@ -84,10 +82,10 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public NewsListFragment() {
     }
 
-    public static NewsListFragment newInstance(int sectionID) {
+    public static NewsListFragment newInstance(NewsTypes type) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
-        args.putInt(SECTION_ID, sectionID);
+        args.putString(NEWS_TYPE, String.valueOf(type));
         fragment.setArguments(args);
         return fragment;
     }
@@ -108,7 +106,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.sectionID = getArguments().getInt(SECTION_ID);
+            this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
         }
     }
 
@@ -122,10 +120,10 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
 
         adapter = new NewsListAdapter(new NewsListAdapter.ClickListener() {
             @Override
-            public void onClick(int sectionID, int positionID) {
-                newsOpenListener.sectionItemOpen(sectionID, positionID);
+            public void onClick(int positionID) {
+                newsOpenListener.sectionItemOpen(type, positionID);
             }
-        }, sectionID);
+        });
 
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new ItemDivider(getContext()));
@@ -138,13 +136,6 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        switch (sectionID){
-            case R.id.nav_news:
-                getLoaderManager().initLoader(NEWS_LOADER, null, this);
-                break;
-            case R.id.nav_memuar:
-                getLoaderManager().initLoader(MEMUAR_LOADER, null, this);
-                break;
-        }
+        getLoaderManager().initLoader(NEWS_LOADER, null, this);
     }
 }

@@ -15,6 +15,7 @@ public class DatabaseDescription {
 
         public static final String COLUMN_TITLE = "news_title";
         public static final String COLUMN_NEWS = "news_full_text";
+        public static final String COLUMN_NEWS_TYPE = "news_type";
         public static final String COLUMN_LINK_NEWS = "news_link";
         public static final String COLUMN_DATE = "news_date";
         public static final String COLUMN_IMAGE = "news_image";
@@ -24,23 +25,7 @@ public class DatabaseDescription {
         }
     }
 
-    public static final class Memuar implements BaseColumns{
-        public static final String TABLE_NAME = "memuars";
-
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
-
-        public static final String COLUMN_TITLE = "memuars_title";
-        public static final String COLUMN_NEWS = "memuars_full_text";
-        public static final String COLUMN_LINK_NEWS = "memuars_link";
-        public static final String COLUMN_DATE = "memuars_date";
-        public static final String COLUMN_IMAGE = "memuars_image";
-
-        public static Uri buildMemuarUri(long id){
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
-    }
-
-    public enum Sections{
+    public enum NewsTypes{
         NEWS,
         MEMUAR
     }
