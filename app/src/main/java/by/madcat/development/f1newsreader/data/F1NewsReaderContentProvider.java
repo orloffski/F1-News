@@ -18,8 +18,6 @@ public class F1NewsReaderContentProvider extends ContentProvider {
 
     private static final int ONE_NEWS = 1;
     private static final int NEWS = 2;
-    private static final int ONE_MEMUAR = 3;
-    private static final int MEMUARS = 4;
 
     static {
         uriMatcher.addURI(DatabaseDescription.AUTHORITY, News.TABLE_NAME + "/#", ONE_NEWS);
