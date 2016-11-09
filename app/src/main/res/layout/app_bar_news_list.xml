@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="by.madcat.development.f1newsreader.NewsListActivity">
+    tools:context="by.madcat.development.f1newsreader.classesUI.NewsListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,5 +23,17 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_news_list"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_cached_white_24dp"
+        android:id="@+id/fabLoadNews"
+        android:layout_gravity="top|end"
+        app:backgroundTint="@android:color/holo_green_light"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"/>
 
 </android.support.design.widget.CoordinatorLayout>

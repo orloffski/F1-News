@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="by.madcat.development.f1newsreader.NewsPageFragment">
+    tools:context="by.madcat.development.f1newsreader.classesUI.NewsPageFragment">
 
     <TextView
         android:layout_width="match_parent"
