@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.dataInet;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -21,9 +22,11 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
     private HashMap<NewsTypes, String> routeMap;
     private Map<String, NewsTypes> links = null;
+    private Context context;
 
-    public LoadLinkListTask(HashMap<NewsTypes, String> routeMap){
+    public LoadLinkListTask(HashMap<NewsTypes, String> routeMap, Context context){
         this.routeMap = routeMap;
+        this.context = context;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
             dataLink.add(entry.getKey().toString());
             dataLink.add(entry.getValue().toString());
 
-            new LoadNewsTask(dataLink).execute();
+            new LoadNewsTask(dataLink, context).execute();
         }
     }
 

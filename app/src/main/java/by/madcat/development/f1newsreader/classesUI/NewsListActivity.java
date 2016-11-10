@@ -51,7 +51,7 @@ public class NewsListActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 dataRouting = InternetDataRouting.getInstance();
-                loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap());
+                loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
                 loadLinksTask.execute();
             }
         });

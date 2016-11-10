@@ -28,34 +28,6 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
                         News.COLUMN_IMAGE + " TEXT);";
 
         sqLiteDatabase.execSQL(CREATE_NEWS_TABLE);
-
-        // фэйковые данные для теста
-        ContentValues cv = new ContentValues();
-
-        for(int i = 1; i <= 31; i++){
-            cv.clear();
-            cv.put(News.COLUMN_TITLE, "news title " + i);
-            cv.put(News.COLUMN_NEWS, "full news text " + i);
-            cv.put(News.COLUMN_NEWS_TYPE, String.valueOf(NewsTypes.NEWS));
-            cv.put(News.COLUMN_LINK_NEWS, "news link " + i);
-            cv.put(News.COLUMN_DATE, i + ".01.2016");
-            cv.put(News.COLUMN_IMAGE, "news image " + i);
-
-            sqLiteDatabase.insert(News.TABLE_NAME, null, cv);
-        }
-
-        for(int i = 1; i <= 31; i++){
-            cv.clear();
-            cv.put(News.COLUMN_TITLE, "Memuar title " + i);
-            cv.put(News.COLUMN_NEWS, "full Memuar text " + i);
-            cv.put(News.COLUMN_NEWS_TYPE, String.valueOf(NewsTypes.MEMUAR));
-            cv.put(News.COLUMN_LINK_NEWS, "Memuar link " + i);
-            cv.put(News.COLUMN_DATE, ((i < 10) ? "0" + i : i) + ".01.2016");
-            cv.put(News.COLUMN_IMAGE, "Memuar image " + i);
-
-            sqLiteDatabase.insert(News.TABLE_NAME, null, cv);
-        }
-        // конец фэйковых данных
     }
 
     @Override

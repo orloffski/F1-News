@@ -1,5 +1,9 @@
 package by.madcat.development.f1newsreader.dataInet;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,9 +21,11 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private ArrayList<String> dataLink;
+    private Context context;
 
-    public LoadNewsTask(ArrayList<String> dataLink){
+    public LoadNewsTask(ArrayList<String> dataLink, Context context){
         this.dataLink = dataLink;
+        this.context = context;
     }
 
     @Override
@@ -37,9 +43,18 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
 
-        for(String data: strings){
-            Log.d("payment", data);
-        }
+        String selection = News.COLUMN_LINK_NEWS + "=?";
+        String[] selectionArgs = new String[]{strings.get(3)};
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(News.COLUMN_TITLE, strings.get(0));
+        contentValues.put(News.COLUMN_NEWS, strings.get(1));
+        contentValues.put(News.COLUMN_NEWS_TYPE, strings.get(2));
+        contentValues.put(News.COLUMN_LINK_NEWS, strings.get(3));
+        contentValues.put(News.COLUMN_DATE, strings.get(4));
+        contentValues.put(News.COLUMN_IMAGE, strings.get(5));
+
+        Uri newNewsUri = context.getContentResolver().insert(News.CONTENT_URI, contentValues);
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {
@@ -75,9 +90,12 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         // news image
         Elements news_image_div = jsDoc.getElementsByClass(InternetDataRouting.NEWS_IMAGE_DIV_PARSE);
-        Elements linkDivs = news_image_div.first().getElementsByTag(InternetDataRouting.NEWS_IMAGE_TAG_PARSE);
-        String image = linkDivs.first().attr(InternetDataRouting.NEWS_IMAGE_LINK_ATTR_PARSE);
-        newsData.add(image);
+        if(news_image_div.first() != null) {
+            Elements linkDivs = news_image_div.first().getElementsByTag(InternetDataRouting.NEWS_IMAGE_TAG_PARSE);
+            String image = linkDivs.first().attr(InternetDataRouting.NEWS_IMAGE_LINK_ATTR_PARSE);
+            newsData.add(image);
+        }else
+            newsData.add("");
 
         return newsData;
     }
