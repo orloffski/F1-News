@@ -2,10 +2,8 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
@@ -21,6 +19,9 @@ import java.util.Date;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
+
+    private static final String NEWS_PREFIX = "/news/";
+    private static final String MEMUAR_PREFIX = "/memuar/";
 
     private ArrayList<String> dataLink;
     private Context context;
@@ -44,6 +45,9 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
+
+        if(!checkNewsLink(strings.get(3), NewsTypes.valueOf(strings.get(2))))
+            return;
 
         String selection = News.COLUMN_LINK_NEWS + "=?";
         String[] selectionArgs = new String[]{strings.get(3)};
@@ -144,5 +148,24 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
                 return i;
 
         return -1;
+    }
+
+    private boolean checkNewsLink(String link, NewsTypes type){
+
+        String prefix = "";
+
+        switch (type){
+            case NEWS:
+                prefix = NEWS_PREFIX;
+                break;
+            case MEMUAR:
+                prefix = MEMUAR_PREFIX;
+                break;
+        }
+
+        if(!link.contains(prefix))
+            return false;
+
+        return true;
     }
 }
