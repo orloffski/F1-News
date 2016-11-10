@@ -2,7 +2,7 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
 import org.jsoup.Jsoup;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
@@ -49,9 +50,6 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         if(!checkNewsLink(strings.get(3), NewsTypes.valueOf(strings.get(2))))
             return;
 
-        String selection = News.COLUMN_LINK_NEWS + "=?";
-        String[] selectionArgs = new String[]{strings.get(3)};
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(News.COLUMN_TITLE, strings.get(0));
         contentValues.put(News.COLUMN_NEWS, strings.get(1));
@@ -60,7 +58,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         contentValues.put(News.COLUMN_DATE, strings.get(4));
         contentValues.put(News.COLUMN_IMAGE, strings.get(5));
 
-        Uri newNewsUri = context.getContentResolver().insert(News.CONTENT_URI, contentValues);
+        context.getContentResolver().insert(News.CONTENT_URI, contentValues);
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {
@@ -152,6 +150,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private boolean checkNewsLink(String link, NewsTypes type){
 
+        // check link to correct news section (delete news from other sections)
         String prefix = "";
 
         switch (type){
@@ -166,6 +165,20 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         if(!link.contains(prefix))
             return false;
 
+        // check link to issue news in DB
+        String selection = News.COLUMN_LINK_NEWS + "=?";
+        String[] selectionArgs = new String[]{link};
+
+        F1NewsReaderDatabaseHelper helper = new F1NewsReaderDatabaseHelper(context);
+        Cursor cursor = helper.getWritableDatabase().query(News.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if(cursor.getCount() != 0) {
+            cursor.close();
+            helper.close();
+            return false;
+        }
+
+        cursor.close();
+        helper.close();
         return true;
     }
 }
