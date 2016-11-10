@@ -32,7 +32,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         cursor.moveToPosition(position);
         holder.setRowID(position);
-        holder.textView.setText(cursor.getString(cursor.getColumnIndex(News.COLUMN_DATE)));
+        holder.textView.setText(cursor.getString(cursor.getColumnIndex(News.COLUMN_TITLE)));
     }
 
     @Override

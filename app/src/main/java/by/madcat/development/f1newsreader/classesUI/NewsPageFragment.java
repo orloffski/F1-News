@@ -28,6 +28,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     private TextView text;
     private TextView link;
     private TextView image;
+    private TextView date;
 
     public NewsPageFragment() {
     }
@@ -57,6 +58,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         text = (TextView) view.findViewById(R.id.content_text);
         link = (TextView) view.findViewById(R.id.content_link);
         image = (TextView) view.findViewById(R.id.content_image);
+        date = (TextView) view.findViewById(R.id.content_date);
 
         getLoaderManager().initLoader(LOADER, null, this);
 
@@ -91,11 +93,13 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             int newsIndex = data.getColumnIndex(News.COLUMN_NEWS);
             int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
             int imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
+            int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
 
             title.setText(data.getString(titleIndex));
             text.setText(data.getString(newsIndex));
             link.setText(data.getString(linkIndex));
             image.setText(data.getString(imageIndex));
+            date.setText(data.getString(dateIndex));
         }
     }
 
