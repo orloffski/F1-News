@@ -14,7 +14,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
@@ -85,8 +87,16 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         newsData.add(urlString);
 
         // news date
+        String dateTime = "";
         Elements news_date = jsDoc.getElementsByClass(InternetDataRouting.NEWS_DATE_PARSE);
-        newsData.add(news_date.text());
+        if(news_date.isEmpty()){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
+            dateTime = simpleDateFormat.format(new Date());
+        }else{
+            dateTime = news_date.text();
+        }
+        dateTime = transformDateTime(dateTime);
+        newsData.add(dateTime);
 
         // news image
         Elements news_image_div = jsDoc.getElementsByClass(InternetDataRouting.NEWS_IMAGE_DIV_PARSE);
@@ -98,5 +108,41 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
             newsData.add("");
 
         return newsData;
+    }
+
+    private String transformDateTime(String dateTime){
+        StringBuilder builder = new StringBuilder();
+
+        String[] date = dateTime.split(",", 0);
+
+        String dateNumber = date[0].split(" ")[0];
+        String monthNumber = date[0].split(" ")[1];
+        String yearNumber = date[0].split(" ")[2];
+
+        builder.append(yearNumber).append(".");
+
+        if(getMonthNumber(monthNumber) + 1 < 10)
+            builder.append("0");
+        builder.append(getMonthNumber(monthNumber) + 1).append(".");
+
+        if(dateNumber.length() < 2)
+            builder.append("0");
+        builder.append(dateNumber);
+
+        builder.append(" ").append(date[1]);
+
+        return builder.toString();
+    }
+
+    private static int getMonthNumber(String monthName){
+        String[] months = new String[]{"января","февраля","марта",
+                "апреля","мая","июня","июля","августа","сентября",
+                "октября","ноября","декабря"};
+
+        for(int i =0; i < months.length; i++)
+            if(months[i].equals(monthName))
+                return i;
+
+        return -1;
     }
 }
