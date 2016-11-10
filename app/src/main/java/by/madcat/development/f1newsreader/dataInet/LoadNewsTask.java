@@ -36,6 +36,9 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     protected ArrayList<String> doInBackground(Void... voids) {
         ArrayList<String> newsData = new ArrayList<>();
         try {
+            if(!checkIssetNewsLinkInDB(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1))))
+                return null;
+
             newsData = loadNewsData(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +50,10 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
 
-        if(!checkNewsLink(strings.get(3), NewsTypes.valueOf(strings.get(2))))
+        if(strings == null)
+            return;
+
+        if(!checkNewsLinkInSection(strings.get(3), NewsTypes.valueOf(strings.get(2))))
             return;
 
         ContentValues contentValues = new ContentValues();
@@ -148,7 +154,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         return -1;
     }
 
-    private boolean checkNewsLink(String link, NewsTypes type){
+    private boolean checkNewsLinkInSection(String link, NewsTypes type){
 
         // check link to correct news section (delete news from other sections)
         String prefix = "";
@@ -165,6 +171,10 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         if(!link.contains(prefix))
             return false;
 
+        return true;
+    }
+
+    private boolean checkIssetNewsLinkInDB(String link, NewsTypes type){
         // check link to issue news in DB
         String selection = News.COLUMN_LINK_NEWS + "=?";
         String[] selectionArgs = new String[]{link};
