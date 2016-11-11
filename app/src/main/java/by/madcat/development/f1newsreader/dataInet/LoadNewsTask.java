@@ -3,14 +3,25 @@ package by.madcat.development.f1newsreader.dataInet;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +34,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private static final String NEWS_PREFIX = "/news/";
     private static final String MEMUAR_PREFIX = "/memuar/";
+
+    private static final String IMAGE_PATH = "F1NewsImages";
 
     private ArrayList<String> dataLink;
     private Context context;
@@ -111,7 +124,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         if(news_image_div.first() != null) {
             Elements linkDivs = news_image_div.first().getElementsByTag(InternetDataRouting.NEWS_IMAGE_TAG_PARSE);
             String image = linkDivs.first().attr(InternetDataRouting.NEWS_IMAGE_LINK_ATTR_PARSE);
-            newsData.add(image);
+            loadNewsImage(image);
+            newsData.add(image.split("/")[image.split("/").length - 1]);
         }else
             newsData.add("");
 
@@ -190,5 +204,33 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         cursor.close();
         helper.close();
         return true;
+    }
+
+    private void loadNewsImage(String imageUrl) throws IOException {
+        File sdPath = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            sdPath = Environment.getExternalStorageDirectory();
+        }else{
+            sdPath = context.getFilesDir();
+        }
+        sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
+
+        if(!sdPath.exists())
+            sdPath.mkdirs();
+
+        String filename = imageUrl.split("/")[imageUrl.split("/").length - 1];
+        File imageOnMemory = new File(sdPath, filename);
+
+        Bitmap image = null;
+
+        OutputStream fOut = new FileOutputStream(imageOnMemory);
+
+        InputStream in = new URL(imageUrl).openStream();
+        image = BitmapFactory.decodeStream(in);
+        image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+
+        fOut.flush();
+        fOut.close();
+        in.close();
     }
 }

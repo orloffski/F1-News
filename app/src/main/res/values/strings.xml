@@ -12,4 +12,5 @@
     <string name="invalid_insert_uri">Invalid insert Uri:</string>
     <string name="invalid_update_uri">Invalid update Uri:</string>
     <string name="insert_failed">Insert failed: s</string>
+    <string name="network_not_available">Подключение к сети отсутствует</string>
 </resources>

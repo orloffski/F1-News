@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;

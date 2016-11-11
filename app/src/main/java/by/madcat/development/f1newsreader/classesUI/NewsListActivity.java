@@ -1,16 +1,21 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,9 +55,13 @@ public class NewsListActivity extends AppCompatActivity
         fabLoadNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataRouting = InternetDataRouting.getInstance();
-                loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
-                loadLinksTask.execute();
+                if(!isNetworkAvailable()) {
+                    Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+                }else {
+                    dataRouting = InternetDataRouting.getInstance();
+                    loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
+                    loadLinksTask.execute();
+                }
             }
         });
 
@@ -127,5 +136,15 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void setSectionNewsLinks(ArrayList<String> links) {
         this.links = links;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
