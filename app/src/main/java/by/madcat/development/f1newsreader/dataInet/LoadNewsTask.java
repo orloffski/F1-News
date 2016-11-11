@@ -35,7 +35,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     private static final String NEWS_PREFIX = "/news/";
     private static final String MEMUAR_PREFIX = "/memuar/";
 
-    private static final String IMAGE_PATH = "F1NewsImages";
+    public static final String IMAGE_PATH = "F1NewsImages";
 
     private ArrayList<String> dataLink;
     private Context context;
@@ -207,12 +207,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     }
 
     private void loadNewsImage(String imageUrl) throws IOException {
-        File sdPath = null;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            sdPath = Environment.getExternalStorageDirectory();
-        }else{
-            sdPath = context.getFilesDir();
-        }
+        File sdPath = context.getFilesDir();
+
         sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
 
         if(!sdPath.exists())

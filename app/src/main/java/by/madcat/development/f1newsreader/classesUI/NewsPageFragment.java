@@ -1,6 +1,8 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +12,14 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
 
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -26,8 +32,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
     private TextView title;
     private TextView text;
-    private TextView link;
-    private TextView image;
+    private ImageView image;
     private TextView date;
 
     public NewsPageFragment() {
@@ -56,8 +61,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
         title = (TextView) view.findViewById(R.id.content_title);
         text = (TextView) view.findViewById(R.id.content_text);
-        link = (TextView) view.findViewById(R.id.content_link);
-        image = (TextView) view.findViewById(R.id.content_image);
+        image = (ImageView) view.findViewById(R.id.content_image);
         date = (TextView) view.findViewById(R.id.content_date);
 
         getLoaderManager().initLoader(LOADER, null, this);
@@ -97,8 +101,10 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
             title.setText(data.getString(titleIndex));
             text.setText(data.getString(newsIndex));
-            link.setText(data.getString(linkIndex));
-            image.setText(data.getString(imageIndex));
+            String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
+            File imageFile = new File(pathToImage);
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            image.setImageBitmap(bitmap);
             date.setText(data.getString(dateIndex));
         }
     }
