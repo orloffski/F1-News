@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
@@ -106,7 +107,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             image.setImageBitmap(bitmap);
 
-            date.setText(data.getString(dateIndex));
+            date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
         }
     }
 
