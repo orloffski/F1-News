@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dimen for page -->
+    <dimen name="title_text_size">18sp</dimen>
+    <dimen name="text_padding">8dp</dimen>
+    <dimen name="image_width">400dp</dimen>
+</resources>
