@@ -7,6 +7,7 @@
     android:layout_gravity="center"
     android:layout_margin="@dimen/card_margin"
     android:elevation="3dp"
+    android:translationZ="3dp"
     card_view:cardCornerRadius="@dimen/card_news_radius">
 
     <LinearLayout
@@ -18,6 +19,7 @@
             android:id="@+id/thumbnail"
             android:layout_width="@dimen/news_cover_width"
             android:layout_height="@dimen/news_cover_height"
+            android:padding="2dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:scaleType="centerCrop" />
@@ -25,11 +27,10 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/thumbnail"
             android:paddingLeft="@dimen/news_title_padding"
             android:paddingRight="@dimen/news_title_padding"
-            android:paddingTop="@dimen/news_title_padding"
             android:textColor="@color/news_title"
             android:textSize="@dimen/news_title"
             android:gravity="center_vertical"/>
