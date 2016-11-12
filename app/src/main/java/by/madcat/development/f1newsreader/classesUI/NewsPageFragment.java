@@ -95,16 +95,17 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         if(data != null && data.moveToFirst()){
             int titleIndex = data.getColumnIndex(News.COLUMN_TITLE);
             int newsIndex = data.getColumnIndex(News.COLUMN_NEWS);
-            int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
             int imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
             int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
 
             title.setText(data.getString(titleIndex));
             text.setText(data.getString(newsIndex));
+
             String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
             File imageFile = new File(pathToImage);
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             image.setImageBitmap(bitmap);
+
             date.setText(data.getString(dateIndex));
         }
     }

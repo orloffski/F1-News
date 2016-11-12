@@ -6,4 +6,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_news_radius">0dp</dimen>
+    <dimen name="news_cover_height">60dp</dimen>
+    <dimen name="news_cover_width">100dp</dimen>
+    <dimen name="news_title_padding">10dp</dimen>
+    <dimen name="news_title">15dp</dimen>
 </resources>

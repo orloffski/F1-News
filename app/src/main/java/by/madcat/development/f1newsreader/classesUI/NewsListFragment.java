@@ -36,6 +36,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
+    private Context context;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -124,10 +125,9 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
             public void onClick(int positionID) {
                 newsOpenListener.sectionItemOpen(type, positionID);
             }
-        });
+        }, getActivity());
 
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new ItemDivider(getContext()));
         recyclerView.setHasFixedSize(true);
 
         return view;
