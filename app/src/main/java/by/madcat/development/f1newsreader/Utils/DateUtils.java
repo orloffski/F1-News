@@ -36,7 +36,7 @@ public final class DateUtils {
         String monthNumber = date[0].split("-")[1];
         String dateNumber = date[0].split("-")[2];
 
-        builder.append(date[1]).append(" ").append(dateNumber).append(".").append(monthNumber).append(".").append(yearNumber);
+        builder.append(dateNumber).append(".").append(monthNumber).append(".").append(yearNumber);
 
         return builder.toString();
     }
