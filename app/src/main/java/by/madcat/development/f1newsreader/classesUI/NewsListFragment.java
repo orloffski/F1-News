@@ -36,7 +36,6 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
-    private Context context;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
