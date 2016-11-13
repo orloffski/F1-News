@@ -39,6 +39,7 @@ public class InternetDataRouting {
         tmpRoutingMap.put(NewsTypes.NEWS, "http://www.f1news.ru/news/");
         tmpRoutingMap.put(NewsTypes.MEMUAR, "http://www.f1news.ru/memuar/");
         tmpRoutingMap.put(NewsTypes.TECH, "http://www.f1news.ru/tech/");
+        tmpRoutingMap.put(NewsTypes.HISTORY, "http://www.f1news.ru/history/");
 
         return tmpRoutingMap;
     }

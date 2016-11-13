@@ -76,6 +76,9 @@ public class NewsListFragment extends Fragment
                     case TECH:
                         selectionArgs = new String[] {String.valueOf(NewsTypes.TECH)};
                         break;
+                    case HISTORY:
+                        selectionArgs = new String[] {String.valueOf(NewsTypes.HISTORY)};
+                        break;
                 }
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
             default:
