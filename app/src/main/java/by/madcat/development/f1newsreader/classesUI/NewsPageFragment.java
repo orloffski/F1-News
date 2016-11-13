@@ -102,10 +102,15 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             title.setText(data.getString(titleIndex));
             text.setText(data.getString(newsIndex));
 
-            String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
-            File imageFile = new File(pathToImage);
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            image.setImageBitmap(bitmap);
+            if(!data.getString(imageIndex).isEmpty()) {
+                String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
+                File imageFile = new File(pathToImage);
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                image.setImageBitmap(bitmap);
+            }else{
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.logo);
+                image.setImageBitmap(bitmap);
+            }
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
         }
