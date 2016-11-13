@@ -29,6 +29,7 @@ public class DatabaseDescription {
         NEWS,
         MEMUAR,
         TECH,
-        HISTORY
+        HISTORY,
+        COLUMNS
     }
 }

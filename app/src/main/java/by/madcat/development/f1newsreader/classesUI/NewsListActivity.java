@@ -83,6 +83,9 @@ public class NewsListActivity extends AppCompatActivity
             case R.id.nav_history:
                 openSectionNews(NewsTypes.HISTORY);
                 break;
+            case R.id.nav_columns:
+                openSectionNews(NewsTypes.COLUMNS);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,6 +114,9 @@ public class NewsListActivity extends AppCompatActivity
                 break;
             case HISTORY:
                 title = getString(R.string.nav_history_title);
+                break;
+            case COLUMNS:
+                title = getString(R.string.nav_columns_title);
                 break;
         }
         setTitle(title);
