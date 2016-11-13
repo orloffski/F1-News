@@ -53,13 +53,7 @@ public class NewsListActivity extends AppCompatActivity
         fabLoadNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isNetworkAvailable()) {
-                    Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
-                }else {
-                    dataRouting = InternetDataRouting.getInstance();
-                    loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
-                    loadLinksTask.execute();
-                }
+                loadMoreNews();
             }
         });
 
@@ -143,6 +137,16 @@ public class NewsListActivity extends AppCompatActivity
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void loadMoreNews(){
+        if(!isNetworkAvailable()) {
+            Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+        }else {
+            dataRouting = InternetDataRouting.getInstance();
+            loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
+            loadLinksTask.execute();
         }
     }
 }
