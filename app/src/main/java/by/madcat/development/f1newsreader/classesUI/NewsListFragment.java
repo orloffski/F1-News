@@ -43,7 +43,7 @@ public class NewsListFragment extends Fragment
     @Override
     public void loadComplete() {
         materialRefreshLayout.finishRefresh();
-        Toast.makeText(getActivity(), createLoadMessage(), Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), createLoadMessage(), Toast.LENGTH_SHORT).show();
     }
 
     public interface NewsOpenListener{
@@ -181,8 +181,9 @@ public class NewsListFragment extends Fragment
 
         if(adapter.getCountNewsToLoad() == 0)
             message = getString(R.string.no_isset_news_to_load);
-        else
-            message = getString(R.string.news_loaded, adapter.getCountNewsToLoad());
+        else {
+            message = getResources().getQuantityString(R.plurals.news_plurals, adapter.getCountNewsToLoad(), adapter.getCountNewsToLoad());
+        }
 
         return message;
     }
