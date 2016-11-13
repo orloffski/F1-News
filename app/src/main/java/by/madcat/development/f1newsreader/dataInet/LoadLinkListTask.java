@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -9,17 +10,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
+import by.madcat.development.f1newsreader.Utils.StringUtils;
+import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
 
-public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>>{
+public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>> {
 
     private HashMap<NewsTypes, String> routeMap;
     private Map<String, NewsTypes> links = null;
     private Context context;
+    private NewsLoadSender sender;
 
-    public LoadLinkListTask(HashMap<NewsTypes, String> routeMap, Context context){
+    public LoadLinkListTask(HashMap<NewsTypes, String> routeMap, Context context, NewsLoadSender sender){
         this.routeMap = routeMap;
         this.context = context;
+        this.sender = sender;
     }
 
     @Override
@@ -40,12 +46,23 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
     protected void onPostExecute(Map<String, NewsTypes> strings) {
         super.onPostExecute(strings);
 
+        strings = checkLinksMap(strings);
+
+        sender.sendNewsCountToAdapter(0);
+
+        if(strings.size() == 0){
+            sender.loadComplete();
+            return;
+        }
+
+        sender.sendNewsCountToAdapter(strings.size());
+
         for(Map.Entry entry : strings.entrySet()){
             ArrayList<String> dataLink = new ArrayList<>();
             dataLink.add(entry.getKey().toString());
             dataLink.add(entry.getValue().toString());
 
-            new LoadNewsTask(dataLink, context).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new LoadNewsTask(dataLink, context, sender).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -53,5 +70,35 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
         links.putAll(DocParseUtils.getNewsLinkList(jsDoc, type));
+    }
+
+    private Map<String, NewsTypes> checkLinksMap(Map<String, NewsTypes> links){
+        HashMap<String, NewsTypes> checkedLinks = new HashMap<>();
+
+        for(Map.Entry entry : links.entrySet()){
+            if(StringUtils.checkNewsLinkInSection(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString())) &&
+                    checkIssetNewsLinkInDB(entry.getKey().toString()))
+                checkedLinks.put(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString()));
+        }
+
+        return checkedLinks;
+    }
+
+    private boolean checkIssetNewsLinkInDB(String link){
+        // check link to issue news in DB
+        String selection = News.COLUMN_LINK_NEWS + "=?";
+        String[] selectionArgs = new String[]{link};
+
+        F1NewsReaderDatabaseHelper helper = new F1NewsReaderDatabaseHelper(context);
+        Cursor cursor = helper.getWritableDatabase().query(News.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if(cursor.getCount() != 0) {
+            cursor.close();
+            helper.close();
+            return false;
+        }
+
+        cursor.close();
+        helper.close();
+        return true;
     }
 }

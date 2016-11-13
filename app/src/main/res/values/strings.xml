@@ -13,4 +13,6 @@
     <string name="invalid_update_uri">Invalid update Uri:</string>
     <string name="insert_failed">Insert failed: s</string>
     <string name="network_not_available">Подключение к сети отсутствует</string>
+    <string name="news_loaded">Загружено %1d новостей</string>
+    <string name="no_isset_news_to_load">Нет новых новостей для загрузки</string>
 </resources>

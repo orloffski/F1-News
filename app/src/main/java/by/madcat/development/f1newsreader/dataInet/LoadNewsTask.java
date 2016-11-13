@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -18,8 +17,8 @@ import java.util.ArrayList;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
+import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
-import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
@@ -27,19 +26,18 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private ArrayList<String> dataLink;
     private Context context;
+    private NewsLoadSender sender;
 
-    public LoadNewsTask(ArrayList<String> dataLink, Context context){
+    public LoadNewsTask(ArrayList<String> dataLink, Context context, NewsLoadSender sender){
         this.dataLink = dataLink;
         this.context = context;
+        this.sender = sender;
     }
 
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
         ArrayList<String> newsData = new ArrayList<>();
         try {
-            if(!checkIssetNewsLinkInDB(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1))))
-                return null;
-
             newsData = loadNewsData(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,9 +52,6 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         if(strings == null)
             return;
 
-        if(!StringUtils.checkNewsLinkInSection(strings.get(3), NewsTypes.valueOf(strings.get(2))))
-            return;
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(News.COLUMN_TITLE, strings.get(0));
         contentValues.put(News.COLUMN_NEWS, strings.get(1));
@@ -66,6 +61,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         contentValues.put(News.COLUMN_IMAGE, strings.get(5));
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
+        sender.sendNewsLoadToAdapter();
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {
@@ -99,26 +95,6 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
             newsData.add("");
 
         return newsData;
-    }
-
-    private boolean checkIssetNewsLinkInDB(String link, NewsTypes type){
-        // check link to issue news in DB
-        String selection = News.COLUMN_LINK_NEWS + "=?";
-        String[] selectionArgs = new String[]{link};
-
-
-
-        F1NewsReaderDatabaseHelper helper = new F1NewsReaderDatabaseHelper(context);
-        Cursor cursor = helper.getWritableDatabase().query(News.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if(cursor.getCount() != 0) {
-            cursor.close();
-            helper.close();
-            return false;
-        }
-
-        cursor.close();
-        helper.close();
-        return true;
     }
 
     private void loadNewsImage(String imageUrl) throws IOException {

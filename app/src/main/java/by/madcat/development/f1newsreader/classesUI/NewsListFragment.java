@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -24,7 +26,25 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 
-public class NewsListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class NewsListFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Cursor>, NewsLoadSender{
+
+    @Override
+    public void sendNewsCountToAdapter(int count) {
+        adapter.setCountNewsToLoad(count);
+        adapter.setCountLoadedNews(0);
+    }
+
+    @Override
+    public void sendNewsLoadToAdapter() {
+        adapter.updateCountLoadedNews();
+    }
+
+    @Override
+    public void loadComplete() {
+        materialRefreshLayout.finishRefresh();
+        Toast.makeText(getActivity(), createLoadMessage(), Snackbar.LENGTH_SHORT).show();
+    }
 
     public interface NewsOpenListener{
         public void sectionItemOpen(NewsTypes type, int positionID);
@@ -39,6 +59,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
+    private MaterialRefreshLayout materialRefreshLayout;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -119,16 +140,16 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 
-        MaterialRefreshLayout materialRefreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
+        materialRefreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-
+                ((NewsListActivity)getActivity()).loadMoreNews();
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-                ((NewsListActivity)getActivity()).loadMoreNews();
+
             }
         });
 
@@ -140,7 +161,7 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
             public void onClick(int positionID) {
                 newsOpenListener.sectionItemOpen(type, positionID);
             }
-        }, getActivity());
+        }, getActivity(), this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -153,5 +174,16 @@ public class NewsListFragment extends Fragment implements LoaderManager.LoaderCa
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
+    }
+
+    private String createLoadMessage(){
+        String message;
+
+        if(adapter.getCountNewsToLoad() == 0)
+            message = getString(R.string.no_isset_news_to_load);
+        else
+            message = getString(R.string.news_loaded, adapter.getCountNewsToLoad());
+
+        return message;
     }
 }

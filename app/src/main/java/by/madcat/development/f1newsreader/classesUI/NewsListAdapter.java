@@ -26,10 +26,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     private Cursor cursor;
     private final ClickListener clickListener;
     private Context context;
+    private NewsLoadSender sender;
 
-    public NewsListAdapter(ClickListener clickListener, Context context){
+    private int countNewsToLoad = 0;
+    private int countLoadedNews;
+
+    public NewsListAdapter(ClickListener clickListener, Context context, NewsLoadSender sender){
         this.clickListener = clickListener;
         this.context = context;
+        this.sender = sender;
     }
 
     @Override
@@ -81,5 +86,24 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void swapCursor(Cursor cursor){
         this.cursor = cursor;
         notifyDataSetChanged();
+    }
+
+    public int getCountNewsToLoad() {
+        return countNewsToLoad;
+    }
+
+    public void setCountNewsToLoad(int countNewsToLoad) {
+        this.countNewsToLoad = countNewsToLoad;
+    }
+
+    public void setCountLoadedNews(int countLoadedNews) {
+        this.countLoadedNews = countLoadedNews;
+    }
+
+    public void updateCountLoadedNews(){
+        this.countLoadedNews +=1;
+
+        if(this.countNewsToLoad == this.countLoadedNews)
+            sender.loadComplete();
     }
 }

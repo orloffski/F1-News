@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,10 +26,10 @@ public class NewsListActivity extends AppCompatActivity
 
     private int sectionItemsCount;
     private ArrayList<String> links;
-    private FloatingActionButton fabLoadNews;
 
     private InternetDataRouting dataRouting;
     private LoadLinkListTask loadLinksTask;
+    private NewsListFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +47,10 @@ public class NewsListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fabLoadNews = (FloatingActionButton) findViewById(R.id.fabLoadNews);
-        fabLoadNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadMoreNews();
-            }
-        });
-
         if(savedInstanceState == null)
             openSectionNews(NewsTypes.NEWS);
         else{
-            NewsListFragment fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+            fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
             setActivityTitle(type);
         }
@@ -95,7 +85,7 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void openSectionNews(NewsTypes type){
-        NewsListFragment fragment = NewsListFragment.newInstance(type);
+        fragment = NewsListFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment).commit();
 
         setActivityTitle(type);
@@ -145,7 +135,7 @@ public class NewsListActivity extends AppCompatActivity
             Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
         }else {
             dataRouting = InternetDataRouting.getInstance();
-            loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext());
+            loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), fragment);
             loadLinksTask.execute();
         }
     }
