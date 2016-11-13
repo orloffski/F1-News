@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -73,6 +72,9 @@ public class NewsListFragment extends Fragment
                         break;
                     case MEMUAR:
                         selectionArgs = new String[] {String.valueOf(NewsTypes.MEMUAR)};
+                        break;
+                    case TECH:
+                        selectionArgs = new String[] {String.valueOf(NewsTypes.TECH)};
                         break;
                 }
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");

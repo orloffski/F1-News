@@ -5,6 +5,7 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription;
 public final class StringUtils {
     private static final String NEWS_PREFIX = "/news/";
     private static final String MEMUAR_PREFIX = "/memuar/";
+    private static final String TECH_PREFIX = "/tech/";
 
     public static String getImageNameFromURL(String url){
         return url.split("/")[url.split("/").length - 1];
@@ -22,6 +23,10 @@ public final class StringUtils {
             case MEMUAR:
                 prefix = MEMUAR_PREFIX;
                 break;
+            case TECH:
+                prefix = TECH_PREFIX;
+                break;
+
         }
 
         if(!link.contains(prefix))
