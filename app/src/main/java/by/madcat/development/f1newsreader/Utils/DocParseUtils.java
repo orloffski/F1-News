@@ -69,16 +69,31 @@ public final class DocParseUtils {
     public static Map<String, NewsTypes> getNewsLinkList(org.jsoup.nodes.Document jsDoc, NewsTypes type){
         Map<String, NewsTypes> links = new HashMap<>();
 
-        for(org.jsoup.nodes.Element mainDiv : jsDoc.getElementsByClass(InternetDataRouting.NEWS_LINK_LIST_TAG)){
-            Elements linkDivs = mainDiv.getElementsByTag(InternetDataRouting.GROUP_TAG_NAME);
-            org.jsoup.nodes.Element linkDiv = linkDivs.first();
-            Elements linkElements = linkDiv.getElementsByTag(InternetDataRouting.LINK_TAG);
-            String linkAttr = linkElements.first().attributes().toString();
-            String link = linkAttr.split(SPLIT_ELEMENT)[1];
-            if(!link.contains(InternetDataRouting.HTTP_PREFIX))
-                link = InternetDataRouting.HTTP_PREFIX_TO_ADD + link;
+        switch (type){
+            case INTERVIEW:
+                for(org.jsoup.nodes.Element li : jsDoc.getElementsByClass("list list_interview").first().getElementsByTag("li")){
+                    String link = li.getElementsByTag("a").first().attributes().toString().split("\"")[1];
 
-            links.put(link, type);
+                    if(!link.contains(InternetDataRouting.HTTP_PREFIX))
+                        link = InternetDataRouting.HTTP_PREFIX_TO_ADD + link;
+
+                    links.put(link, type);
+                }
+                break;
+            default:
+                for(org.jsoup.nodes.Element mainDiv : jsDoc.getElementsByClass(InternetDataRouting.NEWS_LINK_LIST_TAG)){
+                    Elements linkDivs = mainDiv.getElementsByTag(InternetDataRouting.GROUP_TAG_NAME);
+                    org.jsoup.nodes.Element linkDiv = linkDivs.first();
+                    Elements linkElements = linkDiv.getElementsByTag(InternetDataRouting.LINK_TAG);
+                    String linkAttr = linkElements.first().attributes().toString();
+                    String link = linkAttr.split(SPLIT_ELEMENT)[1];
+
+                    if(!link.contains(InternetDataRouting.HTTP_PREFIX))
+                        link = InternetDataRouting.HTTP_PREFIX_TO_ADD + link;
+
+                    links.put(link, type);
+                }
+                break;
         }
 
         return links;

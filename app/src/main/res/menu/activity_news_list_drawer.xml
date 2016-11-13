@@ -9,6 +9,9 @@
             android:id="@+id/nav_memuar"
             android:title="@string/nav_memuar_title"/>
         <item
+            android:id="@+id/nav_interview"
+            android:title="@string/nav_interview_title"/>
+        <item
             android:id="@+id/nav_tech"
             android:title="@string/nav_tech_title"/>
         <item

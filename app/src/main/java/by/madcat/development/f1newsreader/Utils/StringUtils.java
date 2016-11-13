@@ -5,6 +5,7 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription;
 public final class StringUtils {
     private static final String NEWS_PREFIX = "/news/";
     private static final String MEMUAR_PREFIX = "/memuar/";
+    private static final String INTERVIEW_PREFIX = "/interview/";
     private static final String TECH_PREFIX = "/tech/";
     private static final String HISTORY_PREFIX = "/Championship/";
     private static final String COLUMNS_PREFIX = "/columns/";
@@ -37,6 +38,9 @@ public final class StringUtils {
                 break;
             case AUTOSPORT:
                 prefix = AUTOSPORT_PREFIX;
+                break;
+            case INTERVIEW:
+                prefix = INTERVIEW_PREFIX;
                 break;
 
         }

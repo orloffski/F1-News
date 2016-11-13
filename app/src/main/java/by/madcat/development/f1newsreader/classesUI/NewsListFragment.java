@@ -65,27 +65,8 @@ public class NewsListFragment extends Fragment
         switch (id){
             case NEWS_LOADER:
                 String selection = News.COLUMN_NEWS_TYPE + "=?";
-                String[] selectionArgs = new String[]{};
-                switch (type){
-                    case NEWS:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.NEWS)};
-                        break;
-                    case MEMUAR:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.MEMUAR)};
-                        break;
-                    case TECH:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.TECH)};
-                        break;
-                    case HISTORY:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.HISTORY)};
-                        break;
-                    case COLUMNS:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.COLUMNS)};
-                        break;
-                    case AUTOSPORT:
-                        selectionArgs = new String[] {String.valueOf(NewsTypes.AUTOSPORT)};
-                        break;
-                }
+                String[] selectionArgs = new String[]{String.valueOf(type)};
+
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
             default:
                 return null;
@@ -193,7 +174,7 @@ public class NewsListFragment extends Fragment
         if(adapter.getCountNewsToLoad() == 0)
             message = getString(R.string.no_isset_news_to_load);
         else {
-            message = getResources().getQuantityString(R.plurals.news_plurals, adapter.getCountNewsToLoad(), adapter.getCountNewsToLoad());
+            message = getActivity().getResources().getQuantityString(R.plurals.news_plurals, adapter.getCountNewsToLoad(), adapter.getCountNewsToLoad());
         }
 
         return message;

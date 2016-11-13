@@ -77,6 +77,9 @@ public class NewsListActivity extends AppCompatActivity
             case R.id.nav_memuar:
                 openSectionNews(NewsTypes.MEMUAR);
                 break;
+            case R.id.nav_interview:
+                openSectionNews(NewsTypes.INTERVIEW);
+                break;
             case R.id.nav_tech:
                 openSectionNews(NewsTypes.TECH);
                 break;
@@ -123,6 +126,9 @@ public class NewsListActivity extends AppCompatActivity
                 break;
             case AUTOSPORT:
                 title = getString(R.string.nav_autosport_title);
+                break;
+            case INTERVIEW:
+                title = getString(R.string.nav_interview_title);
                 break;
         }
         setTitle(title);

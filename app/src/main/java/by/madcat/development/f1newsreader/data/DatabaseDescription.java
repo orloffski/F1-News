@@ -28,6 +28,7 @@ public class DatabaseDescription {
     public enum NewsTypes{
         NEWS,
         MEMUAR,
+        INTERVIEW,
         TECH,
         HISTORY,
         COLUMNS,
