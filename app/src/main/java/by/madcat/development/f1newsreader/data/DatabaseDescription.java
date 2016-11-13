@@ -30,6 +30,7 @@ public class DatabaseDescription {
         MEMUAR,
         TECH,
         HISTORY,
-        COLUMNS
+        COLUMNS,
+        AUTOSPORT
     }
 }

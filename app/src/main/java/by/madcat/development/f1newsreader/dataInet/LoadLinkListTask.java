@@ -38,6 +38,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
             loadNewsLinks(routeMap.get(NewsTypes.TECH), NewsTypes.TECH);
             loadNewsLinks(routeMap.get(NewsTypes.HISTORY), NewsTypes.HISTORY);
             loadNewsLinks(routeMap.get(NewsTypes.COLUMNS), NewsTypes.COLUMNS);
+            loadNewsLinks(routeMap.get(NewsTypes.AUTOSPORT), NewsTypes.AUTOSPORT);
         } catch (IOException e) {
             e.printStackTrace();
         }

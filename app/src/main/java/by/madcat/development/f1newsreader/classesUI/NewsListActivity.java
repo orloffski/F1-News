@@ -86,6 +86,9 @@ public class NewsListActivity extends AppCompatActivity
             case R.id.nav_columns:
                 openSectionNews(NewsTypes.COLUMNS);
                 break;
+            case R.id.nav_autosport:
+                openSectionNews(NewsTypes.AUTOSPORT);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,6 +120,9 @@ public class NewsListActivity extends AppCompatActivity
                 break;
             case COLUMNS:
                 title = getString(R.string.nav_columns_title);
+                break;
+            case AUTOSPORT:
+                title = getString(R.string.nav_autosport_title);
                 break;
         }
         setTitle(title);

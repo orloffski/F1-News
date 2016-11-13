@@ -6,8 +6,9 @@ public final class StringUtils {
     private static final String NEWS_PREFIX = "/news/";
     private static final String MEMUAR_PREFIX = "/memuar/";
     private static final String TECH_PREFIX = "/tech/";
-    private static final String HISTORY_PREFIX = "/history/";
+    private static final String HISTORY_PREFIX = "/Championship/";
     private static final String COLUMNS_PREFIX = "/columns/";
+    private static final String AUTOSPORT_PREFIX = "/autosport-";
 
     public static String getImageNameFromURL(String url){
         return url.split("/")[url.split("/").length - 1];
@@ -33,6 +34,9 @@ public final class StringUtils {
                 break;
             case COLUMNS:
                 prefix = COLUMNS_PREFIX;
+                break;
+            case AUTOSPORT:
+                prefix = AUTOSPORT_PREFIX;
                 break;
 
         }
