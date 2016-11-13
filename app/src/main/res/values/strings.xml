@@ -3,6 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_title">Формула 1 на F1news.ru - все новости Формулы 1 2016</string>
 
     <string name="nav_memuar_title">Статьи</string>
     <string name="nav_news_title">Новости</string>
