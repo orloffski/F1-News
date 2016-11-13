@@ -163,6 +163,7 @@ public class NewsListActivity extends AppCompatActivity
     public void loadMoreNews(){
         if(!isNetworkAvailable()) {
             Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+            fragment.loadCanceled();
         }else {
             dataRouting = InternetDataRouting.getInstance();
             loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), fragment);

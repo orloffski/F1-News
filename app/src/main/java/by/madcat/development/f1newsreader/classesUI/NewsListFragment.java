@@ -45,6 +45,11 @@ public class NewsListFragment extends Fragment
         Toast.makeText(context, createLoadMessage(), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void loadCanceled() {
+        materialRefreshLayout.finishRefresh();
+    }
+
     public interface NewsOpenListener{
         public void sectionItemOpen(NewsTypes type, int positionID);
         public void setSectionItemsCount(int count);
