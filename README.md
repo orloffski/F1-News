@@ -1,5 +1,9 @@
 <b>Приложение для получения новостей с сайта F1news.ru</b>
 
+#Preview
+
+![скрин меню](https://github.com/orloffski/F1News.ru-reader/master/screen/6.jpg)
+
 План реализации:
 
 1. создать скелет пользовательского интерфейса +
