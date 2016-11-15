@@ -2,7 +2,7 @@
 
 #Preview
 
-![jpg](https://github.com/orloffski/F1News.ru-reader/tree/master/screen/6.jpg)
+![скрин меню](https://github.com/orloffski/F1News.ru-reader/master/screen/6.jpg)
 
 План реализации:
 
