@@ -1,7 +1,8 @@
 <b>Приложение для получения новостей с сайта F1news.ru</b>
 
 #Preview
-(https://github.com/orloffski/F1News.ru-reader/tree/master/screen/6.jpg)
+
+![jpg](https://github.com/orloffski/F1News.ru-reader/tree/master/screen/6.jpg)
 
 План реализации:
 
