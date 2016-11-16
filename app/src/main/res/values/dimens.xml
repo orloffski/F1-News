@@ -6,7 +6,6 @@
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_news_radius">2dp</dimen>
     <dimen name="news_cover_height">60dp</dimen>
@@ -16,6 +15,6 @@
 
     <!-- Dimen for page -->
     <dimen name="title_text_size">14sp</dimen>
-    <dimen name="text_padding">5dp</dimen>
-    <dimen name="image_width">200dp</dimen>
+    <dimen name="text_padding">10dp</dimen>
+    <dimen name="image_width">220dp</dimen>
 </resources>

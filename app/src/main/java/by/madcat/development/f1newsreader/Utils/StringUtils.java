@@ -9,7 +9,7 @@ public final class StringUtils {
     private static final String TECH_PREFIX = "f1news.ru/tech/";
     private static final String HISTORY_PREFIX = "f1news.ru/Championship/";
     private static final String COLUMNS_PREFIX = "f1news.ru/columns/";
-    private static final String AUTOSPORT_PREFIX = "f1news.ru/autosport-";
+    private static final String AUTOSPORT_PREFIX = "/autosport-";
 
     public static String getImageNameFromURL(String url){
         return url.split("/")[url.split("/").length - 1];

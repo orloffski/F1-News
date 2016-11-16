@@ -35,12 +35,14 @@
                 android:id="@+id/content_date"
                 android:textStyle="bold"
                 android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"/>
+                android:paddingRight="@dimen/text_padding"
+                android:paddingTop="@dimen/text_padding"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/image_width"
-                android:id="@+id/content_image"/>
+                android:id="@+id/content_image"
+                android:paddingTop="@dimen/text_padding"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -48,7 +50,9 @@
                 android:id="@+id/content_text"
                 android:paddingLeft="@dimen/text_padding"
                 android:paddingRight="@dimen/text_padding"
-                android:paddingBottom="@dimen/text_padding"/>
+                android:paddingBottom="@dimen/text_padding"
+                android:paddingTop="@dimen/text_padding"
+                android:layout_gravity="fill"/>
         </LinearLayout>
     </ScrollView>
 
