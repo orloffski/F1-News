@@ -12,6 +12,7 @@
     <string name="nav_history_title">История</string>
     <string name="nav_columns_title">Авторские колонки</string>
     <string name="nav_autosport_title">Новости автоспорта</string>
+    <string name="nav_settings_title">Настройки</string>
 
     <string name="invalid_query_uri">Invalid query Uri:</string>
     <string name="invalid_delete_uri">Invalid delete Uri:</string>
@@ -21,6 +22,31 @@
     <string name="network_not_available">Подключение к сети отсутствует</string>
     <string name="news_loaded">Загружено</string>
     <string name="no_isset_news_to_load">Нет новостей для загрузки</string>
+    <string name="news_page_label">F1News.ru reader</string>
+
+    <string name="settings_title">Настройки</string>
+    <string name="hide_read_news_checkbox">Скрыть прочитанные новости</string>
+    <string name="hide_read_news_checkbox_summary">В списке новостей будут скрыты прочитанные новости</string>
+    <string name="refresh_interval_on">Включить автообновление</string>
+    <string name="refresh_interval">Частота автообновления</string>
+    <string name="category_hide_news">Внешний вид</string>
+    <string name="category_autorefresh">Автообновление новостей</string>
+    <string-array name="refresh_intervals_title">
+        <item>10 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>3 часа</item>
+        <item>6 часов</item>
+        <item>24 часа</item>
+    </string-array>
+    <string-array name="refresh_intervals">
+        <item>600000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>10800000</item>
+        <item>21600000</item>
+        <item>86400000</item>
+    </string-array>
 
     <plurals name="news_plurals">
         <item quantity="zero">нет новостей</item>

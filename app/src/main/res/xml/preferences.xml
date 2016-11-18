@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/category_hide_news">
+
+        <CheckBoxPreference
+            android:key="hide_read_news"
+            android:summary="@string/hide_read_news_checkbox_summary"
+            android:title="@string/hide_read_news_checkbox"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/category_autorefresh">
+
+        <CheckBoxPreference
+            android:key="refresh_interval_on"
+            android:title="@string/refresh_interval_on"/>
+        <ListPreference
+            android:key="refresh_interval"
+            android:entries="@array/refresh_intervals_title"
+            android:entryValues="@array/refresh_intervals"
+            android:title="@string/refresh_interval"/>
+    </PreferenceCategory>
+</PreferenceScreen>

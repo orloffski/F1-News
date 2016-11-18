@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".classesUI.NewsPageActivity">
+            android:name=".classesUI.NewsPageActivity"
+            android:label="@string/news_page_label">
         </activity>
 
         <provider

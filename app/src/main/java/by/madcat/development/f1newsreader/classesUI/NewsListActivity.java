@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -92,6 +93,9 @@ public class NewsListActivity extends AppCompatActivity
             case R.id.nav_autosport:
                 openSectionNews(NewsTypes.AUTOSPORT);
                 break;
+            case R.id.nav_settings:
+                openSettings();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -104,6 +108,15 @@ public class NewsListActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment).commit();
 
         setActivityTitle(type);
+    }
+
+    private void openSettings(){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_news_list, new PreferencesFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        setTitle(getString(R.string.settings_title));
     }
 
     private void setActivityTitle(NewsTypes type){
