@@ -2,11 +2,10 @@
 
 #Скриншоты приложения
 
-![скрин меню](https://cloud.githubusercontent.com/assets/12079742/20305374/4ad503d0-ab46-11e6-8a6a-8137ba89bdb4.png)
-
-![список новостей](https://cloud.githubusercontent.com/assets/12079742/20305460/cc79f3e6-ab46-11e6-88ce-7a382886f881.jpg)
-
-![вывод новости](https://cloud.githubusercontent.com/assets/12079742/20305525/fba0f1c4-ab46-11e6-9a72-eb81a02cec6b.jpg)
+![menu](https://cloud.githubusercontent.com/assets/12079742/20429425/96bf7d24-ad9f-11e6-86f2-efc82eb90aea.png)
+![list](https://cloud.githubusercontent.com/assets/12079742/20429442/ae91da50-ad9f-11e6-8589-7be7c7690877.png)
+![page](https://cloud.githubusercontent.com/assets/12079742/20429448/bf20a68a-ad9f-11e6-9b9b-e4c08b329133.png)
+![settings1](https://cloud.githubusercontent.com/assets/12079742/20429459/ce0a0c22-ad9f-11e6-963c-0d0f32e3ac05.png)
 
 ***
 #Описание
