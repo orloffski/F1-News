@@ -2,7 +2,7 @@
 
 #Скриншоты приложения
 
-![menu](https://cloud.githubusercontent.com/assets/12079742/20441034/bd103e9e-add3-11e6-8b37-b97c5656e979.png)
+![menu](https://cloud.githubusercontent.com/assets/12079742/20441352/27f71628-add5-11e6-8d70-018fbb10b310.png)
 ![list](https://cloud.githubusercontent.com/assets/12079742/20441048/cb00249c-add3-11e6-91b6-77e331cb0450.png)
 ![page](https://cloud.githubusercontent.com/assets/12079742/20441064/dc9953b8-add3-11e6-9a34-dad4546ee4db.png)
 ![settings1](https://cloud.githubusercontent.com/assets/12079742/20441075/e6d610f0-add3-11e6-84b8-0546f70b83cd.png)
