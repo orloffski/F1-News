@@ -1,6 +1,5 @@
 package by.madcat.development.f1newsreader.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -25,7 +24,8 @@ public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
                         News.COLUMN_NEWS_TYPE + " TEXT, " +
                         News.COLUMN_LINK_NEWS + " TEXT, " +
                         News.COLUMN_DATE + " TEXT, " +
-                        News.COLUMN_IMAGE + " TEXT);";
+                        News.COLUMN_IMAGE + " TEXT, " +
+                        News.COLUMN_READ_FLAG + " integer);";
 
         sqLiteDatabase.execSQL(CREATE_NEWS_TABLE);
     }

@@ -19,6 +19,7 @@ public class DatabaseDescription {
         public static final String COLUMN_LINK_NEWS = "news_link";
         public static final String COLUMN_DATE = "news_date";
         public static final String COLUMN_IMAGE = "news_image";
+        public static final String COLUMN_READ_FLAG = "news_read_flag";
 
         public static Uri buildNewsUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);

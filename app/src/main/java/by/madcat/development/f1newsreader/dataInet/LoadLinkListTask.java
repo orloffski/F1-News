@@ -1,7 +1,6 @@
 package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
-import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>> {
 

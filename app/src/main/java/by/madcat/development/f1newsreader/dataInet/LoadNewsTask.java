@@ -59,6 +59,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         contentValues.put(News.COLUMN_LINK_NEWS, strings.get(3));
         contentValues.put(News.COLUMN_DATE, strings.get(4));
         contentValues.put(News.COLUMN_IMAGE, strings.get(5));
+        contentValues.put(News.COLUMN_READ_FLAG, String.valueOf(0));
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
         sender.sendNewsLoadToAdapter();

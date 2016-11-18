@@ -113,7 +113,6 @@ public class NewsListActivity extends AppCompatActivity
     private void openSettings(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_news_list, new PreferencesFragment());
-        transaction.addToBackStack(null);
         transaction.commit();
 
         setTitle(getString(R.string.settings_title));

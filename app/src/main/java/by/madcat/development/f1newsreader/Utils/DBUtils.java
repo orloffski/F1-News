@@ -1,7 +1,9 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
@@ -23,5 +25,14 @@ public class DBUtils {
         cursor.close();
         helper.close();
         return true;
+    }
+
+    public static void setNewsRead(Uri newsUri, Context context){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseDescription.News.COLUMN_READ_FLAG, 1);
+        context.getContentResolver().update(newsUri, contentValues, null, null);
+
+        context.getContentResolver().notifyChange(newsUri, null);
     }
 }

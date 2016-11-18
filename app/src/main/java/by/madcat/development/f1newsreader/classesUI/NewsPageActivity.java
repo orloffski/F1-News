@@ -2,6 +2,7 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class NewsPageActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class NewsPageActivity extends AppCompatActivity {
     private int positionID;
     private int itemsCount;
     private ArrayList<String> links;
+    private Uri openNewsUri;
 
     private NewsPageAdapter pagerAdapter;
 
@@ -40,6 +43,27 @@ public class NewsPageActivity extends AppCompatActivity {
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setCurrentItem(positionID);
+
+        openNewsUri = News.buildNewsUri(Long.valueOf(links.get(positionID)));
+        DBUtils.setNewsRead(openNewsUri, getApplicationContext());
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                openNewsUri = News.buildNewsUri(Long.valueOf(links.get(position)));
+                DBUtils.setNewsRead(openNewsUri, getApplicationContext());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public static Intent getIntent(Context context, NewsTypes type, int positionID, int itemsCount, ArrayList<String> links){

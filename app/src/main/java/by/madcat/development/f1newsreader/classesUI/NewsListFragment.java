@@ -4,6 +4,7 @@ package by.madcat.development.f1newsreader.classesUI;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -70,8 +71,17 @@ public class NewsListFragment extends Fragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id){
             case NEWS_LOADER:
-                String selection = News.COLUMN_NEWS_TYPE + "=?";
-                String[] selectionArgs = new String[]{String.valueOf(type)};
+                String selection;
+                String[] selectionArgs;
+
+                if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_read_news", false)){
+                    selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
+                    selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
+                }else {
+                    selection = News.COLUMN_NEWS_TYPE + "=?";
+                    selectionArgs = new String[]{String.valueOf(type)};
+                }
+
 
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
             default:
