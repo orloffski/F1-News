@@ -36,8 +36,9 @@ public class NewsPageActivity extends AppCompatActivity {
         links = getIntent().getStringArrayListExtra(SECTION_LINKS);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, type, links);
+        pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, links);
         pager.setAdapter(pagerAdapter);
+        pager.setPageTransformer(true, new ZoomOutPageTransformer());
         pager.setCurrentItem(positionID);
     }
 
