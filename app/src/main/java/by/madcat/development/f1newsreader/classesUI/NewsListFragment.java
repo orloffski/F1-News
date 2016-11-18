@@ -197,4 +197,8 @@ public class NewsListFragment extends Fragment
 
         return message;
     }
+
+    public void updateNewsList(){
+        getLoaderManager().restartLoader(NEWS_LOADER, null, this);
+    }
 }
