@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
@@ -82,28 +83,10 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
         for(Map.Entry entry : links.entrySet()){
             if(StringUtils.checkNewsLinkInSection(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString())) &&
-                    checkIssetNewsLinkInDB(entry.getKey().toString()))
+                    DBUtils.checkIssetNewsLinkInDB(context, entry.getKey().toString()))
                 checkedLinks.put(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString()));
         }
 
         return checkedLinks;
-    }
-
-    private boolean checkIssetNewsLinkInDB(String link){
-        // check link to issue news in DB
-        String selection = News.COLUMN_LINK_NEWS + "=?";
-        String[] selectionArgs = new String[]{link};
-
-        F1NewsReaderDatabaseHelper helper = new F1NewsReaderDatabaseHelper(context);
-        Cursor cursor = helper.getWritableDatabase().query(News.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if(cursor.getCount() != 0) {
-            cursor.close();
-            helper.close();
-            return false;
-        }
-
-        cursor.close();
-        helper.close();
-        return true;
     }
 }
