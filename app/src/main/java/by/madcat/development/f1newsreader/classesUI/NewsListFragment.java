@@ -201,4 +201,8 @@ public class NewsListFragment extends Fragment
     public void updateNewsList(){
         getLoaderManager().restartLoader(NEWS_LOADER, null, this);
     }
+
+    public NewsTypes getNewsType(){
+        return this.type;
+    }
 }

@@ -25,12 +25,15 @@ public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsListFragment.NewsOpenListener{
 
+    public static final String LIST_FRAGMENT_NAME = "list_fragment";
+
     private int sectionItemsCount;
     private ArrayList<String> links;
 
     private InternetDataRouting dataRouting;
     private LoadLinkListTask loadLinksTask;
     private NewsListFragment fragment;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class NewsListActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null)
@@ -66,7 +69,8 @@ public class NewsListActivity extends AppCompatActivity
             super.onBackPressed();
         }
 
-        ((NewsListFragment)getSupportFragmentManager().findFragmentById(R.id.content_news_list)).updateNewsList();
+        NewsTypes type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
+        updateOnBackPressed(type);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -107,7 +111,7 @@ public class NewsListActivity extends AppCompatActivity
 
     private void openSectionNews(NewsTypes type){
         fragment = NewsListFragment.newInstance(type);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME).commit();
 
         setActivityTitle(type);
     }
@@ -183,6 +187,34 @@ public class NewsListActivity extends AppCompatActivity
             dataRouting = InternetDataRouting.getInstance();
             loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), fragment);
             loadLinksTask.execute();
+        }
+    }
+
+    private void updateOnBackPressed(NewsTypes type){
+        setActivityTitle(type);
+
+        switch (type){
+            case NEWS:
+                navigationView.setCheckedItem(R.id.nav_news);
+                break;
+            case MEMUAR:
+                navigationView.setCheckedItem(R.id.nav_memuar);
+                break;
+            case INTERVIEW:
+                navigationView.setCheckedItem(R.id.nav_interview);
+                break;
+            case TECH:
+                navigationView.setCheckedItem(R.id.nav_tech);
+                break;
+            case HISTORY:
+                navigationView.setCheckedItem(R.id.nav_history);
+                break;
+            case COLUMNS:
+                navigationView.setCheckedItem(R.id.nav_columns);
+                break;
+            case AUTOSPORT:
+                navigationView.setCheckedItem(R.id.nav_autosport);
+                break;
         }
     }
 }

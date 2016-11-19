@@ -16,6 +16,15 @@ public class PreferencesFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.preferences);
 
+        final CheckBoxPreference hide_read_news = (CheckBoxPreference)findPreference("hide_read_news");
+        hide_read_news.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((NewsListFragment)getActivity().getSupportFragmentManager().findFragmentByTag(NewsListActivity.LIST_FRAGMENT_NAME)).updateNewsList();
+                return false;
+            }
+        });
+
         final CheckBoxPreference refresh_interval_on = (CheckBoxPreference)findPreference("refresh_interval_on");
         final ListPreference refresh_interval = (ListPreference)findPreference("refresh_interval");
         refresh_interval.setEnabled(refresh_interval_on.isChecked());
