@@ -16,8 +16,6 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 public final class DocParseUtils {
-    private static final String SPLIT_ELEMENT = "\"";
-
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
@@ -66,34 +64,14 @@ public final class DocParseUtils {
         return image;
     }
 
-    public static Map<String, NewsTypes> getNewsLinkList(org.jsoup.nodes.Document jsDoc, NewsTypes type){
+    public static Map<String, NewsTypes> getNewsLinkList(org.jsoup.nodes.Document jsDoc){
         Map<String, NewsTypes> links = new HashMap<>();
 
-        switch (type){
-            case INTERVIEW:
-                for(org.jsoup.nodes.Element li : jsDoc.getElementsByClass("list list_interview").first().getElementsByTag("li")){
-                    String link = li.getElementsByTag("a").first().attributes().toString().split("\"")[1];
-
-                    if(!link.contains(InternetDataRouting.HTTP_PREFIX))
-                        link = InternetDataRouting.HTTP_PREFIX_TO_ADD + link;
-
-                    links.put(link, type);
-                }
-                break;
-            default:
-                for(org.jsoup.nodes.Element mainDiv : jsDoc.getElementsByClass(InternetDataRouting.NEWS_LINK_LIST_TAG)){
-                    Elements linkDivs = mainDiv.getElementsByTag(InternetDataRouting.GROUP_TAG_NAME);
-                    org.jsoup.nodes.Element linkDiv = linkDivs.first();
-                    Elements linkElements = linkDiv.getElementsByTag(InternetDataRouting.LINK_TAG);
-                    String linkAttr = linkElements.first().attributes().toString();
-                    String link = linkAttr.split(SPLIT_ELEMENT)[1];
-
-                    if(!link.contains(InternetDataRouting.HTTP_PREFIX))
-                        link = InternetDataRouting.HTTP_PREFIX_TO_ADD + link;
-
-                    links.put(link, type);
-                }
-                break;
+        for(org.jsoup.nodes.Element guid : jsDoc.getElementsByTag(InternetDataRouting.LINK_TAG)){
+            String link = guid.text();
+            NewsTypes type = StringUtils.getNewsSection(link);
+            if(type != null)
+                links.put(link, type);
         }
 
         return links;

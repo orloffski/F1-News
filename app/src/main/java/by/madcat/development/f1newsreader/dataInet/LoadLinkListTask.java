@@ -10,18 +10,17 @@ import java.util.Map;
 
 import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>> {
 
-    private HashMap<NewsTypes, String> routeMap;
+    private String routeMap;
     private Map<String, NewsTypes> links = null;
     private Context context;
     private NewsLoadSender sender;
 
-    public LoadLinkListTask(HashMap<NewsTypes, String> routeMap, Context context, NewsLoadSender sender){
+    public LoadLinkListTask(String routeMap, Context context, NewsLoadSender sender){
         this.routeMap = routeMap;
         this.context = context;
         this.sender = sender;
@@ -32,13 +31,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
         links = new HashMap<>();
 
         try {
-            loadNewsLinks(routeMap.get(NewsTypes.NEWS), NewsTypes.NEWS);
-            loadNewsLinks(routeMap.get(NewsTypes.MEMUAR), NewsTypes.MEMUAR);
-            loadNewsLinks(routeMap.get(NewsTypes.TECH), NewsTypes.TECH);
-            loadNewsLinks(routeMap.get(NewsTypes.HISTORY), NewsTypes.HISTORY);
-            loadNewsLinks(routeMap.get(NewsTypes.COLUMNS), NewsTypes.COLUMNS);
-            loadNewsLinks(routeMap.get(NewsTypes.AUTOSPORT), NewsTypes.AUTOSPORT);
-            loadNewsLinks(routeMap.get(NewsTypes.INTERVIEW), NewsTypes.INTERVIEW);
+            loadNewsLinks(routeMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,18 +63,17 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
         }
     }
 
-    private void loadNewsLinks(String urlString, NewsTypes type) throws IOException{
+    private void loadNewsLinks(String urlString) throws IOException{
 
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
-        links.putAll(DocParseUtils.getNewsLinkList(jsDoc, type));
+        links.putAll(DocParseUtils.getNewsLinkList(jsDoc));
     }
 
     private Map<String, NewsTypes> checkLinksMap(Map<String, NewsTypes> links){
         HashMap<String, NewsTypes> checkedLinks = new HashMap<>();
 
         for(Map.Entry entry : links.entrySet()){
-            if(StringUtils.checkNewsLinkInSection(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString())) &&
-                    DBUtils.checkIssetNewsLinkInDB(context, entry.getKey().toString()))
+            if(DBUtils.checkIssetNewsLinkInDB(context, entry.getKey().toString()))
                 checkedLinks.put(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString()));
         }
 
