@@ -71,7 +71,7 @@ public final class DocParseUtils {
 
         switch (type){
             case INTERVIEW:
-                for(org.jsoup.nodes.Element li : jsDoc.getElementsByClass("list list_interview").first().getElementsByTag("li")){
+                for(org.jsoup.nodes.Element li : jsDoc.getElementsByClass("list_interview").first().getElementsByTag("li")){
                     String link = li.getElementsByTag("a").first().attributes().toString().split("\"")[1];
 
                     if(!link.contains(InternetDataRouting.HTTP_PREFIX))
