@@ -8,6 +8,7 @@ import android.preference.Preference;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.LoadNewsService;
 
 public class PreferencesFragment extends PreferenceFragment {
     @Override
@@ -33,7 +34,26 @@ public class PreferencesFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 refresh_interval.setEnabled(refresh_interval_on.isChecked());
+
+                if(refresh_interval_on.isChecked()) {
+                    LoadNewsService.setServiceAlarm(getActivity(), true, Integer.parseInt(refresh_interval.getValue()));
+                }else{
+                    LoadNewsService.setServiceAlarm(getActivity(), false, 0);
+                }
+
                 return false;
+            }
+        });
+
+        refresh_interval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                String value = o.toString();
+                int timePause = Integer.parseInt(value);
+
+                LoadNewsService.setServiceAlarm(getActivity(), false, 0);
+                LoadNewsService.setServiceAlarm(getActivity(), true, timePause);
+                return true;
             }
         });
     }

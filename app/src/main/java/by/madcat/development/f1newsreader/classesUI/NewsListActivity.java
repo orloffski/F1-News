@@ -1,8 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
@@ -169,18 +168,8 @@ public class NewsListActivity extends AppCompatActivity
         this.links = links;
     }
 
-    public boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void loadMoreNews(){
-        if(!isNetworkAvailable()) {
+        if(!SystemUtils.isNetworkAvailableAndConnected(this)) {
             Toast.makeText(NewsListActivity.this, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
             fragment.loadCanceled();
         }else {
