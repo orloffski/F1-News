@@ -34,7 +34,7 @@
             android:exported="false">
         </provider>
 
-        <service android:name=".Services.LoadNewsService"/>
+        <service android:name=".Services.LoadNewsService" android:exported="true"/>
     </application>
 
 </manifest>

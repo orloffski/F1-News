@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -33,6 +34,10 @@ public class NewsListActivity extends AppCompatActivity
     private LoadLinkListTask loadLinksTask;
     private NewsListFragment fragment;
     private NavigationView navigationView;
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, NewsListActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
