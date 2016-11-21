@@ -22,7 +22,7 @@
 
 Имеется возможность включить обновление по расписанию с выбором интервала обновления. Реализовано через IntentService.
 
-Релиз доступен: https://github.com/orloffski/F1News.ru-reader/blob/master/apk_RC/F1NewsReader.RC.1.030.apk.test (необходимо удалить ".test" в конце имени файла)
+Релиз доступен: https://github.com/orloffski/F1News.ru-reader/releases
 ***
 #Планируемые доработки
 
