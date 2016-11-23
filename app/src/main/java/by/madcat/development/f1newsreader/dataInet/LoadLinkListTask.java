@@ -10,7 +10,7 @@ import java.util.Map;
 
 import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
+import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>> {
@@ -45,14 +45,14 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
         strings = checkLinksMap(strings);
 
-        sender.sendNewsCountToAdapter(0);
+        sender.sendNewsLoadCount(0);
 
         if(strings.size() == 0){
-            sender.loadComplete();
+            sender.loadCanceled();
             return;
         }
 
-        sender.sendNewsCountToAdapter(strings.size());
+        sender.loadStart();
 
         for(Map.Entry entry : strings.entrySet()){
             ArrayList<String> dataLink = new ArrayList<>();
@@ -61,6 +61,8 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
             new LoadNewsTask(dataLink, context, sender).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+
+        sender.sendNewsLoadCount(strings.size());
     }
 
     private void loadNewsLinks(String urlString) throws IOException{

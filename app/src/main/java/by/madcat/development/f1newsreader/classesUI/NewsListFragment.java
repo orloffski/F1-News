@@ -1,7 +1,10 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,50 +25,28 @@ import com.cjj.MaterialRefreshListener;
 
 import java.util.ArrayList;
 
+import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.UILoadNewsService;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 
 public class NewsListFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<Cursor>, NewsLoadSender{
-
-    @Override
-    public void sendNewsCountToAdapter(int count) {
-        adapter.setCountNewsToLoad(count);
-        adapter.setCountLoadedNews(0);
-    }
-
-    @Override
-    public void sendNewsLoadToAdapter() {
-        adapter.updateCountLoadedNews();
-    }
-
-    @Override
-    public void loadComplete() {
-        materialRefreshLayout.finishRefresh();
-        Toast.makeText(context, createLoadMessage(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void loadCanceled() {
-        materialRefreshLayout.finishRefresh();
-    }
-
-    public interface NewsOpenListener{
-        public void sectionItemOpen(NewsTypes type, int positionID);
-        public void setSectionItemsCount(int count);
-        public void setSectionNewsLinks(ArrayList<String> links);
-    }
-
+        implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String NEWS_TYPE = "news_type";
     private static final int NEWS_LOADER = 0;
+    public static final String SERVICE_DATA = "service_data";
+
+    public final static String BROADCAST_ACTION = "by.madcat.development.f1newsreader";
 
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
     private MaterialRefreshLayout materialRefreshLayout;
     private Context context;
+    BroadcastReceiver receiver;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -81,7 +62,6 @@ public class NewsListFragment extends Fragment
                     selection = News.COLUMN_NEWS_TYPE + "=?";
                     selectionArgs = new String[]{String.valueOf(type)};
                 }
-
 
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
             default:
@@ -135,6 +115,7 @@ public class NewsListFragment extends Fragment
     public void onDetach() {
         super.onDetach();
         newsOpenListener = null;
+        context.unregisterReceiver(receiver);
     }
 
     @Override
@@ -143,6 +124,19 @@ public class NewsListFragment extends Fragment
         if (getArguments() != null) {
             this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
         }
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int data = intent.getIntExtra(SERVICE_DATA, 0);
+
+                materialRefreshLayout.finishRefresh();
+                Toast.makeText(context, createLoadMessage(data), Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(BROADCAST_ACTION);
+        context.registerReceiver(receiver, filter);
     }
 
     @Override
@@ -154,7 +148,7 @@ public class NewsListFragment extends Fragment
         materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                ((NewsListActivity)getActivity()).loadMoreNews();
+                loadMoreNews();
             }
 
             @Override
@@ -171,7 +165,7 @@ public class NewsListFragment extends Fragment
             public void onClick(int positionID) {
                 newsOpenListener.sectionItemOpen(type, positionID);
             }
-        }, getActivity(), this);
+        }, getActivity());
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -186,13 +180,13 @@ public class NewsListFragment extends Fragment
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
     }
 
-    private String createLoadMessage(){
+    private String createLoadMessage(int count){
         String message;
 
-        if(adapter.getCountNewsToLoad() == 0)
+        if(count == 0)
             message = getString(R.string.no_isset_news_to_load);
         else {
-            message = context.getResources().getQuantityString(R.plurals.news_plurals, adapter.getCountNewsToLoad(), adapter.getCountNewsToLoad());
+            message = context.getResources().getQuantityString(R.plurals.news_plurals, count, count);
         }
 
         return message;
@@ -205,4 +199,15 @@ public class NewsListFragment extends Fragment
     public NewsTypes getNewsType(){
         return this.type;
     }
+
+    public void loadMoreNews(){
+        if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
+            Toast.makeText(context, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+            materialRefreshLayout.finishRefresh();
+        }else {
+            Intent intent = new Intent(context, UILoadNewsService.class);
+            context.startService(intent);
+        }
+    }
+
 }

@@ -34,7 +34,14 @@
             android:exported="false">
         </provider>
 
-        <service android:name=".Services.LoadNewsService" android:exported="true"/>
+        <service
+            android:name=".Services.BackgroundLoadNewsService"
+            android:exported="true"/>
+        <service
+            android:name=".Services.UILoadNewsService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

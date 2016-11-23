@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
-import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
+import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
@@ -62,7 +62,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, ArrayList<String>> {
         contentValues.put(News.COLUMN_READ_FLAG, String.valueOf(0));
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
-        sender.sendNewsLoadToAdapter();
+        sender.checkNewsLoadCount();
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {

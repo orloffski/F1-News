@@ -15,21 +15,21 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
-import by.madcat.development.f1newsreader.classesUI.NewsLoadSender;
+import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
 
-public class LoadNewsService extends IntentService implements NewsLoadSender{
-    private static final String TAG = "LoadNewsService";
+public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
+    private static final String TAG = "BackgroundLoadNewsService";
 
     private int countNewsToLoad;
-    private int countLoadedNews;
+    private int countNewsLoaded;
 
     public static Intent newIntent(Context context){
-        return new Intent(context, LoadNewsService.class);
+        return new Intent(context, BackgroundLoadNewsService.class);
     }
 
-    public LoadNewsService() {
+    public BackgroundLoadNewsService() {
         super(TAG);
     }
 
@@ -51,7 +51,7 @@ public class LoadNewsService extends IntentService implements NewsLoadSender{
     }
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
-        Intent i = LoadNewsService.newIntent(context);
+        Intent i = BackgroundLoadNewsService.newIntent(context);
         PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -93,22 +93,30 @@ public class LoadNewsService extends IntentService implements NewsLoadSender{
     }
 
     @Override
-    public void sendNewsCountToAdapter(int count) {
-        this.countNewsToLoad = count;
-        this.countLoadedNews = 0;
+    public void checkNewsLoadCount() {
+        this.countNewsLoaded += 1;
+
+        if(this.countNewsLoaded == this.countNewsToLoad)
+            loadComplete();
     }
 
     @Override
-    public void sendNewsLoadToAdapter() {
-        this.countLoadedNews +=1;
+    public void sendNewsLoadCount(int count) {
+        if(count == 0){
+            this.countNewsToLoad = 0;
+            this.countNewsLoaded = 0;
+        }else {
+            this.countNewsToLoad = count;
+        }
+    }
 
-        if(this.countNewsToLoad == this.countLoadedNews)
-            this.loadComplete();
+    @Override
+    public void loadStart() {
     }
 
     @Override
     public void loadComplete() {
-        if(countNewsToLoad == 0)
+        if(this.countNewsToLoad == 0)
             return;
 
         sendNotification(countNewsToLoad);
