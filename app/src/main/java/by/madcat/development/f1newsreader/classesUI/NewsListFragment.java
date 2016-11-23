@@ -13,15 +13,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.cjj.MaterialRefreshLayout;
-import com.cjj.MaterialRefreshListener;
 
 import java.util.ArrayList;
 
@@ -44,7 +42,7 @@ public class NewsListFragment extends Fragment
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
     private NewsListAdapter adapter;
-    private MaterialRefreshLayout materialRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     BroadcastReceiver receiver;
 
@@ -130,7 +128,7 @@ public class NewsListFragment extends Fragment
             public void onReceive(Context context, Intent intent) {
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
 
-                materialRefreshLayout.finishRefresh();
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(context, createLoadMessage(data), Toast.LENGTH_SHORT).show();
             }
         };
@@ -144,16 +142,11 @@ public class NewsListFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 
-        materialRefreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
-        materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+            public void onRefresh() {
                 loadMoreNews();
-            }
-
-            @Override
-            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-
             }
         });
 
@@ -203,8 +196,9 @@ public class NewsListFragment extends Fragment
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
             Toast.makeText(context, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
-            materialRefreshLayout.finishRefresh();
+            swipeRefreshLayout.setRefreshing(false);
         }else {
+            swipeRefreshLayout.setRefreshing(true);
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);
         }
