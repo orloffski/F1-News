@@ -21,12 +21,16 @@ public final class DocParseUtils {
         StringBuilder doc = new StringBuilder();
 
         URL url = new URL(urlString);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
+        InputStreamReader isReader = new InputStreamReader(url.openConnection().getInputStream());
+        BufferedReader reader = new BufferedReader(isReader);
 
         while((line = reader.readLine()) != null)
             doc.append(line);
 
         org.jsoup.nodes.Document jsDoc = Jsoup.parse(doc.toString(), "UTF-8");
+
+        reader.close();
+        isReader.close();
 
         return jsDoc;
     }
