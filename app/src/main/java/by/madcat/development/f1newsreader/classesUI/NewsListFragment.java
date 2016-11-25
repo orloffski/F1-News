@@ -126,9 +126,9 @@ public class NewsListFragment extends Fragment
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int data = intent.getIntExtra(SERVICE_DATA, 0);
-
                 swipeRefreshLayout.setRefreshing(false);
+
+                int data = intent.getIntExtra(SERVICE_DATA, 0);
                 Toast.makeText(context, createLoadMessage(data), Toast.LENGTH_SHORT).show();
             }
         };
@@ -195,10 +195,9 @@ public class NewsListFragment extends Fragment
 
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
-            Toast.makeText(context, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
             swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(context, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
         }else {
-            swipeRefreshLayout.setRefreshing(true);
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);
         }

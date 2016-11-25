@@ -36,14 +36,14 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
             e.printStackTrace();
         }
 
+        links = checkLinksMap(links);
+
         return links;
     }
 
     @Override
     protected void onPostExecute(Map<String, NewsTypes> strings) {
         super.onPostExecute(strings);
-
-        strings = checkLinksMap(strings);
 
         sender.sendNewsLoadCount(0);
 
@@ -52,6 +52,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
             return;
         }
 
+        sender.sendNewsLoadCount(strings.size());
         sender.loadStart();
 
         for(Map.Entry entry : strings.entrySet()){
@@ -61,8 +62,6 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
             new LoadNewsTask(dataLink, context, sender).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-
-        sender.sendNewsLoadCount(strings.size());
     }
 
     private void loadNewsLinks(String urlString) throws IOException{
@@ -73,12 +72,10 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
 
     private Map<String, NewsTypes> checkLinksMap(Map<String, NewsTypes> links){
         HashMap<String, NewsTypes> checkedLinks = new HashMap<>();
-
         for(Map.Entry entry : links.entrySet()){
             if(DBUtils.checkIssetNewsLinkInDB(context, entry.getKey().toString()))
                 checkedLinks.put(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString()));
         }
-
         return checkedLinks;
     }
 }
