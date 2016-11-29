@@ -35,11 +35,7 @@ public class PreferencesFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 refresh_interval.setEnabled(refresh_interval_on.isChecked());
 
-                int defaultValue;
-                if(refresh_interval.getValue() == null)
-                    defaultValue = 86400000;
-                else
-                    defaultValue = Integer.parseInt(refresh_interval.getValue());
+                int defaultValue = Integer.parseInt(refresh_interval.getValue());
 
                 if(refresh_interval_on.isChecked()) {
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);

@@ -15,6 +15,7 @@
             android:key="refresh_interval_on"
             android:title="@string/refresh_interval_on"/>
         <ListPreference
+            android:defaultValue="@string/refresh_intervals_default_value"
             android:key="refresh_interval"
             android:entries="@array/refresh_intervals_title"
             android:entryValues="@array/refresh_intervals"

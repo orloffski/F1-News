@@ -60,7 +60,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
             dataLink.add(entry.getKey().toString());
             dataLink.add(entry.getValue().toString());
 
-            new LoadNewsTask(dataLink, context, sender).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new LoadNewsTask(dataLink, context, sender).execute();
         }
     }
 

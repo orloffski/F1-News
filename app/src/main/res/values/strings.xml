@@ -47,6 +47,7 @@
         <item>21600000</item>
         <item>86400000</item>
     </string-array>
+    <string name="refresh_intervals_default_value">86400000</string>
 
     <plurals name="news_plurals">
         <item quantity="zero">нет новостей</item>
