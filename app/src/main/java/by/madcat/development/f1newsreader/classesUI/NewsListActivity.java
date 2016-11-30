@@ -11,8 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.google.android.gms.analytics.ExceptionReporter;
+
 import java.util.ArrayList;
 
+import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
@@ -20,7 +24,6 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsOpenListener {
-
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
 
     private int sectionItemsCount;
@@ -39,6 +42,8 @@ public class NewsListActivity extends AppCompatActivity
         setContentView(R.layout.activity_news_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setUncaughtExceptionHandler();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -193,5 +198,13 @@ public class NewsListActivity extends AppCompatActivity
                 navigationView.setCheckedItem(R.id.nav_autosport);
                 break;
         }
+    }
+
+    private void setUncaughtExceptionHandler(){
+        Thread.UncaughtExceptionHandler myHandler = new ExceptionReporter(
+                ((AnalyticsTrackers)getApplication()).getDefaultTracker(),
+                Thread.getDefaultUncaughtExceptionHandler(),
+                getApplicationContext());
+        Thread.setDefaultUncaughtExceptionHandler(myHandler);
     }
 }
