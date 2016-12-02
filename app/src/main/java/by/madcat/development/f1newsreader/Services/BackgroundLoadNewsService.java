@@ -42,7 +42,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
         loadLinksTask.execute();
 
-        return Service.START_NOT_STICKY;
+        return Service.START_REDELIVER_INTENT;
     }
 
     @Override
