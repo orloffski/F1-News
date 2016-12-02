@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,8 +15,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,8 @@ import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.UILoadNewsService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.adapters.NewsCardsAdapter;
+import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
 
@@ -41,7 +47,7 @@ public class NewsListFragment extends Fragment
 
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
-    private NewsListAdapter adapter;
+    private RecyclerView.Adapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     BroadcastReceiver receiver;
@@ -80,14 +86,18 @@ public class NewsListFragment extends Fragment
 
             data.moveToFirst();
         }
-        adapter.swapCursor(data);
+
+        if(adapter instanceof NewsListAdapter)((NewsListAdapter)adapter).swapCursor(data);
+        else if (adapter instanceof NewsCardsAdapter)((NewsCardsAdapter)adapter).swapCursor(data);
+
         newsOpenListener.setSectionItemsCount((data != null) ? data.getCount() : 0);
         newsOpenListener.setSectionNewsLinks(newsLink);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
+        if(adapter instanceof NewsListAdapter)((NewsListAdapter)adapter).swapCursor(null);
+        else if (adapter instanceof NewsCardsAdapter)((NewsCardsAdapter)adapter).swapCursor(null);
     }
 
     public NewsListFragment() {
@@ -141,6 +151,7 @@ public class NewsListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        String listStyle = PreferenceManager.getDefaultSharedPreferences(context).getString("list_news_view", "list");
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -153,12 +164,25 @@ public class NewsListFragment extends Fragment
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
-        adapter = new NewsListAdapter(new NewsListAdapter.ClickListener() {
-            @Override
-            public void onClick(int positionID) {
-                newsOpenListener.sectionItemOpen(type, positionID);
-            }
-        }, getActivity());
+        if(listStyle.equals("list")) {
+            adapter = new NewsListAdapter(new NewsListAdapter.ClickListener() {
+                @Override
+                public void onClick(int positionID) {
+                    newsOpenListener.sectionItemOpen(type, positionID);
+                }
+            }, getActivity());
+        }else{
+            adapter = new NewsCardsAdapter(new NewsCardsAdapter.ClickListener(){
+                @Override
+                public void onClick(int positionID) {
+                    newsOpenListener.sectionItemOpen(type, positionID);
+                }
+            }, getActivity());
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        }
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -203,4 +227,8 @@ public class NewsListFragment extends Fragment
         }
     }
 
+    private int dpToPx(int dp) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
 }

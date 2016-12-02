@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.classesUI;
+package by.madcat.development.f1newsreader.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,11 +14,10 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
-public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder>{
-
+public class NewsCardsAdapter extends RecyclerView.Adapter<NewsCardsAdapter.ViewHolder> {
     public interface ClickListener{
         void onClick(int positionID);
     }
@@ -27,15 +26,16 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     private final ClickListener clickListener;
     private Context context;
 
-    public NewsListAdapter(ClickListener clickListener, Context context){
-        this.clickListener = clickListener;
+    public NewsCardsAdapter(ClickListener clickListener, Context context) {
         this.context = context;
+        this.clickListener = clickListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_card, parent, false);
-        return new ViewHolder(view);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_cards_card, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
     @Override
@@ -49,18 +49,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         Glide.with(context).load(new File(pathToImage)).into(holder.thumbnail);
     }
 
-    @Override
-    public int getItemCount() {
-        return (cursor != null) ? cursor.getCount() : 0;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView title;
         public final ImageView thumbnail;
         private long rowID;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
+        public ViewHolder(View view) {
+            super(view);
             title = (TextView) itemView.findViewById(R.id.title);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
 
@@ -70,12 +65,16 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                     clickListener.onClick((int)rowID);
                 }
             });
-
         }
 
         public void setRowID(long id){
             this.rowID = id;
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        return (cursor != null) ? cursor.getCount() : 0;
     }
 
     public void swapCursor(Cursor cursor){

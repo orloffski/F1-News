@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">F1NewsReader</string>
 
+    <!-- navigation drawer titles -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="drawer_title">Формула 1 на F1news.ru - все новости Формулы 1 2016</string>
-
     <string name="nav_memuar_title">Статьи</string>
     <string name="nav_news_title">Новости</string>
     <string name="nav_tech_title">Техника</string>
@@ -14,16 +14,21 @@
     <string name="nav_autosport_title">Новости автоспорта</string>
     <string name="nav_settings_title">Настройки</string>
 
+    <!-- content provider strings -->
     <string name="invalid_query_uri">Invalid query Uri:</string>
     <string name="invalid_delete_uri">Invalid delete Uri:</string>
     <string name="invalid_insert_uri">Invalid insert Uri:</string>
     <string name="invalid_update_uri">Invalid update Uri:</string>
     <string name="insert_failed">Insert failed: s</string>
+
+    <!-- toast strings -->
     <string name="network_not_available">Подключение к сети отсутствует</string>
     <string name="news_loaded">Загружено</string>
     <string name="no_isset_news_to_load">Нет новостей для загрузки</string>
+
     <string name="news_page_label">F1News.ru reader</string>
 
+    <!-- preferences titles -->
     <string name="settings_title">Настройки</string>
     <string name="hide_read_news_checkbox">Скрыть прочитанные новости</string>
     <string name="hide_read_news_checkbox_summary">В списке новостей будут скрыты прочитанные новости</string>
@@ -31,6 +36,9 @@
     <string name="refresh_interval">Частота автообновления</string>
     <string name="category_hide_news">Внешний вид</string>
     <string name="category_autorefresh">Автообновление новостей</string>
+    <string name="list_news_view_title">Оформление списка новостей</string>
+
+    <!-- refresh interval of autoload news -->
     <string-array name="refresh_intervals_title">
         <item>10 минут</item>
         <item>30 минут</item>
@@ -49,6 +57,18 @@
     </string-array>
     <string name="refresh_intervals_default_value">86400000</string>
 
+    <!-- news list view preferences -->
+    <string-array name="list_news_view_title">
+        <item>Список</item>
+        <item>Карточки</item>
+    </string-array>
+    <string-array name="list_news_view">
+        <item>list</item>
+        <item>card</item>
+    </string-array>
+    <string name="list_news_view_default">list</string>
+
+    <!-- download news plurals -->
     <plurals name="news_plurals">
         <item quantity="zero">нет новостей</item>
         <item quantity="one">Загружена %1$d новость</item>

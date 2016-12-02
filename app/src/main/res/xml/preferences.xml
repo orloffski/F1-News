@@ -7,6 +7,12 @@
             android:key="hide_read_news"
             android:summary="@string/hide_read_news_checkbox_summary"
             android:title="@string/hide_read_news_checkbox"/>
+        <ListPreference
+            android:defaultValue="@string/list_news_view_default"
+            android:key="list_news_view"
+            android:entries="@array/list_news_view_title"
+            android:entryValues="@array/list_news_view"
+            android:title="@string/list_news_view_title"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/category_autorefresh">
