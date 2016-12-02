@@ -2,12 +2,14 @@
 
 #Скриншоты приложения
 
-![menu](https://cloud.githubusercontent.com/assets/12079742/20441352/27f71628-add5-11e6-8d70-018fbb10b310.png)
-![list](https://cloud.githubusercontent.com/assets/12079742/20441048/cb00249c-add3-11e6-91b6-77e331cb0450.png)
-![page](https://cloud.githubusercontent.com/assets/12079742/20441064/dc9953b8-add3-11e6-9a34-dad4546ee4db.png)
-![slide](https://cloud.githubusercontent.com/assets/12079742/20441607/45d8249c-add6-11e6-8792-bf0720320651.png)
-![settings1](https://cloud.githubusercontent.com/assets/12079742/20441075/e6d610f0-add3-11e6-84b8-0546f70b83cd.png)
-![settings2](https://cloud.githubusercontent.com/assets/12079742/20441080/efd3399e-add3-11e6-92aa-9e5140e94dcc.png)
+![navdrawer](https://cloud.githubusercontent.com/assets/12079742/20848933/5ac28c2a-b8e5-11e6-81e4-9449fda3019e.png)
+![cards_list](https://cloud.githubusercontent.com/assets/12079742/20848927/52e1d6d2-b8e5-11e6-8a4b-6d5d016b39ff.png)
+![list](https://cloud.githubusercontent.com/assets/12079742/20848930/57175f56-b8e5-11e6-8891-42387ed4a985.png)
+![news_page](https://cloud.githubusercontent.com/assets/12079742/20848938/5db547a6-b8e5-11e6-931d-ae0ba21bae16.png)
+![news_page_slide](https://cloud.githubusercontent.com/assets/12079742/20848943/61c34712-b8e5-11e6-99a7-59c53a62ced0.png)
+![settings_all](https://cloud.githubusercontent.com/assets/12079742/20848945/6504b01e-b8e5-11e6-8cc6-b0e6e8c9c9ca.png)
+![settings_autorefresh](https://cloud.githubusercontent.com/assets/12079742/20848950/67c6738c-b8e5-11e6-8d92-baed2e2bc454.png)
+![settings_list](https://cloud.githubusercontent.com/assets/12079742/20848953/6a92a324-b8e5-11e6-9ace-d580047b12fb.png)
 
 ***
 #Описание
