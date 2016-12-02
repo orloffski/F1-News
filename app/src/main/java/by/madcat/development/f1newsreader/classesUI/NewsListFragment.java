@@ -32,6 +32,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.UILoadNewsService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.NewsCardsAdapter;
+import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
 
@@ -47,7 +48,7 @@ public class NewsListFragment extends Fragment
 
     private NewsTypes type;
     private NewsOpenListener newsOpenListener;
-    private RecyclerView.Adapter adapter;
+    private NewsListAbstractAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     BroadcastReceiver receiver;
@@ -87,8 +88,7 @@ public class NewsListFragment extends Fragment
             data.moveToFirst();
         }
 
-        if(adapter instanceof NewsListAdapter)((NewsListAdapter)adapter).swapCursor(data);
-        else if (adapter instanceof NewsCardsAdapter)((NewsCardsAdapter)adapter).swapCursor(data);
+        adapter.swapCursor(data);
 
         newsOpenListener.setSectionItemsCount((data != null) ? data.getCount() : 0);
         newsOpenListener.setSectionNewsLinks(newsLink);
@@ -96,8 +96,7 @@ public class NewsListFragment extends Fragment
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        if(adapter instanceof NewsListAdapter)((NewsListAdapter)adapter).swapCursor(null);
-        else if (adapter instanceof NewsCardsAdapter)((NewsCardsAdapter)adapter).swapCursor(null);
+        adapter.swapCursor(null);
     }
 
     public NewsListFragment() {
