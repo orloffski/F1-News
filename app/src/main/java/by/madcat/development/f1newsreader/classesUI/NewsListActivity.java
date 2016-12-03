@@ -38,12 +38,11 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setUncaughtExceptionHandler();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        setUncaughtExceptionHandler();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

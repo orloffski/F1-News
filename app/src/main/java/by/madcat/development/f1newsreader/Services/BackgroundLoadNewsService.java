@@ -36,13 +36,13 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(!isNetworkAvailableAndConnected())
-            return Service.START_NOT_STICKY;
+            return Service.START_STICKY;
 
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
         LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
         loadLinksTask.execute();
 
-        return Service.START_REDELIVER_INTENT;
+        return Service.START_STICKY;
     }
 
     @Override

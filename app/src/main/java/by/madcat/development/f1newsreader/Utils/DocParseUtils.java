@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
@@ -40,7 +41,11 @@ public final class DocParseUtils {
     }
 
     public static String getNewsBody(org.jsoup.nodes.Document jsDoc){
-        return jsDoc.getElementsByClass(InternetDataRouting.NEWS_BODY_PARSE).text();
+        StringBuilder newsBody = new StringBuilder();
+        Element news_content = jsDoc.getElementsByClass(InternetDataRouting.NEWS_BODY_PARSE).first();
+        for(Element p : news_content.getElementsByTag(InternetDataRouting.NEWS_BODY_ELEMENTS_PARSE))
+            newsBody.append(p.toString());
+        return newsBody.toString();
     }
 
     public static String getNewsDate(org.jsoup.nodes.Document jsDoc){
