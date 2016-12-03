@@ -32,7 +32,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     private Uri newsUri;
 
     private TextView title;
-    private TextView text;
+    private HtmlTextView htmlTextView;
     private ImageView image;
     private TextView date;
 
@@ -61,7 +61,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         View view = inflater.inflate(R.layout.fragment_news_page, container, false);
 
         title = (TextView) view.findViewById(R.id.content_title);
-        text = (TextView) view.findViewById(R.id.content_text);
+        htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
         image = (ImageView) view.findViewById(R.id.content_image);
         date = (TextView) view.findViewById(R.id.content_date);
 
@@ -100,7 +100,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
 
             title.setText(data.getString(titleIndex));
-            text.setText(data.getString(newsIndex));
+            htmlTextView.setHtmlText(data.getString(newsIndex));
 
             if(!data.getString(imageIndex).isEmpty()) {
                 String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);

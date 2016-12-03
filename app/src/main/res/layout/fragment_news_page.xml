@@ -44,15 +44,11 @@
                 android:id="@+id/content_image"
                 android:paddingTop="@dimen/text_padding"/>
 
-            <TextView
-                android:layout_width="match_parent"
+            <by.madcat.development.f1newsreader.classesUI.HtmlTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/content_text"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
-                android:layout_gravity="fill"/>
+                android:id="@+id/html_text_view"
+                android:padding="@dimen/text_padding"/>
         </LinearLayout>
     </ScrollView>
 
