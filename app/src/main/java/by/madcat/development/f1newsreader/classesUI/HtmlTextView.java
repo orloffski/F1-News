@@ -2,10 +2,13 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 
 public class HtmlTextView extends LinearLayout{
 
@@ -28,11 +31,15 @@ public class HtmlTextView extends LinearLayout{
 
     private void initView(){
         linearLayout = (LinearLayout)findViewById(R.id.html_text_view);
+        linearLayout.setOrientation(VERTICAL);
     }
 
     public void setHtmlText(String htmlText){
-        TextView text = new TextView(getContext());
-        text.setText(htmlText);
-        linearLayout.addView(text);
+        ArrayList<View> views = DocParseUtils.getViews(htmlText, getContext());
+
+        if(linearLayout.getChildCount() == 0)
+            for(View view : views) {
+                linearLayout.addView(view);
+            }
     }
 }
