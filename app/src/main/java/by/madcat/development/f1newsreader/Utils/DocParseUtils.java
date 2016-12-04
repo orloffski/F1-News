@@ -1,11 +1,15 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
-import android.graphics.Path;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -22,10 +26,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 public final class DocParseUtils {
+    public static final String DOCUMENT_ENCODING = "UTF-8";
+
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
@@ -37,7 +44,7 @@ public final class DocParseUtils {
         while((line = reader.readLine()) != null)
             doc.append(line);
 
-        org.jsoup.nodes.Document jsDoc = Jsoup.parse(doc.toString(), "UTF-8");
+        org.jsoup.nodes.Document jsDoc = Jsoup.parse(doc.toString(), DOCUMENT_ENCODING);
 
         reader.close();
         isReader.close();
@@ -52,7 +59,7 @@ public final class DocParseUtils {
     public static String getNewsBody(org.jsoup.nodes.Document jsDoc){
         StringBuilder newsBody = new StringBuilder();
         Element news_content = jsDoc.getElementsByClass(InternetDataRouting.NEWS_BODY_PARSE).first();
-        for(Element p : news_content.getElementsByTag(InternetDataRouting.NEWS_BODY_ELEMENTS_PARSE))
+        for(Element p : news_content.children())
             newsBody.append(p.toString());
         return newsBody.toString();
     }
@@ -99,41 +106,55 @@ public final class DocParseUtils {
         ArrayList<View> views = new ArrayList<>();
 
 
-        org.jsoup.nodes.Document jsDoc = Jsoup.parse(htmlText.toString(), "UTF-8");
+        org.jsoup.nodes.Document jsDoc = Jsoup.parse(htmlText.toString(), DOCUMENT_ENCODING);
+        Element body = jsDoc.getElementsByTag(InternetDataRouting.NEWS_BODY_ROOT_ELEMENT).first();
+        for(Element child : body.children()){
 
-        for(Element p : jsDoc.getElementsByTag(InternetDataRouting.NEWS_BODY_ELEMENTS_PARSE)){
-            String modifiedText = "";
-            String modifierTag = "";
-            int lengthOfChildrens = 0;
-
-            if(p.children().size() != 0){
-                for(Element children : p.children()){
-                    modifiedText = children.text();
-                    modifierTag = children.tagName();
-
-                    // пока все ссылки выброшены - в дальнейшем есть планы сделать переход на новость по ссылке
-                    if(modifierTag.equals("a"))
-                        break;
-
-                    // при повторении нескольких модификаторов между парой кусков текста есть пробел
-                    if(lengthOfChildrens != 0)
-                        lengthOfChildrens += 1;
-
-                    lengthOfChildrens += modifiedText.length();
-
-                    // переходы на новую строку в блоке <p> - имба PHP-прогеров портала... рисунки в новости пока не реализованы
-                    if(!modifierTag.equals("br") && !modifierTag.equals("img")) {
-                        View headerText = createView(modifiedText, modifierTag, "TextView", context);
-                        views.add(headerText);
-                    }
-                }
+            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_TABLE_ELEMENTS_PARSE)){
+                View table = createView(child.toString(), "", "TableView", context);
+                views.add(table);
             }
 
-            // пустые абзацы выбрасываем - PHP-программисты такие программисты
-            if(p.text().length() != 0) {
-                View text = createView(p.text().toString().substring(lengthOfChildrens),
-                        "", "TextView", context);
-                views.add(text);
+            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_H3_ELEMENTS_PARSE)){
+                View table = createView(child.text(), InternetDataRouting.NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context);
+                views.add(table);
+            }
+
+            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_TEXT_ELEMENTS_PARSE)) {
+                String modifiedText = "";
+                String modifierTag = "";
+                int lengthOfChildrens = 0;
+
+                if (child.children().size() != 0) {
+                    for (Element children : child.children()) {
+                        modifiedText = children.text();
+                        modifierTag = children.tagName();
+
+                        // пока все ссылки выброшены
+                        if (modifierTag.equals("a"))
+                            break;
+
+                        // при повторении нескольких модификаторов между парой кусков текста есть пробел
+                        if (lengthOfChildrens != 0)
+                            lengthOfChildrens += 1;
+
+                        lengthOfChildrens += modifiedText.length();
+
+                        // переходы на новую строку в блоке <p>
+                        if (!modifierTag.equals(InternetDataRouting.NEWS_BODY_BR_ELEMENT)
+                                && !modifierTag.equals(InternetDataRouting.NEWS_BODY_IMG_ELEMENT)) {
+                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context);
+                            views.add(headerText);
+                        }
+                    }
+                }
+
+                // пустые абзацы выбрасываем
+                if (child.text().length() != 0) {
+                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
+                            "", "TextView", context);
+                    views.add(text);
+                }
             }
         }
 
@@ -147,7 +168,9 @@ public final class DocParseUtils {
     }
 
     private static View createView(String text, String modifier, String viewType, Context context){
-        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
         View view = null;
 
         switch (viewType){
@@ -157,16 +180,70 @@ public final class DocParseUtils {
                 view.setPadding(0, 5, 0, 0);
                 view.setLayoutParams(textViewLayoutParams);
                 break;
+            case "TableView":
+                view = new TableLayout(context);
+                view.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT));
+
+                view = completeTheTable(view, text, context);
+
+                break;
         }
 
         switch (modifier){
-            case "b": case "span":  // на портале стиль жирного текста ради стиля - верстальщики как и PHP-прогеры)))
+            case "b": case "span":  // на портале стиль жирного текста ради стиля
                 ((TextView)view).setTypeface(null, Typeface.BOLD);
                 break;
             case "i":
                 ((TextView)view).setTypeface(null, Typeface.ITALIC);
+                break;
+            case "h3":
+                ((TextView)view).setAllCaps(true);
+                ((TextView)view).setTypeface(null, Typeface.BOLD);
+                break;
         }
 
         return view;
+    }
+
+    private static View completeTheTable(View tableView, String table, Context context){
+        org.jsoup.nodes.Document jsDoc = Jsoup.parse(table.toString(), DOCUMENT_ENCODING);
+        Element body = jsDoc.getElementsByTag(InternetDataRouting.NEWS_BODY_TABLE_TBODY_PARSE).first();
+        String modifier = "";
+        int counter = 1;
+
+        for(Element childRows: body.children()){
+            counter++;
+
+            if(childRows.attr("class").equals("firstLine")) {
+                modifier = "b";
+            }else{
+                modifier = "";
+            }
+
+            TableRow row = new TableRow(context);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            row.setMinimumHeight(20);
+
+            for(Element childColumns : childRows.children()){
+                View columnText = new TextView(context);
+                ((TextView)columnText).setText(childColumns.text());
+                ((TextView)columnText).setTextSize(11);
+                if(modifier.equals("b"))
+                    ((TextView)columnText).setTypeface(null, Typeface.BOLD);
+
+                ((TextView)columnText).setPadding(2,0,15,0);
+
+                row.addView(columnText);
+            }
+
+            if(counter%2 == 0)
+                row.setBackgroundColor(Color.rgb(233,233,233));
+
+            ((TableLayout)tableView).addView(row);
+        }
+
+        return tableView;
     }
 }
