@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 
+import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
@@ -24,6 +25,7 @@ public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<ViewH
         cursor.moveToPosition(position);
         holder.setRowID(position);
         holder.title.setText(cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_TITLE)));
+        holder.date.setText(DateUtils.untransformDateTime(cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_DATE))));
 
         String pathToImage = context.getFilesDir() +
                 "/" + LoadNewsTask.IMAGE_PATH + "/" + cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_IMAGE));

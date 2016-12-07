@@ -21,7 +21,16 @@
                 android:layout_height="@dimen/image_view_layout_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:paddingBottom="5dp"/>
+
+            <TextView
+                style="@style/DateTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:id="@+id/newsDate" />
 
             <TextView
                 android:id="@+id/title"

@@ -9,6 +9,7 @@ import by.madcat.development.f1newsreader.R;
 
 public class ViewHolder extends RecyclerView.ViewHolder{
     public final TextView title;
+    public final TextView date;
     public final ImageView thumbnail;
     private long rowID;
     private NewsListAbstractAdapter.ClickListener clickListener;
@@ -17,6 +18,7 @@ public class ViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         this.clickListener = clickListener;
 
+        date = (TextView) itemView.findViewById(R.id.newsDate);
         title = (TextView) itemView.findViewById(R.id.title);
         thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
 
