@@ -4,18 +4,17 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
 
@@ -34,20 +33,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if(!isNetworkAvailableAndConnected())
-            return Service.START_STICKY;
-
-        InternetDataRouting dataRouting = InternetDataRouting.getInstance();
-        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
-        loadLinksTask.execute();
-
-        return Service.START_STICKY;
-    }
-
-    @Override
     protected void onHandleIntent(Intent intent) {
-
+        runLoad();
     }
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
@@ -125,5 +112,14 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     @Override
     public void loadCanceled() {
 
+    }
+
+    private void runLoad(){
+        if(!isNetworkAvailableAndConnected())
+            return;
+
+        InternetDataRouting dataRouting = InternetDataRouting.getInstance();
+        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
+        loadLinksTask.execute();
     }
 }
