@@ -3,8 +3,6 @@ package by.madcat.development.f1newsreader.Utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -26,12 +24,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
+    public static final String LINK_TAG = "guid";
+    public static final String NEWS_TITLE_PARSE = "post_title";
+    public static final String NEWS_BODY_PARSE = "post_content";
+    public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
+    public static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
+    public static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
+    public static final String NEWS_BODY_TABLE_TBODY_PARSE = "tbody";
+    public static final String NEWS_BODY_ROOT_ELEMENT = "body";
+    public static final String NEWS_BODY_BR_ELEMENT = "br";
+    public static final String NEWS_BODY_IMG_ELEMENT = "img";
+    public static final String NEWS_DATE_PARSE = "post_date";
+    public static final String NEWS_IMAGE_DIV_PARSE = "post_thumbnail";
+    public static final String NEWS_IMAGE_TAG_PARSE = "img";
+    public static final String NEWS_IMAGE_LINK_ATTR_PARSE = "src";
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
@@ -53,12 +63,12 @@ public final class DocParseUtils {
     }
 
     public static String getNewsTitle(org.jsoup.nodes.Document jsDoc){
-        return jsDoc.getElementsByClass(InternetDataRouting.NEWS_TITLE_PARSE).text();
+        return jsDoc.getElementsByClass(NEWS_TITLE_PARSE).text();
     }
 
     public static String getNewsBody(org.jsoup.nodes.Document jsDoc){
         StringBuilder newsBody = new StringBuilder();
-        Element news_content = jsDoc.getElementsByClass(InternetDataRouting.NEWS_BODY_PARSE).first();
+        Element news_content = jsDoc.getElementsByClass(NEWS_BODY_PARSE).first();
         for(Element p : news_content.children())
             newsBody.append(p.toString());
         return newsBody.toString();
@@ -66,7 +76,7 @@ public final class DocParseUtils {
 
     public static String getNewsDate(org.jsoup.nodes.Document jsDoc){
         String dateTime = "";
-        Elements news_date = jsDoc.getElementsByClass(InternetDataRouting.NEWS_DATE_PARSE);
+        Elements news_date = jsDoc.getElementsByClass(NEWS_DATE_PARSE);
         if(news_date.isEmpty()){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
             dateTime = simpleDateFormat.format(new Date());
@@ -80,10 +90,10 @@ public final class DocParseUtils {
     public static String getNewsImage(org.jsoup.nodes.Document jsDoc){
         String image = "";
 
-        Elements news_image_div = jsDoc.getElementsByClass(InternetDataRouting.NEWS_IMAGE_DIV_PARSE);
+        Elements news_image_div = jsDoc.getElementsByClass(NEWS_IMAGE_DIV_PARSE);
         if(news_image_div.first() != null) {
-            Elements linkDivs = news_image_div.first().getElementsByTag(InternetDataRouting.NEWS_IMAGE_TAG_PARSE);
-            image = linkDivs.first().attr(InternetDataRouting.NEWS_IMAGE_LINK_ATTR_PARSE);
+            Elements linkDivs = news_image_div.first().getElementsByTag(NEWS_IMAGE_TAG_PARSE);
+            image = linkDivs.first().attr(NEWS_IMAGE_LINK_ATTR_PARSE);
         }
 
         return image;
@@ -92,7 +102,7 @@ public final class DocParseUtils {
     public static Map<String, NewsTypes> getNewsLinkList(org.jsoup.nodes.Document jsDoc){
         Map<String, NewsTypes> links = new HashMap<>();
 
-        for(org.jsoup.nodes.Element guid : jsDoc.getElementsByTag(InternetDataRouting.LINK_TAG)){
+        for(org.jsoup.nodes.Element guid : jsDoc.getElementsByTag(LINK_TAG)){
             String link = guid.text();
             NewsTypes type = StringUtils.getNewsSection(link);
             if(type != null)
@@ -107,20 +117,20 @@ public final class DocParseUtils {
 
 
         org.jsoup.nodes.Document jsDoc = Jsoup.parse(htmlText.toString(), DOCUMENT_ENCODING);
-        Element body = jsDoc.getElementsByTag(InternetDataRouting.NEWS_BODY_ROOT_ELEMENT).first();
+        Element body = jsDoc.getElementsByTag(NEWS_BODY_ROOT_ELEMENT).first();
         for(Element child : body.children()){
 
-            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_TABLE_ELEMENTS_PARSE)){
+            if(child.tagName().equals(NEWS_BODY_TABLE_ELEMENTS_PARSE)){
                 View table = createView(child.toString(), "", "TableView", context);
                 views.add(table);
             }
 
-            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_H3_ELEMENTS_PARSE)){
-                View table = createView(child.text(), InternetDataRouting.NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context);
+            if(child.tagName().equals(NEWS_BODY_H3_ELEMENTS_PARSE)){
+                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context);
                 views.add(table);
             }
 
-            if(child.tagName().equals(InternetDataRouting.NEWS_BODY_TEXT_ELEMENTS_PARSE)) {
+            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE)) {
                 String modifiedText = "";
                 String modifierTag = "";
                 int lengthOfChildrens = 0;
@@ -141,8 +151,8 @@ public final class DocParseUtils {
                         lengthOfChildrens += modifiedText.length();
 
                         // переходы на новую строку в блоке <p>
-                        if (!modifierTag.equals(InternetDataRouting.NEWS_BODY_BR_ELEMENT)
-                                && !modifierTag.equals(InternetDataRouting.NEWS_BODY_IMG_ELEMENT)) {
+                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT)
+                                && !modifierTag.equals(NEWS_BODY_IMG_ELEMENT)) {
                             View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context);
                             views.add(headerText);
                         }
@@ -177,7 +187,6 @@ public final class DocParseUtils {
             case "TextView":
                 view = new TextView(context);
                 ((TextView)view).setText(text);
-                view.setPadding(0, 5, 0, 0);
                 view.setLayoutParams(textViewLayoutParams);
                 break;
             case "TableView":
@@ -203,12 +212,14 @@ public final class DocParseUtils {
                 break;
         }
 
+        view.setPadding(0, 5, 0, 0);
+
         return view;
     }
 
     private static View completeTheTable(View tableView, String table, Context context){
         org.jsoup.nodes.Document jsDoc = Jsoup.parse(table.toString(), DOCUMENT_ENCODING);
-        Element body = jsDoc.getElementsByTag(InternetDataRouting.NEWS_BODY_TABLE_TBODY_PARSE).first();
+        Element body = jsDoc.getElementsByTag(NEWS_BODY_TABLE_TBODY_PARSE).first();
         String modifier = "";
         int counter = 1;
 
@@ -233,7 +244,7 @@ public final class DocParseUtils {
                 if(modifier.equals("b"))
                     ((TextView)columnText).setTypeface(null, Typeface.BOLD);
 
-                ((TextView)columnText).setPadding(2,0,15,0);
+                columnText.setPadding(0,0,15,0);
 
                 row.addView(columnText);
             }
