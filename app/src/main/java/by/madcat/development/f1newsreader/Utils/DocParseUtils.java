@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -172,7 +171,6 @@ public final class DocParseUtils {
 
                         if(modifierTag.equals("img")) {
                             String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                            Log.d("payment", image);
                             View bodyImage = createView(image, modifierTag, "ImageView", context);
                             views.add(bodyImage);
                         }
@@ -183,8 +181,8 @@ public final class DocParseUtils {
 
                         lengthOfChildrens += modifiedText.length();
 
-                        // переходы на новую строку в блоке <p> не обрабатываются
-                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT)) {
+                        // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
+                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
                             View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context);
                             views.add(headerText);
                         }
@@ -220,6 +218,7 @@ public final class DocParseUtils {
                 view = new TextView(context);
                 ((TextView)view).setText(text);
                 view.setLayoutParams(textViewLayoutParams);
+                view.setPadding(0, 5, 0, 0);
                 break;
             case "TableView":
                 view = new TableLayout(context);
@@ -227,6 +226,7 @@ public final class DocParseUtils {
                     TableLayout.LayoutParams.WRAP_CONTENT));
 
                 view = completeTheTable(view, text, context);
+                view.setPadding(0, 10, 0, 0);
                 break;
             case "ImageView":
                 view = new ImageView(context);
@@ -235,6 +235,7 @@ public final class DocParseUtils {
                 String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;
                 File imageFile = new File(pathToImage);
                 ((ImageView)view).setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+                view.setPadding(0, 10, 0, 0);
                 break;
         }
 
@@ -250,8 +251,6 @@ public final class DocParseUtils {
                 ((TextView)view).setTypeface(null, Typeface.BOLD);
                 break;
         }
-
-        view.setPadding(0, 5, 0, 0);
 
         return view;
     }
