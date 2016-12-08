@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -160,6 +161,8 @@ public class NewsListFragment extends Fragment
             }
         });
 
+        checkServiceRun(UILoadNewsService.class);
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
@@ -194,6 +197,14 @@ public class NewsListFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
+    }
+
+    private void checkServiceRun(Class<?> serviceClass){
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(50))
+            if(serviceClass.getName().equals(service.service.getClassName())) {
+                this.swipeRefreshLayout.setRefreshing(true);
+            }
     }
 
     private String createLoadMessage(int count){
