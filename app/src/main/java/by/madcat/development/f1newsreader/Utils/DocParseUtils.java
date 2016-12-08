@@ -1,11 +1,13 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,6 +19,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -27,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
@@ -166,15 +170,21 @@ public final class DocParseUtils {
                         if (modifierTag.equals("a"))
                             break;
 
+                        if(modifierTag.equals("img")) {
+                            String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
+                            Log.d("payment", image);
+                            View bodyImage = createView(image, modifierTag, "ImageView", context);
+                            views.add(bodyImage);
+                        }
+
                         // при повторении нескольких модификаторов между парой кусков текста есть пробел
                         if (lengthOfChildrens != 0)
                             lengthOfChildrens += 1;
 
                         lengthOfChildrens += modifiedText.length();
 
-                        // переходы на новую строку в блоке <p>
-                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT)
-                                && !modifierTag.equals(NEWS_BODY_IMG_ELEMENT)) {
+                        // переходы на новую строку в блоке <p> не обрабатываются
+                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT)) {
                             View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context);
                             views.add(headerText);
                         }
@@ -217,7 +227,14 @@ public final class DocParseUtils {
                     TableLayout.LayoutParams.WRAP_CONTENT));
 
                 view = completeTheTable(view, text, context);
-
+                break;
+            case "ImageView":
+                view = new ImageView(context);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;
+                File imageFile = new File(pathToImage);
+                ((ImageView)view).setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
                 break;
         }
 
