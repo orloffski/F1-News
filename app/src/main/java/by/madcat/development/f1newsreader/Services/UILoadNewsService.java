@@ -13,6 +13,7 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
     private int countNewsToLoad;
     private int countNewsLoaded;
     private Intent intent;
+    private static boolean isServiceRun;
 
     public UILoadNewsService() {
         this.intent = new Intent(NewsListFragment.BROADCAST_ACTION);
@@ -25,6 +26,7 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        this.isServiceRun = true;
         
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
         LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
@@ -57,11 +59,13 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
 
     @Override
     public void loadComplete() {
+        this.isServiceRun = false;
         sendNotification(countNewsToLoad);
     }
 
     @Override
     public void loadCanceled() {
+        this.isServiceRun = false;
         sendNotification(0);
     }
 
@@ -69,5 +73,9 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
         this.intent = new Intent(NewsListFragment.BROADCAST_ACTION);
         this.intent.putExtra(NewsListFragment.SERVICE_DATA, count);
         sendBroadcast(intent);
+    }
+
+    public static boolean isServiceRun() {
+        return isServiceRun;
     }
 }

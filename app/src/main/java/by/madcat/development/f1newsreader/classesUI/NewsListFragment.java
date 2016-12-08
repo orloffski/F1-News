@@ -20,6 +20,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -161,7 +162,7 @@ public class NewsListFragment extends Fragment
             }
         });
 
-        checkServiceRun(UILoadNewsService.class);
+        checkServiceRun();
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
@@ -199,12 +200,9 @@ public class NewsListFragment extends Fragment
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
     }
 
-    private void checkServiceRun(Class<?> serviceClass){
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(50))
-            if(serviceClass.getName().equals(service.service.getClassName())) {
-                this.swipeRefreshLayout.setRefreshing(true);
-            }
+    private void checkServiceRun(){
+        if(UILoadNewsService.isServiceRun())
+            this.swipeRefreshLayout.setRefreshing(true);
     }
 
     private String createLoadMessage(int count){
