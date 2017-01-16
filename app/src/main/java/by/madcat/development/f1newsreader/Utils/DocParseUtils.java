@@ -128,7 +128,10 @@ public final class DocParseUtils {
         Map<String, NewsTypes> links = new HashMap<>();
 
         for(Element guid : jsDoc.getElementsByTag(LINK_TAG)){
-            String link = guid.text().replace("http", "https");
+            String link = guid.text();
+            if(!link.contains("https"))
+                link = link.replace("http", "https");
+
             NewsTypes type = StringUtils.getNewsSection(link);
             if(type != null)
                 links.put(link, type);
