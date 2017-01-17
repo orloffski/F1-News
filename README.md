@@ -31,6 +31,7 @@ Fragments, RecyclerView, CardView, ViewPager, Google Analytics, Animations, Cont
 
 ***
 <b>Актуальный релиз</b>
+
 F1 News reader v.1.1.3 (https://github.com/orloffski/F1News.ru-reader/releases/tag/1.1.3)
 
 ***
