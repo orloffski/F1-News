@@ -115,6 +115,8 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             }
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
+
+            ((NewsPageActivity)getActivity()).setNewsTitle(newsUri, data.getString(titleIndex));
         }
     }
 

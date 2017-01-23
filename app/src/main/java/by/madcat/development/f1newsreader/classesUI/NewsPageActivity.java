@@ -75,4 +75,9 @@ public class NewsPageActivity extends AppCompatActivity {
         intent.putStringArrayListExtra(SECTION_LINKS, links);
         return intent;
     }
+
+    public void setNewsTitle(Uri newsUri, String title){
+        if(newsUri.equals(openNewsUri))
+            setTitle(title);
+    }
 }
