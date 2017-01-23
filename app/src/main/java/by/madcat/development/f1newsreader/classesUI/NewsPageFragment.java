@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -116,7 +115,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
 
-            ((NewsPageActivity)getActivity()).setNewsTitle(newsUri, data.getString(titleIndex));
+            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(titleIndex));
         }
     }
 

@@ -79,4 +79,6 @@
     </plurals>
 
     <string name="get_new_news">Получены новости портала F1News.ru</string>
+
+    <string name="share_news_title">Поделиться</string>
 </resources>

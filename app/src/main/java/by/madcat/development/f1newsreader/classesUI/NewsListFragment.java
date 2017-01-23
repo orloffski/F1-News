@@ -1,7 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,13 +76,16 @@ public class NewsListFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ArrayList<String> newsLink = new ArrayList<>();
+        ArrayList<String> newsIDs = new ArrayList<>();
+        ArrayList<String> newsLinks = new ArrayList<>();
 
         if(data != null && data.moveToFirst()){
             int idIndex = data.getColumnIndex(News._ID);
+            int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
 
             do {
-                newsLink.add(data.getString(idIndex));
+                newsIDs.add(data.getString(idIndex));
+                newsLinks.add(data.getString(linkIndex));
             }while(data.moveToNext());
 
             data.moveToFirst();
@@ -93,7 +94,7 @@ public class NewsListFragment extends Fragment
         adapter.swapCursor(data);
 
         newsOpenListener.setSectionItemsCount((data != null) ? data.getCount() : 0);
-        newsOpenListener.setSectionNewsLinks(newsLink);
+        newsOpenListener.setSectionNewsLinks(newsIDs, newsLinks);
     }
 
     @Override

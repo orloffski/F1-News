@@ -27,7 +27,8 @@ public class NewsListActivity extends AppCompatActivity
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
 
     private int sectionItemsCount;
-    private ArrayList<String> links;
+    private ArrayList<String> newsIDs;
+    private ArrayList<String> newsLinks;
 
     private NewsListFragment fragment;
     private NavigationView navigationView;
@@ -157,7 +158,7 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void sectionItemOpen(NewsTypes type, int positionID) {
-        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, type, positionID, sectionItemsCount, links);
+        Intent intent = NewsPageActivity.getIntent(NewsListActivity.this, type, positionID, sectionItemsCount, newsIDs, newsLinks);
         startActivity(intent);
     }
 
@@ -167,8 +168,9 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void setSectionNewsLinks(ArrayList<String> links) {
-        this.links = links;
+    public void setSectionNewsLinks(ArrayList<String> newsIDs, ArrayList<String> newsLinks) {
+        this.newsIDs = newsIDs;
+        this.newsLinks = newsLinks;
     }
 
     private void updateOnBackPressed(NewsTypes type){

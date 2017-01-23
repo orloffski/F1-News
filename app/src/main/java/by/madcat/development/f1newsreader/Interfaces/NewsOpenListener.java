@@ -7,5 +7,5 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription;
 public interface NewsOpenListener {
     void sectionItemOpen(DatabaseDescription.NewsTypes type, int positionID);
     void setSectionItemsCount(int count);
-    void setSectionNewsLinks(ArrayList<String> links);
+    void setSectionNewsLinks(ArrayList<String> newsIDs, ArrayList<String> newsLinks);
 }
