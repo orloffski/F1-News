@@ -26,8 +26,6 @@
     <string name="news_loaded">Загружено</string>
     <string name="no_isset_news_to_load">Нет новостей для загрузки</string>
 
-    <string name="news_page_label">F1News.ru reader</string>
-
     <!-- preferences titles -->
     <string name="settings_title">Настройки</string>
     <string name="hide_read_news_checkbox">Скрыть прочитанные новости</string>

@@ -2,14 +2,18 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,7 @@ public class NewsPageActivity extends AppCompatActivity {
     private ShareActionProvider mShareActionProvider;
 
     private String shareLink;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,14 @@ public class NewsPageActivity extends AppCompatActivity {
         ids = getIntent().getStringArrayListExtra(SECTION_NEWS_IDS);
 
         shareLink = String.valueOf(links.get(positionID));
+
+        toolbar = (Toolbar) findViewById(R.id.newsPageToolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, ids);
@@ -102,7 +115,8 @@ public class NewsPageActivity extends AppCompatActivity {
 
     public void setNewsData(Uri newsUri, String title){
         if(newsUri.equals(openNewsUri)) {
-            setTitle(title);
+            toolbar.setTitleTextColor(Color.BLACK);
+            toolbar.setTitle(title);
         }
     }
 

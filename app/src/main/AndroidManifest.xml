@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".classesUI.NewsPageActivity"
-            android:label="@string/news_page_label">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <provider
