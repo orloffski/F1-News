@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +13,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
@@ -36,6 +38,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     private HtmlTextView htmlTextView;
     private ImageView image;
     private TextView date;
+    private ImageButton shareBtn;
 
     public NewsPageFragment() {
     }
@@ -65,6 +68,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
         image = (ImageView) view.findViewById(R.id.content_image);
         date = (TextView) view.findViewById(R.id.content_date);
+        shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
         getLoaderManager().initLoader(LOADER, null, this);
 
@@ -93,12 +97,13 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         if(data != null && data.moveToFirst()){
             int titleIndex = data.getColumnIndex(News.COLUMN_TITLE);
             int newsIndex = data.getColumnIndex(News.COLUMN_NEWS);
             int imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
             int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
+            final int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
 
             title.setText(data.getString(titleIndex));
             htmlTextView.setHtmlText(data.getString(newsIndex));
@@ -114,6 +119,15 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             }
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
+            shareBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, data.getString(linkIndex));
+                    startActivity(Intent.createChooser(shareIntent, "Share news"));
+                }
+            });
 
             ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(titleIndex));
         }

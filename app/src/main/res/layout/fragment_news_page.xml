@@ -19,24 +19,53 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/content_title"
-                android:textStyle="bold"
-                android:textSize="@dimen/title_text_size"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"/>
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/content_date"
-                android:textStyle="bold"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:srcCompat="@drawable/ic_share_black_24dp"
+                        android:id="@+id/shareBtn"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_title"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/title_text_size"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingRight="@dimen/text_padding"
+                        android:paddingTop="@dimen/text_padding"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_date"
+                        android:textStyle="bold"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingRight="@dimen/text_padding"
+                        android:paddingTop="@dimen/text_padding"/>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
