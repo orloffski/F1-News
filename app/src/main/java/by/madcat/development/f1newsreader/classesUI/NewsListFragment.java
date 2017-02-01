@@ -72,8 +72,8 @@ public class NewsListFragment extends Fragment
                         selectionArgs = new String[]{String.valueOf(type)};
                     }
                 }else{
-                    selection = News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
-                    selectionArgs = null;
+                    selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
+                    selectionArgs = new String[]{String.valueOf(type)};
                 }
 
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
