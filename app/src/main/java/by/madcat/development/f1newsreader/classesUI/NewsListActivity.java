@@ -36,6 +36,7 @@ public class NewsListActivity extends AppCompatActivity
     private int sectionItemsCount;
     private ArrayList<String> newsIDs;
     private ArrayList<String> newsLinks;
+    private NewsTypes nowType;
 
     private NewsListFragment fragment;
     private NavigationView navigationView;
@@ -64,6 +65,21 @@ public class NewsListActivity extends AppCompatActivity
         imageView = (ImageView) findViewById(R.id.toolbar_image);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on full text search
+                openSectionNews(nowType, query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // on search text changed
+                openSectionNews(nowType, newText);
+                return false;
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,9 +90,10 @@ public class NewsListActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null)
-            openSectionNews(NewsTypes.NEWS);
-        else{
+        if(savedInstanceState == null) {
+            openSectionNews(NewsTypes.NEWS, null);
+            nowType = NewsTypes.NEWS;
+        }else{
             fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
             setActivityTitle(type);
@@ -86,7 +103,9 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -102,25 +121,25 @@ public class NewsListActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.nav_news:
-                openSectionNews(NewsTypes.NEWS);
+                openSectionNews(NewsTypes.NEWS, null);
                 break;
             case R.id.nav_memuar:
-                openSectionNews(NewsTypes.MEMUAR);
+                openSectionNews(NewsTypes.MEMUAR, null);
                 break;
             case R.id.nav_interview:
-                openSectionNews(NewsTypes.INTERVIEW);
+                openSectionNews(NewsTypes.INTERVIEW, null);
                 break;
             case R.id.nav_tech:
-                openSectionNews(NewsTypes.TECH);
+                openSectionNews(NewsTypes.TECH, null);
                 break;
             case R.id.nav_history:
-                openSectionNews(NewsTypes.HISTORY);
+                openSectionNews(NewsTypes.HISTORY, null);
                 break;
             case R.id.nav_columns:
-                openSectionNews(NewsTypes.COLUMNS);
+                openSectionNews(NewsTypes.COLUMNS, null);
                 break;
             case R.id.nav_autosport:
-                openSectionNews(NewsTypes.AUTOSPORT);
+                openSectionNews(NewsTypes.AUTOSPORT, null);
                 break;
             case R.id.nav_settings:
                 openSettings();
@@ -142,13 +161,15 @@ public class NewsListActivity extends AppCompatActivity
         return true;
     }
 
-    private void openSectionNews(NewsTypes type){
+    private void openSectionNews(NewsTypes type, String searchQuery){
         appBarLayout.setExpanded(true);
+        nowType = type;
 
-        fragment = NewsListFragment.newInstance(type);
+        fragment = NewsListFragment.newInstance(type, searchQuery);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME).commit();
 
         setActivityTitle(type);
+        searchQuery = null;
     }
 
     private void openSettings(){
@@ -159,7 +180,7 @@ public class NewsListActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
-        setTitle(getString(R.string.settings_title));
+        collapsingToolbarLayout.setTitle(getString(R.string.settings_title));
     }
 
     private void setActivityTitle(NewsTypes type){

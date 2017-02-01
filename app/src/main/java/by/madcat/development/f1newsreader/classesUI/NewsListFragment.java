@@ -19,6 +19,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,12 +42,14 @@ public class NewsListFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String NEWS_TYPE = "news_type";
+    public static final String SEARCH_QUERY = "search_query";
     private static final int NEWS_LOADER = 0;
     public static final String SERVICE_DATA = "service_data";
 
     public final static String BROADCAST_ACTION = "by.madcat.development.f1newsreader";
 
     private NewsTypes type;
+    private String searchQuery;
     private NewsOpenListener newsOpenListener;
     private NewsListAbstractAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -60,12 +63,17 @@ public class NewsListFragment extends Fragment
                 String selection;
                 String[] selectionArgs;
 
-                if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_read_news", false)){
-                    selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
-                    selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
-                }else {
-                    selection = News.COLUMN_NEWS_TYPE + "=?";
-                    selectionArgs = new String[]{String.valueOf(type)};
+                if(searchQuery == null) {
+                    if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_read_news", false)) {
+                        selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
+                        selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
+                    } else {
+                        selection = News.COLUMN_NEWS_TYPE + "=?";
+                        selectionArgs = new String[]{String.valueOf(type)};
+                    }
+                }else{
+                    selection = News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
+                    selectionArgs = null;
                 }
 
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
@@ -105,10 +113,11 @@ public class NewsListFragment extends Fragment
     public NewsListFragment() {
     }
 
-    public static NewsListFragment newInstance(NewsTypes type) {
+    public static NewsListFragment newInstance(NewsTypes type, String searchQuery) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
         args.putString(NEWS_TYPE, String.valueOf(type));
+        args.putString(SEARCH_QUERY, searchQuery);
         fragment.setArguments(args);
         return fragment;
     }
@@ -133,6 +142,7 @@ public class NewsListFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
+            this.searchQuery = getArguments().getString(SEARCH_QUERY);
         }
 
         receiver = new BroadcastReceiver() {
