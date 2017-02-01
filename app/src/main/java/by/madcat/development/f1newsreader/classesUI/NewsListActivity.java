@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
@@ -70,6 +71,8 @@ public class NewsListActivity extends AppCompatActivity
             public boolean onQueryTextSubmit(String query) {
                 // on full text search
                 openSectionNews(nowType, query);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                 return true;
             }
 
