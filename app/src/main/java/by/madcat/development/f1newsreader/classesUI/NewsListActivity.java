@@ -2,7 +2,10 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
 
@@ -36,6 +40,8 @@ public class NewsListActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
+    private ImageView imageView;
 
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
@@ -50,6 +56,9 @@ public class NewsListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
+        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
+        imageView = (ImageView) findViewById(R.id.toolbar_image);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -118,6 +127,8 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void openSectionNews(NewsTypes type){
+        appBarLayout.setExpanded(true);
+        
         fragment = NewsListFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME).commit();
 
@@ -125,6 +136,8 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void openSettings(){
+        appBarLayout.setExpanded(false);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_news_list, new PreferencesFragment());
         transaction.addToBackStack(null);
@@ -135,30 +148,39 @@ public class NewsListActivity extends AppCompatActivity
 
     private void setActivityTitle(NewsTypes type){
         String title = null;
+        Drawable image = null;
         switch (type){
             case NEWS:
                 title = getString(R.string.nav_news_title);
+                image = getResources().getDrawable(R.drawable.news);
                 break;
             case MEMUAR:
                 title = getString(R.string.nav_memuar_title);
+                image = getResources().getDrawable(R.drawable.memuar);
                 break;
             case TECH:
                 title = getString(R.string.nav_tech_title);
+                image = getResources().getDrawable(R.drawable.tech);
                 break;
             case HISTORY:
                 title = getString(R.string.nav_history_title);
+                image = getResources().getDrawable(R.drawable.history);
                 break;
             case COLUMNS:
                 title = getString(R.string.nav_columns_title);
+                image = getResources().getDrawable(R.drawable.columns);
                 break;
             case AUTOSPORT:
                 title = getString(R.string.nav_autosport_title);
+                image = getResources().getDrawable(R.drawable.autosport);
                 break;
             case INTERVIEW:
                 title = getString(R.string.nav_interview_title);
+                image = getResources().getDrawable(R.drawable.interview);
                 break;
         }
         collapsingToolbarLayout.setTitle(title);
+        imageView.setImageBitmap(((BitmapDrawable)image).getBitmap());
     }
 
     @Override
