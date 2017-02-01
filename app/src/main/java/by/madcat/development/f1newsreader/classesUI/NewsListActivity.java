@@ -14,10 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
@@ -43,6 +45,8 @@ public class NewsListActivity extends AppCompatActivity
     private AppBarLayout appBarLayout;
     private ImageView imageView;
 
+    private MaterialSearchView searchView;
+
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
     }
@@ -58,6 +62,8 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
         appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
         imageView = (ImageView) findViewById(R.id.toolbar_image);
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -126,9 +132,19 @@ public class NewsListActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
     private void openSectionNews(NewsTypes type){
         appBarLayout.setExpanded(true);
-        
+
         fragment = NewsListFragment.newInstance(type);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME).commit();
 
