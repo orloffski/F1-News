@@ -38,7 +38,7 @@ F1 News reader v.1.1.4 (https://github.com/orloffski/F1News.ru-reader/releases/t
 Все релизы доступны: https://github.com/orloffski/F1News.ru-reader/releases
 
 # License
-	Copyright 2015 Orlovsky Engen
+	Copyright 2016 Orlovsky Engen
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
