@@ -3,6 +3,7 @@ package by.madcat.development.f1newsreader.classesUI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -33,6 +34,9 @@ public class NewsListActivity extends AppCompatActivity
     private NewsListFragment fragment;
     private NavigationView navigationView;
 
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
     }
@@ -42,9 +46,10 @@ public class NewsListActivity extends AppCompatActivity
         setUncaughtExceptionHandler();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -153,7 +158,7 @@ public class NewsListActivity extends AppCompatActivity
                 title = getString(R.string.nav_interview_title);
                 break;
         }
-        setTitle(title);
+        collapsingToolbarLayout.setTitle(title);
     }
 
     @Override
