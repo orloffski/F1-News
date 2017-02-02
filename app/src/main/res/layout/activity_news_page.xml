@@ -13,15 +13,16 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout_page"
         android:layout_width="match_parent"
-        android:layout_height="292dp"
+        android:layout_height="392dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout_page"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/table_bg"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="2">
 
         <ImageView
             android:id="@+id/toolbar_image_page"
@@ -40,7 +41,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:background="@color/transparent"/>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_news_page"/>
