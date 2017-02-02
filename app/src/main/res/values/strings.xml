@@ -78,5 +78,6 @@
 
     <string name="get_new_news">Получены новости портала F1News.ru</string>
 
-    <string name="share_news_title">Поделиться</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_backpress">Вернуться к разделу</string>
 </resources>
