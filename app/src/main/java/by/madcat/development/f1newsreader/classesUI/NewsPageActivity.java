@@ -2,13 +2,17 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -35,12 +39,24 @@ public class NewsPageActivity extends AppCompatActivity {
     private NewsPageAdapter pagerAdapter;
 
     private String shareLink;
+
     private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_page);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        setSupportActionBar(toolbar);
 
         type = NewsTypes.valueOf(getIntent().getStringExtra(NEWS_TYPE));
         positionID = getIntent().getIntExtra(POSITION_ID, 1);
@@ -50,13 +66,9 @@ public class NewsPageActivity extends AppCompatActivity {
 
         shareLink = String.valueOf(links.get(positionID));
 
-        toolbar = (Toolbar) findViewById(R.id.newsPageToolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_page);
+        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_page);
+        imageView = (ImageView) findViewById(R.id.toolbar_image_page);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, ids);
@@ -97,10 +109,13 @@ public class NewsPageActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void setNewsData(Uri newsUri, String title){
+    public void setNewsData(Uri newsUri, String title, Bitmap image, String link, String date){
         if(newsUri.equals(openNewsUri)) {
-            toolbar.setTitleTextColor(Color.BLACK);
-            toolbar.setTitle(title);
+            //toolbar.setTitleTextColor(Color.BLACK);
+            //toolbar.setTitle(title);
+
+            imageView.setImageBitmap(image);
+            collapsingToolbarLayout.setTitle(title);
         }
     }
 }

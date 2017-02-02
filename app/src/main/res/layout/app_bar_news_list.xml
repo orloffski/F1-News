@@ -9,20 +9,20 @@
     tools:context="by.madcat.development.f1newsreader.classesUI.NewsListActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
+        android:id="@+id/app_bar_layout_list"
         android:layout_width="match_parent"
         android:layout_height="292dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/toolbar_layout_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/table_bg"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
-                android:id="@+id/toolbar_image"
+                android:id="@+id/toolbar_image_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
@@ -30,7 +30,7 @@
                 app:layout_collapseMode="pin"/>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_list"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

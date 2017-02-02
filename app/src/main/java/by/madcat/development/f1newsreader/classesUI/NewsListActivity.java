@@ -59,12 +59,12 @@ public class NewsListActivity extends AppCompatActivity
         setUncaughtExceptionHandler();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_list);
         setSupportActionBar(toolbar);
 
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
-        imageView = (ImageView) findViewById(R.id.toolbar_image);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_list);
+        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_list);
+        imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
