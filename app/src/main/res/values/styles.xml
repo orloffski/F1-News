@@ -31,4 +31,23 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="ExpandedTextAppearance" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="CollapsedTextAppearance" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.Design.CollapsingToolbar.Expanded.Shadow" parent="@android:style/TextAppearance.Medium">
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
 </resources>
