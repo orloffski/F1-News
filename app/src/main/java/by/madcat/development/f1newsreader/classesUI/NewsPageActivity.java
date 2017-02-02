@@ -3,7 +3,6 @@ package by.madcat.development.f1newsreader.classesUI;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -50,12 +49,6 @@ public class NewsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
         toolbar = (Toolbar) findViewById(R.id.toolbar_page);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         setSupportActionBar(toolbar);
 
         type = NewsTypes.valueOf(getIntent().getStringExtra(NEWS_TYPE));

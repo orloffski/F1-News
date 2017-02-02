@@ -35,7 +35,6 @@
                 android:id="@+id/toolbar_page"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                style="@style/NewsPageToolbar"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"

@@ -31,10 +31,4 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="NewsPageToolbar">
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
-        <item name="navigationIcon">@drawable/ic_arrow_back_black_24dp</item>
-        <item name="android:background">@color/table_bg</item>
-    </style>
-
 </resources>
