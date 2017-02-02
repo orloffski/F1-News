@@ -48,6 +48,7 @@ public class NewsListActivity extends AppCompatActivity
     private ImageView imageView;
 
     private MaterialSearchView searchView;
+    private Menu searchMenu;
 
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
@@ -112,6 +113,9 @@ public class NewsListActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
+            if(searchMenu != null)
+                searchMenu.findItem(R.id.action_search).setVisible(true);
         }
 
         NewsTypes type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
@@ -161,10 +165,15 @@ public class NewsListActivity extends AppCompatActivity
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
+        searchMenu = menu;
+
         return true;
     }
 
     private void openSectionNews(NewsTypes type, String searchQuery){
+        if(searchMenu != null)
+            searchMenu.findItem(R.id.action_search).setVisible(true);
+
         appBarLayout.setExpanded(true);
         nowType = type;
 
@@ -176,6 +185,9 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void openSettings(){
+        if(searchMenu != null)
+            searchMenu.findItem(R.id.action_search).setVisible(false);
+
         appBarLayout.setExpanded(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
