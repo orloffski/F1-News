@@ -19,7 +19,7 @@ public class InternetDataRouting {
     }
 
     private String createRoutesMap(){
-        String tmpRoutingMap = "http://www.f1news.ru/export/news.xml";
+        String tmpRoutingMap = "https://www.f1news.ru/export/news.xml";
         return tmpRoutingMap;
     }
 
