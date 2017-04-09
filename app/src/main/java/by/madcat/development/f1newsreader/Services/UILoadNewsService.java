@@ -36,8 +36,9 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
     }
 
     @Override
-    public void checkNewsLoadCount() {
-        this.countNewsLoaded += 1;
+    public void checkNewsLoadCount(boolean loaded) {
+        if(loaded)
+            this.countNewsLoaded += 1;
 
         if(this.countNewsLoaded == this.countNewsToLoad)
             loadComplete();
@@ -51,6 +52,12 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
         }else {
             this.countNewsToLoad = count;
         }
+    }
+
+    @Override
+    public void cancelLinkLoad() {
+        this.countNewsToLoad--;
+        checkNewsLoadCount(false);
     }
 
     @Override

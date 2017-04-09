@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jsoup.nodes.Document;
 
@@ -32,6 +33,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     private NewsLoadSender sender;
     private ArrayList<String> bodyImages;
 
+    private boolean newsLoaded = false;
+
     public LoadNewsTask(ArrayList<String> dataLink, Context context, NewsLoadSender sender){
         this.dataLink = dataLink;
         this.context = context;
@@ -58,6 +61,10 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+
+        if(!this.newsLoaded){
+            sender.cancelLinkLoad();
+        }
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {
@@ -110,7 +117,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         contentValues.put(News.COLUMN_READ_FLAG, String.valueOf(0));
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
-        sender.checkNewsLoadCount();
+        this.newsLoaded = true;
+        sender.checkNewsLoadCount(true);
     }
 
     private void loadNewsImage(String imageUrl) throws IOException {
@@ -129,8 +137,10 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         OutputStream fOut = new FileOutputStream(imageOnMemory);
 
         InputStream in = new URL(imageUrl).openStream();
-        image = BitmapFactory.decodeStream(in);
-        image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+        if(in != null) {
+            image = BitmapFactory.decodeStream(in);
+            image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+        }
 
         fOut.flush();
         fOut.close();

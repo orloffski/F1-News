@@ -80,8 +80,9 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     }
 
     @Override
-    public void checkNewsLoadCount() {
-        this.countNewsLoaded += 1;
+    public void checkNewsLoadCount(boolean loaded) {
+        if(loaded)
+            this.countNewsLoaded += 1;
 
         if(this.countNewsLoaded == this.countNewsToLoad)
             loadComplete();
@@ -95,6 +96,12 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         }else {
             this.countNewsToLoad = count;
         }
+    }
+
+    @Override
+    public void cancelLinkLoad() {
+        this.countNewsToLoad--;
+        checkNewsLoadCount(false);
     }
 
     @Override
