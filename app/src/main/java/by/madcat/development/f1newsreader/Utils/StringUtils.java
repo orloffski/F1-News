@@ -1,5 +1,7 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import java.util.Calendar;
+
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 
 public final class StringUtils {
@@ -25,8 +27,11 @@ public final class StringUtils {
             return DatabaseDescription.NewsTypes.INTERVIEW;
         else if(link.contains(TECH_PREFIX))
             return DatabaseDescription.NewsTypes.TECH;
-        else if(link.contains(HISTORY_PREFIX))
-            return DatabaseDescription.NewsTypes.HISTORY;
+        else if(link.contains(HISTORY_PREFIX)) {
+            if(link.contains(String.valueOf(Calendar.getInstance().get(Calendar.YEAR))))
+                return DatabaseDescription.NewsTypes.NEWS;
+            else
+                return DatabaseDescription.NewsTypes.HISTORY;}
         else if(link.contains(COLUMNS_PREFIX))
             return DatabaseDescription.NewsTypes.COLUMNS;
         else if(link.contains(AUTOSPORT_PREFIX))
