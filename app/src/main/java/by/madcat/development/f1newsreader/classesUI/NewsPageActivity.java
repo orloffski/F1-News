@@ -2,7 +2,7 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -12,9 +12,7 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-
-import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -32,6 +30,7 @@ public class NewsPageActivity extends AppCompatActivity {
     private static final String SECTION_NEWS_IDS = "sections_ids";
     private static final String SECTION_NEWS_LINKS = "sections_links";
 
+    private NewsTypes type;
     private int positionID;
     private int itemsCount;
     private ArrayList<String> ids;
@@ -44,27 +43,25 @@ public class NewsPageActivity extends AppCompatActivity {
     private String shareLink;
 
     private Toolbar toolbar;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_page);
-        setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.newsPageToolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
+        type = NewsTypes.valueOf(getIntent().getStringExtra(NEWS_TYPE));
         positionID = getIntent().getIntExtra(POSITION_ID, 1);
         itemsCount = getIntent().getIntExtra(SECTION_ITEMS_COUNT, 0);
         links = getIntent().getStringArrayListExtra(SECTION_NEWS_LINKS);
         ids = getIntent().getStringArrayListExtra(SECTION_NEWS_IDS);
         shareLink = String.valueOf(links.get(positionID));
-
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_page);
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
-
-        imageView = (ImageView) findViewById(R.id.toolbar_image_page);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new NewsPageAdapter(getSupportFragmentManager(), itemsCount, ids);
@@ -86,7 +83,7 @@ public class NewsPageActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 openNewsUri = News.buildNewsUri(Long.valueOf(ids.get(position)));
                 DBUtils.setNewsRead(openNewsUri, getApplicationContext());
-                setShareIntent(createShareIntent(links.get(position)));
+                //setShareIntent(createShareIntent(links.get(position)));
             }
 
             @Override
@@ -128,12 +125,13 @@ public class NewsPageActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void setNewsData(Uri newsUri, String title, Bitmap image, String link, String date){
+    public void setNewsData(Uri newsUri, String title){
+    //public void setNewsData(Uri newsUri, String title, Bitmap image, String link, String date){
         if(newsUri.equals(openNewsUri)) {
-            imageView.setImageBitmap(image);
-            collapsingToolbarLayout.setTitle(title);
+            toolbar.setTitleTextColor(Color.BLACK);
+            toolbar.setTitle(title);
 
-            setShareIntent(createShareIntent(link));
+            //setShareIntent(createShareIntent(link));
         }
     }
 

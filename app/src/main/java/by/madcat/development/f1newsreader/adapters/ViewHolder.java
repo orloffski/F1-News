@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

@@ -50,4 +50,10 @@
         <item name="android:shadowColor">@android:color/black</item>
     </style>
 
+    <style name="NewsPageToolbar">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back_black_24dp</item>
+        <item name="android:background">@color/table_bg</item>
+    </style>
+
 </resources>

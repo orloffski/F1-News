@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import android.widget.TextView;
 
 import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
 
@@ -34,7 +33,11 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
     private Uri newsUri;
 
+    private TextView title;
     private HtmlTextView htmlTextView;
+    private ImageView image;
+    private TextView date;
+    private ImageButton shareBtn;
 
     public NewsPageFragment() {
     }
@@ -60,7 +63,11 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_page, container, false);
 
+        title = (TextView) view.findViewById(R.id.content_title);
         htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
+        image = (ImageView) view.findViewById(R.id.content_image);
+        date = (TextView) view.findViewById(R.id.content_date);
+        shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
         getLoaderManager().initLoader(LOADER, null, this);
 
@@ -97,17 +104,21 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
             final int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.logo);
+            title.setText(data.getString(titleIndex));
 
             htmlTextView.setHtmlText(data.getString(newsIndex));
 
             if(!data.getString(imageIndex).isEmpty()) {
                 String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
                 File imageFile = new File(pathToImage);
-                bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                image.setImageBitmap(bitmap);
+            }else{
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.logo);
+                image.setImageBitmap(bitmap);
             }
 
-            /*date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
+            date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
             shareBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,15 +128,8 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
                     startActivity(Intent.createChooser(shareIntent, "Share news"));
                 }
             });
-            */
 
-            ((NewsPageActivity)getActivity()).setNewsData(
-                    newsUri,
-                    data.getString(titleIndex),
-                    bitmap,
-                    data.getString(linkIndex),
-                    data.getString(dateIndex)
-            );
+            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(titleIndex));
         }
     }
 
