@@ -1,6 +1,18 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import java.util.Date;
+
 public final class DateUtils {
+    public static final String NEXT_GP_TITLE = "До старта: ";
+    public static final String DAYS_SUFF = "д";
+    public static final String HOURS_SUFF = "ч";
+    public static final String MINUTES_SUFF = "м";
+    public static final String SECONDS_SUFF = "с";
+
+    public static final int SECONDS_IN_DAY = 86400;
+    public static final int SECONDS_IN_HOUR = 3600;
+    public static final int SECONDS_IN_MINUTE = 60;
+
     public static String transformDateTime(String dateTime){
         StringBuilder builder = new StringBuilder();
 
@@ -49,5 +61,39 @@ public final class DateUtils {
                 return i;
 
         return -1;
+    }
+
+    public static String getNextGpString(int timestamp){
+        String nextGp = NEXT_GP_TITLE;
+
+        long seconds = (timestamp - (new Date().getTime()/1000));
+
+        nextGp += getDaysCount(seconds) + DAYS_SUFF + " ";
+
+        seconds -= (getDaysCount(seconds) * SECONDS_IN_DAY);
+
+        nextGp += getHoursCount(seconds) + HOURS_SUFF + " ";
+
+        seconds -= (getHoursCount(seconds) * SECONDS_IN_HOUR);
+
+        nextGp += getMinutesCount(seconds) + MINUTES_SUFF + " ";
+
+        seconds -= (getMinutesCount(seconds) * SECONDS_IN_MINUTE);
+
+        nextGp += seconds + SECONDS_SUFF;
+
+        return nextGp;
+    }
+
+    private static long getDaysCount(long seconds){
+        return seconds / SECONDS_IN_DAY;
+    }
+
+    private static long getHoursCount(long seconds){
+        return seconds / SECONDS_IN_HOUR;
+    }
+
+    private static long getMinutesCount(long seconds){
+        return seconds / SECONDS_IN_MINUTE;
     }
 }

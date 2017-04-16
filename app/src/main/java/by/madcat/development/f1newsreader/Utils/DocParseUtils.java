@@ -51,6 +51,7 @@ public final class DocParseUtils {
     public static final String NEXT_GP_TITLE = "stream_title";
     public static final String NEXT_GP_DATE = "stream_date";
     public static final String NEXT_GP_TIMESTAMP = "stream_countdown";
+    public static final String NEXT_GP_TIMESTAMP_ATTR = "data-timestamp";
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
@@ -220,6 +221,17 @@ public final class DocParseUtils {
 
     public static String getNextGpDate(Document jsDoc){
         return jsDoc.getElementsByClass(NEXT_GP_DATE).text();
+    }
+
+    public static String getNextGpTimestamp(Document jsDoc){
+        String timestamp = "";
+
+        Elements next_gp_timestamps = jsDoc.getElementsByClass(NEXT_GP_TIMESTAMP);
+        if(next_gp_timestamps.first() != null) {
+            timestamp = next_gp_timestamps.first().attr(NEXT_GP_TIMESTAMP_ATTR);
+        }
+
+        return timestamp;
     }
 
     private static View createView(String text, String modifier, String viewType, Context context){

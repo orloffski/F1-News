@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 
 public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
@@ -25,6 +26,8 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
         timer = views[1];
 
         String timerText = "";
+        int timestamp = 0;
+        String toNextGP = "";
 
         try {
             jsDoc = DocParseUtils.getJsDoc(InternetDataRouting.getInstance().getMainSiteAdress());
@@ -35,10 +38,12 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
         if(jsDoc != null){
             timerText = DocParseUtils.getNextGpTitle(jsDoc);
             timerText += "\n" + DocParseUtils.getNextGpDate(jsDoc);
+
+            timestamp = Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)) ;
         }
 
-        for(int i = 0; i < 50; i++){
-            publishProgress(timerText, String.valueOf(i));
+        while(true){
+            publishProgress(timerText, DateUtils.getNextGpString(timestamp));
 
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -47,7 +52,7 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
             }
         }
 
-        return null;
+        //return null;
     }
 
     @Override
