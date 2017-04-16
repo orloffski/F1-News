@@ -48,6 +48,10 @@ public final class DocParseUtils {
     public static final String NEWS_IMAGE_TAG_PARSE = "img";
     public static final String NEWS_IMAGE_LINK_ATTR_PARSE = "src";
 
+    public static final String NEXT_GP_TITLE = "stream_title";
+    public static final String NEXT_GP_DATE = "stream_date";
+    public static final String NEXT_GP_TIMESTAMP = "stream_countdown";
+
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
@@ -208,6 +212,14 @@ public final class DocParseUtils {
         }
 
         return views;
+    }
+
+    public static String getNextGpTitle(Document jsDoc){
+        return jsDoc.getElementsByClass(NEXT_GP_TITLE).text();
+    }
+
+    public static String getNextGpDate(Document jsDoc){
+        return jsDoc.getElementsByClass(NEXT_GP_DATE).text();
     }
 
     private static View createView(String text, String modifier, String viewType, Context context){

@@ -16,8 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -50,6 +52,9 @@ public class NewsListActivity extends AppCompatActivity
     private MaterialSearchView searchView;
     private Menu searchMenu;
 
+    private TextView timerText;
+    private TextView timer;
+
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
     }
@@ -65,6 +70,8 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_list);
         appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_list);
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
+
+        loadTimerLinks();
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -286,5 +293,18 @@ public class NewsListActivity extends AppCompatActivity
                 Thread.getDefaultUncaughtExceptionHandler(),
                 getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(myHandler);
+    }
+
+    public View getTimerTextLink(){
+        return timerText;
+    }
+
+    public View getTimerLink(){
+        return timer;
+    }
+
+    private void loadTimerLinks(){
+        timerText = (TextView) findViewById(R.id.timerText);
+        timer = (TextView) findViewById(R.id.timer);
     }
 }

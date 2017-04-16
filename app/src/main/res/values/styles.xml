@@ -56,4 +56,9 @@
         <item name="android:background">@color/table_bg</item>
     </style>
 
+    <style name="timer_GP">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

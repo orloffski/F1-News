@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,7 +36,9 @@ import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.NewsCardsAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataInet.TimerNextGpTask;
 
 
 public class NewsListFragment extends Fragment
@@ -54,6 +58,10 @@ public class NewsListFragment extends Fragment
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     BroadcastReceiver receiver;
+
+    private TextView timer;
+    private TextView timerText;
+    private TimerNextGpTask timerTask;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -208,6 +216,12 @@ public class NewsListFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
+
+        timer = (TextView) ((NewsListActivity)getActivity()).getTimerLink();
+        timerText = (TextView) ((NewsListActivity)getActivity()).getTimerTextLink();
+
+        if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
+            loadTimer();
     }
 
     private void checkServiceRun(){
@@ -248,5 +262,10 @@ public class NewsListFragment extends Fragment
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    private void loadTimer(){
+        timerTask = new TimerNextGpTask();
+        timerTask.execute(timerText, timer);
     }
 }
