@@ -1,7 +1,5 @@
 package by.madcat.development.f1newsreader.Utils;
 
-import android.util.Log;
-
 public final class DateUtils {
     public static String transformDateTime(String dateTime){
         StringBuilder builder = new StringBuilder();
