@@ -265,7 +265,7 @@ public class NewsListFragment extends Fragment
     }
 
     private void loadTimer(){
-        timerTask = new TimerNextGpTask();
+        timerTask = new TimerNextGpTask(context);
         timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer);
     }
 }

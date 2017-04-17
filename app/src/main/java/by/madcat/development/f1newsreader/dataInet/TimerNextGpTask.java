@@ -1,23 +1,24 @@
 package by.madcat.development.f1newsreader.dataInet;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import by.madcat.development.f1newsreader.Utils.DateUtils;
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 
 public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
 
-    private Document jsDoc;
+    private Context context;
 
     private TextView timerText;
     private TextView timer;
+
+    public TimerNextGpTask(Context context){
+        this.context = context;
+    }
 
     @Override
     protected Void doInBackground(TextView... views) {
@@ -25,25 +26,18 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
         timerText = views[0];
         timer = views[1];
 
-        String timerText = "";
-        int timestamp = 0;
+        String text = PreferenceManager.getDefaultSharedPreferences(context).getString("gp_country", "")
+                + "\n" + PreferenceManager.getDefaultSharedPreferences(context).getString("gp_date", "");
+        int timestamp = PreferenceManager.getDefaultSharedPreferences(context).getInt("gp_timestamp", 0);
         String toNextGP = "";
 
-        try {
-            jsDoc = DocParseUtils.getJsDoc(InternetDataRouting.getInstance().getMainSiteAdress());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if(jsDoc != null){
-            timerText = DocParseUtils.getNextGpTitle(jsDoc);
-            timerText += "\n" + DocParseUtils.getNextGpDate(jsDoc);
-
-            timestamp = Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)) ;
-        }
 
         while(true){
-            publishProgress(timerText, DateUtils.getNextGpString(timestamp));
+            if(timestamp != 0)
+                toNextGP = DateUtils.getNextGpString(timestamp);
+
+            publishProgress(text, toNextGP);
 
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -51,8 +45,6 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
                 e.printStackTrace();
             }
         }
-
-        //return null;
     }
 
     @Override

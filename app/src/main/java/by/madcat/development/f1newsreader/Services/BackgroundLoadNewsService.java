@@ -126,7 +126,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
             return;
 
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
-        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), getApplicationContext(), this);
+        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
         loadLinksTask.execute();
     }
 }
