@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,11 +16,11 @@ import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
-public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsTypes>> {
+public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<NewsTypes, Date>>> {
 
     private String routeMap;
     private String mainSiteAdress;
-    private Map<String, NewsTypes> links = null;
+    private Map<String, Map<NewsTypes, Date>> links = null;
     private Context context;
     private NewsLoadSender sender;
 
@@ -31,7 +32,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
     }
 
     @Override
-    protected Map<String, NewsTypes> doInBackground(Void... voids) {
+    protected Map<String, Map<NewsTypes, Date>> doInBackground(Void... voids) {
         links = new HashMap<>();
 
         try {
@@ -47,7 +48,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
     }
 
     @Override
-    protected void onPostExecute(Map<String, NewsTypes> strings) {
+    protected void onPostExecute(Map<String, Map<NewsTypes, Date>> strings) {
         super.onPostExecute(strings);
 
         sender.sendNewsLoadCount(0);
@@ -63,7 +64,10 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
         for(Map.Entry entry : strings.entrySet()){
             ArrayList<String> dataLink = new ArrayList<>();
             dataLink.add(entry.getKey().toString());
-            dataLink.add(entry.getValue().toString());
+            for(Map.Entry tmp : ((Map<NewsTypes, Date>) entry.getValue()).entrySet()) {
+                dataLink.add(tmp.getKey().toString());
+                dataLink.add(tmp.getValue().toString());
+            }
 
             new LoadNewsTask(dataLink, context, sender).execute();
         }
@@ -74,11 +78,11 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
         links.putAll(DocParseUtils.getNewsLinkList(jsDoc));
     }
 
-    private Map<String, NewsTypes> checkLinksMap(Map<String, NewsTypes> links){
-        HashMap<String, NewsTypes> checkedLinks = new HashMap<>();
+    private Map<String, Map<NewsTypes, Date>> checkLinksMap(Map<String, Map<NewsTypes, Date>> links){
+        HashMap<String, Map<NewsTypes, Date>> checkedLinks = new HashMap<>();
         for(Map.Entry entry : links.entrySet()){
             if(DBUtils.checkIssetNewsLinkInDB(context, entry.getKey().toString()))
-                checkedLinks.put(entry.getKey().toString(), NewsTypes.valueOf(entry.getValue().toString()));
+                checkedLinks.put(entry.getKey().toString(), (Map<NewsTypes, Date>)entry.getValue());
         }
         return checkedLinks;
     }

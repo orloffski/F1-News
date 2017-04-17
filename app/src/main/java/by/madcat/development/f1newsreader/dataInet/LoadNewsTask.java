@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
@@ -44,7 +45,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         ArrayList<String> newsData;
         try {
-            newsData = loadNewsData(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1)));
+            newsData = loadNewsData(dataLink.get(0), NewsTypes.valueOf(dataLink.get(1)), new Date(dataLink.get(2)));
             saveNewsData(newsData);
 
             if(bodyImages != null)
@@ -66,7 +67,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    public ArrayList<String> loadNewsData(String urlString, NewsTypes type) throws IOException {
+    public ArrayList<String> loadNewsData(String urlString, NewsTypes type, Date rssDate) throws IOException {
 
         ArrayList<String> newsData = new ArrayList<>();
 
@@ -85,7 +86,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         newsData.add(urlString);
 
         // news date
-        String dateTime = DateUtils.transformDateTime(DocParseUtils.getNewsDate(jsDoc));
+        String dateTime = DateUtils.transformDateTime(DocParseUtils.getNewsDate(jsDoc, rssDate));
         newsData.add(dateTime);
 
         // news image

@@ -33,7 +33,9 @@ import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
+    public static final String LINK_ITEM = "item";
     public static final String LINK_TAG = "guid";
+    public static final String LINK_DATE = "pubDate";
     public static final String NEWS_TITLE_PARSE = "post_title";
     public static final String NEWS_BODY_PARSE = "post_content";
     public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
@@ -104,15 +106,24 @@ public final class DocParseUtils {
         return images_array;
     }
 
-    public static String getNewsDate(Document jsDoc){
+    public static String getNewsDate(Document jsDoc, Date rssDate){
         String dateTime = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
+
         Elements news_date = jsDoc.getElementsByClass(NEWS_DATE_PARSE);
+
         if(news_date.isEmpty()){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
             dateTime = simpleDateFormat.format(new Date());
         }else{
             dateTime = news_date.text();
         }
+
+        String newsDateTransform = DateUtils.transformDateTime(dateTime);
+        String rssDateTransform = DateUtils.transformDateTime(dateTime);
+
+        if(!newsDateTransform.equals(rssDateTransform))
+            if(DateUtils.compareTransformedDateTime(newsDateTransform, rssDateTransform))
+                dateTime = rssDateTransform;
 
         return dateTime;
     }
@@ -129,17 +140,22 @@ public final class DocParseUtils {
         return image;
     }
 
-    public static Map<String, NewsTypes> getNewsLinkList(Document jsDoc){
-        Map<String, NewsTypes> links = new HashMap<>();
+    public static Map<String, Map<NewsTypes, Date>> getNewsLinkList(Document jsDoc){
+        Map<String, Map<NewsTypes, Date>> links = new HashMap<>();
 
-        for(Element guid : jsDoc.getElementsByTag(LINK_TAG)){
-            String link = guid.text();
+        for(Element item : jsDoc.getElementsByTag(LINK_ITEM)){
+            String link = item.getElementsByTag(LINK_TAG).first().text();
             if(!link.contains("https"))
                 link = link.replace("http", "https");
 
+            Date date = new Date(item.getElementsByTag(LINK_DATE).first().text());
+
             NewsTypes type = StringUtils.getNewsSection(link);
-            if(type != null)
-                links.put(link, type);
+            if(type != null) {
+                Map<NewsTypes, Date> tmp = new HashMap<>();
+                tmp.put(type, date);
+                links.put(link, tmp);
+            }
         }
 
         return links;
