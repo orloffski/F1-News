@@ -65,7 +65,6 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, NewsType
     }
 
     private void loadNewsLinks(String urlString) throws IOException{
-
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
         links.putAll(DocParseUtils.getNewsLinkList(jsDoc));
     }
