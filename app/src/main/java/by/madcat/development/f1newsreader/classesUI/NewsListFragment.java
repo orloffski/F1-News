@@ -38,7 +38,7 @@ import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.TimerNextGpTask;
+import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
 
 
 public class NewsListFragment extends Fragment

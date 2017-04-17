@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet;
+package by.madcat.development.f1newsreader.Services;
 
 import android.content.Context;
 import android.os.AsyncTask;
