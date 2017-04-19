@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
@@ -111,11 +113,9 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             if(!data.getString(imageIndex).isEmpty()) {
                 String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
                 File imageFile = new File(pathToImage);
-                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                image.setImageBitmap(bitmap);
+                Glide.with(getContext()).load(imageFile).placeholder(R.drawable.f1_logo).into(image);
             }else{
-                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.logo);
-                image.setImageBitmap(bitmap);
+                Glide.with(getContext()).load("").placeholder(R.drawable.f1_logo).into(image);
             }
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));

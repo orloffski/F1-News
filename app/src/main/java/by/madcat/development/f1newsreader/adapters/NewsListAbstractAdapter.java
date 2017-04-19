@@ -2,12 +2,18 @@ package by.madcat.development.f1newsreader.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
@@ -29,7 +35,8 @@ public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<ViewH
 
         String pathToImage = context.getFilesDir() +
                 "/" + LoadNewsTask.IMAGE_PATH + "/" + cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_IMAGE));
-        Glide.with(context).load(new File(pathToImage)).into(holder.thumbnail);
+
+        Glide.with(context).load(new File(pathToImage)).placeholder(R.drawable.f1_logo).into(holder.thumbnail);
     }
 
     @Override
