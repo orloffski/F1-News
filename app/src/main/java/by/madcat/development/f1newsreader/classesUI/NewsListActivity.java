@@ -68,6 +68,9 @@ public class NewsListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_list);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
+
         appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_list);
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
