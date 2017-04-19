@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,19 +112,18 @@ public final class DocParseUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
 
         Elements news_date = jsDoc.getElementsByClass(NEWS_DATE_PARSE);
-
         if(news_date.isEmpty()){
             dateTime = simpleDateFormat.format(new Date());
         }else{
             dateTime = news_date.text();
         }
 
-        String newsDateTransform = DateUtils.transformDateTime(dateTime);
-        String rssDateTransform = DateUtils.transformDateTime(dateTime);
-
-        if(!newsDateTransform.equals(rssDateTransform))
-            if(DateUtils.compareTransformedDateTime(newsDateTransform, rssDateTransform))
-                dateTime = rssDateTransform;
+        try {
+            Date dateFromNews = simpleDateFormat.parse(dateTime);
+            dateTime = simpleDateFormat.format(DateUtils.getEarlyDate(dateFromNews, rssDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return dateTime;
     }

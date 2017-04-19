@@ -13,25 +13,11 @@ public final class DateUtils {
     public static final int SECONDS_IN_HOUR = 3600;
     public static final int SECONDS_IN_MINUTE = 60;
 
-    public static boolean compareTransformedDateTime(String first, String second){
-        for(int i = 0; i < first.length(); i++){
-            if(i < first.length() - 1)
-                if(!first.substring(i, i+1).equals(second.substring(i, i+1))){
-                    if(Integer.parseInt(first.substring(i, i + 1)) > Integer.parseInt(second.substring(i, i + 1)))
-                        return true;
-                    else
-                        return false;
-                }
-            else
-                if(!first.substring(i).equals(second.substring(i))){
-                    if(Integer.parseInt(first.substring(i)) > Integer.parseInt(second.substring(i)))
-                        return true;
-                    else
-                        return false;
-                }
-        }
-
-        return false;
+    public static Date getEarlyDate(Date newsDate, Date rssDate){
+        if(newsDate.before(rssDate))
+            return newsDate;
+        else
+            return rssDate;
     }
 
     public static String transformDateTime(String dateTime){
