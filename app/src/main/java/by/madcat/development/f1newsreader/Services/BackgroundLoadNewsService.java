@@ -35,8 +35,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(!SystemUtils.getLoadFlag(getApplicationContext())) {
-            SystemUtils.setLoadFlag(getApplicationContext(), true);
+        if(!SystemUtils.getUiLoadFlag(getApplicationContext())) {
+            SystemUtils.setBgLoadFlag(getApplicationContext(), true);
 
             runLoad();
         }
@@ -120,7 +120,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
         sendNotification(countNewsToLoad);
 
-        SystemUtils.setLoadFlag(getApplicationContext(), false);
+        SystemUtils.setBgLoadFlag(getApplicationContext(), false);
     }
 
     @Override

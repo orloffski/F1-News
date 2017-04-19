@@ -30,8 +30,8 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
     public int onStartCommand(Intent intent, int flags, int startId) {
         loadIsBG = false;
 
-        if(!SystemUtils.getLoadFlag(getApplicationContext())) {
-            SystemUtils.setLoadFlag(getApplicationContext(), true);
+        if(!SystemUtils.getBgLoadFlag(getApplicationContext())) {
+            SystemUtils.setUiLoadFlag(getApplicationContext(), true);
             this.isServiceRun = true;
 
             InternetDataRouting dataRouting = InternetDataRouting.getInstance();
@@ -79,7 +79,7 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
         this.isServiceRun = false;
         sendNotification(countNewsToLoad);
 
-        SystemUtils.setLoadFlag(getApplicationContext(), false);
+        SystemUtils.setUiLoadFlag(getApplicationContext(), false);
     }
 
     @Override
