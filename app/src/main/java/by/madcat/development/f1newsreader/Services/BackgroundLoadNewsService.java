@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
@@ -34,7 +35,11 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        runLoad();
+        if(!SystemUtils.getLoadFlag(getApplicationContext())) {
+            SystemUtils.setLoadFlag(getApplicationContext(), true);
+
+            runLoad();
+        }
     }
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
@@ -114,6 +119,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
             return;
 
         sendNotification(countNewsToLoad);
+
+        SystemUtils.setLoadFlag(getApplicationContext(), false);
     }
 
     @Override

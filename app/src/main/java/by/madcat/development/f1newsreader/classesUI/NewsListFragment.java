@@ -234,6 +234,8 @@ public class NewsListFragment extends Fragment
 
         if(count == 0)
             message = getString(R.string.no_isset_news_to_load);
+        else if(count == -1)
+            message = getString(R.string.load_is_runned);
         else {
             message = context.getResources().getQuantityString(R.plurals.news_plurals, count, count);
         }

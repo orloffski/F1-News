@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListFragment;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
@@ -14,6 +15,7 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
     private int countNewsLoaded;
     private Intent intent;
     private static boolean isServiceRun;
+    private static boolean loadIsBG;
 
     public UILoadNewsService() {
         this.intent = new Intent(NewsListFragment.BROADCAST_ACTION);
@@ -26,11 +28,19 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.isServiceRun = true;
+        loadIsBG = false;
 
-        InternetDataRouting dataRouting = InternetDataRouting.getInstance();
-        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
-        loadLinksTask.execute();
+        if(!SystemUtils.getLoadFlag(getApplicationContext())) {
+            SystemUtils.setLoadFlag(getApplicationContext(), true);
+            this.isServiceRun = true;
+
+            InternetDataRouting dataRouting = InternetDataRouting.getInstance();
+            LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
+            loadLinksTask.execute();
+        }else{
+            loadIsBG = true;
+            loadCanceled();
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -68,12 +78,18 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
     public void loadComplete() {
         this.isServiceRun = false;
         sendNotification(countNewsToLoad);
+
+        SystemUtils.setLoadFlag(getApplicationContext(), false);
     }
 
     @Override
     public void loadCanceled() {
         this.isServiceRun = false;
-        sendNotification(0);
+
+        if(loadIsBG)
+            sendNotification(-1);
+        else
+            sendNotification(0);
     }
 
     private void sendNotification(int count){

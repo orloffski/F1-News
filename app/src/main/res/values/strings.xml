@@ -25,6 +25,7 @@
     <string name="network_not_available">Подключение к сети отсутствует</string>
     <string name="news_loaded">Загружено</string>
     <string name="no_isset_news_to_load">Нет новостей для загрузки</string>
+    <string name="load_is_runned">Запущена загрузка новостей в фоне</string>
 
     <!-- preferences titles -->
     <string name="settings_title">Настройки</string>
