@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.R;
 
-public class ViewHolder extends RecyclerView.ViewHolder{
+public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public final TextView title;
     public final TextView date;
     public final ImageView thumbnail;
@@ -22,16 +22,17 @@ public class ViewHolder extends RecyclerView.ViewHolder{
         title = (TextView) itemView.findViewById(R.id.title);
         thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onClick((int)rowID);
-            }
-        });
+        thumbnail.setOnClickListener(this);
+        itemView.setOnClickListener(this);
 
     }
 
     public void setRowID(long id){
         this.rowID = id;
+    }
+
+    @Override
+    public void onClick(View v) {
+        clickListener.onClick((int)rowID);
     }
 }
