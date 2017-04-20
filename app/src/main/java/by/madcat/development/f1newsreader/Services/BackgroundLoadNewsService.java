@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -71,9 +73,14 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         Intent i = NewsListActivity.newIntent(this);
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
 
+        Resources res = getApplicationContext().getResources();
+
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setColor(Color.WHITE)
+                .setSmallIcon(R.drawable.f1)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
+                .setNumber(countNews)
                 .setContentTitle(resources.getString(R.string.get_new_news))
                 .setContentText(resources.getQuantityString(R.plurals.news_plurals, countNews, countNews))
                 .setContentIntent(pi)
