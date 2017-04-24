@@ -5,10 +5,16 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 
+import java.io.IOException;
+
 public class SystemUtils {
 
     public static final String BG_LOAD_FLAG = "bg_load_run";
     public static final String UI_LOAD_FLAG = "ui_load_run";
+
+    public static final String GP_DATA_COUNTRY = "gp_country";
+    public static final String GP_DATA_DATE = "gp_date";
+    public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -39,5 +45,25 @@ public class SystemUtils {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(BG_LOAD_FLAG, flag);
         editor.commit();
+    }
+
+    public static void loadTimersData(String urlString, Context context) throws IOException {
+        org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(GP_DATA_COUNTRY, DocParseUtils.getNextGpTitle(jsDoc));
+        editor.putString(GP_DATA_DATE, DocParseUtils.getNextGpDate(jsDoc));
+        editor.putInt(GP_DATA_TIMESTAMP, Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)));
+        editor.commit();
+    }
+
+    public static String getNextGpData(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_COUNTRY, "")
+                + "\n" + PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_DATE, "");
+    }
+
+    public static int getNextGpTime(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(GP_DATA_TIMESTAMP, 0);
     }
 }

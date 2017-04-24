@@ -2,12 +2,14 @@ package by.madcat.development.f1newsreader.Services;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import by.madcat.development.f1newsreader.Utils.DateUtils;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
 
@@ -22,22 +24,35 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
 
     @Override
     protected Void doInBackground(TextView... views) {
-
         timerText = views[0];
         timer = views[1];
 
-        String text = PreferenceManager.getDefaultSharedPreferences(context).getString("gp_country", "")
-                + "\n" + PreferenceManager.getDefaultSharedPreferences(context).getString("gp_date", "");
-        int timestamp = PreferenceManager.getDefaultSharedPreferences(context).getInt("gp_timestamp", 0);
-        String toNextGP = "";
-
-
+        String toNextGP;
+        String text;
 
         while(true){
-            if(timestamp != 0)
-                toNextGP = DateUtils.getNextGpString(timestamp);
+            int timestamp = SystemUtils.getNextGpTime(context);
 
-            publishProgress(text, toNextGP);
+            if(timestamp != 0 && timestamp > System.currentTimeMillis()/1000) {
+                toNextGP = DateUtils.getNextGpString(timestamp);
+                text = SystemUtils.getNextGpData(context);
+
+                publishProgress(text, toNextGP);
+            }
+            else if(timestamp != 0 && timestamp < System.currentTimeMillis()/1000){
+                try {
+                    SystemUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
+                    
+                    text = SystemUtils.getNextGpData(context);
+                    toNextGP = DateUtils.getNextGpString(timestamp);
+
+                    publishProgress(text, toNextGP);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
 
             try {
                 TimeUnit.SECONDS.sleep(1);
