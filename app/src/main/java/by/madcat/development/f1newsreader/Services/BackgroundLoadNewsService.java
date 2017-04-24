@@ -77,8 +77,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))
-                .setColor(Color.WHITE)
-                .setSmallIcon(R.drawable.f1)
+                .setSmallIcon(R.drawable.ic_notif_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
                 .setNumber(countNews)
                 .setContentTitle(resources.getString(R.string.get_new_news))
