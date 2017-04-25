@@ -13,7 +13,6 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +32,7 @@ public class ReminderService extends IntentService {
         super(TAG);
     }
 
-    public static Intent newIntent(Context context, boolean vibroIsOn, String ringtoneUri, long timePause){
+    public static Intent newIntent(Context context, boolean vibroIsOn, String ringtoneUri, int timePause){
         Intent intent = new Intent(context, ReminderService.class);
         intent.putExtra(VIBRO_IS_ON, vibroIsOn);
         intent.putExtra(RINGTONE_URI, ringtoneUri);
@@ -54,7 +53,6 @@ public class ReminderService extends IntentService {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         if(isOn) {
-            Log.d("test", "set alarm manager");
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), timePause, pi);
         }
         else{
@@ -64,7 +62,6 @@ public class ReminderService extends IntentService {
     }
 
     private void runReminder(final Intent intent){
-        Log.d("test", "run reminder");
         Timer timer = new Timer();
 
         TimerTask notificationTimerTask = new TimerTask() {
@@ -76,6 +73,13 @@ public class ReminderService extends IntentService {
 
                 Resources res = getApplicationContext().getResources();
 
+                long[] vibrate;
+                if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
+                    vibrate = new long[] { 1000, 1000, 1000, 1000, 1000 };
+                }else{
+                    vibrate = new long[]{};
+                }
+
                 Notification notification = new NotificationCompat.Builder(getApplicationContext())
                         .setTicker(resources.getString(R.string.reminder_ticker))
                         .setSmallIcon(R.drawable.ic_notif_logo)
@@ -83,13 +87,12 @@ public class ReminderService extends IntentService {
                         .setContentTitle(resources.getString(R.string.reminder_ticker))
                         .setContentText(resources.getString(R.string.reminder_content_text))
                         .setSound(Uri.parse(intent.getStringExtra(ReminderService.RINGTONE_URI)))
-                        .setVibrate((new long[] { 1000, 1000, 1000, 1000, 1000 }))
+                        .setVibrate(vibrate)
                         .setContentIntent(pi)
                         .setAutoCancel(true)
                         .build();
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                Log.d("test", "send notification");
                 notificationManager.notify(0, notification);
             }
         };
@@ -101,14 +104,12 @@ public class ReminderService extends IntentService {
             }
         };
 
-        if(System.currentTimeMillis()/1000 > SystemUtils.getNextGpTime(this) - intent.getIntExtra(TIME_PAUSE, 0)){
+        if(System.currentTimeMillis()/1000 > SystemUtils.getNextGpTime(this) - intent.getIntExtra(TIME_PAUSE, 0)/1000){
             long delay = 1000 * 60 * 60 * 3;
-            Log.d("test", "start reload whith: " + delay/1000 + " seconds");
             timer.schedule(runReminderTimerTask, delay);
         }else{
             long delay = SystemUtils.getNextGpTime(this) - System.currentTimeMillis()/1000 - intent.getIntExtra(TIME_PAUSE, 0)/1000;
-            Log.d("test", "start timer whith: " + delay + " seconds");
-            timer.schedule(notificationTimerTask, delay);
+            timer.schedule(notificationTimerTask, delay * 1000);
         }
     }
 }
