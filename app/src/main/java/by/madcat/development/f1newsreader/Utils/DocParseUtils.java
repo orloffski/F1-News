@@ -1,7 +1,7 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
@@ -12,13 +12,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -29,6 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
@@ -250,7 +255,7 @@ public final class DocParseUtils {
         return timestamp;
     }
 
-    private static View createView(String text, String modifier, String viewType, Context context){
+    private static View createView(String text, final String modifier, String viewType, final Context context){
         LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -273,11 +278,23 @@ public final class DocParseUtils {
                 break;
             case "ImageView":
                 view = new ImageView(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-                String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;
-                File imageFile = new File(pathToImage);
-                ((ImageView)view).setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+                final String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;
+
+                Glide.with(context)
+                        .load(pathToImage)
+                        .asBitmap()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.f1_logo)
+                        .into(new BitmapImageViewTarget((ImageView)view) {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                super.onResourceReady(bitmap, anim);
+                                Glide.with(context).load(pathToImage).into(view);
+                            }
+                        });
                 view.setPadding(0, 10, 0, 0);
                 break;
         }
