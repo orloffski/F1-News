@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +22,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 
@@ -309,5 +310,15 @@ public class NewsListActivity extends AppCompatActivity
     private void loadTimerLinks(){
         timerText = (TextView) findViewById(R.id.timerText);
         timer = (TextView) findViewById(R.id.timer);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            PreferencesFragment pref_fragment = (PreferencesFragment)getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+            pref_fragment.updateReminderRingtone(data);
+        }
     }
 }

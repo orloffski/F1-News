@@ -2,7 +2,10 @@ package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import java.io.IOException;
@@ -15,6 +18,8 @@ public class SystemUtils {
     public static final String GP_DATA_COUNTRY = "gp_country";
     public static final String GP_DATA_DATE = "gp_date";
     public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
+
+    public final static String REMINDER_RINGTONE = "reminder_ringtone";
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,5 +70,23 @@ public class SystemUtils {
 
     public static int getNextGpTime(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(GP_DATA_TIMESTAMP, 0);
+    }
+
+    public static void saveRingtoneData(String ringtonUri, Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(REMINDER_RINGTONE, ringtonUri);
+        editor.commit();
+    }
+
+    public static String loadRingtoneData(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(REMINDER_RINGTONE, "");
+    }
+
+    public static String loadRingtoneTitle(Context context){
+        String ringtoneUriString = PreferenceManager.getDefaultSharedPreferences(context).getString(REMINDER_RINGTONE, "");
+        Uri ringtoneUri = Uri.parse(ringtoneUriString);
+        Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
+        return ringtone.getTitle(context);
     }
 }

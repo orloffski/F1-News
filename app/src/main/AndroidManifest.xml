@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name=".AnalyticsTrackers.AnalyticsTrackers"
@@ -43,6 +45,9 @@
             android:name=".Services.BackgroundLoadNewsService"
             android:exported="true"/>
         <service
+            android:name=".Services.ReminderService"
+            android:exported="true"/>
+        <service
             android:name=".Services.UILoadNewsService"
             android:enabled="true"
             android:exported="false">
@@ -77,6 +82,13 @@
 
         <receiver
             android:name=".Receivers.ServiceBootBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".Receivers.ReminderBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

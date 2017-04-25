@@ -36,9 +36,17 @@
     <string name="category_hide_news">Внешний вид</string>
     <string name="category_autorefresh">Автообновление новостей</string>
     <string name="list_news_view_title">Оформление списка новостей</string>
+    <string name="reminder_to_gp">Напоминание о Гран-При</string>
+    <string name="reminder_on">Включить напоминание о Гран-При</string>
+    <string name="reminder">Интервал напоминания</string>
+    <string name="reminder_data_null">Отсутствуют данные о следующем Гран-При, обновите данные приложения</string>
+    <string name="reminder_ringtone_title">Звук напоминания</string>
+    <string name="reminder_ringtone_summary">Выбрать звук напоминания</string>
+    <string name="reminder_vibration_title">Включить вибро при напоминании</string>
+    <string name="ringtone_null">Без звука</string>
 
-    <!-- refresh interval of autoload news -->
-    <string-array name="refresh_intervals_title">
+    <!-- intervals -->
+    <string-array name="intervals_title">
         <item>10 минут</item>
         <item>30 минут</item>
         <item>1 час</item>
@@ -46,7 +54,7 @@
         <item>6 часов</item>
         <item>24 часа</item>
     </string-array>
-    <string-array name="refresh_intervals">
+    <string-array name="intervals_milliseconds">
         <item>600000</item>
         <item>1800000</item>
         <item>3600000</item>
@@ -54,7 +62,7 @@
         <item>21600000</item>
         <item>86400000</item>
     </string-array>
-    <string name="refresh_intervals_default_value">86400000</string>
+    <string name="intervals_default_value">86400000</string>
 
     <!-- news list view preferences -->
     <string-array name="list_news_view_title">
@@ -78,6 +86,8 @@
     </plurals>
 
     <string name="get_new_news">Получены новости портала F1News.ru</string>
+    <string name="reminder_ticker">Напоминание о Гран-При</string>
+    <string name="reminder_content_text">Вы просили напомнить о Гран-При.</string>
 
     <string name="action_share">Поделиться</string>
     <string name="action_backpress">Вернуться к разделу</string>

@@ -16,7 +16,7 @@ public class ServiceBootBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int refresh_interval = Integer.parseInt(PreferenceManager
                 .getDefaultSharedPreferences(context)
-                .getString("refresh_interval", context.getString(R.string.refresh_intervals_default_value)));
+                .getString("refresh_interval", context.getString(R.string.intervals_default_value)));
         BackgroundLoadNewsService.setServiceAlarm(context, true, refresh_interval);
     }
 }
