@@ -71,8 +71,6 @@ public class ReminderService extends IntentService {
                 Intent i = NewsListActivity.newIntent(getApplicationContext());
                 PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, i, 0);
 
-                Resources res = getApplicationContext().getResources();
-
                 long[] vibrate;
                 if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
                     vibrate = new long[] { 1000, 1000, 1000, 1000, 1000 };
@@ -83,9 +81,9 @@ public class ReminderService extends IntentService {
                 Notification notification = new NotificationCompat.Builder(getApplicationContext())
                         .setTicker(resources.getString(R.string.reminder_ticker))
                         .setSmallIcon(R.drawable.ic_notif_logo)
-                        .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
+                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                         .setContentTitle(resources.getString(R.string.reminder_ticker))
-                        .setContentText(resources.getString(R.string.reminder_content_text))
+                        .setContentText(getReminderNotification())
                         .setSound(Uri.parse(intent.getStringExtra(ReminderService.RINGTONE_URI)))
                         .setVibrate(vibrate)
                         .setContentIntent(pi)
@@ -111,5 +109,19 @@ public class ReminderService extends IntentService {
             long delay = SystemUtils.getNextGpTime(this) - System.currentTimeMillis()/1000 - intent.getIntExtra(TIME_PAUSE, 0)/1000;
             timer.schedule(notificationTimerTask, delay * 1000);
         }
+    }
+
+    private String getReminderNotification(){
+        Resources resources = getResources();
+        StringBuilder notification = new StringBuilder();
+
+        notification
+                .append(resources.getString(R.string.reminder_content_text))
+                .append(" \"")
+                .append(SystemUtils.getNextGpCountry(getApplicationContext()))
+                .append("\" ").append(resources.getString(R.string.reminder_content_text2)).append(" ")
+                .append(SystemUtils.getNextGpTimeout(getApplicationContext()));
+
+        return notification.toString();
     }
 }

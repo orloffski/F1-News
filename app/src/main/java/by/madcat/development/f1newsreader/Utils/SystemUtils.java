@@ -9,6 +9,10 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import by.madcat.development.f1newsreader.R;
 
 public class SystemUtils {
 
@@ -64,8 +68,28 @@ public class SystemUtils {
     }
 
     public static String getNextGpData(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_COUNTRY, "")
-                + "\n" + PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_DATE, "");
+        return getNextGpCountry(context)
+                + "\n"
+                + getNextGpDate(context);
+    }
+
+    public static String getNextGpCountry(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_COUNTRY, "");
+    }
+
+    public static String getNextGpDate(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_DATE, "");
+    }
+
+    public static String getNextGpTimeout(Context context){
+        int timeout = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("reminder_interval", "0"));
+        List<String> intervals = Arrays.asList(context.getResources().getStringArray(R.array.intervals_milliseconds));
+
+        int index = intervals.indexOf(String.valueOf(timeout));
+
+        String[] intervals_titles = context.getResources().getStringArray(R.array.intervals_title);
+
+        return intervals_titles[index];
     }
 
     public static int getNextGpTime(Context context){
