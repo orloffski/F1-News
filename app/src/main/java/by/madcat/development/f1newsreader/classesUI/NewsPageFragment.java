@@ -66,6 +66,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         title = (TextView) view.findViewById(R.id.content_title);
         htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
         image = (ImageView) view.findViewById(R.id.content_image);
+        image.setPadding(20, 0, 20, 0);
         date = (TextView) view.findViewById(R.id.content_date);
         shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
