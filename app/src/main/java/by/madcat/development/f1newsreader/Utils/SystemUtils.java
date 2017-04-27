@@ -56,17 +56,6 @@ public class SystemUtils {
         editor.commit();
     }
 
-    public static void loadTimersData(String urlString, Context context) throws IOException {
-        org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(GP_DATA_COUNTRY, DocParseUtils.getNextGpTitle(jsDoc));
-        editor.putString(GP_DATA_DATE, DocParseUtils.getNextGpDate(jsDoc));
-        editor.putInt(GP_DATA_TIMESTAMP, Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)));
-        editor.commit();
-    }
-
     public static String getNextGpData(Context context){
         return getNextGpCountry(context)
                 + "\n"

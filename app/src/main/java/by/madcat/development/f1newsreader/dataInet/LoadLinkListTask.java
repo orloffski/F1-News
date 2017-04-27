@@ -35,7 +35,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
         links = new HashMap<>();
 
         try {
-            SystemUtils.loadTimersData(mainSiteAdress, context);
+            DocParseUtils.loadTimersData(mainSiteAdress, context);
             loadNewsLinks(routeMap);
         } catch (IOException e) {
             e.printStackTrace();
