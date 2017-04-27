@@ -91,6 +91,15 @@ public class SystemUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(GP_DATA_TIMESTAMP, 0);
     }
 
+    public static void saveTimersData(String country, String date, int timestamp, Context context){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+
+        editor.putString(SystemUtils.GP_DATA_COUNTRY, country);
+        editor.putString(SystemUtils.GP_DATA_DATE, date);
+        editor.putInt(SystemUtils.GP_DATA_TIMESTAMP, timestamp);
+        editor.commit();
+    }
+
     public static void saveRingtoneData(String ringtonUri, Context context){
         SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putString(REMINDER_RINGTONE, ringtonUri);

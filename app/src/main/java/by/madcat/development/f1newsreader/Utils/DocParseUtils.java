@@ -1,11 +1,9 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -368,12 +366,11 @@ public final class DocParseUtils {
     public static void loadTimersData(String urlString, Context context) throws IOException {
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SystemUtils.GP_DATA_COUNTRY, DocParseUtils.getNextGpTitle(jsDoc));
-        editor.putString(SystemUtils.GP_DATA_DATE, DocParseUtils.getNextGpDate(jsDoc));
-        editor.putInt(SystemUtils.GP_DATA_TIMESTAMP, Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)));
-        editor.commit();
+        SystemUtils.saveTimersData(
+                getNextGpTitle(jsDoc),
+                getNextGpDate(jsDoc),
+                Integer.parseInt(getNextGpTimestamp(jsDoc)),
+                context);
     }
 
     public static void loadNextGranPriWeekend(String urlString, Context context) throws IOException{
