@@ -27,6 +27,7 @@ public class ReminderService extends IntentService {
     public static final String VIBRO_IS_ON = "vibro_is_on";
     public static final String RINGTONE_URI = "ringtone_uri";
     public static final String TIME_PAUSE = "time_pause";
+    public static final int PAUSE_3_HOUR = 10800000;
 
     public ReminderService() {
         super(TAG);
@@ -103,8 +104,7 @@ public class ReminderService extends IntentService {
         };
 
         if(System.currentTimeMillis()/1000 > SystemUtils.getNextGpTime(this) - intent.getIntExtra(TIME_PAUSE, 0)/1000){
-            long delay = 1000 * 60 * 60 * 3;
-            timer.schedule(runReminderTimerTask, delay);
+            timer.schedule(runReminderTimerTask, PAUSE_3_HOUR);
         }else{
             long delay = SystemUtils.getNextGpTime(this) - System.currentTimeMillis()/1000 - intent.getIntExtra(TIME_PAUSE, 0)/1000;
             timer.schedule(notificationTimerTask, delay * 1000);
@@ -112,16 +112,8 @@ public class ReminderService extends IntentService {
     }
 
     private String getReminderNotification(){
-        Resources resources = getResources();
-        StringBuilder notification = new StringBuilder();
-
-        notification
-                .append(resources.getString(R.string.reminder_content_text))
-                .append(" \"")
-                .append(SystemUtils.getNextGpCountry(getApplicationContext()))
-                .append("\" ").append(resources.getString(R.string.reminder_content_text2)).append(" ")
-                .append(SystemUtils.getNextGpTimeout(getApplicationContext()));
-
-        return notification.toString();
+        return getResources().getString(R.string.reminder_content_text,
+                SystemUtils.getNextGpCountry(getApplicationContext()),
+                SystemUtils.getNextGpTimeout(getApplicationContext()));
     }
 }

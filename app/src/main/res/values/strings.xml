@@ -87,8 +87,7 @@
 
     <string name="get_new_news">Получены новости портала F1News.ru</string>
     <string name="reminder_ticker">Напоминание о Гран-При</string>
-    <string name="reminder_content_text">До старта</string>
-    <string name="reminder_content_text2">осталось</string>
+    <string name="reminder_content_text">До старта %1$s осталось %2$s</string>
 
     <string name="action_share">Поделиться</string>
     <string name="action_backpress">Вернуться к разделу</string>
