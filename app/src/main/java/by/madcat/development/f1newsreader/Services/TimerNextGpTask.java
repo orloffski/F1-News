@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import by.madcat.development.f1newsreader.Utils.DateUtils;
+import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
@@ -41,7 +42,7 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
             }
             else if(timestamp != 0 && timestamp < System.currentTimeMillis()/1000){
                 try {
-                    SystemUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
+                    DocParseUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
                     
                     text = SystemUtils.getNextGpData(context);
                     toNextGP = DateUtils.getNextGpString(timestamp);
