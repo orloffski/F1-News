@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -142,6 +143,31 @@ public class SystemUtils {
         }
 
         editor.commit();
+    }
+
+    public static String getWeekendTitle(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_TITLE, "");
+    }
+
+    public static Map<String, String> getWeekendData(Context context){
+        Map<String, String> weekendData = new LinkedHashMap<>();
+
+        weekendData.put(
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_1ST_DAY_TITLE, ""),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_1ST_DAY_TEXT, "")
+        );
+
+        weekendData.put(
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_2ND_DAY_TITLE, ""),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_2ND_DAY_TEXT, "")
+        );
+
+        weekendData.put(
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_3RD_DAY_TITLE, ""),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_3RD_DAY_TEXT, "")
+        );
+
+        return weekendData;
     }
 
     private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){

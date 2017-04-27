@@ -30,11 +30,12 @@ import java.util.ArrayList;
 import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        NewsOpenListener {
+        NewsOpenListener, View.OnClickListener {
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
 
     private int sectionItemsCount;
@@ -310,6 +311,9 @@ public class NewsListActivity extends AppCompatActivity
     private void loadTimerLinks(){
         timerText = (TextView) findViewById(R.id.timerText);
         timer = (TextView) findViewById(R.id.timer);
+
+        timerText.setOnClickListener(this);
+        timer.setOnClickListener(this);
     }
 
     @Override
@@ -319,6 +323,26 @@ public class NewsListActivity extends AppCompatActivity
         if(resultCode == RESULT_OK){
             PreferencesFragment pref_fragment = (PreferencesFragment)getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             pref_fragment.updateReminderRingtone(data);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        String timerGpTitle = SystemUtils.getNextGpCountry(this);
+        String weekendTitle = SystemUtils.getWeekendTitle(this);
+
+        if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
+            if(searchMenu != null)
+                searchMenu.findItem(R.id.action_search).setVisible(false);
+
+            appBarLayout.setExpanded(false);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+            collapsingToolbarLayout.setTitle(weekendTitle);
         }
     }
 }

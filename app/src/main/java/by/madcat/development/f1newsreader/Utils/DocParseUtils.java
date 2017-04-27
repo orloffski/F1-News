@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
@@ -385,7 +386,7 @@ public final class DocParseUtils {
     }
 
     public static Map<String, String> getWeekendData(Element weekendTable){
-        Map<String, String> weekendData = new HashMap<>();
+        Map<String, String> weekendData = new LinkedHashMap<>();
 
         Elements theads = weekendTable.getElementsByTag("thead");
         Elements tbodies = weekendTable.getElementsByTag("tbody");
@@ -394,7 +395,8 @@ public final class DocParseUtils {
         ArrayList<String> bodyList = new ArrayList<>();
 
         for(Element head : theads)
-            headList.add(head.text());
+            if(!head.text().equals(""))
+                headList.add(head.text());
 
         for(Element body : tbodies) {
             if(!body.equals(tbodies.first())) {
@@ -403,7 +405,7 @@ public final class DocParseUtils {
             }
         }
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < headList.size(); i++)
             weekendData.put(headList.get(i), bodyList.get(i));
 
         return weekendData;
