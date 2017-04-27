@@ -41,4 +41,30 @@ public final class StringUtils {
 
         return null;
     }
+
+    public static String addNewLineCharInLongLine(String line){
+        StringBuilder tmpLine = new StringBuilder();
+        boolean needNewLine = false;
+
+        for(int i = 0; i < line.length(); i++){
+            if(needNewLine && line.charAt(i) != ' '){
+                tmpLine.append("\n");
+                tmpLine.append(line.charAt(i));
+                needNewLine = false;
+            }else {
+                if (Character.isDigit(line.charAt(i))) {
+                    if (i != line.length() - 1 && line.charAt(i + 1) == ' ') {
+                        tmpLine.append(line.charAt(i));
+                        needNewLine = true;
+                    } else {
+                        tmpLine.append(line.charAt(i));
+                    }
+                } else {
+                    tmpLine.append(line.charAt(i));
+                }
+            }
+        }
+
+        return tmpLine.toString();
+    }
 }

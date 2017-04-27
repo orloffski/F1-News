@@ -63,6 +63,13 @@ public final class DocParseUtils {
     public static final String NEXT_GP_TIMESTAMP = "stream_countdown";
     public static final String NEXT_GP_TIMESTAMP_ATTR = "data-timestamp";
 
+    public static final String NEXT_WEEKEND_GP_HEAD_STREAM = "widget stream widget_danger";
+    public static final String NEXT_WEEKEND_GP_TITLE_STREAM = "widget_title";
+    public static final String NEXT_WEEKEND_GP_BODY_STREAM = "list_featured";
+    public static final String WORDS_TO_CLEAR_1 = "Online ";
+    public static final String WORDS_TO_CLEAR_2 = "Стартовое поле ";
+
+
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
@@ -367,5 +374,41 @@ public final class DocParseUtils {
         editor.putString(SystemUtils.GP_DATA_DATE, DocParseUtils.getNextGpDate(jsDoc));
         editor.putInt(SystemUtils.GP_DATA_TIMESTAMP, Integer.parseInt(DocParseUtils.getNextGpTimestamp(jsDoc)));
         editor.commit();
+    }
+
+    public static void loadNextGranPriWeekend(String urlString, Context context) throws IOException{
+        org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
+
+        Element weekend = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_HEAD_STREAM).first();
+        String weekendTitle = weekend.getElementsByClass(NEXT_WEEKEND_GP_TITLE_STREAM).text();
+
+        Element weekendTable = weekend.getElementsByClass(NEXT_WEEKEND_GP_BODY_STREAM).first();
+
+        SystemUtils.saveWeekendData(weekendTitle, getWeekendData(weekendTable), context);
+    }
+
+    public static Map<String, String> getWeekendData(Element weekendTable){
+        Map<String, String> weekendData = new HashMap<>();
+
+        Elements theads = weekendTable.getElementsByTag("thead");
+        Elements tbodies = weekendTable.getElementsByTag("tbody");
+
+        ArrayList<String> headList = new ArrayList<>();
+        ArrayList<String> bodyList = new ArrayList<>();
+
+        for(Element head : theads)
+            headList.add(head.text());
+
+        for(Element body : tbodies) {
+            if(!body.equals(tbodies.first())) {
+                bodyList.add(StringUtils.addNewLineCharInLongLine(
+                        body.text().replace(WORDS_TO_CLEAR_1, "").replace(WORDS_TO_CLEAR_2, "")));
+            }
+        }
+
+        for(int i = 0; i < 3; i++)
+            weekendData.put(headList.get(i), bodyList.get(i));
+
+        return weekendData;
     }
 }

@@ -8,9 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
 
@@ -24,6 +24,14 @@ public class SystemUtils {
     public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
 
     public final static String REMINDER_RINGTONE = "reminder_ringtone";
+
+    public final static String WEEKEND_TITLE = "weekend_title";
+    public final static String WEEKEND_1ST_DAY_TITLE = "weekend_1st_day_title";
+    public final static String WEEKEND_2ND_DAY_TITLE = "weekend_2nd_day_title";
+    public final static String WEEKEND_3RD_DAY_TITLE = "weekend_3rd_day_title";
+    public final static String WEEKEND_1ST_DAY_TEXT = "weekend_1st_day_text";
+    public final static String WEEKEND_2ND_DAY_TEXT = "weekend_2nd_day_text";
+    public final static String WEEKEND_3RD_DAY_TEXT = "weekend_3rd_day_text";
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -39,8 +47,7 @@ public class SystemUtils {
     }
 
     public static final void setUiLoadFlag(Context context, boolean flag){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putBoolean(UI_LOAD_FLAG, flag);
         editor.commit();
     }
@@ -50,8 +57,7 @@ public class SystemUtils {
     }
 
     public static final void setBgLoadFlag(Context context, boolean flag){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putBoolean(BG_LOAD_FLAG, flag);
         editor.commit();
     }
@@ -86,8 +92,7 @@ public class SystemUtils {
     }
 
     public static void saveRingtoneData(String ringtonUri, Context context){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putString(REMINDER_RINGTONE, ringtonUri);
         editor.commit();
     }
@@ -101,5 +106,37 @@ public class SystemUtils {
         Uri ringtoneUri = Uri.parse(ringtoneUriString);
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
         return ringtone.getTitle(context);
+    }
+
+    public static void saveWeekendData(String weekendTitle, Map<String, String> weekendData, Context context){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.putString(WEEKEND_TITLE, weekendTitle);
+
+        int counter = 1;
+
+        for(Map.Entry entry : weekendData.entrySet()){
+            switch (counter){
+                case 1:
+                    editor.putString(WEEKEND_1ST_DAY_TITLE, entry.getKey().toString());
+                    editor.putString(WEEKEND_1ST_DAY_TEXT, entry.getValue().toString());
+                    break;
+                case 2:
+                    editor.putString(WEEKEND_2ND_DAY_TITLE, entry.getKey().toString());
+                    editor.putString(WEEKEND_2ND_DAY_TEXT, entry.getValue().toString());
+                    break;
+                case 3:
+                    editor.putString(WEEKEND_3RD_DAY_TITLE, entry.getKey().toString());
+                    editor.putString(WEEKEND_3RD_DAY_TEXT, entry.getValue().toString());
+                    break;
+            }
+            counter++;
+        }
+
+        editor.commit();
+    }
+
+    private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.edit();
     }
 }

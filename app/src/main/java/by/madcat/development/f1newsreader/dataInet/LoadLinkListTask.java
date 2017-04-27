@@ -12,7 +12,6 @@ import java.util.Map;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<NewsTypes, Date>>> {
@@ -36,6 +35,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
         try {
             DocParseUtils.loadTimersData(mainSiteAdress, context);
+            DocParseUtils.loadNextGranPriWeekend(mainSiteAdress, context);
             loadNewsLinks(routeMap);
         } catch (IOException e) {
             e.printStackTrace();
