@@ -63,10 +63,14 @@ public final class DocParseUtils {
     public static final String NEXT_GP_TIMESTAMP_ATTR = "data-timestamp";
 
     public static final String NEXT_WEEKEND_GP_HEAD_STREAM = "widget stream widget_danger";
+    public static final String NEXT_WEEKEND_GP_IMAGE_STREAM = "stream_wrap";
     public static final String NEXT_WEEKEND_GP_TITLE_STREAM = "widget_title";
     public static final String NEXT_WEEKEND_GP_BODY_STREAM = "list_featured";
+    public static final String NEXT_WEEKEND_GP_BIMAGE_LINK_ID = "style";
     public static final String WORDS_TO_CLEAR_1 = "Online ";
     public static final String WORDS_TO_CLEAR_2 = "Стартовое поле ";
+    public static final String WORDS_TO_CLEAR_3 = "background: url(";
+    public static final String WORDS_TO_CLEAR_4 = ");";
 
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
@@ -380,9 +384,13 @@ public final class DocParseUtils {
         Element weekend = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_HEAD_STREAM).first();
         String weekendTitle = weekend.getElementsByClass(NEXT_WEEKEND_GP_TITLE_STREAM).text();
 
+        Element weekendImage = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_IMAGE_STREAM).first();
+        String weekendImageLink =
+                weekendImage.attr(NEXT_WEEKEND_GP_BIMAGE_LINK_ID).replace(WORDS_TO_CLEAR_3, ""). replace(WORDS_TO_CLEAR_4,"");
+
         Element weekendTable = weekend.getElementsByClass(NEXT_WEEKEND_GP_BODY_STREAM).first();
 
-        SystemUtils.saveWeekendData(weekendTitle, getWeekendData(weekendTable), context);
+        SystemUtils.saveWeekendData(weekendTitle, weekendImageLink, getWeekendData(weekendTable), context);
     }
 
     public static Map<String, String> getWeekendData(Element weekendTable){

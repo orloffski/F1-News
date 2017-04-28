@@ -2,18 +2,28 @@ package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
+
+import static by.madcat.development.f1newsreader.dataInet.LoadNewsTask.IMAGE_PATH;
 
 public class SystemUtils {
 
@@ -27,6 +37,7 @@ public class SystemUtils {
     public final static String REMINDER_RINGTONE = "reminder_ringtone";
 
     public final static String WEEKEND_TITLE = "weekend_title";
+    public final static String WEEKEND_IMAGE = "weekend_image";
     public final static String WEEKEND_1ST_DAY_TITLE = "weekend_1st_day_title";
     public final static String WEEKEND_2ND_DAY_TITLE = "weekend_2nd_day_title";
     public final static String WEEKEND_3RD_DAY_TITLE = "weekend_3rd_day_title";
@@ -118,9 +129,14 @@ public class SystemUtils {
         return ringtone.getTitle(context);
     }
 
-    public static void saveWeekendData(String weekendTitle, Map<String, String> weekendData, Context context){
+    public static void saveWeekendData(String weekendTitle, String weekendImageLink, Map<String, String> weekendData, Context context){
         SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putString(WEEKEND_TITLE, weekendTitle);
+        try {
+            editor.putString(WEEKEND_IMAGE, loadWeekendImage(weekendImageLink, context));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         int counter = 1;
 
@@ -149,6 +165,10 @@ public class SystemUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_TITLE, "");
     }
 
+    public static String getWeekendImage(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_IMAGE, "");
+    }
+
     public static Map<String, String> getWeekendData(Context context){
         Map<String, String> weekendData = new LinkedHashMap<>();
 
@@ -173,5 +193,34 @@ public class SystemUtils {
     private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.edit();
+    }
+
+    private static String loadWeekendImage(String imageUrl, Context context) throws IOException {
+        File sdPath = context.getFilesDir();
+
+        sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
+
+        if(!sdPath.exists())
+            sdPath.mkdirs();
+
+        String filename = StringUtils.getImageNameFromURL(imageUrl);
+        File imageOnMemory = new File(sdPath, filename);
+
+        Bitmap image;
+
+        OutputStream fOut;
+        fOut = new FileOutputStream(imageOnMemory);
+
+        InputStream in = new URL(imageUrl).openStream();
+        if(in != null) {
+            image = BitmapFactory.decodeStream(in);
+            image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+        }
+
+        fOut.flush();
+        fOut.close();
+        in.close();
+
+        return filename;
     }
 }
