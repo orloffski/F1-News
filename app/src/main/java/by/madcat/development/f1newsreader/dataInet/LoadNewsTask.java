@@ -92,8 +92,10 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         // news image
         String image = "";
         if(!(image = DocParseUtils.getNewsImage(jsDoc)).equals("")) {
-            loadNewsImage(image);
-            newsData.add(StringUtils.getImageNameFromURL(image));
+            if(loadNewsImage(image))
+                newsData.add(StringUtils.getImageNameFromURL(image));
+            else
+                newsData.add("");
         }else
             newsData.add("");
 
@@ -121,7 +123,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         sender.checkNewsLoadCount(true);
     }
 
-    private void loadNewsImage(String imageUrl) throws IOException {
+    private boolean loadNewsImage(String imageUrl) throws IOException {
         File sdPath = context.getFilesDir();
 
         sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
@@ -139,11 +141,17 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
         InputStream in = new URL(imageUrl).openStream();
         if(in != null) {
             image = BitmapFactory.decodeStream(in);
-            image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+            if(image != null)
+                image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
         }
 
         fOut.flush();
         fOut.close();
         in.close();
+
+        if(image != null)
+            return true;
+        else
+            return false;
     }
 }

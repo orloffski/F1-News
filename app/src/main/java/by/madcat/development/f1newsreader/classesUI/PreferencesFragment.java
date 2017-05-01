@@ -57,6 +57,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);
                 }else{
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
+                    SystemUtils.setBgLoadFlag(getContext(), false);
                 }
 
                 return false;
@@ -94,10 +95,14 @@ public class PreferencesFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 if(!reminder_on.isChecked()){
                     cancelReminder();
+                    reminder_interval.setEnabled(reminder_on.isChecked());
+                    reminder_ringtone.setEnabled(reminder_on.isChecked());
+                    reminder_vibro.setEnabled(reminder_on.isChecked());
                 }else{
                     if(SystemUtils.getNextGpTime(getContext()) == 0){
                         Toast.makeText(getContext(), getString(R.string.reminder_data_null), Toast.LENGTH_SHORT).show();
                         cancelReminder();
+                        reminder_on.setChecked(false);
                     }else{
                         int defaultValue = Integer.parseInt(reminder_interval.getValue());
                         boolean vibroValue = reminder_vibro.isChecked();

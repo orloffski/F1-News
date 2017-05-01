@@ -51,6 +51,8 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else{
+                publishProgress("", "");
             }
 
 

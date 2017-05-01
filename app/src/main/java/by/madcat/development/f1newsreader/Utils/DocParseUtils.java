@@ -292,7 +292,8 @@ public final class DocParseUtils {
                 view = new ImageView(context);
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-                final String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;
+
+                final String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;;
 
                 Glide.with(context)
                         .load(pathToImage)
@@ -304,7 +305,7 @@ public final class DocParseUtils {
                             @Override
                             public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
                                 super.onResourceReady(bitmap, anim);
-                                Glide.with(context).load(pathToImage).into(view);
+                                Glide.with(context).load(pathToImage).placeholder(R.drawable.f1_logo).into(view);
                             }
                         });
                 view.setPadding(0, 10, 0, 0);

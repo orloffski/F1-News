@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 
-public class ReminderBroadcastReceiver extends BroadcastReceiver {
+public class ReminderBootBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int reminder_interval = Integer.parseInt(PreferenceManager
