@@ -214,7 +214,10 @@ public class SystemUtils {
         InputStream in = new URL(imageUrl).openStream();
         if(in != null) {
             image = BitmapFactory.decodeStream(in);
-            image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+            if(image != null)
+                image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
+            else
+                filename = "";
         }
 
         fOut.flush();
