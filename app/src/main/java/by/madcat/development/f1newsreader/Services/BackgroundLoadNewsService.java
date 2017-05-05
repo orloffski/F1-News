@@ -23,9 +23,6 @@ import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";
 
-    private int countNewsToLoad;
-    private int countNewsLoaded;
-
     public static Intent newIntent(Context context){
         return new Intent(context, BackgroundLoadNewsService.class);
     }
@@ -58,16 +55,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         }
     }
 
-    private boolean isNetworkAvailableAndConnected(){
-        ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-
-        boolean isNetworkAvailable = cm.getActiveNetworkInfo() != null;
-        boolean isNetworkConnected = isNetworkAvailable && cm.getActiveNetworkInfo().isConnected();
-
-        return isNetworkConnected;
-    }
-
-    private void sendNotification(int countNews){
+    public void sendNotification(int countNews){
         Resources resources = getResources();
         Intent i = NewsListActivity.newIntent(this);
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
@@ -89,52 +77,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         notificationManager.notify(0, notification);
     }
 
-    @Override
-    public void checkNewsLoadCount(boolean loaded) {
-        if(loaded)
-            this.countNewsLoaded += 1;
-
-        if(this.countNewsLoaded == this.countNewsToLoad)
-            loadComplete();
-    }
-
-    @Override
-    public void sendNewsLoadCount(int count) {
-        if(count == 0){
-            this.countNewsToLoad = 0;
-            this.countNewsLoaded = 0;
-        }else {
-            this.countNewsToLoad = count;
-        }
-    }
-
-    @Override
-    public void cancelLinkLoad() {
-        this.countNewsToLoad--;
-        checkNewsLoadCount(false);
-    }
-
-    @Override
-    public void loadStart() {
-    }
-
-    @Override
-    public void loadComplete() {
-        if(this.countNewsToLoad == 0)
-            return;
-
-        sendNotification(countNewsToLoad);
-
-        SystemUtils.setBgLoadFlag(getApplicationContext(), false);
-    }
-
-    @Override
-    public void loadCanceled() {
-
-    }
-
     private void runLoad(){
-        if(!isNetworkAvailableAndConnected())
+        if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext()))
             return;
 
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();

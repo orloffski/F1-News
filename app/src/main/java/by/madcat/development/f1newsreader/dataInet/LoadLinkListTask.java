@@ -50,15 +50,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
     protected void onPostExecute(Map<String, Map<NewsTypes, Date>> strings) {
         super.onPostExecute(strings);
 
-        sender.sendNewsLoadCount(0);
-
-        if(strings.size() == 0){
-            sender.loadCanceled();
-            return;
-        }
-
-        sender.sendNewsLoadCount(strings.size());
-        sender.loadStart();
+        NewsLinkListToLoad links = NewsLinkListToLoad.getInstance(sender);
 
         for(Map.Entry entry : strings.entrySet()){
             ArrayList<String> dataLink = new ArrayList<>();
@@ -68,8 +60,10 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
                 dataLink.add(tmp.getValue().toString());
             }
 
-            new LoadNewsTask(dataLink, context, sender).execute();
+            links.addLoadNewsTask(new LoadNewsTask(dataLink, context, links));
         }
+
+        links.runLoadNews();
     }
 
     private void loadNewsLinks(String urlString) throws IOException{

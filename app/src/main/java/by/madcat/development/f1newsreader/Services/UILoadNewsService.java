@@ -11,8 +11,6 @@ import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
 
 public class UILoadNewsService extends Service implements NewsLoadSender {
-    private int countNewsToLoad;
-    private int countNewsLoaded;
     private Intent intent;
     private static boolean isServiceRun;
     private static boolean loadIsBG;
@@ -39,64 +37,18 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
             loadLinksTask.execute();
         }else{
             loadIsBG = true;
-            loadCanceled();
         }
 
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
-    public void checkNewsLoadCount(boolean loaded) {
-        if(loaded)
-            this.countNewsLoaded += 1;
-
-        if(this.countNewsLoaded == this.countNewsToLoad)
-            loadComplete();
-    }
-
-    @Override
-    public void sendNewsLoadCount(int count) {
-        if(count == 0){
-            this.countNewsToLoad = 0;
-            this.countNewsLoaded = 0;
-        }else {
-            this.countNewsToLoad = count;
-        }
-    }
-
-    @Override
-    public void cancelLinkLoad() {
-        this.countNewsToLoad--;
-        checkNewsLoadCount(false);
-    }
-
-    @Override
-    public void loadStart() {
-    }
-
-    @Override
-    public void loadComplete() {
-        this.isServiceRun = false;
-        sendNotification(countNewsToLoad);
-
-        SystemUtils.setUiLoadFlag(getApplicationContext(), false);
-    }
-
-    @Override
-    public void loadCanceled() {
-        this.isServiceRun = false;
-
-        if(loadIsBG)
-            sendNotification(-1);
-        else
-            sendNotification(0);
-    }
-
-    private void sendNotification(int count){
+    public void sendNotification(int count) {
         this.intent = new Intent(NewsListFragment.BROADCAST_ACTION);
         this.intent.putExtra(NewsListFragment.SERVICE_DATA, count);
         sendBroadcast(intent);
     }
+
 
     public static boolean isServiceRun() {
         return isServiceRun;

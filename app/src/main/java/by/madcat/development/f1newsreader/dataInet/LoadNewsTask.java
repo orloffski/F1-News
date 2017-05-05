@@ -30,15 +30,15 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 
     private ArrayList<String> dataLink;
     private Context context;
-    private NewsLoadSender sender;
     private ArrayList<String> bodyImages;
+    private NewsLinkListToLoad linksList;
 
     private boolean newsLoaded = false;
 
-    public LoadNewsTask(ArrayList<String> dataLink, Context context, NewsLoadSender sender){
+    public LoadNewsTask(ArrayList<String> dataLink, Context context, NewsLinkListToLoad linksList){
         this.dataLink = dataLink;
         this.context = context;
-        this.sender = sender;
+        this.linksList = linksList;
     }
 
     @Override
@@ -61,10 +61,6 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-        if(!this.newsLoaded){
-            sender.cancelLinkLoad();
-        }
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type, Date rssDate) throws IOException {
@@ -120,7 +116,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
         this.newsLoaded = true;
-        sender.checkNewsLoadCount(true);
+
+        linksList.removeLoadNewsTask(this);
     }
 
     private boolean loadNewsImage(String imageUrl) throws IOException {
