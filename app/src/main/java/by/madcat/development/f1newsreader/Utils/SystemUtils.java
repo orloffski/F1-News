@@ -46,6 +46,8 @@ public class SystemUtils {
     public static final String IMAGE_PATH = "F1NewsImages";
     public static final String APP_ON_SD_PATH = "F1NewsReader";
 
+    public static final String SAVE_IMAGES_ON_SD = "images_on_sd";
+
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -208,13 +210,16 @@ public class SystemUtils {
         return filename;
     }
 
-    public static String getImagesPath(Context context){
-        String imagesPath;
+    public static boolean imagesOnSdCard(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SAVE_IMAGES_ON_SD, false);
+    }
 
-        if(externalSdIsMounted()){
-            imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
-        }else{
-            imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
+    public static String getImagesPath(Context context){
+        String imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
+
+        if(imagesOnSdCard(context)){
+            if(externalSdIsMounted())
+                imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
         }
 
         return imagesPath;

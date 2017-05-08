@@ -302,7 +302,6 @@ public final class DocParseUtils {
                 Glide.with(context).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into((ImageView) view);
 
                 view.setPadding(0, 10, 0, 0);
-
                 break;
         }
 
