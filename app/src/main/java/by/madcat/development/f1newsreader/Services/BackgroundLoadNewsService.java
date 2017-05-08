@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -19,6 +18,7 @@ import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
+import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";
@@ -33,11 +33,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(!SystemUtils.getUiLoadFlag(getApplicationContext())) {
-            SystemUtils.setBgLoadFlag(getApplicationContext(), true);
-
+        if(NewsLinkListToLoad.getInstance(this).getNewsCount() == 0)
             runLoad();
-        }
     }
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
@@ -56,6 +53,11 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     }
 
     public void sendNotification(int countNews){
+        if(countNews != 0)
+            sendMessage(countNews);
+    }
+
+    public void sendMessage(int countNews){
         Resources resources = getResources();
         Intent i = NewsListActivity.newIntent(this);
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);

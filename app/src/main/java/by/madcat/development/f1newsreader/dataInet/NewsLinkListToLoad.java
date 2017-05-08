@@ -14,6 +14,8 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     public static NewsLinkListToLoad getInstance(NewsLoadSender sender) {
         if(ourInstance == null)
             ourInstance = new NewsLinkListToLoad(sender);
+        else if(ourInstance.newsCount == 0)
+            updateSender(sender);
 
         return ourInstance;
     }
@@ -21,6 +23,10 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     private NewsLinkListToLoad(NewsLoadSender sender) {
         this.sender = sender;
         newsLinkList = new ArrayList<>();
+    }
+
+    private static void updateSender(NewsLoadSender newSender){
+        ourInstance.sender = newSender;
     }
 
     @Override
@@ -35,11 +41,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
         if(newsLinkList.size() == 0)
             completeLoadNews();
-    }
-
-    @Override
-    public int getLoadedNewsCount() {
-        return newsCount;
     }
 
     @Override
@@ -69,5 +70,9 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
             return 0;
         else
             return newsLinkList.size();
+    }
+
+    public int getNewsCount() {
+        return newsCount;
     }
 }

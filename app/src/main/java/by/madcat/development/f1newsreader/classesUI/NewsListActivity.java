@@ -125,7 +125,7 @@ public class NewsListActivity extends AppCompatActivity
             fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
 
-            if(type == null) {
+            if(type == null || type.toString().equals("")) {
                 openSectionNews(NewsTypes.NEWS, null);
             }else {
                 setActivityTitle(type);
