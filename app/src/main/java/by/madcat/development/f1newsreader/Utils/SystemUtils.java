@@ -208,16 +208,22 @@ public class SystemUtils {
     }
 
     public static String getImagesPath(Context context){
-        String appImagesOnSd = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH;
-        File appOnSdFolder = new File(appImagesOnSd);
         String imagesPath;
 
-        if(!appOnSdFolder.exists()) {
+        if(externalSdIsMounted()){
             imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
-        }else {
+        }else{
             imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
         }
 
         return imagesPath;
+    }
+
+    public static boolean externalSdIsMounted(){
+        String s = System.getenv("SECONDARY_STORAGE");
+        if(s == null)
+            return false;
+
+        return true;
     }
 }

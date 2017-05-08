@@ -5,10 +5,12 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.RingtonePreference;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
@@ -57,7 +59,6 @@ public class PreferencesFragment extends PreferenceFragment {
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);
                 }else{
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
-                    SystemUtils.setBgLoadFlag(getContext(), false);
                 }
 
                 return false;
@@ -145,6 +146,10 @@ public class PreferencesFragment extends PreferenceFragment {
                 return false;
             }
         });
+
+        // перенос изображений на карту памяти
+        CheckBoxPreference move_to_sd = (CheckBoxPreference)findPreference("move_pic_to_sd");
+        move_to_sd.setEnabled(SystemUtils.externalSdIsMounted());
     }
 
     private void cancelReminder(){
