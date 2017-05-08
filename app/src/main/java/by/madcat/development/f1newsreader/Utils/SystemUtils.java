@@ -212,8 +212,6 @@ public class SystemUtils {
         File appOnSdFolder = new File(appImagesOnSd);
         String imagesPath;
 
-        Log.d("test", "path: " + appImagesOnSd);
-
         if(!appOnSdFolder.exists()) {
             imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
         }else {
