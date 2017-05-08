@@ -211,9 +211,9 @@ public class SystemUtils {
         String imagesPath;
 
         if(externalSdIsMounted()){
-            imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
-        }else{
             imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
+        }else{
+            imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
         }
 
         return imagesPath;
