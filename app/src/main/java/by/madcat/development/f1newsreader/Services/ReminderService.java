@@ -13,8 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
@@ -26,7 +25,6 @@ public class ReminderService extends IntentService {
     public static final String VIBRO_IS_ON = "vibro_is_on";
     public static final String RINGTONE_URI = "ringtone_uri";
     public static final String TIME_PAUSE = "time_pause";
-    public static final int PAUSE_3_HOUR = 10800000;
 
     public ReminderService() {
         super(TAG);
@@ -48,12 +46,15 @@ public class ReminderService extends IntentService {
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause, boolean vibroIsOn, String ringtoneUri){
         Intent i = ReminderService.newIntent(context, vibroIsOn, ringtoneUri, timePause);
-        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
+        PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+        int delay = SystemUtils.getNextGpTime(context) - (int)System.currentTimeMillis()/1000 - timePause/1000;
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, delay);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        if(isOn) {
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, timePause, pi);
+        if(isOn && delay > 0) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
         }
         else{
             alarmManager.cancel(pi);
@@ -62,52 +63,31 @@ public class ReminderService extends IntentService {
     }
 
     private void runReminder(final Intent intent){
-        Timer timer = new Timer();
+        Resources resources = getResources();
+        Intent i = NewsListActivity.newIntent(getApplicationContext());
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, i, 0);
 
-        TimerTask notificationTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Resources resources = getResources();
-                Intent i = NewsListActivity.newIntent(getApplicationContext());
-                PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, i, 0);
-
-                long[] vibrate;
-                if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
-                    vibrate = new long[] { 1000, 1000, 1000, 1000, 1000 };
-                }else{
-                    vibrate = new long[]{};
-                }
-
-                Notification notification = new NotificationCompat.Builder(getApplicationContext())
-                        .setTicker(resources.getString(R.string.reminder_ticker))
-                        .setSmallIcon(R.drawable.ic_notif_logo)
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-                        .setContentTitle(resources.getString(R.string.reminder_ticker))
-                        .setContentText(getReminderNotification())
-                        .setSound(Uri.parse(intent.getStringExtra(ReminderService.RINGTONE_URI)))
-                        .setVibrate(vibrate)
-                        .setContentIntent(pi)
-                        .setAutoCancel(true)
-                        .build();
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                notificationManager.notify(0, notification);
-            }
-        };
-
-        TimerTask runReminderTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runReminder(intent);
-            }
-        };
-
-        if(System.currentTimeMillis()/1000 > SystemUtils.getNextGpTime(this) - intent.getIntExtra(TIME_PAUSE, 0)/1000){
-            timer.schedule(runReminderTimerTask, PAUSE_3_HOUR);
+        long[] vibrate;
+        if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
+            vibrate = new long[] { 1000, 1000, 1000, 1000, 1000 };
         }else{
-            long delay = SystemUtils.getNextGpTime(this) - System.currentTimeMillis()/1000 - intent.getIntExtra(TIME_PAUSE, 0)/1000;
-            timer.schedule(notificationTimerTask, delay * 1000);
+            vibrate = new long[]{};
         }
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext())
+                .setTicker(resources.getString(R.string.reminder_ticker))
+                .setSmallIcon(R.drawable.ic_notif_logo)
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                .setContentTitle(resources.getString(R.string.reminder_ticker))
+                .setContentText(getReminderNotification())
+                .setSound(Uri.parse(intent.getStringExtra(ReminderService.RINGTONE_URI)))
+                .setVibrate(vibrate)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+        notificationManager.notify(0, notification);
     }
 
     private String getReminderNotification(){

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.ReminderService;
 
 public class SystemUtils {
     public static final String GP_DATA_COUNTRY = "gp_country";
@@ -252,5 +253,16 @@ public class SystemUtils {
 
     public static float getImageScaleHeight(float originalHeight, float scale){
         return originalHeight * scale;
+    }
+
+    public static void updateReminder(Context context){
+        if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("reminder_on", false)){
+            int reminderInterval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("reminder_interval", "0"));
+            boolean reminderVibration = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("reminder_vibration", false);
+            String reminderRingtoneUri = loadRingtoneData(context);
+
+            ReminderService.setServiceAlarm(context, false, 0, false, null);
+            ReminderService.setServiceAlarm(context, true, reminderInterval, reminderVibration, reminderRingtoneUri);
+        }
     }
 }

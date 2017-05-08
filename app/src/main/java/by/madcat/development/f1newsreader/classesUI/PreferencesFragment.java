@@ -5,12 +5,10 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.RingtonePreference;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
