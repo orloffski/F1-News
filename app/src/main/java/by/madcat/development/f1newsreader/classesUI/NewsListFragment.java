@@ -180,6 +180,8 @@ public class NewsListFragment extends Fragment
             }
         });
 
+        checkServiceIsRun();
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
@@ -220,6 +222,11 @@ public class NewsListFragment extends Fragment
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
+    }
+
+    private void checkServiceIsRun(){
+        if(UILoadNewsService.isThisServiceIsRun())
+            this.swipeRefreshLayout.setRefreshing(true);
     }
 
     private String createLoadMessage(int count){

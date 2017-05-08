@@ -119,8 +119,8 @@ public class NewsListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
-            openSectionNews(NewsTypes.NEWS, null);
             nowType = NewsTypes.NEWS;
+            openSectionNews(nowType, null);
         }else{
             fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
