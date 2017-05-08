@@ -2,6 +2,7 @@ package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Ringtone;
@@ -225,5 +226,26 @@ public class SystemUtils {
             return false;
 
         return true;
+    }
+
+    public static int getResizedImageHeight(Bitmap bitmap){
+        int screenWidth = getScreenWidth();
+        int originalWidth = bitmap.getWidth();
+        int originalHeight = bitmap.getHeight();
+        float scale = getScale(originalWidth, screenWidth);
+
+        return (int)SystemUtils.getImageScaleHeight(originalHeight, scale);
+    }
+
+    public static int getScreenWidth(){
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static float getScale(float original, float resized){
+        return resized / original;
+    }
+
+    public static float getImageScaleHeight(float originalHeight, float scale){
+        return originalHeight * scale;
     }
 }

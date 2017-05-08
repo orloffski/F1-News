@@ -2,6 +2,7 @@ package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
@@ -289,26 +290,19 @@ public final class DocParseUtils {
                 view.setPadding(0, 10, 0, 0);
                 break;
             case "ImageView":
-                view = new ImageView(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
                 final String pathToImage = SystemUtils.getImagesPath(context) + "/" + text;
 
-                Glide.with(context)
-                        .load(pathToImage)
-                        .asBitmap()
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.f1_logo)
-                        .into(new BitmapImageViewTarget((ImageView)view) {
-                            @Override
-                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                                super.onResourceReady(bitmap, anim);
-                                Glide.with(context).load(pathToImage).placeholder(R.drawable.f1_logo).into(view);
-                            }
-                        });
+                Bitmap image = BitmapFactory.decodeFile(pathToImage);
+                int imageHeight = SystemUtils.getResizedImageHeight(image);
+
+                view = new ImageView(context);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        imageHeight));
+
+                Glide.with(context).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into((ImageView) view);
+
                 view.setPadding(0, 10, 0, 0);
+
                 break;
         }
 
