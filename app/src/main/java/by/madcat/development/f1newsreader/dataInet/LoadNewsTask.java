@@ -17,16 +17,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
-public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
+import static by.madcat.development.f1newsreader.Utils.SystemUtils.IMAGE_PATH;
 
-    public static final String IMAGE_PATH = "F1NewsImages";
+public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 
     private ArrayList<String> dataLink;
     private Context context;
@@ -121,9 +121,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     }
 
     private boolean loadNewsImage(String imageUrl) throws IOException {
-        File sdPath = context.getFilesDir();
-
-        sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
+        File sdPath = new File(SystemUtils.getImagesPath(context));
 
         if(!sdPath.exists())
             sdPath.mkdirs();

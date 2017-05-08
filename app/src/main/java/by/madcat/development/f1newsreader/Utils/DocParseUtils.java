@@ -293,7 +293,7 @@ public final class DocParseUtils {
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                final String pathToImage = context.getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + text;;
+                final String pathToImage = SystemUtils.getImagesPath(context);
 
                 Glide.with(context)
                         .load(pathToImage)

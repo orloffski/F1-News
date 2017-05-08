@@ -10,6 +10,7 @@ import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
@@ -28,8 +29,8 @@ public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<ViewH
         holder.title.setText(cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_TITLE)));
         holder.date.setText(DateUtils.untransformDateTime(cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_DATE))));
 
-        String pathToImage = context.getFilesDir() +
-                "/" + LoadNewsTask.IMAGE_PATH + "/" + cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_IMAGE));
+        String pathToImage = SystemUtils.getImagesPath(context)
+                 + "/" + cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_IMAGE));
 
         Glide.with(context).load(new File(pathToImage)).placeholder(R.drawable.f1_logo).into(holder.thumbnail);
     }

@@ -8,7 +8,10 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,13 +26,7 @@ import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
 
-import static by.madcat.development.f1newsreader.dataInet.LoadNewsTask.IMAGE_PATH;
-
 public class SystemUtils {
-
-    public static final String BG_LOAD_FLAG = "bg_load_run";
-    public static final String UI_LOAD_FLAG = "ui_load_run";
-
     public static final String GP_DATA_COUNTRY = "gp_country";
     public static final String GP_DATA_DATE = "gp_date";
     public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
@@ -45,6 +42,9 @@ public class SystemUtils {
     public final static String WEEKEND_2ND_DAY_TEXT = "weekend_2nd_day_text";
     public final static String WEEKEND_3RD_DAY_TEXT = "weekend_3rd_day_text";
 
+    public static final String IMAGE_PATH = "F1NewsImages";
+    public static final String APP_ON_SD_PATH = "F1NewsReader";
+
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -52,26 +52,6 @@ public class SystemUtils {
         boolean isNetworcConnected = isNetworkAvailable && cm.getActiveNetworkInfo().isConnected();
 
         return isNetworcConnected;
-    }
-
-    public static final boolean getUiLoadFlag(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(UI_LOAD_FLAG, false);
-    }
-
-    public static final void setUiLoadFlag(Context context, boolean flag){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putBoolean(UI_LOAD_FLAG, flag);
-        editor.commit();
-    }
-
-    public static final boolean getBgLoadFlag(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(BG_LOAD_FLAG, false);
-    }
-
-    public static final void setBgLoadFlag(Context context, boolean flag){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putBoolean(BG_LOAD_FLAG, flag);
-        editor.commit();
     }
 
     public static String getNextGpData(Context context){
@@ -225,5 +205,21 @@ public class SystemUtils {
         in.close();
 
         return filename;
+    }
+
+    public static String getImagesPath(Context context){
+        String appImagesOnSd = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH;
+        File appOnSdFolder = new File(appImagesOnSd);
+        String imagesPath;
+
+        Log.d("test", "path: " + appImagesOnSd);
+
+        if(!appOnSdFolder.exists()) {
+            imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
+        }else {
+            imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
+        }
+
+        return imagesPath;
     }
 }

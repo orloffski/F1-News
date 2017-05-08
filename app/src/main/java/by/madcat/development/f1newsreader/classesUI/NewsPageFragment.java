@@ -21,6 +21,7 @@ import java.io.File;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
@@ -110,7 +111,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             htmlTextView.setHtmlText(data.getString(newsIndex));
 
             if(!data.getString(imageIndex).isEmpty()) {
-                String pathToImage = getActivity().getFilesDir() + "/" + LoadNewsTask.IMAGE_PATH + "/" + data.getString(imageIndex);
+                String pathToImage = SystemUtils.getImagesPath(getContext());
                 File imageFile = new File(pathToImage);
                 Glide.with(getContext()).load(imageFile).placeholder(R.drawable.f1_logo).into(image);
             }else{
