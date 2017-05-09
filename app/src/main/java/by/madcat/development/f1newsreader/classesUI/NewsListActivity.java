@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +39,8 @@ public class NewsListActivity extends AppCompatActivity
         NewsOpenListener, View.OnClickListener {
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
 
+    private CoordinatorLayout coordinatorLayout;
+
     private int sectionItemsCount;
     private ArrayList<String> newsIDs;
     private ArrayList<String> newsLinks;
@@ -68,6 +71,8 @@ public class NewsListActivity extends AppCompatActivity
         setContentView(R.layout.activity_news_list);
         toolbar = (Toolbar) findViewById(R.id.toolbar_list);
         setSupportActionBar(toolbar);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout_list);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
@@ -361,5 +366,9 @@ public class NewsListActivity extends AppCompatActivity
 
             collapsingToolbarLayout.setTitle(weekendTitle);
         }
+    }
+
+    public CoordinatorLayout getCoordinatorLayout(){
+        return this.coordinatorLayout;
     }
 }

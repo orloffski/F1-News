@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -25,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -158,7 +158,7 @@ public class NewsListFragment extends Fragment
                 swipeRefreshLayout.setRefreshing(false);
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
-                Toast.makeText(context, createLoadMessage(data), Toast.LENGTH_SHORT).show();
+                Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
             }
         };
 
@@ -254,7 +254,7 @@ public class NewsListFragment extends Fragment
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(context, getString(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+            Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);

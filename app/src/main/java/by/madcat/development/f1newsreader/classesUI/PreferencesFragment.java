@@ -9,7 +9,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.RingtonePreference;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
@@ -99,7 +99,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     reminder_vibro.setEnabled(reminder_on.isChecked());
                 }else{
                     if(SystemUtils.getNextGpTime(getContext()) == 0){
-                        Toast.makeText(getContext(), getString(R.string.reminder_data_null), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), getString(R.string.reminder_data_null), Snackbar.LENGTH_SHORT).show();
                         cancelReminder();
                         reminder_on.setChecked(false);
                     }else{
