@@ -135,6 +135,8 @@ public class NewsListActivity extends AppCompatActivity
             }else {
                 setActivityTitle(type);
             }
+
+            nowType = type;
         }
     }
 
