@@ -33,7 +33,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NewsLinkListToLoad.getInstance(this).getNewsCount() == 0)
+        if(!NewsLinkListToLoad.getInstance(this).isLock())
             runLoad();
     }
 

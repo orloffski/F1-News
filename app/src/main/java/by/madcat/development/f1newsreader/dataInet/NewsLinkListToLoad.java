@@ -10,6 +10,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     private ArrayList<LoadNewsTask> newsLinkList;
     private int newsCount;
     private NewsLoadSender sender;
+    private boolean lock;
 
     public static NewsLinkListToLoad getInstance(NewsLoadSender sender) {
         if(ourInstance == null)
@@ -31,6 +32,9 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void addLoadNewsTask(LoadNewsTask task) {
+        if(!lock)
+            lock = true;
+
         newsLinkList.add(task);
         newsCount++;
     }
@@ -56,12 +60,14 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     public void completeLoadNews() {
         sender.sendNotification(newsCount);
         newsCount = 0;
+        lock = false;
     }
 
     @Override
     public void cancelLoadNews() {
         sender.sendNotification(0);
         newsCount = 0;
+        lock = false;
     }
 
     @Override
@@ -74,5 +80,13 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     public int getNewsCount() {
         return newsCount;
+    }
+
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
     }
 }

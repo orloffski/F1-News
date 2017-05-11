@@ -159,7 +159,7 @@ public class PreferencesFragment extends PreferenceFragment {
         move_to_sd.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(NewsLinkListToLoad.getInstance(null).getNewsCount() != 0){
+                if(NewsLinkListToLoad.getInstance(null).isLock()){
                     SystemUtils.sendSnackbarMessage(
                             ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),

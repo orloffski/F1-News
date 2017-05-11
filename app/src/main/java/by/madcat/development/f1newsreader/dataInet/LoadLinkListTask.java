@@ -19,11 +19,17 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
     private String routeMap;
     private String mainSiteAdress;
-    private Map<String, Map<NewsTypes, Date>> links = null;
+    private Map<String, Map<NewsTypes, Date>> linksMap = null;
     private Context context;
     private NewsLoadSender sender;
 
+    NewsLinkListToLoad links;
+
     public LoadLinkListTask(String routeMap, String mainSiteAdress, Context context, NewsLoadSender sender){
+
+        links = NewsLinkListToLoad.getInstance(sender);
+        links.setLock(true);
+
         this.routeMap = routeMap;
         this.mainSiteAdress = mainSiteAdress;
         this.context = context;
@@ -32,7 +38,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
     @Override
     protected Map<String, Map<NewsTypes, Date>> doInBackground(Void... voids) {
-        links = new HashMap<>();
+        linksMap = new HashMap<>();
 
         try {
             DocParseUtils.loadTimersData(mainSiteAdress, context);
@@ -43,16 +49,14 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
             e.printStackTrace();
         }
 
-        links = checkLinksMap(links);
+        linksMap = checkLinksMap(linksMap);
 
-        return links;
+        return linksMap;
     }
 
     @Override
     protected void onPostExecute(Map<String, Map<NewsTypes, Date>> strings) {
         super.onPostExecute(strings);
-
-        NewsLinkListToLoad links = NewsLinkListToLoad.getInstance(sender);
 
         for(Map.Entry entry : strings.entrySet()){
             ArrayList<String> dataLink = new ArrayList<>();
@@ -70,7 +74,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
     private void loadNewsLinks(String urlString) throws IOException{
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
-        links.putAll(DocParseUtils.getNewsLinkList(jsDoc));
+        linksMap.putAll(DocParseUtils.getNewsLinkList(jsDoc));
     }
 
     private Map<String, Map<NewsTypes, Date>> checkLinksMap(Map<String, Map<NewsTypes, Date>> links){
