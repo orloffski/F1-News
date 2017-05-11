@@ -14,9 +14,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,7 +34,6 @@ import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
@@ -293,6 +289,9 @@ public final class DocParseUtils {
                 final String pathToImage = SystemUtils.getImagesPath(context) + "/" + text;
 
                 Bitmap image = BitmapFactory.decodeFile(pathToImage);
+                if(image == null)
+                    image = BitmapFactory.decodeResource(context.getResources() ,R.drawable.f1_logo);
+
                 int imageHeight = SystemUtils.getResizedImageHeight(image);
 
                 view = new ImageView(context);
