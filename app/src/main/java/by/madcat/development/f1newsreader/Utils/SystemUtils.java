@@ -275,12 +275,4 @@ public class SystemUtils {
     public static void moveImagesToMemory(){
 
     }
-
-    public static void sendSnackbarMessage(View rootView, String message, int lenght){
-        Snackbar.make(rootView, message, lenght).show();
-    }
-
-    public static void stopSnackbarView(Snackbar snackbar){
-        snackbar.dismiss();
-    }
 }

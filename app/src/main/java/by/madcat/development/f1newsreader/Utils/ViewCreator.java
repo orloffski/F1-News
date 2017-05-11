@@ -2,6 +2,8 @@ package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -21,5 +23,9 @@ public class ViewCreator {
         textView.setTextColor(color);
 
         return textView;
+    }
+
+    public static void sendSnackbarMessage(View rootView, String message, int lenght){
+        Snackbar.make(rootView, message, lenght).show();
     }
 }

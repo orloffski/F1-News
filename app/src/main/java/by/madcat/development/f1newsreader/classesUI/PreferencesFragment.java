@@ -18,6 +18,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.Utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class PreferencesFragment extends PreferenceFragment {
@@ -100,7 +101,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     reminder_vibro.setEnabled(reminder_on.isChecked());
                 }else{
                     if(SystemUtils.getNextGpTime(getContext()) == 0){
-                        SystemUtils.sendSnackbarMessage(
+                        ViewCreator.sendSnackbarMessage(
                                 ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                                 getString(R.string.reminder_data_null),
                                 Snackbar.LENGTH_SHORT);
@@ -160,7 +161,7 @@ public class PreferencesFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if(NewsLinkListToLoad.getInstance(null).isLock()){
-                    SystemUtils.sendSnackbarMessage(
+                    ViewCreator.sendSnackbarMessage(
                             ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),
                             Snackbar.LENGTH_LONG);
