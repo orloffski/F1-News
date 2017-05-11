@@ -59,8 +59,8 @@ public class WeekendInfoFragment extends Fragment {
 
     private void loadWeekendTableData(Context context){
         String weekendImageName = SystemUtils.getWeekendImage(context);
-        String fullPathImage = SystemUtils.getImagesPath(getContext());
-        Glide.with(context).load(fullPathImage).placeholder(R.drawable.f1_logo).into(weekendImage);
+        String fullPathImage = SystemUtils.getImagesPath(getContext()) + "/" + weekendImageName;
+        Glide.with(context).load(fullPathImage).into(weekendImage);
 
         String weekendTitleString = SystemUtils.getWeekendTitle(context);
         weekendTitle.setText(weekendTitleString);
