@@ -153,6 +153,9 @@ public class NewsListActivity extends AppCompatActivity
         }
 
         NewsTypes type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
+        if(type == null || type.toString().equals("")) {
+            type = NewsTypes.NEWS;
+        }
         updateOnBackPressed(type);
     }
 
