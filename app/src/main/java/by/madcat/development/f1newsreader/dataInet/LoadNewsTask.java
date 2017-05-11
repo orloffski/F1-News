@@ -24,8 +24,6 @@ import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
-import static by.madcat.development.f1newsreader.Utils.SystemUtils.IMAGE_PATH;
-
 public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 
     private ArrayList<String> dataLink;

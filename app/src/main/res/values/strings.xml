@@ -53,6 +53,9 @@
     <string name="move_pictures_to_sd_summary_prev">Для переноса изображений необходима карта памяти в устройстве</string>
     <string name="move_pictures_to_sd_summary">Перенести все изображения на карту памяти</string>
     <string name="news_load_running">Запущена загрузка новостей, дождитесь окончания и повторите</string>
+    <string name="move_message">Дождитесь окончания переноса файлов</string>
+    <string name="move_title_to_sd">Перенос изображений на карту памяти</string>
+    <string name="move_title_to_memory">Перенос изображений в память устройства</string>
 
     <!-- intervals -->
     <string-array name="intervals_title">

@@ -11,23 +11,22 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.MoveToSdTask;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 
 public class SystemUtils {
@@ -49,7 +48,7 @@ public class SystemUtils {
     public static final String IMAGE_PATH = "F1NewsImages";
     public static final String APP_ON_SD_PATH = "F1NewsReader";
 
-    public static final String SAVE_IMAGES_ON_SD = "images_on_sd";
+    public static final String SAVE_IMAGES_ON_SD = "move_pic_to_sd";
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -218,11 +217,12 @@ public class SystemUtils {
     }
 
     public static String getImagesPath(Context context){
-        String imagesPath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH;
+        String imagesPath = imagesPathInMemory(context);
 
         if(imagesOnSdCard(context)){
-            if(externalSdIsMounted())
-                imagesPath = Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH;
+            if(externalSdIsMounted()) {
+                imagesPath = imagesPathOnSd();
+            }
         }
 
         return imagesPath;
@@ -268,11 +268,57 @@ public class SystemUtils {
         }
     }
 
-    public static void moveImagesToSd(){
+    public static String imagesPathInMemory(Context context){
+        return context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH + "/";
+    }
+
+    public static String imagesPathOnSd(){
+        return Environment.getExternalStorageDirectory().toString() + "/" + APP_ON_SD_PATH + "/" + IMAGE_PATH + "/";
+    }
+
+    public static void moveImages(Context context, String pathFrom, String pathTo, boolean toSd){
+        MoveToSdTask move_to_sd = new MoveToSdTask(context, pathFrom, pathTo, toSd);
+        move_to_sd.execute();
+    }
+
+    public static int getFilesCountInDir(String path){
+        File folder = new File(path);
+        return folder.listFiles().length;
+    }
+
+    public static void copyFile(File fileFrom, File fileTo) throws IOException {
+        if (!fileTo.getParentFile().exists())
+            fileTo.getParentFile().mkdirs();
+
+        if (!fileTo.exists()) {
+            fileTo.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        try {
+            source = new FileInputStream(fileFrom).getChannel();
+            destination = new FileOutputStream(fileTo).getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            if (destination != null) {
+                destination.close();
+            }
+        }
 
     }
 
-    public static void moveImagesToMemory(){
+    public static void deleteFiles(String path){
+        File[] files = new File(path).listFiles();
+
+        if(files.length > 0)
+            for(int i = 0; i < files.length; i++){
+                new File(path + "/" + files[i].getName()).delete();
+            }
 
     }
 }

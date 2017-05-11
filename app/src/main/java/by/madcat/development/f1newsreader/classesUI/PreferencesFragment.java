@@ -168,9 +168,15 @@ public class PreferencesFragment extends PreferenceFragment {
                     move_to_sd.setChecked(false);
                 }else{
                     if(move_to_sd.isChecked()){
-                        SystemUtils.moveImagesToSd();
+                        SystemUtils.moveImages(getActivity(),
+                                SystemUtils.imagesPathInMemory(getContext()),
+                                SystemUtils.imagesPathOnSd(),
+                                true);
                     }else{
-                        SystemUtils.moveImagesToMemory();
+                        SystemUtils.moveImages(getActivity(),
+                                SystemUtils.imagesPathOnSd(),
+                                SystemUtils.imagesPathInMemory(getContext()),
+                                false);
                     }
                 }
 
