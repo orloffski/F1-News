@@ -29,13 +29,16 @@
 
     <!-- preferences titles -->
     <string name="settings_title">Настройки</string>
+
+    <string name="category_hide_news">Внешний вид</string>
     <string name="hide_read_news_checkbox">Скрыть прочитанные новости</string>
+    <string name="list_news_view_title">Оформление списка новостей</string>
     <string name="hide_read_news_checkbox_summary">В списке новостей будут скрыты прочитанные новости</string>
+
+    <string name="category_autorefresh">Автообновление новостей</string>
     <string name="refresh_interval_on">Включить автообновление</string>
     <string name="refresh_interval">Частота автообновления</string>
-    <string name="category_hide_news">Внешний вид</string>
-    <string name="category_autorefresh">Автообновление новостей</string>
-    <string name="list_news_view_title">Оформление списка новостей</string>
+
     <string name="reminder_to_gp">Напоминание о Гран-При</string>
     <string name="reminder_on">Включить напоминание о Гран-При</string>
     <string name="reminder">Интервал напоминания</string>
@@ -44,6 +47,12 @@
     <string name="reminder_ringtone_summary">Выбрать звук напоминания</string>
     <string name="reminder_vibration_title">Включить вибро при напоминании</string>
     <string name="ringtone_null">Без звука</string>
+
+    <string name="system_pref_title">Системные</string>
+    <string name="move_pictures_to_sd">Переместить изображения</string>
+    <string name="move_pictures_to_sd_summary_prev">Для переноса изображений необходима карта памяти в устройстве</string>
+    <string name="move_pictures_to_sd_summary">Перенести все изображения на карту памяти</string>
+    <string name="news_load_running">Запущена загрузка новостей, дождитесь окончания и повторите</string>
 
     <!-- intervals -->
     <string-array name="intervals_title">
@@ -91,7 +100,4 @@
 
     <string name="action_share">Поделиться</string>
     <string name="action_backpress">Вернуться к разделу</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

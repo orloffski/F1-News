@@ -12,7 +12,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -264,5 +266,21 @@ public class SystemUtils {
             ReminderService.setServiceAlarm(context, false, 0, false, null);
             ReminderService.setServiceAlarm(context, true, reminderInterval, reminderVibration, reminderRingtoneUri);
         }
+    }
+
+    public static void moveImagesToSd(){
+
+    }
+
+    public static void moveImagesToMemory(){
+
+    }
+
+    public static void sendSnackbarMessage(View rootView, String message, int lenght){
+        Snackbar.make(rootView, message, lenght).show();
+    }
+
+    public static void stopSnackbarView(Snackbar snackbar){
+        snackbar.dismiss();
     }
 }

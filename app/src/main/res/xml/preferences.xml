@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceScreen
+    <PreferenceCategory
+        android:title="@string/system_pref_title">
+
+        <CheckBoxPreference
+            android:key="move_pic_to_sd"
+            android:title="@string/move_pictures_to_sd"
+            android:summary="@string/move_pictures_to_sd_summary"/>
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="@string/category_hide_news">
 
         <CheckBoxPreference
@@ -14,8 +22,8 @@
             android:entries="@array/list_news_view_title"
             android:entryValues="@array/list_news_view"
             android:title="@string/list_news_view_title"/>
-    </PreferenceScreen>
-    <PreferenceScreen
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="@string/category_autorefresh">
 
         <CheckBoxPreference
@@ -27,9 +35,9 @@
             android:entries="@array/intervals_title"
             android:entryValues="@array/intervals_milliseconds"
             android:title="@string/refresh_interval"/>
-    </PreferenceScreen>
+    </PreferenceCategory>
 
-    <PreferenceScreen
+    <PreferenceCategory
         android:title="@string/reminder_to_gp">
 
         <CheckBoxPreference
@@ -47,5 +55,5 @@
         <CheckBoxPreference
             android:key="reminder_vibration"
             android:title="@string/reminder_vibration_title"/>
-    </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>

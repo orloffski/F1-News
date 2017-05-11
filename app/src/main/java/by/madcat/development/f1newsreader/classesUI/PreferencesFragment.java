@@ -18,6 +18,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class PreferencesFragment extends PreferenceFragment {
     @Override
@@ -99,7 +100,10 @@ public class PreferencesFragment extends PreferenceFragment {
                     reminder_vibro.setEnabled(reminder_on.isChecked());
                 }else{
                     if(SystemUtils.getNextGpTime(getContext()) == 0){
-                        Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), getString(R.string.reminder_data_null), Snackbar.LENGTH_SHORT).show();
+                        SystemUtils.sendSnackbarMessage(
+                                ((NewsListActivity)getActivity()).getCoordinatorLayout(),
+                                getString(R.string.reminder_data_null),
+                                Snackbar.LENGTH_SHORT);
                         cancelReminder();
                         reminder_on.setChecked(false);
                     }else{
@@ -146,8 +150,32 @@ public class PreferencesFragment extends PreferenceFragment {
         });
 
         // перенос изображений на карту памяти
-        CheckBoxPreference move_to_sd = (CheckBoxPreference)findPreference("move_pic_to_sd");
+        final CheckBoxPreference move_to_sd = (CheckBoxPreference)findPreference("move_pic_to_sd");
+
+        if(!SystemUtils.externalSdIsMounted())
+            move_to_sd.setSummary(getString(R.string.move_pictures_to_sd_summary_prev));
+
         move_to_sd.setEnabled(SystemUtils.externalSdIsMounted());
+        move_to_sd.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if(NewsLinkListToLoad.getInstance(null).getNewsCount() != 0){
+                    SystemUtils.sendSnackbarMessage(
+                            ((NewsListActivity)getActivity()).getCoordinatorLayout(),
+                            getString(R.string.news_load_running),
+                            Snackbar.LENGTH_LONG);
+                    move_to_sd.setChecked(false);
+                }else{
+                    if(move_to_sd.isChecked()){
+                        SystemUtils.moveImagesToSd();
+                    }else{
+                        SystemUtils.moveImagesToMemory();
+                    }
+                }
+
+                return false;
+            }
+        });
     }
 
     private void cancelReminder(){
