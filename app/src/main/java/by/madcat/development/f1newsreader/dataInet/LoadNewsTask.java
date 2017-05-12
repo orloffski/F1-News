@@ -59,6 +59,8 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+
+        linksList.removeLoadNewsTask(this);
     }
 
     public ArrayList<String> loadNewsData(String urlString, NewsTypes type, Date rssDate) throws IOException {
@@ -114,8 +116,6 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 
         context.getContentResolver().insert(News.CONTENT_URI, contentValues);
         this.newsLoaded = true;
-
-        linksList.removeLoadNewsTask(this);
     }
 
     private boolean loadNewsImage(String imageUrl) throws IOException {

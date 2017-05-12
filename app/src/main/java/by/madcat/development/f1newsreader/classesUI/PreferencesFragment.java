@@ -59,6 +59,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);
                 }else{
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
+                    NewsLinkListToLoad.getInstance(null).setLock(false);
                 }
 
                 return false;
