@@ -41,9 +41,11 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void removeLoadNewsTask(LoadNewsTask task) {
-        newsLinkList.remove(task);
+        synchronized (newsLinkList) {
+            newsLinkList.remove(task);
+        }
 
-        if(newsLinkList.size() == 0)
+        if(newsLinkList.isEmpty())
             completeLoadNews();
     }
 
