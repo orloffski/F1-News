@@ -80,10 +80,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
             return newsLinkList.size();
     }
 
-    public int getNewsCount() {
-        return newsCount;
-    }
-
     public boolean isLock() {
         return lock;
     }
