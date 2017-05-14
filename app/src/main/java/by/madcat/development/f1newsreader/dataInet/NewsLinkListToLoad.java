@@ -15,7 +15,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     public static NewsLinkListToLoad getInstance(NewsLoadSender sender) {
         if(ourInstance == null)
             ourInstance = new NewsLinkListToLoad(sender);
-        else if(ourInstance.newsCount == 0)
+        else if(ourInstance.newsLinkList.isEmpty())
             updateSender(sender);
 
         return ourInstance;
@@ -55,7 +55,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
             for(LoadNewsTask task: newsLinkList)
                 task.execute();
         else
-            sender.sendNotification(0);
+            cancelLoadNews();
     }
 
     @Override
