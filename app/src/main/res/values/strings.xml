@@ -94,7 +94,7 @@
         <item quantity="two">Загружены %1$d новости</item>
         <item quantity="few">Загружены %1$d новости</item>
         <item quantity="many">Загружено %1$d новостей</item>
-        <item quantity="other">Загружено %1$d новостей</item>
+        <item quantity="other">Загружено %1$d новости</item>
     </plurals>
 
     <string name="get_new_news">Получены новости портала F1News.ru</string>
