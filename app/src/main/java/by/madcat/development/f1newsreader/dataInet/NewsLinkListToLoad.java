@@ -51,7 +51,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void runLoadNews() {
-        if(newsLinkList != null && newsLinkList.size() > 0)
+        if(!newsLinkList.isEmpty())
             for(LoadNewsTask task: newsLinkList)
                 task.execute();
         else
