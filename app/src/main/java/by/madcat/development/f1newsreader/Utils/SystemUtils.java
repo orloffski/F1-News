@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.MoveToSdTask;
@@ -49,6 +50,8 @@ public class SystemUtils {
     public static final String APP_ON_SD_PATH = "F1NewsReader";
 
     public static final String SAVE_IMAGES_ON_SD = "move_pic_to_sd";
+
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -320,5 +323,17 @@ public class SystemUtils {
                 new File(path + "/" + files[i].getName()).delete();
             }
 
+    }
+
+    public static int generateViewId() {
+        for (;;) {
+            final int result = sNextGeneratedId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
     }
 }

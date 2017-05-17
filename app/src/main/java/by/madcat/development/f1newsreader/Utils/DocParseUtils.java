@@ -5,13 +5,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 
@@ -33,6 +41,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.classesUI.VideoFragment;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
 public final class DocParseUtils {
@@ -175,7 +184,7 @@ public final class DocParseUtils {
         return links;
     }
 
-    public static ArrayList<View> getViews(String htmlText, Context context){
+    public static ArrayList<View> getViews(String htmlText, Context context, FragmentManager fragmentManager){
         ArrayList<View> views = new ArrayList<>();
 
 
@@ -184,12 +193,12 @@ public final class DocParseUtils {
         for(Element child : body.children()){
 
             if(child.tagName().equals(NEWS_BODY_TABLE_ELEMENTS_PARSE)){
-                View table = createView(child.toString(), "", "TableView", context);
+                View table = createView(child.toString(), "", "TableView", context, fragmentManager);
                 views.add(table);
             }
 
             if(child.tagName().equals(NEWS_BODY_H3_ELEMENTS_PARSE)){
-                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context);
+                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context, fragmentManager);
                 views.add(table);
             }
 
@@ -209,8 +218,14 @@ public final class DocParseUtils {
 
                         if(modifierTag.equals("img")) {
                             String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                            View bodyImage = createView(image, modifierTag, "ImageView", context);
+                            View bodyImage = createView(image, modifierTag, "ImageView", context, fragmentManager);
                             views.add(bodyImage);
+                        }
+
+                        if(modifierTag.equals("iframe")){
+                            String videoLink = StringUtils.getVideoIdFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
+                            View bodyVideo = createView(videoLink, modifierTag, "VideoView", context, fragmentManager);
+                            views.add(bodyVideo);
                         }
 
                         // при повторении нескольких модификаторов между парой кусков текста есть пробел
@@ -221,7 +236,7 @@ public final class DocParseUtils {
 
                         // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
                         if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
-                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context);
+                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context, fragmentManager);
                             views.add(headerText);
                         }
                     }
@@ -230,7 +245,7 @@ public final class DocParseUtils {
                 // пустые абзацы выбрасываем
                 if (child.text().length() != 0) {
                     View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
-                            "", "TextView", context);
+                            "", "TextView", context, fragmentManager);
                     views.add(text);
                 }
             }
@@ -238,7 +253,7 @@ public final class DocParseUtils {
 
         // если новость была загружена до внедрения CustomView у нее нет тегов, грузим без оформления
         if(views.size() == 0){
-            View text = createView(htmlText, "", "TextView", context);
+            View text = createView(htmlText, "", "TextView", context, fragmentManager);
             views.add(text);
         }
 
@@ -264,8 +279,8 @@ public final class DocParseUtils {
         return timestamp;
     }
 
-    private static View createView(String text, final String modifier, String viewType, final Context context){
-        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+    private static View createView(final String text, final String modifier, String viewType, final Context context, FragmentManager fragmentManager){
+        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         View view = null;
@@ -301,6 +316,24 @@ public final class DocParseUtils {
                 Glide.with(context).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into((ImageView) view);
 
                 view.setPadding(0, 10, 0, 0);
+                break;
+            case "VideoView":
+                VideoFragment videoFragment = VideoFragment.newInstance(text);
+
+                view = new LinearLayout(context);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+                view.setPadding(0,10,0,0);
+
+                int viewId;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    viewId = SystemUtils.generateViewId();
+                    view.setId(viewId);
+                } else {
+                    viewId = View.generateViewId();
+                    view.setId(viewId);
+                }
+                fragmentManager.beginTransaction().add(viewId, videoFragment).commitAllowingStateLoss();
                 break;
         }
 

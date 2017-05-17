@@ -18,6 +18,13 @@ public final class StringUtils {
         return url.split("/")[url.split("/").length - 1];
     }
 
+    public static String getVideoIdFromURL(String url){
+        String idTemp = url.split("/")[url.split("/").length - 1];
+        idTemp = idTemp.split("\\?")[0];
+
+        return idTemp;
+    }
+
     public static DatabaseDescription.NewsTypes getNewsSection(String link){
         if(link.contains(NEWS_PREFIX))
             return DatabaseDescription.NewsTypes.NEWS;

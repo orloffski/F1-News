@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 public class HtmlTextView extends LinearLayout{
 
     private LinearLayout linearLayout;
+    private FragmentManager fragmentManager;
 
     public HtmlTextView(Context context) {
         super(context);
@@ -34,8 +36,12 @@ public class HtmlTextView extends LinearLayout{
         linearLayout.setOrientation(VERTICAL);
     }
 
+    public void setFragmentManager(FragmentManager fragmentManager){
+        this.fragmentManager = fragmentManager;
+    }
+
     public void setHtmlText(String htmlText){
-        ArrayList<View> views = DocParseUtils.getViews(htmlText, getContext());
+        ArrayList<View> views = DocParseUtils.getViews(htmlText, getContext(), fragmentManager);
 
         if(linearLayout.getChildCount() == 0)
             for(View view : views) {
