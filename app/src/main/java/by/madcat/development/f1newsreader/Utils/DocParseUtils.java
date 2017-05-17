@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -318,22 +319,23 @@ public final class DocParseUtils {
                 view.setPadding(0, 10, 0, 0);
                 break;
             case "VideoView":
-                VideoFragment videoFragment = VideoFragment.newInstance(text);
-
                 view = new LinearLayout(context);
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
                 view.setPadding(0,10,0,0);
 
-                int viewId;
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    viewId = SystemUtils.generateViewId();
-                    view.setId(viewId);
-                } else {
-                    viewId = View.generateViewId();
-                    view.setId(viewId);
-                }
-                fragmentManager.beginTransaction().add(viewId, videoFragment).commitAllowingStateLoss();
+//                int viewId;
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//                    viewId = SystemUtils.generateViewId();
+//                    view.setId(viewId);
+//                } else {
+//                    viewId = View.generateViewId();
+//                    view.setId(viewId);
+//                }
+
+                view.setId(1);
+
+                fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
                 break;
         }
 

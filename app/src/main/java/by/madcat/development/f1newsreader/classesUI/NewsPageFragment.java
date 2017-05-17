@@ -107,7 +107,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
             title.setText(data.getString(titleIndex));
 
-            htmlTextView.setFragmentManager(getActivity().getSupportFragmentManager());
+            htmlTextView.setFragmentManager(this.getChildFragmentManager());
             htmlTextView.setHtmlText(data.getString(newsIndex));
 
             if(!data.getString(imageIndex).isEmpty()) {
