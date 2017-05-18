@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -127,16 +128,39 @@ public class NewsListActivity extends AppCompatActivity
             nowType = NewsTypes.NEWS;
             openSectionNews(nowType, null);
         }else{
-            fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
-            NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
+            Fragment reopenFragment = getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+            if(reopenFragment.getClass().equals(NewsListFragment.class)){
+                fragment = (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+                NewsTypes type = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
 
-            if(type == null || type.toString().equals("")) {
-                openSectionNews(NewsTypes.NEWS, null);
-            }else {
-                setActivityTitle(type);
+                if (type == null || type.toString().equals("")) {
+                    openSectionNews(NewsTypes.NEWS, null);
+                } else {
+                    setActivityTitle(type);
+                }
+
+                nowType = type;
+            }else{
+                nowType = NewsTypes.SETTINGS;
             }
+        }
+    }
 
-            nowType = type;
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Fragment reopenFragment = getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+        if(reopenFragment.getClass().equals(NewsListFragment.class)){
+            nowType = NewsTypes.valueOf(fragment.getArguments().getString(fragment.NEWS_TYPE));
+            if (nowType == null || nowType.toString().equals("")) {
+                openSectionNews(NewsTypes.NEWS, null);
+            } else {
+                openSectionNews(nowType, null);
+            }
+        }else{
+            nowType = NewsTypes.SETTINGS;
+            openSettings();
         }
     }
 
@@ -154,10 +178,19 @@ public class NewsListActivity extends AppCompatActivity
                 searchMenu.findItem(R.id.action_search).setVisible(true);
         }
 
-        NewsTypes type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
-        if(type == null || type.toString().equals("")) {
-            type = NewsTypes.NEWS;
+        NewsTypes type;
+
+        Fragment reopenFragment = getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+        if(reopenFragment.getClass().equals(NewsListFragment.class)){
+            type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
+            if(type == null || type.toString().equals("")) {
+                type = NewsTypes.NEWS;
+            }
+        }else{
+            type = NewsTypes.SETTINGS;
         }
+
+
         updateOnBackPressed(type);
     }
 
@@ -224,6 +257,7 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void openSettings(){
+        nowType = NewsTypes.SETTINGS;
         if(searchMenu != null)
             searchMenu.findItem(R.id.action_search).setVisible(false);
 
@@ -231,7 +265,7 @@ public class NewsListActivity extends AppCompatActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_news_list, new PreferencesFragment());
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
 
         collapsingToolbarLayout.setTitle(getString(R.string.settings_title));
@@ -270,8 +304,11 @@ public class NewsListActivity extends AppCompatActivity
                 image = getResources().getDrawable(R.drawable.interview);
                 break;
         }
-        collapsingToolbarLayout.setTitle(title);
-        imageView.setImageBitmap(((BitmapDrawable)image).getBitmap());
+
+        if(!type.equals(NewsTypes.SETTINGS)) {
+            collapsingToolbarLayout.setTitle(title);
+            imageView.setImageBitmap(((BitmapDrawable) image).getBitmap());
+        }
     }
 
     @Override
@@ -292,7 +329,8 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void updateOnBackPressed(NewsTypes type){
-        setActivityTitle(type);
+        if(!type.equals(NewsTypes.SETTINGS))
+            setActivityTitle(type);
 
         switch (type){
             case NEWS:

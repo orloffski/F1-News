@@ -33,6 +33,7 @@ public class DatabaseDescription {
         TECH,
         HISTORY,
         COLUMNS,
-        AUTOSPORT
+        AUTOSPORT,
+        SETTINGS
     }
 }

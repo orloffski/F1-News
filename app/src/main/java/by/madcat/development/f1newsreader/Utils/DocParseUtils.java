@@ -5,22 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 
@@ -322,18 +314,8 @@ public final class DocParseUtils {
                 view = new LinearLayout(context);
                 view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT));
-                view.setPadding(0,10,0,0);
-
-//                int viewId;
-//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                    viewId = SystemUtils.generateViewId();
-//                    view.setId(viewId);
-//                } else {
-//                    viewId = View.generateViewId();
-//                    view.setId(viewId);
-//                }
-
                 view.setId(1);
+                view.setPadding(0,10,0,0);
 
                 fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
                 break;

@@ -22,6 +22,9 @@ import by.madcat.development.f1newsreader.Utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class PreferencesFragment extends PreferenceFragment {
+    public PreferencesFragment() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
