@@ -39,6 +39,7 @@ public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsOpenListener, View.OnClickListener {
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
+    public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -160,7 +161,7 @@ public class NewsListActivity extends AppCompatActivity
             }
         }else{
             nowType = NewsTypes.SETTINGS;
-            openSettings();
+            openSettings(false);
         }
     }
 
@@ -190,6 +191,10 @@ public class NewsListActivity extends AppCompatActivity
             type = NewsTypes.SETTINGS;
         }
 
+        if(getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME) != null){
+            getSupportFragmentManager().beginTransaction().remove(
+                    getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME)).commit();
+        }
 
         updateOnBackPressed(type);
     }
@@ -221,7 +226,7 @@ public class NewsListActivity extends AppCompatActivity
                 openSectionNews(NewsTypes.AUTOSPORT, null);
                 break;
             case R.id.nav_settings:
-                openSettings();
+                openSettings(true);
                 break;
         }
 
@@ -256,7 +261,7 @@ public class NewsListActivity extends AppCompatActivity
         searchQuery = null;
     }
 
-    private void openSettings(){
+    private void openSettings(boolean isNeedToBackStack){
         nowType = NewsTypes.SETTINGS;
         if(searchMenu != null)
             searchMenu.findItem(R.id.action_search).setVisible(false);
@@ -264,8 +269,9 @@ public class NewsListActivity extends AppCompatActivity
         appBarLayout.setExpanded(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_news_list, new PreferencesFragment());
-        //transaction.addToBackStack(null);
+        transaction.replace(R.id.content_news_list, new PreferencesFragment(), SETTINGS_FRAGMENT_NAME);
+        if(isNeedToBackStack)
+            transaction.addToBackStack(null);
         transaction.commit();
 
         collapsingToolbarLayout.setTitle(getString(R.string.settings_title));
