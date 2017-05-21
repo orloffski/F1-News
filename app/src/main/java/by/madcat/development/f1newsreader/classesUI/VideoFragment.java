@@ -36,9 +36,35 @@ public class VideoFragment extends YouTubePlayerSupportFragment {
             }
 
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored) {
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer player, boolean wasRestored) {
                 player.setFullscreenControlFlags(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI);
                 if (!wasRestored) {
+                    player.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+                        @Override
+                        public void onPlaying() {
+                            player.setFullscreen(true);
+                        }
+
+                        @Override
+                        public void onPaused() {
+
+                        }
+
+                        @Override
+                        public void onStopped() {
+
+                        }
+
+                        @Override
+                        public void onBuffering(boolean b) {
+
+                        }
+
+                        @Override
+                        public void onSeekTo(int i) {
+
+                        }
+                    });
                     player.cueVideo(getArguments().getString("url"));
                 }
             }
