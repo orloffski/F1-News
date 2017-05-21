@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -42,7 +43,9 @@ public class VideoFragment extends YouTubePlayerSupportFragment {
                     player.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
                         @Override
                         public void onPlaying() {
-                            player.setFullscreen(true);
+                            if(PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("fullscreen_video", false))
+
+                                player.setFullscreen(true);
                         }
 
                         @Override

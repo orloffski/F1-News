@@ -44,6 +44,9 @@ public class PreferencesFragment extends PreferenceFragment {
             }
         });
 
+        // видео в полноэкранном режиме
+        final CheckBoxPreference fullscreen_video = (CheckBoxPreference) findPreference("fullscreen_video");
+
         // автообновление новостей
         final CheckBoxPreference refresh_interval_on = (CheckBoxPreference)findPreference("refresh_interval_on");
         final ListPreference refresh_interval = (ListPreference)findPreference("refresh_interval");

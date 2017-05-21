@@ -32,6 +32,8 @@
 
     <string name="category_hide_news">Внешний вид</string>
     <string name="hide_read_news_checkbox">Скрыть прочитанные новости</string>
+    <string name="fullscreen_video">Видео в полноэкранном режиме</string>
+    <string name="fullscreen_video_summary">Включите данную опцию если при просмотре видео оно постоянно становится в паузу</string>
     <string name="list_news_view_title">Оформление списка новостей</string>
     <string name="hide_read_news_checkbox_summary">В списке новостей будут скрыты прочитанные новости</string>
 
