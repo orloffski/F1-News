@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -45,6 +46,7 @@ public final class DocParseUtils {
     public static final String NEWS_TITLE_PARSE = "post_title";
     public static final String NEWS_BODY_PARSE = "post_content";
     public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
+    public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE_2 = "blockquote";
     public static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
     public static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
     public static final String NEWS_BODY_TABLE_TBODY_PARSE = "tbody";
@@ -195,7 +197,7 @@ public final class DocParseUtils {
                 views.add(table);
             }
 
-            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE)) {
+            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE) || child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE_2)) {
                 String modifiedText = "";
                 String modifierTag = "";
                 int lengthOfChildrens = 0;
@@ -219,6 +221,11 @@ public final class DocParseUtils {
                             String videoLink = StringUtils.getVideoIdFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
                             View bodyVideo = createView(videoLink, modifierTag, "VideoView", context, fragmentManager);
                             views.add(bodyVideo);
+                        }
+
+                        if(modifierTag.equals("twitter-video twitter-video-error")){
+                            View twitterView = createView(modifiedText, modifierTag, "TwitterView", context, fragmentManager);
+                            views.add(twitterView);
                         }
 
                         // при повторении нескольких модификаторов между парой кусков текста есть пробел
@@ -318,6 +325,13 @@ public final class DocParseUtils {
                 view.setPadding(0,10,0,0);
 
                 fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
+                break;
+            case "TwitterView":
+                view = new WebView(context);
+                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT));
+                ((WebView)view).getSettings().setJavaScriptEnabled(true);
+                ((WebView)view).loadData(text, "text/html; charset=utf-8", "UTF-8");
                 break;
         }
 
