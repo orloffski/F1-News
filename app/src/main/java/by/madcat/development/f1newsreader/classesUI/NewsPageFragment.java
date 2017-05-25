@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.File;
-
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
@@ -35,7 +33,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
     private TextView title;
     private HtmlTextView htmlTextView;
-    private ImageView image;
+    private ImageView imageView;
     private TextView date;
     private ImageButton shareBtn;
 
@@ -65,8 +63,8 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
         title = (TextView) view.findViewById(R.id.content_title);
         htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
-        image = (ImageView) view.findViewById(R.id.content_image);
-        image.setPadding(20, 0, 20, 0);
+        imageView = (ImageView) view.findViewById(R.id.content_image);
+        imageView.setPadding(20, 0, 20, 0);
         date = (TextView) view.findViewById(R.id.content_date);
         shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
@@ -110,13 +108,13 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             htmlTextView.setFragmentManager(this.getChildFragmentManager());
             htmlTextView.setHtmlText(data.getString(newsIndex));
 
+            String pathToImage;
             if(!data.getString(imageIndex).isEmpty()) {
-                String pathToImage = SystemUtils.getImagesPath(getContext()) + "/" + data.getString(imageIndex);
-                File imageFile = new File(pathToImage);
-                Glide.with(getContext()).load(imageFile).placeholder(R.drawable.f1_logo).into(image);
+                pathToImage = SystemUtils.getImagesPath(getContext()) + "/" + data.getString(imageIndex);
             }else{
-                Glide.with(getContext()).load("").placeholder(R.drawable.f1_logo).into(image);
+                pathToImage = "";
             }
+            Glide.with(getContext()).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into(imageView);
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
             shareBtn.setOnClickListener(new View.OnClickListener() {
