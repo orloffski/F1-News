@@ -244,7 +244,7 @@ public final class DocParseUtils {
 
                 // пустые абзацы выбрасываем
                 if (child.text().length() != 0) {
-                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
+                    View text = createView(child.text().toString().trim(),
                             "", "TextView", context, fragmentManager);
                     views.add(text);
                 }

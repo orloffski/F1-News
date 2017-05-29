@@ -46,7 +46,7 @@ public class ReminderService extends IntentService {
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause, boolean vibroIsOn, String ringtoneUri){
         Intent i = ReminderService.newIntent(context, vibroIsOn, ringtoneUri, timePause);
-        PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getService(context, 1, i, PendingIntent.FLAG_ONE_SHOT);
         int delay = (int)(SystemUtils.getNextGpTime(context) - System.currentTimeMillis()/1000 - timePause/1000);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, delay);

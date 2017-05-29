@@ -39,12 +39,12 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
         Intent i = BackgroundLoadNewsService.newIntent(context);
-        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
+        PendingIntent pi = PendingIntent.getService(context, 2, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         if(isOn) {
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
         }
         else{
             alarmManager.cancel(pi);
