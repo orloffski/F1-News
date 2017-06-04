@@ -172,7 +172,7 @@ public class PreferencesFragment extends PreferenceFragment {
                             ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),
                             Snackbar.LENGTH_LONG);
-                    move_to_sd.setChecked(false);
+                    move_to_sd.setChecked(!move_to_sd.isChecked());
                 }else{
                     if(move_to_sd.isChecked()){
                         SystemUtils.moveImages(getActivity(),
