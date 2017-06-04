@@ -33,46 +33,49 @@ public class MoveToSdTask extends AsyncTask<Void, Integer, Void> {
     protected void onPreExecute() {
         filesCount = SystemUtils.getFilesCountInDir(pathFrom);
 
-        String title;
-        if(move_to_sd)
-            title = context.getString(R.string.move_title_to_sd);
-        else
-            title = context.getString(R.string.move_title_to_memory);
+        if(filesCount != 0) {
+            String title;
+            if (move_to_sd)
+                title = context.getString(R.string.move_title_to_sd);
+            else
+                title = context.getString(R.string.move_title_to_memory);
 
-        moveImagesProgressDialog = ViewCreator.getProgressFilesMove(
-                context,
-                filesCount,
-                context.getString(R.string.move_message),
-                title);
-        moveImagesProgressDialog.show();
+            moveImagesProgressDialog = ViewCreator.getProgressFilesMove(
+                    context,
+                    filesCount,
+                    context.getString(R.string.move_message),
+                    title);
+            moveImagesProgressDialog.show();
+        }
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        File[] filesList = new File(pathFrom).listFiles();
+        if(filesCount != 0) {
+            File[] filesList = new File(pathFrom).listFiles();
 
-        if(filesList.length > 0)
-            for(int i = 0; i < filesList.length; i++){
+            if (filesList.length > 0)
+                for (int i = 0; i < filesList.length; i++) {
 
-                try {
-                    SystemUtils.copyFile(filesList[i], new File(pathTo + filesList[i].getName().toString()));
-                    Thread.sleep(50);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try {
+                        SystemUtils.copyFile(filesList[i], new File(pathTo + filesList[i].getName().toString()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    publishProgress(i + 1);
                 }
-
-                publishProgress(i + 1);
-            }
+        }
 
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        SystemUtils.deleteFiles(pathFrom);
-        moveImagesProgressDialog.dismiss();
+        if(filesCount != 0) {
+            SystemUtils.deleteFiles(pathFrom);
+            moveImagesProgressDialog.dismiss();
+        }
         NewsLinkListToLoad.getInstance(null).setLock(false);
     }
 

@@ -286,7 +286,13 @@ public class SystemUtils {
 
     public static int getFilesCountInDir(String path){
         File folder = new File(path);
-        return folder.listFiles().length;
+        int count;
+
+        if(!folder.exists())
+            count = 0;
+        else
+            count = folder.listFiles().length;
+        return count;
     }
 
     public static void copyFile(File fileFrom, File fileTo) throws IOException {
