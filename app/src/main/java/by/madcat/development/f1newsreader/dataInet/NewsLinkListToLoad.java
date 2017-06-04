@@ -36,7 +36,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
             lock = true;
 
         newsLinkList.add(task);
-        newsCount++;
     }
 
     @Override
@@ -51,10 +50,11 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void runLoadNews() {
-        if(!newsLinkList.isEmpty())
-            for(LoadNewsTask task: newsLinkList)
+        if(!newsLinkList.isEmpty()) {
+            newsCount = newsLinkList.size();
+            for (LoadNewsTask task : newsLinkList)
                 task.execute();
-        else
+        }else
             cancelLoadNews();
     }
 
