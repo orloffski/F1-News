@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
@@ -33,7 +34,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(!NewsLinkListToLoad.getInstance(this).isLock())
+        if(!NewsLinkListToLoad.getInstance(this, (AnalyticsTrackers)getApplication()).isLock())
             runLoad();
     }
 
@@ -86,7 +87,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
             return;
 
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
-        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
+        LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplication(), this);
         loadLinksTask.execute();
     }
 }

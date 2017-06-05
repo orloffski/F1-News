@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.classesUI.NewsListFragment;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
@@ -25,10 +26,10 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(!NewsLinkListToLoad.getInstance(this).isLock()) {
+        if(!NewsLinkListToLoad.getInstance(this, (AnalyticsTrackers) getApplication()).isLock()) {
             thisServiceIsRun = true;
             InternetDataRouting dataRouting = InternetDataRouting.getInstance();
-            LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
+            LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplication(), this);
             loadLinksTask.execute();
         }else{
             sendNotification(-1);
