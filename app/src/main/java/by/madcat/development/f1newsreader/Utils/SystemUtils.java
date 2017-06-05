@@ -1,6 +1,9 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -341,5 +344,12 @@ public class SystemUtils {
                 return result;
             }
         }
+    }
+
+    public static void stopOldService(AlarmManager alarmManager, Intent i, Context context){
+        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
+
+        alarmManager.cancel(pi);
+        pi.cancel();
     }
 }

@@ -43,6 +43,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
+        SystemUtils.stopOldService(alarmManager, i, context);
+
         if(isOn) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
         }
