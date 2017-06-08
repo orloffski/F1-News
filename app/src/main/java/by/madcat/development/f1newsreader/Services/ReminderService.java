@@ -2,13 +2,13 @@ package by.madcat.development.f1newsreader.Services;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -46,7 +46,7 @@ public class ReminderService extends IntentService {
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause, boolean vibroIsOn, String ringtoneUri){
         Intent i = ReminderService.newIntent(context, vibroIsOn, ringtoneUri, timePause);
-        PendingIntent pi = PendingIntent.getService(context, 1, i, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getService(context, 2, i, PendingIntent.FLAG_ONE_SHOT);
         int delay = (int)(SystemUtils.getNextGpTime(context) - System.currentTimeMillis()/1000 - timePause/1000);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, delay);
@@ -56,7 +56,10 @@ public class ReminderService extends IntentService {
         SystemUtils.stopOldService(alarmManager, i, context);
 
         if(isOn && delay > 0) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            else
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
         }
         else{
             alarmManager.cancel(pi);
@@ -67,7 +70,7 @@ public class ReminderService extends IntentService {
     private void runReminder(final Intent intent){
         Resources resources = getResources();
         Intent i = NewsListActivity.newIntent(getApplicationContext());
-        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, i, 0);
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 2, i, 0);
 
         long[] vibrate;
         if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
@@ -76,7 +79,7 @@ public class ReminderService extends IntentService {
             vibrate = new long[]{};
         }
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext())
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.reminder_ticker))
                 .setSmallIcon(R.drawable.ic_notif_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
@@ -85,11 +88,10 @@ public class ReminderService extends IntentService {
                 .setSound(Uri.parse(intent.getStringExtra(ReminderService.RINGTONE_URI)))
                 .setVibrate(vibrate)
                 .setContentIntent(pi)
-                .setAutoCancel(true)
-                .build();
+                .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-        notificationManager.notify(0, notification);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(2, mBuilder.build());
     }
 
     private String getReminderNotification(){

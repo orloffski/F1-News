@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.Services;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -40,14 +39,14 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause){
         Intent i = BackgroundLoadNewsService.newIntent(context);
-        PendingIntent pi = PendingIntent.getService(context, 2, i, 0);
+        PendingIntent pi = PendingIntent.getService(context, 1, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         SystemUtils.stopOldService(alarmManager, i, context);
 
         if(isOn) {
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
         }
         else{
             alarmManager.cancel(pi);
@@ -63,11 +62,11 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     public void sendMessage(int countNews){
         Resources resources = getResources();
         Intent i = NewsListActivity.newIntent(this);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
+        PendingIntent pi = PendingIntent.getActivity(this, 1, i, 0);
 
         Resources res = getApplicationContext().getResources();
 
-        Notification notification = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))
                 .setSmallIcon(R.drawable.ic_notif_logo)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
@@ -75,11 +74,10 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
                 .setContentTitle(resources.getString(R.string.get_new_news))
                 .setContentText(resources.getQuantityString(R.plurals.news_plurals, countNews, countNews))
                 .setContentIntent(pi)
-                .setAutoCancel(true)
-                .build();
+                .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, notification);
+        notificationManager.notify(1, mBuilder.build());
     }
 
     private void runLoad(){
