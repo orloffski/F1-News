@@ -1,6 +1,8 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +14,10 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.service.notification.StatusBarNotification;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -351,5 +355,21 @@ public class SystemUtils {
 
         alarmManager.cancel(pi);
         pi.cancel();
+    }
+
+    public static int getNumberInIssetNotification(int id, NotificationManager notificationManager){
+        int number = 0;
+        
+        if (Build.VERSION.SDK_INT >= 23) {
+            StatusBarNotification[] statusBarNotifications = notificationManager.getActiveNotifications();
+
+            for(StatusBarNotification statusBarNotification : statusBarNotifications)
+                if(statusBarNotification.getId() == id){
+                    Notification notification = statusBarNotification.getNotification();
+                    number = notification.number;
+                }
+        }
+
+        return number;
     }
 }

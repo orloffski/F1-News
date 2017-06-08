@@ -2,6 +2,7 @@ package by.madcat.development.f1newsreader.Services;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         PendingIntent pi = PendingIntent.getActivity(this, 1, i, 0);
 
         Resources res = getApplicationContext().getResources();
+
+        countNews += SystemUtils.getNumberInIssetNotification(1, (NotificationManager)getSystemService(NOTIFICATION_SERVICE));
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))
