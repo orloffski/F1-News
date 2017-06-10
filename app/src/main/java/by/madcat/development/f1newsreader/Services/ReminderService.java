@@ -21,6 +21,10 @@ import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 
 public class ReminderService extends IntentService {
 
+    public static final int NOTIFICATION_ID = 2;
+    private static final int SERVICE_INTENT_ID = 2;
+    private static final int NOTIFICATION_INTENT_ID = 4;
+
     private static final String TAG = "ReminderService";
     public static final String VIBRO_IS_ON = "vibro_is_on";
     public static final String RINGTONE_URI = "ringtone_uri";
@@ -46,7 +50,7 @@ public class ReminderService extends IntentService {
 
     public static void setServiceAlarm(Context context, boolean isOn, int timePause, boolean vibroIsOn, String ringtoneUri){
         Intent i = ReminderService.newIntent(context, vibroIsOn, ringtoneUri, timePause);
-        PendingIntent pi = PendingIntent.getService(context, 2, i, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pi = PendingIntent.getService(context, SERVICE_INTENT_ID, i, PendingIntent.FLAG_ONE_SHOT);
         int delay = (int)(SystemUtils.getNextGpTime(context) - System.currentTimeMillis()/1000 - timePause/1000);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, delay);
@@ -70,7 +74,7 @@ public class ReminderService extends IntentService {
     private void runReminder(final Intent intent){
         Resources resources = getResources();
         Intent i = NewsListActivity.newIntent(getApplicationContext());
-        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 2, i, 0);
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_INTENT_ID, i, 0);
 
         long[] vibrate;
         if(intent.getBooleanExtra(VIBRO_IS_ON, false)){
@@ -91,7 +95,7 @@ public class ReminderService extends IntentService {
                 .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(2, mBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     private String getReminderNotification(){

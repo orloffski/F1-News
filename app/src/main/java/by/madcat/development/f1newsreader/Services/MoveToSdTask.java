@@ -22,7 +22,7 @@ public class MoveToSdTask extends AsyncTask<Void, Integer, Void> {
     private boolean move_to_sd;
 
     public MoveToSdTask(Context context, String pathFrom, String pathTo, boolean toSd) {
-        NewsLinkListToLoad.getInstance(null, null).setLock(true);
+        NewsLinkListToLoad.getInstance(null).setLock(true);
         this.context = context;
         this.pathFrom = pathFrom;
         this.pathTo = pathTo;
@@ -76,7 +76,7 @@ public class MoveToSdTask extends AsyncTask<Void, Integer, Void> {
             SystemUtils.deleteFiles(pathFrom);
             moveImagesProgressDialog.dismiss();
         }
-        NewsLinkListToLoad.getInstance(null, null).setLock(false);
+        NewsLinkListToLoad.getInstance(null).setLock(false);
     }
 
     @Override

@@ -4,15 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.android.gms.analytics.Tracker;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
@@ -26,20 +23,17 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
     private Map<String, Map<NewsTypes, Date>> linksMap = null;
     private Context context;
     private NewsLoadSender sender;
-    private AnalyticsTrackers analyticsTrackers;
 
     NewsLinkListToLoad links;
 
-    public LoadLinkListTask(String routeMap, String mainSiteAdress, Application application, NewsLoadSender sender){
+    public LoadLinkListTask(String routeMap, String mainSiteAdress, Context context, NewsLoadSender sender){
 
-        this.analyticsTrackers = (AnalyticsTrackers)application;
-
-        links = NewsLinkListToLoad.getInstance(sender, analyticsTrackers);
+        links = NewsLinkListToLoad.getInstance(sender);
         links.setLock(true);
 
         this.routeMap = routeMap;
         this.mainSiteAdress = mainSiteAdress;
-        this.context = application.getApplicationContext();
+        this.context = context;
         this.sender = sender;
     }
 

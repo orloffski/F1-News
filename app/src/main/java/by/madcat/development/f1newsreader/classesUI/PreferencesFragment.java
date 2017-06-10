@@ -59,7 +59,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);
                 }else{
                     BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
-                    NewsLinkListToLoad.getInstance(null, null).setLock(false);
+                    NewsLinkListToLoad.getInstance(null).setLock(false);
                 }
 
                 return false;
@@ -159,7 +159,7 @@ public class PreferencesFragment extends PreferenceFragment {
         move_to_sd.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(NewsLinkListToLoad.getInstance(null, null).isLock()){
+                if(NewsLinkListToLoad.getInstance(null).isLock()){
                     ViewCreator.sendSnackbarMessage(
                             ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),

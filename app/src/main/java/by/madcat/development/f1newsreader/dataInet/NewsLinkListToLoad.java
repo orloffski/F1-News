@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import java.util.ArrayList;
 
-import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsLinkListObservable;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 
@@ -12,20 +11,18 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     private int newsCount;
     private NewsLoadSender sender;
     private boolean lock;
-    private AnalyticsTrackers analyticsTrackers;
 
-    public static NewsLinkListToLoad getInstance(NewsLoadSender sender, AnalyticsTrackers analyticsTrackers) {
+    public static NewsLinkListToLoad getInstance(NewsLoadSender sender) {
         if(ourInstance == null)
-            ourInstance = new NewsLinkListToLoad(sender, analyticsTrackers);
+            ourInstance = new NewsLinkListToLoad(sender);
         else if(ourInstance.newsLinkList.isEmpty())
             updateSender(sender);
 
         return ourInstance;
     }
 
-    private NewsLinkListToLoad(NewsLoadSender sender, AnalyticsTrackers analyticsTrackers) {
+    private NewsLinkListToLoad(NewsLoadSender sender) {
         this.sender = sender;
-        this.analyticsTrackers = analyticsTrackers;
         newsLinkList = new ArrayList<>();
     }
 
@@ -54,7 +51,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     @Override
     public void runLoadNews() {
         if(!newsLinkList.isEmpty()) {
-            analyticsTrackers.trackEvent("Load news", "load run", "news count: " + newsLinkList.size());
             newsCount = newsLinkList.size();
             for (LoadNewsTask task : newsLinkList)
                 task.execute();
@@ -64,7 +60,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void completeLoadNews() {
-        analyticsTrackers.trackEvent("Load news", "load complete", "loaded news count: " + newsCount);
         sender.sendNotification(newsCount);
         newsCount = 0;
         lock = false;
@@ -72,7 +67,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
 
     @Override
     public void cancelLoadNews() {
-        analyticsTrackers.trackEvent("Load news", "load canceled", "loaded news count: " + 0);
         sender.sendNotification(0);
         newsCount = 0;
         lock = false;
