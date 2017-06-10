@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -32,6 +33,8 @@ import java.util.ArrayList;
 import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
+import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
@@ -145,6 +148,14 @@ public class NewsListActivity extends AppCompatActivity
                 nowType = NewsTypes.SETTINGS;
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        clearNotifications(BackgroundLoadNewsService.NOTIFICATION_ID);
+        clearNotifications(ReminderService.NOTIFICATION_ID);
     }
 
     @Override
@@ -419,5 +430,10 @@ public class NewsListActivity extends AppCompatActivity
 
     public CoordinatorLayout getCoordinatorLayout(){
         return this.coordinatorLayout;
+    }
+
+    private void clearNotifications(int notificationsId){
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationsId);
     }
 }
