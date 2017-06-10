@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
         <activity
             android:name=".classesUI.NewsListActivity"
             android:label="@string/app_name"
@@ -28,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".classesUI.NewsPageActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -44,14 +46,22 @@
         <service
             android:name=".Services.BackgroundLoadNewsService"
             android:exported="true"/>
+
         <service
             android:name=".Services.ReminderService"
             android:exported="true"/>
+
         <service
             android:name=".Services.UILoadNewsService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false"/>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
 
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
@@ -61,11 +71,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false"/>
-
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:exported="true">
@@ -74,12 +79,6 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
-
-        <meta-data
-            android:name="com.google.android.gms.analytics.globalConfigResource"
-            android:resource="@xml/app_tracker"/>
-
         <receiver
             android:name=".Receivers.ServiceBootBroadcastReceiver"
             android:exported="false">
@@ -87,6 +86,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".Receivers.ReminderBootBroadcastReceiver"
             android:exported="false">
@@ -94,6 +94,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.analytics.globalConfigResource"
+            android:resource="@xml/app_tracker"/>
     </application>
 
 </manifest>
