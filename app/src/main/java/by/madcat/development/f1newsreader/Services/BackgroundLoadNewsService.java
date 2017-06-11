@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -50,7 +49,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         SystemUtils.stopOldService(alarmManager, i, context);
 
         if(isOn) {
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), timePause, pi);
+            alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), timePause, pi);
         }
         else{
             alarmManager.cancel(pi);
