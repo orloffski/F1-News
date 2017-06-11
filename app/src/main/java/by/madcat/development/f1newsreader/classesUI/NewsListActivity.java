@@ -38,6 +38,8 @@ import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
+import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
+
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         NewsOpenListener, View.OnClickListener {
@@ -266,7 +268,11 @@ public class NewsListActivity extends AppCompatActivity
         nowType = type;
 
         fragment = NewsListFragment.newInstance(type, searchQuery);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.content_news_list, fragment, LIST_FRAGMENT_NAME)
+                .commit();
 
         setActivityTitle(type);
         searchQuery = null;
@@ -280,7 +286,8 @@ public class NewsListActivity extends AppCompatActivity
         appBarLayout.setExpanded(false);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_news_list, new PreferencesFragment(), SETTINGS_FRAGMENT_NAME);
+        transaction.setTransition(TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.content_news_list, new PreferencesFragment(), SETTINGS_FRAGMENT_NAME);
         if(isNeedToBackStack)
             transaction.addToBackStack(null);
         transaction.commit();
