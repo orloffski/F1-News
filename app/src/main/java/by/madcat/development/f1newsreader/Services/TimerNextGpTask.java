@@ -7,6 +7,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
@@ -43,9 +44,18 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
             else if(timestamp != 0 && timestamp < System.currentTimeMillis()/1000){
                 try {
                     DocParseUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
-                    
-                    text = SystemUtils.getNextGpData(context);
-                    toNextGP = DateUtils.getNextGpString(timestamp);
+
+                    // перезагружаем данные о следующем гран-при
+                    timestamp = SystemUtils.getNextGpTime(context);
+
+                    // вдруг гонка онлайн и данные о текущем - фикс отсчета таймера в минус
+                    if(timestamp > System.currentTimeMillis()/1000) {
+                        text = SystemUtils.getNextGpData(context);
+                        toNextGP = DateUtils.getNextGpString(timestamp);
+                    }else{
+                        text = SystemUtils.getNextGpData(context);
+                        toNextGP = context.getResources().getString(R.string.gp_online);
+                    }
 
                     publishProgress(text, toNextGP);
                 } catch (IOException e) {
