@@ -232,10 +232,9 @@ public final class DocParseUtils {
                         if (lengthOfChildrens != 0)
                             lengthOfChildrens += 1;
 
-                        lengthOfChildrens += modifiedText.length();
-
                         // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
                         if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
+                            lengthOfChildrens += modifiedText.length();
                             View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context, fragmentManager);
                             views.add(headerText);
                         }
@@ -244,7 +243,7 @@ public final class DocParseUtils {
 
                 // пустые абзацы выбрасываем
                 if (child.text().length() != 0) {
-                    View text = createView(child.text().toString().trim(),
+                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
                             "", "TextView", context, fragmentManager);
                     views.add(text);
                 }
