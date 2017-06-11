@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -49,7 +50,11 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         SystemUtils.stopOldService(alarmManager, i, context);
 
         if(isOn) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), timePause, pi);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + timePause, timePause, pi);
+            }else{
+                alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + timePause, timePause, pi);
+            }
         }
         else{
             alarmManager.cancel(pi);
