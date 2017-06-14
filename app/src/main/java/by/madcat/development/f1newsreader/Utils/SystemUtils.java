@@ -38,6 +38,7 @@ import by.madcat.development.f1newsreader.Services.MoveToSdTask;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 
 public class SystemUtils {
+    public static final String NOTIFICATIONS_COUNT_ID = "notifications_count";
     public static final String GP_DATA_COUNTRY = "gp_country";
     public static final String GP_DATA_DATE = "gp_date";
     public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
@@ -357,7 +358,7 @@ public class SystemUtils {
         pi.cancel();
     }
 
-    public static int getNumberInIssetNotification(int id, NotificationManager notificationManager){
+    public static int getNumberInIssetNotificationsCount(int id, NotificationManager notificationManager, Context context){
         int number = 0;
         
         if (Build.VERSION.SDK_INT >= 23) {
@@ -368,8 +369,22 @@ public class SystemUtils {
                     Notification notification = statusBarNotification.getNotification();
                     number = notification.number;
                 }
+        }else if(Build.VERSION.SDK_INT < 23 && Build.VERSION.SDK_INT >= 18){
+            number = PreferenceManager.getDefaultSharedPreferences(context).getInt(NOTIFICATIONS_COUNT_ID, 0);
         }
 
         return number;
+    }
+
+    public static void setIssetNotificationsCount(Context context, int count){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.putInt(NOTIFICATIONS_COUNT_ID, count);
+        editor.commit();
+    }
+
+    public static void clearIssetNotificationsCount(Context context){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.putInt(NOTIFICATIONS_COUNT_ID, 0);
+        editor.commit();
     }
 }

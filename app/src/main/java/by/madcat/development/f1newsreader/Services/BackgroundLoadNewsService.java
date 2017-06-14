@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Receivers.NotificationDismissedReceiver;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
@@ -23,9 +24,10 @@ import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";
-    public static final int NOTIFICATION_ID = 1;
+    public static final int NOTIFICATION_ID = 1001;
     private static final int SERVICE_INTENT_ID = 1;
     private static final int NOTIFICATION_INTENT_ID = 3;
+    public static String NOTIFICATION_CODE = "by.madcat.development.f1newsreader";
 
     public static Intent newIntent(Context context){
         return new Intent(context, BackgroundLoadNewsService.class);
@@ -72,7 +74,9 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         Intent i = NewsListActivity.newIntent(this);
         PendingIntent pi = PendingIntent.getActivity(this, NOTIFICATION_INTENT_ID, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        countNews += SystemUtils.getNumberInIssetNotification(NOTIFICATION_ID, (NotificationManager)getSystemService(NOTIFICATION_SERVICE));
+        countNews += SystemUtils.getNumberInIssetNotificationsCount(NOTIFICATION_ID, (NotificationManager)getSystemService(NOTIFICATION_SERVICE), getApplicationContext());
+
+        SystemUtils.setIssetNotificationsCount(getApplicationContext(), countNews);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))
@@ -83,7 +87,8 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
                 .setContentText(resources.getQuantityString(R.plurals.news_plurals, countNews, countNews))
                 .setContentIntent(pi)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setDeleteIntent(createOnDismissedIntent(getApplicationContext(), NOTIFICATION_ID));
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
@@ -96,5 +101,15 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
         LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);
         loadLinksTask.execute();
+    }
+
+    private PendingIntent createOnDismissedIntent(Context context, int notificationId) {
+        Intent intent = new Intent(context, NotificationDismissedReceiver.class);
+        intent.putExtra(NOTIFICATION_CODE, notificationId);
+
+        PendingIntent pendingIntent =
+                PendingIntent.getBroadcast(context.getApplicationContext(),
+                        notificationId, intent, 0);
+        return pendingIntent;
     }
 }
