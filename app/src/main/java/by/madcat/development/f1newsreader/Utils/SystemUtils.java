@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.MoveToSdTask;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 
@@ -386,5 +387,39 @@ public class SystemUtils {
         SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putInt(NOTIFICATIONS_COUNT_ID, 0);
         editor.commit();
+    }
+
+    public static void addServiceToAlarmManager(Context context, boolean serviceIsRun, int timePause, boolean restartService){
+
+        if(restartService){
+            serviceIsRun = PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getBoolean("refresh_interval_on", false);
+
+            timePause = Integer.parseInt(PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getString("refresh_interval", context.getString(R.string.intervals_default_value)));
+        }
+
+        Intent i = BackgroundLoadNewsService.newIntent(context);
+        PendingIntent pi = PendingIntent.getService(context, BackgroundLoadNewsService.SERVICE_INTENT_ID, i, 0);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        SystemUtils.stopOldService(alarmManager, i, context);
+
+        if(serviceIsRun) {
+            if(Build.VERSION.SDK_INT >= 23){
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC, timePause, pi);
+            }else if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 23){
+                alarmManager.setExact(AlarmManager.RTC, timePause, pi);
+            }else{
+                alarmManager.set(AlarmManager.RTC, timePause, pi);
+            }
+        }
+        else{
+            alarmManager.cancel(pi);
+            pi.cancel();
+        }
     }
 }

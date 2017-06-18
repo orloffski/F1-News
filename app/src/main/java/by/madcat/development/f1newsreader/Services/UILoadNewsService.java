@@ -25,7 +25,7 @@ public class UILoadNewsService extends Service implements NewsLoadSender {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(!NewsLinkListToLoad.getInstance(this).isLock()) {
+        if(!NewsLinkListToLoad.getInstance(this, getApplicationContext()).isLock()) {
             thisServiceIsRun = true;
             InternetDataRouting dataRouting = InternetDataRouting.getInstance();
             LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);

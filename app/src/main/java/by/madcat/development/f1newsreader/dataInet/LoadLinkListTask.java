@@ -28,7 +28,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
     public LoadLinkListTask(String routeMap, String mainSiteAdress, Context context, NewsLoadSender sender){
 
-        links = NewsLinkListToLoad.getInstance(sender);
+        links = NewsLinkListToLoad.getInstance(sender, context);
         links.setLock(true);
 
         this.routeMap = routeMap;

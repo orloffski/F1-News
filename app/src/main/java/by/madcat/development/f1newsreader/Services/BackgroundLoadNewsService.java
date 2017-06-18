@@ -1,6 +1,5 @@
 package by.madcat.development.f1newsreader.Services;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -25,7 +23,7 @@ import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";
     public static final int NOTIFICATION_ID = 1001;
-    private static final int SERVICE_INTENT_ID = 1;
+    public static final int SERVICE_INTENT_ID = 1;
     private static final int NOTIFICATION_INTENT_ID = 3;
     public static String NOTIFICATION_CODE = "by.madcat.development.f1newsreader";
 
@@ -39,29 +37,10 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(!NewsLinkListToLoad.getInstance(this).isLock())
+        if(!NewsLinkListToLoad.getInstance(this, getApplicationContext()).isLock())
             runLoad();
-    }
-
-    public static void setServiceAlarm(Context context, boolean isOn, int timePause){
-        Intent i = BackgroundLoadNewsService.newIntent(context);
-        PendingIntent pi = PendingIntent.getService(context, SERVICE_INTENT_ID, i, 0);
-
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-
-        SystemUtils.stopOldService(alarmManager, i, context);
-
-        if(isOn) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                alarmManager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + timePause, timePause, pi);
-            }else{
-                alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + timePause, timePause, pi);
-            }
-        }
-        else{
-            alarmManager.cancel(pi);
-            pi.cancel();
-        }
+        else
+            SystemUtils.addServiceToAlarmManager(getApplicationContext(), false, 0, true);
     }
 
     public void sendNotification(int countNews){
@@ -95,8 +74,10 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     }
 
     private void runLoad(){
-        if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext()))
+        if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext())) {
+            SystemUtils.addServiceToAlarmManager(getApplicationContext(), false, 0, true);
             return;
+        }
 
         InternetDataRouting dataRouting = InternetDataRouting.getInstance();
         LoadLinkListTask loadLinksTask = new LoadLinkListTask(dataRouting.getRoutingMap(), dataRouting.getMainSiteAdress(), getApplicationContext(), this);

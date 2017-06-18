@@ -56,10 +56,10 @@ public class PreferencesFragment extends PreferenceFragment {
                 int defaultValue = Integer.parseInt(refresh_interval.getValue());
 
                 if(refresh_interval_on.isChecked()) {
-                    BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, defaultValue);
+                    SystemUtils.addServiceToAlarmManager(getActivity(), true, defaultValue, false);
                 }else{
-                    BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
-                    NewsLinkListToLoad.getInstance(null).setLock(false);
+                    SystemUtils.addServiceToAlarmManager(getActivity(), false, 0, false);
+                    NewsLinkListToLoad.getInstance(null, getContext()).setLock(false);
                 }
 
                 return false;
@@ -72,8 +72,8 @@ public class PreferencesFragment extends PreferenceFragment {
                 String value = newValue.toString();
                 int timePause = Integer.parseInt(value);
 
-                BackgroundLoadNewsService.setServiceAlarm(getActivity(), false, 0);
-                BackgroundLoadNewsService.setServiceAlarm(getActivity(), true, timePause);
+                SystemUtils.addServiceToAlarmManager(getActivity(), false, 0, false);
+                SystemUtils.addServiceToAlarmManager(getActivity(), true, timePause, false);
                 return true;
             }
         });
@@ -159,7 +159,7 @@ public class PreferencesFragment extends PreferenceFragment {
         move_to_sd.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(NewsLinkListToLoad.getInstance(null).isLock()){
+                if(NewsLinkListToLoad.getInstance(null, getContext()).isLock()){
                     ViewCreator.sendSnackbarMessage(
                             ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),

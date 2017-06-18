@@ -1,9 +1,12 @@
 package by.madcat.development.f1newsreader.dataInet;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLinkListObservable;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 
 public class NewsLinkListToLoad implements NewsLinkListObservable{
     private static NewsLinkListToLoad ourInstance;
@@ -11,19 +14,21 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
     private int newsCount;
     private NewsLoadSender sender;
     private boolean lock;
+    private Context context;
 
-    public static NewsLinkListToLoad getInstance(NewsLoadSender sender) {
+    public static NewsLinkListToLoad getInstance(NewsLoadSender sender, Context context) {
         if(ourInstance == null)
-            ourInstance = new NewsLinkListToLoad(sender);
+            ourInstance = new NewsLinkListToLoad(sender, context);
         else if(ourInstance.newsLinkList.isEmpty())
             updateSender(sender);
 
         return ourInstance;
     }
 
-    private NewsLinkListToLoad(NewsLoadSender sender) {
+    private NewsLinkListToLoad(NewsLoadSender sender, Context context) {
         this.sender = sender;
         newsLinkList = new ArrayList<>();
+        this.context = context;
     }
 
     private static void updateSender(NewsLoadSender newSender){
@@ -63,6 +68,8 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         sender.sendNotification(newsCount);
         newsCount = 0;
         lock = false;
+
+        SystemUtils.addServiceToAlarmManager(context, false, 0, true);
     }
 
     @Override
@@ -70,6 +77,8 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         sender.sendNotification(0);
         newsCount = 0;
         lock = false;
+
+        SystemUtils.addServiceToAlarmManager(context, false, 0, true);
     }
 
     @Override
