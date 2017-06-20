@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,12 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
-        SystemUtils.addServiceToAlarmManager(context, true);
+        SystemUtils.addServiceToAlarmManager(
+                context,
+                PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getBoolean("refresh_interval_on", false)
+        );
     }
 
     @Override
@@ -78,7 +84,12 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
-        SystemUtils.addServiceToAlarmManager(context, true);
+        SystemUtils.addServiceToAlarmManager(
+                context,
+                PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getBoolean("refresh_interval_on", false)
+        );
     }
 
     @Override

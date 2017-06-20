@@ -15,6 +15,11 @@ public class ServiceBootBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SystemUtils.addServiceToAlarmManager(context, true);
+        SystemUtils.addServiceToAlarmManager(
+                context,
+                PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getBoolean("refresh_interval_on", false)
+        );
     }
 }
