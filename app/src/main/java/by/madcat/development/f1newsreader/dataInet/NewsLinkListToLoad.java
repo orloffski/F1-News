@@ -69,7 +69,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
-        SystemUtils.addServiceToAlarmManager(context, false, 0, true);
+        SystemUtils.addServiceToAlarmManager(context, true);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
-        SystemUtils.addServiceToAlarmManager(context, false, 0, true);
+        SystemUtils.addServiceToAlarmManager(context, true);
     }
 
     @Override
