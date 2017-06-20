@@ -57,8 +57,6 @@ public class ReminderService extends IntentService {
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        SystemUtils.stopOldService(alarmManager, i, context);
-
         if(isOn && delay > 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);

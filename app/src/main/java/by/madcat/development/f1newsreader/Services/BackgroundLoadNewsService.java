@@ -40,7 +40,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         if(!NewsLinkListToLoad.getInstance(this, getApplicationContext()).isLock())
             runLoad();
         else
-            SystemUtils.addServiceToAlarmManager(getApplicationContext(), false, 0, true);
+            SystemUtils.addServiceToAlarmManager(getApplicationContext(), true);
     }
 
     public void sendNotification(int countNews){
@@ -75,7 +75,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     private void runLoad(){
         if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext())) {
-            SystemUtils.addServiceToAlarmManager(getApplicationContext(), false, 0, true);
+            SystemUtils.addServiceToAlarmManager(getApplicationContext(), true);
             return;
         }
 

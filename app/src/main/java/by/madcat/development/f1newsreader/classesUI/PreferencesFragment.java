@@ -56,9 +56,9 @@ public class PreferencesFragment extends PreferenceFragment {
                 int defaultValue = Integer.parseInt(refresh_interval.getValue());
 
                 if(refresh_interval_on.isChecked()) {
-                    SystemUtils.addServiceToAlarmManager(getActivity(), true, defaultValue, false);
+                    SystemUtils.addServiceToAlarmManager(getActivity(), true);
                 }else{
-                    SystemUtils.addServiceToAlarmManager(getActivity(), false, 0, false);
+                    SystemUtils.addServiceToAlarmManager(getActivity(), false);
                     NewsLinkListToLoad.getInstance(null, getContext()).setLock(false);
                 }
 
@@ -69,11 +69,8 @@ public class PreferencesFragment extends PreferenceFragment {
         refresh_interval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                String value = newValue.toString();
-                int timePause = Integer.parseInt(value);
-
-                SystemUtils.addServiceToAlarmManager(getActivity(), false, 0, false);
-                SystemUtils.addServiceToAlarmManager(getActivity(), true, timePause, false);
+                SystemUtils.addServiceToAlarmManager(getActivity(), false);
+                SystemUtils.addServiceToAlarmManager(getActivity(), true);
                 return true;
             }
         });

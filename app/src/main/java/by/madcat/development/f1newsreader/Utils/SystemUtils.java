@@ -352,13 +352,6 @@ public class SystemUtils {
         }
     }
 
-    public static void stopOldService(AlarmManager alarmManager, Intent i, Context context){
-        PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
-
-        alarmManager.cancel(pi);
-        pi.cancel();
-    }
-
     public static int getNumberInIssetNotificationsCount(int id, NotificationManager notificationManager, Context context){
         int number = 0;
         
@@ -389,26 +382,17 @@ public class SystemUtils {
         editor.commit();
     }
 
-    public static void addServiceToAlarmManager(Context context, boolean serviceIsRun, int timePause, boolean restartService){
-
-        if(restartService){
-            serviceIsRun = PreferenceManager
-                    .getDefaultSharedPreferences(context)
-                    .getBoolean("refresh_interval_on", false);
-
-            timePause = Integer.parseInt(PreferenceManager
-                    .getDefaultSharedPreferences(context)
-                    .getString("refresh_interval", context.getString(R.string.intervals_default_value)));
-        }
-
+    public static void addServiceToAlarmManager(Context context, boolean serviceStart){
         Intent i = BackgroundLoadNewsService.newIntent(context);
         PendingIntent pi = PendingIntent.getService(context, BackgroundLoadNewsService.SERVICE_INTENT_ID, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        SystemUtils.stopOldService(alarmManager, i, context);
+        if(serviceStart) {
+            int timePause = Integer.parseInt(PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getString("refresh_interval", context.getString(R.string.intervals_default_value)));
 
-        if(serviceIsRun) {
             if(Build.VERSION.SDK_INT >= 23){
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC, timePause, pi);
             }else if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 23){
