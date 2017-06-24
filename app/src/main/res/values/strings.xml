@@ -61,6 +61,7 @@
 
     <!-- intervals -->
     <string-array name="intervals_title">
+        <item>5 минут</item>
         <item>15 минут</item>
         <item>30 минут</item>
         <item>1 час</item>
@@ -69,6 +70,7 @@
         <item>24 часа</item>
     </string-array>
     <string-array name="intervals_milliseconds">
+        <item>300000</item>
         <item>900000</item>
         <item>1800000</item>
         <item>3600000</item>

@@ -53,8 +53,6 @@ public class PreferencesFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 refresh_interval.setEnabled(refresh_interval_on.isChecked());
 
-                int defaultValue = Integer.parseInt(refresh_interval.getValue());
-
                 if(refresh_interval_on.isChecked()) {
                     SystemUtils.addServiceToAlarmManager(getActivity(), true);
                 }else{
@@ -69,7 +67,6 @@ public class PreferencesFragment extends PreferenceFragment {
         refresh_interval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                SystemUtils.addServiceToAlarmManager(getActivity(), false);
                 SystemUtils.addServiceToAlarmManager(getActivity(), true);
                 return true;
             }

@@ -388,6 +388,9 @@ public class SystemUtils {
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
+        alarmManager.cancel(pi);
+        pi.cancel();
+
         if(serviceStart) {
             int timePause = Integer.parseInt(PreferenceManager
                     .getDefaultSharedPreferences(context)
@@ -400,10 +403,6 @@ public class SystemUtils {
             }else{
                 alarmManager.set(AlarmManager.RTC, timePause, pi);
             }
-        }
-        else{
-            alarmManager.cancel(pi);
-            pi.cancel();
         }
     }
 }
