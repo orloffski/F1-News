@@ -19,7 +19,10 @@ public class ServiceBootBroadcastReceiver extends BroadcastReceiver {
                 context,
                 PreferenceManager
                         .getDefaultSharedPreferences(context)
-                        .getBoolean("refresh_interval_on", false)
+                        .getBoolean("refresh_interval_on", false),
+                Integer.parseInt(PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString("refresh_interval", context.getString(R.string.intervals_default_value)))
         );
     }
 }

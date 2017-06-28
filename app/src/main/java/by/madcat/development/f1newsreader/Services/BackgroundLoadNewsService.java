@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
@@ -22,9 +24,9 @@ import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";
-    public static final int NOTIFICATION_ID = 1001;
-    public static final int SERVICE_INTENT_ID = 1;
-    private static final int NOTIFICATION_INTENT_ID = 3;
+    public static final int NOTIFICATION_ID = 1001001;
+    public static final int SERVICE_INTENT_ID = 1001001;
+    private static final int NOTIFICATION_INTENT_ID = 1001003;
     public static String NOTIFICATION_CODE = "by.madcat.development.f1newsreader";
 
     public static Intent newIntent(Context context){
@@ -39,8 +41,16 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
     protected void onHandleIntent(Intent intent) {
         if(!NewsLinkListToLoad.getInstance(this, getApplicationContext()).isLock())
             runLoad();
-        else
-            SystemUtils.addServiceToAlarmManager(getApplicationContext(), true);
+        else {
+            Log.d("test", "Load is locked - set service to AlarmManager");
+            SystemUtils.addServiceToAlarmManager(
+                    getApplicationContext(),
+                    true,
+                    Integer.parseInt(PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext())
+                            .getString("refresh_interval", getApplication().getString(R.string.intervals_default_value)))
+                    );
+        }
     }
 
     public void sendNotification(int countNews){
@@ -75,7 +85,14 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     private void runLoad(){
         if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext())) {
-            SystemUtils.addServiceToAlarmManager(getApplicationContext(), true);
+            Log.d("test", "Network disconnected - set service to AlarmManager");
+            SystemUtils.addServiceToAlarmManager(
+                    getApplicationContext(),
+                    true,
+                    Integer.parseInt(PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext())
+                            .getString("refresh_interval", getApplication().getString(R.string.intervals_default_value)))
+                    );
             return;
         }
 

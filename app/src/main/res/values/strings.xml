@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">F1News.ru</string>
+    <string name="app_name">F1News.ru reader</string>
 
     <!-- navigation drawer titles -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

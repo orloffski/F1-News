@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -382,27 +384,29 @@ public class SystemUtils {
         editor.commit();
     }
 
-    public static void addServiceToAlarmManager(Context context, boolean serviceStart){
+    public static void addServiceToAlarmManager(Context context, boolean serviceStart, int timePause){
+        Log.d("test", "addServiceToAlarmManager started");
         Intent i = BackgroundLoadNewsService.newIntent(context);
         PendingIntent pi = PendingIntent.getService(context, BackgroundLoadNewsService.SERVICE_INTENT_ID, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.cancel(pi);
-        pi.cancel();
-
         if(serviceStart) {
-            int timePause = Integer.parseInt(PreferenceManager
-                    .getDefaultSharedPreferences(context)
-                    .getString("refresh_interval", context.getString(R.string.intervals_default_value)));
+            Log.d("test", "service add to AlarmManager");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MILLISECOND, timePause);
 
             if(Build.VERSION.SDK_INT >= 23){
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC, timePause, pi);
-            }else if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 23){
-                alarmManager.setExact(AlarmManager.RTC, timePause, pi);
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+            }else if (Build.VERSION.SDK_INT >= 19){
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             }else{
-                alarmManager.set(AlarmManager.RTC, timePause, pi);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             }
+        }else{
+            Log.d("test", "service stopped");
+            alarmManager.cancel(pi);
+            pi.cancel();
         }
     }
 }

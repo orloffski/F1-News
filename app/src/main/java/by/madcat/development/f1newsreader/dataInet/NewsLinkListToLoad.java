@@ -2,11 +2,13 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLinkListObservable;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 
 public class NewsLinkListToLoad implements NewsLinkListObservable{
@@ -70,11 +72,16 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
+        Log.d("test", "news load completed");
+
         SystemUtils.addServiceToAlarmManager(
                 context,
                 PreferenceManager
                     .getDefaultSharedPreferences(context)
-                    .getBoolean("refresh_interval_on", false)
+                    .getBoolean("refresh_interval_on", false),
+                Integer.parseInt(PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString("refresh_interval", context.getString(R.string.intervals_default_value)))
         );
     }
 
@@ -84,11 +91,16 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
+        Log.d("test", "news load canceled");
+
         SystemUtils.addServiceToAlarmManager(
                 context,
                 PreferenceManager
                     .getDefaultSharedPreferences(context)
-                    .getBoolean("refresh_interval_on", false)
+                    .getBoolean("refresh_interval_on", false),
+                Integer.parseInt(PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString("refresh_interval", context.getString(R.string.intervals_default_value)))
         );
     }
 

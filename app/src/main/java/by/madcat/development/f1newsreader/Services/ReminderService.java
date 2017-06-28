@@ -21,9 +21,9 @@ import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 
 public class ReminderService extends IntentService {
 
-    public static final int NOTIFICATION_ID = 2;
-    private static final int SERVICE_INTENT_ID = 2;
-    private static final int NOTIFICATION_INTENT_ID = 4;
+    public static final int NOTIFICATION_ID = 1001002;
+    private static final int SERVICE_INTENT_ID = 1001002;
+    private static final int NOTIFICATION_INTENT_ID = 1001004;
 
     private static final String TAG = "ReminderService";
     public static final String VIBRO_IS_ON = "vibro_is_on";

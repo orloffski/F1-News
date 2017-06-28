@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
@@ -54,9 +56,17 @@ public class PreferencesFragment extends PreferenceFragment {
                 refresh_interval.setEnabled(refresh_interval_on.isChecked());
 
                 if(refresh_interval_on.isChecked()) {
-                    SystemUtils.addServiceToAlarmManager(getActivity(), true);
+                    Log.d("test", "Manualy set service ON");
+                    SystemUtils.addServiceToAlarmManager(
+                            getContext(),
+                            true,
+                            Integer.parseInt(PreferenceManager
+                            .getDefaultSharedPreferences(getContext())
+                            .getString("refresh_interval", getContext().getString(R.string.intervals_default_value)))
+                    );
                 }else{
-                    SystemUtils.addServiceToAlarmManager(getActivity(), false);
+                    Log.d("test", "Manualy set service OFF");
+                    SystemUtils.addServiceToAlarmManager(getContext(), false, 0);
                     NewsLinkListToLoad.getInstance(null, getContext()).setLock(false);
                 }
 
@@ -67,7 +77,13 @@ public class PreferencesFragment extends PreferenceFragment {
         refresh_interval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                SystemUtils.addServiceToAlarmManager(getActivity(), true);
+                Log.d("test", "Manualy service settings change " + newValue.toString());
+                SystemUtils.addServiceToAlarmManager(getContext(), false, 0);
+                SystemUtils.addServiceToAlarmManager(
+                        getContext(),
+                        true,
+                        Integer.parseInt(newValue.toString())
+                );
                 return true;
             }
         });
@@ -105,7 +121,7 @@ public class PreferencesFragment extends PreferenceFragment {
                         boolean vibroValue = reminder_vibro.isChecked();
                         String ringtoneUri = SystemUtils.loadRingtoneData(getContext());
 
-                        ReminderService.setServiceAlarm(getActivity(), true, defaultValue, vibroValue, ringtoneUri);
+                        ReminderService.setServiceAlarm(getContext(), true, defaultValue, vibroValue, ringtoneUri);
 
                         reminder_interval.setEnabled(reminder_on.isChecked());
                         reminder_ringtone.setEnabled(reminder_on.isChecked());
@@ -124,8 +140,8 @@ public class PreferencesFragment extends PreferenceFragment {
                 int timePause = Integer.parseInt(value);
                 String ringtoneUri = SystemUtils.loadRingtoneData(getContext());
 
-                ReminderService.setServiceAlarm(getActivity(), false, 0, false, null);
-                ReminderService.setServiceAlarm(getActivity(), true, timePause, reminder_vibro.isChecked(), ringtoneUri);
+                ReminderService.setServiceAlarm(getContext(), false, 0, false, null);
+                ReminderService.setServiceAlarm(getContext(), true, timePause, reminder_vibro.isChecked(), ringtoneUri);
                 return true;
             }
         });
