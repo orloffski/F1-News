@@ -8,6 +8,11 @@
             android:key="move_pic_to_sd"
             android:title="@string/move_pictures_to_sd"
             android:summary="@string/move_pictures_to_sd_summary"/>
+
+        <CheckBoxPreference
+            android:key="doze_disable"
+            android:title="@string/doze_disabled_title"
+            android:summary="@string/doze_disabled_summary"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/category_hide_news">

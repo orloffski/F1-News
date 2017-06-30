@@ -1,28 +1,34 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.Utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class PreferencesFragment extends PreferenceFragment {
+
+    CheckBoxPreference doze_disabled;
+
     public PreferencesFragment() {
     }
 
@@ -192,6 +198,40 @@ public class PreferencesFragment extends PreferenceFragment {
                 return false;
             }
         });
+
+        // отключение энергосбережения
+        doze_disabled = (CheckBoxPreference)findPreference("doze_disable");
+        doze_disabled.setEnabled(false);
+
+        if(Build.VERSION.SDK_INT >= 23) {
+            doze_disabled.setEnabled(true);
+
+            String packageName = getContext().getPackageName();
+            PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+            doze_disabled.setChecked(pm.isIgnoringBatteryOptimizations(packageName));
+        }
+
+        doze_disabled.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(Build.VERSION.SDK_INT >= 23) {
+            doze_disabled.setEnabled(true);
+
+            String packageName = getContext().getPackageName();
+            PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+            doze_disabled.setChecked(pm.isIgnoringBatteryOptimizations(packageName));
+        }
     }
 
     private void cancelReminder(){
@@ -201,7 +241,7 @@ public class PreferencesFragment extends PreferenceFragment {
     public void updateReminderRingtone(Intent data){
         String ringTonePath = "";
         Ringtone ringtone;
-        String title = "";
+        String title;
         RingtonePreference reminder_ringtone = (RingtonePreference)findPreference("reminder_ringtone");
 
         Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);

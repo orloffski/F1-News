@@ -59,6 +59,9 @@
     <string name="move_title_to_sd">Перенос изображений на карту памяти</string>
     <string name="move_title_to_memory">Перенос изображений в память устройства</string>
 
+    <string name="doze_disabled_title">Отключить энергосбережение</string>
+    <string name="doze_disabled_summary">Данная функция необходима для работы приложения в режиме Doze. Актуальна для Android 6.0 и выше</string>
+
     <!-- intervals -->
     <string-array name="intervals_title">
         <item>5 минут</item>
