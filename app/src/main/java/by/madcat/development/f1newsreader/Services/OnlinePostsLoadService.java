@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import by.madcat.development.f1newsreader.Utils.DocParseUtils;
+import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
 import static by.madcat.development.f1newsreader.classesUI.TextOnlineActivity.BROADCAST_ACTION;
@@ -43,17 +46,14 @@ public class OnlinePostsLoadService extends Service {
     }
 
     void schedule(){
-        posts = new LinkedList<>();
-
         if (task != null) task.cancel();
         task = new TimerTask() {
             public void run() {
-                SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-                posts.add(new OnlinePost("Test string skjnfkjsnjk dnkajs ndkjn kjsan kjdnaskj", sdf.format(new Date())));
+                posts = loadOnlinePosts();
                 sendDataLoading();
             }
         };
-        timer.schedule(task, 0, 1000);
+        timer.schedule(task, 0, 15000);
     }
 
     void sendDataLoading(){
@@ -71,5 +71,19 @@ public class OnlinePostsLoadService extends Service {
         intent.putExtra("dates", dates);
         intent.putExtra("posts", onlinePosts);
         sendBroadcast(intent);
+    }
+
+    LinkedList<OnlinePost> loadOnlinePosts(){
+        Document jsDoc = null;
+        try {
+            jsDoc = DocParseUtils.getJsDoc(InternetDataRouting.TEXT_ONLINE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(jsDoc != null)
+            return DocParseUtils.getOnlinePosts(jsDoc);
+
+        return null;
     }
 }

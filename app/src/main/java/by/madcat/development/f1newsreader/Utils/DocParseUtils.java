@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,11 +35,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.classesUI.VideoFragment;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
@@ -72,6 +77,10 @@ public final class DocParseUtils {
     public static final String WORDS_TO_CLEAR_2 = "Стартовое поле ";
     public static final String WORDS_TO_CLEAR_3 = "background: url(";
     public static final String WORDS_TO_CLEAR_4 = ");";
+
+    public static final String ONLINE_JSON_ARRAY = "messages";
+    public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
+    public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
 
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
@@ -440,5 +449,23 @@ public final class DocParseUtils {
             weekendData.put(headList.get(i), bodyList.get(i));
 
         return weekendData;
+    }
+
+    public static LinkedList<OnlinePost> getOnlinePosts(Document jsDoc){
+        LinkedList<OnlinePost> posts = new LinkedList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsDoc.text());
+            JSONArray jsonArray = jsonObject.getJSONArray(ONLINE_JSON_ARRAY);
+
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject currJsonObject = jsonArray.getJSONObject(i);
+                posts.add(new OnlinePost(currJsonObject.getString(ONLINE_JSON_ELEMENT_MESSAGE), currJsonObject.getString(ONLINE_JSON_ELEMENT_DATE)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return posts;
     }
 }
