@@ -4,6 +4,8 @@ public class InternetDataRouting {
 
     public final static String ROUTING_MAP = "https://www.f1news.ru/export/news.xml";
     public final static String MAIN_SITE_ADRESS = "https://www.f1news.ru";
+    public final static String VIDEO_ONLINE = "http://www.online-match.tv/now/";
+    public final static String TEXT_ONLINE = "https://www.f1news.ru/lc/";
 
     private static InternetDataRouting instance = null;
 

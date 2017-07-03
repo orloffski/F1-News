@@ -2,6 +2,8 @@ package by.madcat.development.f1newsreader.Services;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -13,21 +15,25 @@ import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
-public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
+public class TimerNextGpTask extends AsyncTask<View, String, Void>{
 
     private Context context;
 
     private TextView timerText;
     private TextView timer;
+    private LinearLayout onlineLinksLayout;
+
+    private boolean isOnline;
 
     public TimerNextGpTask(Context context){
         this.context = context;
     }
 
     @Override
-    protected Void doInBackground(TextView... views) {
-        timerText = views[0];
-        timer = views[1];
+    protected Void doInBackground(View... views) {
+        timerText = (TextView) views[0];
+        timer = (TextView) views[1];
+        onlineLinksLayout = (LinearLayout) views[2];
 
         String toNextGP;
         String text;
@@ -39,9 +45,15 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
                 toNextGP = DateUtils.getNextGpString(timestamp);
                 text = SystemUtils.getNextGpData(context);
 
+                // даем начать просмотр за 15 минут до старта Гран-При
+                if(timestamp - System.currentTimeMillis()/1000 <= 900)
+                    isOnline = true;
+                else
+                    isOnline = true;
+//                    isOnline = false;
+
                 publishProgress(text, toNextGP);
-            }
-            else if(timestamp != 0 && timestamp < System.currentTimeMillis()/1000){
+            }else if(timestamp != 0 && timestamp < System.currentTimeMillis()/1000){
                 try {
                     DocParseUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
 
@@ -57,11 +69,13 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
                         toNextGP = context.getResources().getString(R.string.gp_online);
                     }
 
+                    isOnline = true;
                     publishProgress(text, toNextGP);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }else{
+                isOnline = false;
                 publishProgress("", "");
             }
 
@@ -81,5 +95,11 @@ public class TimerNextGpTask extends AsyncTask<TextView, String, Void>{
 
         timerText.setText(timers[0]);
         timer.setText(timers[1]);
+
+        if(isOnline) {
+            onlineLinksLayout.setVisibility(View.VISIBLE);
+        }else{
+            onlineLinksLayout.setVisibility(View.GONE);
+        }
     }
 }

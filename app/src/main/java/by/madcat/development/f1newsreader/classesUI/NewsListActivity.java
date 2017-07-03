@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.ExceptionReporter;
@@ -37,6 +39,7 @@ import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
 
@@ -67,6 +70,10 @@ public class NewsListActivity extends AppCompatActivity
     private TextView timerText;
     private TextView timer;
 
+    private LinearLayout onlineLinksLayout;
+    private ImageView videoOnlineImage;
+    private ImageView textOnlineImage;
+
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
     }
@@ -89,6 +96,7 @@ public class NewsListActivity extends AppCompatActivity
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
         loadTimerLinks();
+        loadOnlineLinks();
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -397,12 +405,25 @@ public class NewsListActivity extends AppCompatActivity
         return timer;
     }
 
+    public View getOnlineLinksLayout(){
+        return onlineLinksLayout;
+    }
+
     private void loadTimerLinks(){
         timerText = (TextView) findViewById(R.id.timerText);
         timer = (TextView) findViewById(R.id.timer);
 
         timerText.setOnClickListener(this);
         timer.setOnClickListener(this);
+    }
+
+    private void loadOnlineLinks(){
+        onlineLinksLayout = (LinearLayout) findViewById(R.id.online_links_layout);
+        videoOnlineImage = (ImageView) findViewById(R.id.video_online_image);
+        textOnlineImage = (ImageView) findViewById(R.id.text_online_image);
+
+        videoOnlineImage.setOnClickListener(this);
+        textOnlineImage.setOnClickListener(this);
     }
 
     @Override
@@ -417,21 +438,33 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        String timerGpTitle = SystemUtils.getNextGpCountry(this);
-        String weekendTitle = SystemUtils.getWeekendTitle(this);
+        switch (v.getId()){
+            case R.id.text_online_image:
+                Intent textIntent = new Intent(this, TextOnlineActivity.class);
+                startActivity(textIntent);
+                break;
+            case R.id.video_online_image:
+                Intent videoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(InternetDataRouting.VIDEO_ONLINE));
+                startActivity(videoIntent);
+                break;
+            case R.id.timer: case R.id.timerText:
+                String timerGpTitle = SystemUtils.getNextGpCountry(this);
+                String weekendTitle = SystemUtils.getWeekendTitle(this);
 
-        if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
-            if(searchMenu != null)
-                searchMenu.findItem(R.id.action_search).setVisible(false);
+                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
+                    if(searchMenu != null)
+                        searchMenu.findItem(R.id.action_search).setVisible(false);
 
-            appBarLayout.setExpanded(false);
+                    appBarLayout.setExpanded(false);
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
 
-            collapsingToolbarLayout.setTitle(weekendTitle);
+                    collapsingToolbarLayout.setTitle(weekendTitle);
+                }
+                break;
         }
     }
 

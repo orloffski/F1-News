@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="by.madcat.development.f1newsreader"
+    package="by.madcat.development.f1newsreader"
     android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:name=".AnalyticsTrackers.AnalyticsTrackers"
@@ -19,91 +19,84 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
         <activity
             android:name=".classesUI.NewsListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".classesUI.NewsPageActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="screenSize|orientation|keyboardHidden">
-        </activity>
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".classesUI.TextOnlineActivity"></activity>
 
         <provider
             android:name=".data.F1NewsReaderContentProvider"
             android:authorities="by.madcat.development.f1newsreader.data"
             android:enabled="true"
-            android:exported="false">
-        </provider>
+            android:exported="false"></provider>
 
+        <service
+            android:name=".Services.OnlinePostsLoadService"
+            android:exported="true" />
         <service
             android:name=".Services.BackgroundLoadNewsService"
-            android:exported="true"/>
-
+            android:exported="true" />
         <service
             android:name=".Services.ReminderService"
-            android:exported="true"/>
-
+            android:exported="true" />
         <service
             android:name=".Services.UILoadNewsService"
             android:enabled="true"
-            android:exported="false"/>
-
+            android:exported="false" />
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
-            android:exported="false"/>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
+            android:exported="false" />
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".Receivers.ServiceBootBroadcastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".Receivers.ReminderBootBroadcastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".Receivers.NotificationDismissedReceiver"
-            android:exported="false" >
-        </receiver>
+            android:exported="false"></receiver>
 
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
-            android:resource="@xml/app_tracker"/>
+            android:resource="@xml/app_tracker" />
     </application>
 
 </manifest>

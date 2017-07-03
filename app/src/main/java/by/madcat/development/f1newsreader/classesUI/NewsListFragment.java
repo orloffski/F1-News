@@ -25,6 +25,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class NewsListFragment extends Fragment
     private TextView timer;
     private TextView timerText;
     private TimerNextGpTask timerTask;
+
+    private LinearLayout onlineLinksLayout;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -220,6 +223,8 @@ public class NewsListFragment extends Fragment
         timer = (TextView) ((NewsListActivity)getActivity()).getTimerLink();
         timerText = (TextView) ((NewsListActivity)getActivity()).getTimerTextLink();
 
+        onlineLinksLayout = (LinearLayout) ((NewsListActivity)getActivity()).getOnlineLinksLayout();
+
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
     }
@@ -268,6 +273,6 @@ public class NewsListFragment extends Fragment
 
     private void loadTimer(){
         timerTask = new TimerNextGpTask(context);
-        timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer);
+        timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer, onlineLinksLayout);
     }
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -34,38 +33,73 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    app:layout_collapseMode="pin"/>
-                <LinearLayout
+                    app:layout_collapseMode="pin" />
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp">
-                    <TextView
-                        android:id="@+id/timerText"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="?actionBarSize"
-                        style="@style/TimerTextStyleOverlayShadow"/>
-                    <TextView
-                        android:id="@+id/timer"
+                        android:layout_gravity="top"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/timerText"
+                            style="@style/TimerTextStyleOverlayShadow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="?actionBarSize" />
+
+                        <TextView
+                            android:id="@+id/timer"
+                            style="@style/TimerTextStyleOverlayShadow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/online_links_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TimerTextStyleOverlayShadow"/>
-                </LinearLayout>
+                        android:layout_gravity="top|right"
+                        android:gravity="top|right"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/video_online_image"
+                            android:layout_width="100dp"
+                            android:layout_height="150dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="?actionBarSize"
+                            app:srcCompat="@drawable/video_ico" />
+
+                        <ImageView
+                            android:id="@+id/text_online_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:paddingRight="10dp"
+                            app:srcCompat="@drawable/text_ico" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_list"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@color/transparent"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                android:background="@color/transparent"/>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/search_view"
@@ -76,6 +110,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_news_list"/>
+    <include layout="@layout/content_news_list" />
 
 </android.support.design.widget.CoordinatorLayout>

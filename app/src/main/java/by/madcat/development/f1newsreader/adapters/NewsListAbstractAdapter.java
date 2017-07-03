@@ -12,9 +12,8 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
-import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 
-public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<ViewHolder>{
+public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<NewsViewHolder>{
     public interface ClickListener{
         void onClick(int positionID);
     }
@@ -23,7 +22,7 @@ public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<ViewH
     protected Context context;
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final NewsViewHolder holder, int position) {
         cursor.moveToPosition(position);
         holder.setRowID(position);
         holder.title.setText(cursor.getString(cursor.getColumnIndex(DatabaseDescription.News.COLUMN_TITLE)));

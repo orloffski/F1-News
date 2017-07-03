@@ -17,8 +17,8 @@ public class NewsListAdapter extends NewsListAbstractAdapter{
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_list_card, parent, false);
-        return new ViewHolder(view, clickListener);
+        return new NewsViewHolder(view, clickListener);
     }
 }

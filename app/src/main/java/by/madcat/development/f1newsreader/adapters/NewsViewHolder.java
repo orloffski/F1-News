@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.R;
 
-public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public final TextView title;
     public final TextView date;
     public final ImageView thumbnail;
     private long rowID;
     private NewsListAbstractAdapter.ClickListener clickListener;
 
-    public ViewHolder(View itemView, final NewsListAbstractAdapter.ClickListener clickListener) {
+    public NewsViewHolder(View itemView, final NewsListAbstractAdapter.ClickListener clickListener) {
         super(itemView);
         this.clickListener = clickListener;
 
