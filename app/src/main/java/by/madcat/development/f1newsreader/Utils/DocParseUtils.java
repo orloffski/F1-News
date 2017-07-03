@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -107,28 +108,37 @@ public final class DocParseUtils {
     }
 
     public static String getNewsBody(Document jsDoc){
-        StringBuilder newsBody = new StringBuilder();
-        Element news_content = jsDoc.getElementsByClass(NEWS_BODY_PARSE).first();
-        for(Element element : news_content.children())
-            newsBody.append(element.toString());
-        return newsBody.toString();
+        try {
+            StringBuilder newsBody = new StringBuilder();
+            Element news_content = jsDoc.getElementsByClass(NEWS_BODY_PARSE).first();
+            for(Element element : news_content.children())
+                newsBody.append(element.toString());
+            return newsBody.toString();
+        }catch (Exception e){
+            return "";
+        }
+
     }
 
     public static ArrayList<String> getNewsBodyImageLinks(Document jsDoc){
-        Element news_content = jsDoc.getElementsByClass(NEWS_BODY_PARSE).first();
-        Elements news_body_images = news_content.getElementsByTag(NEWS_BODY_IMG_ELEMENT);
-
-        if(news_body_images.size() == 0)
-            return null;
-
         ArrayList<String> images_array = new ArrayList<>();
 
-        for(Element imageLink : news_body_images){
-            String link = imageLink.attr(NEWS_IMAGE_LINK_ATTR_PARSE);
-            if(!link.contains("http"))
-                link = "http:" + link;
+        try {
+            Element news_content = jsDoc.getElementsByClass(NEWS_BODY_PARSE).first();
+            Elements news_body_images = news_content.getElementsByTag(NEWS_BODY_IMG_ELEMENT);
 
-            images_array.add(link);
+            if(news_body_images.size() == 0)
+                return null;
+
+            for(Element imageLink : news_body_images){
+                String link = imageLink.attr(NEWS_IMAGE_LINK_ATTR_PARSE);
+                if(!link.contains("http"))
+                    link = "http:" + link;
+
+                images_array.add(link);
+            }
+        }catch (Exception e){
+
         }
 
         return images_array;
