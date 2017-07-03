@@ -17,6 +17,7 @@ import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
+import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
@@ -83,6 +84,8 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
 
         IntentFilter filter = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(receiver, filter);
+
+        setTitle(SystemUtils.getNextGpCountry(this));
     }
 
     @Override
