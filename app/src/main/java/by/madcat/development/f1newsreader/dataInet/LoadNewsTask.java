@@ -102,7 +102,7 @@ public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
     }
 
     private void saveNewsData(ArrayList<String> strings){
-        if(strings == null)
+        if(strings == null || strings.get(1).equals(""))
             return;
 
         ContentValues contentValues = new ContentValues();
