@@ -13,6 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
@@ -20,6 +24,10 @@ import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
+
+import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ARRAY;
+import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ELEMENT_DATE;
+import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ELEMENT_MESSAGE;
 
 public class TextOnlineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -71,11 +79,23 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
             public void onReceive(Context context, Intent intent) {
                 posts.clear();
 
-                String[] dates = intent.getStringArrayExtra("dates");
-                String[] onlinePosts = intent.getStringArrayExtra("posts");
+                String data = intent.getStringExtra("online_posts_data");
 
-                for(int i = 0; i < dates.length; i++){
-                    posts.add(new OnlinePost(onlinePosts[i], dates[i]));
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    JSONArray jsonArray = jsonObject.getJSONArray(ONLINE_JSON_ARRAY);
+
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        JSONObject currJsonObject = jsonArray.getJSONObject(i);
+                        posts.add(
+                                new OnlinePost(
+                                        currJsonObject.getString(ONLINE_JSON_ELEMENT_MESSAGE),
+                                        currJsonObject.getString(ONLINE_JSON_ELEMENT_DATE)
+                                )
+                        );
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
                 adapter.notifyDataSetChanged();

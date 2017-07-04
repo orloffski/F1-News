@@ -20,7 +20,7 @@ import static by.madcat.development.f1newsreader.classesUI.TextOnlineActivity.BR
 
 public class OnlinePostsLoadService extends Service {
 
-    private LinkedList<OnlinePost> posts;
+    private String data;
     private Timer timer;
     private TimerTask task;
 
@@ -49,7 +49,7 @@ public class OnlinePostsLoadService extends Service {
         if (task != null) task.cancel();
         task = new TimerTask() {
             public void run() {
-                posts = loadOnlinePosts();
+                data = loadOnlinePosts();
                 sendDataLoading();
             }
         };
@@ -57,23 +57,12 @@ public class OnlinePostsLoadService extends Service {
     }
 
     void sendDataLoading(){
-        String[] dates = new String[posts.size()];
-        String[] onlinePosts = new String[posts.size()];
-        int counter = 0;
-
-        for(OnlinePost post : posts){
-            dates[counter] = post.getOnlinePostTime();
-            onlinePosts[counter] = post.getOnlinePostText();
-            counter++;
-        }
-
         Intent intent = new Intent(BROADCAST_ACTION);
-        intent.putExtra("dates", dates);
-        intent.putExtra("posts", onlinePosts);
+        intent.putExtra("online_posts_data", data);
         sendBroadcast(intent);
     }
 
-    LinkedList<OnlinePost> loadOnlinePosts(){
+    String loadOnlinePosts(){
         Document jsDoc = null;
         try {
             jsDoc = DocParseUtils.getJsDoc(InternetDataRouting.TEXT_ONLINE);
@@ -82,8 +71,8 @@ public class OnlinePostsLoadService extends Service {
         }
 
         if(jsDoc != null)
-            return DocParseUtils.getOnlinePosts(jsDoc);
+            return jsDoc.text();
 
-        return null;
+        return "";
     }
 }
