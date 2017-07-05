@@ -8,7 +8,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="card_news_radius">2dp</dimen>
-    <dimen name="news_cover_height">65dp</dimen>
+    <dimen name="news_cover_height">60dp</dimen>
     <dimen name="news_cover_width">100dp</dimen>
     <dimen name="news_title_padding">10dp</dimen>
     <dimen name="news_title">12dp</dimen>
@@ -23,9 +23,4 @@
     <dimen name="image_view_layout_height">100dp</dimen>
     <dimen name="text_view_padding">10dp</dimen>
     <dimen name="text_size">15dp</dimen>
-
-    <!-- weekend text -->
-    <dimen name="weekend_text_size">15sp</dimen>
-
-    <dimen name="links_image_size">80dp</dimen>
 </resources>
