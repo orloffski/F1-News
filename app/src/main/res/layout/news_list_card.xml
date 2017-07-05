@@ -12,7 +12,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:minHeight="65dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -46,6 +47,7 @@
                 android:paddingRight="@dimen/news_title_padding"
                 android:textColor="@color/news_title"
                 android:textSize="@dimen/news_title"
+                android:minHeight="65dp"
                 android:gravity="center_vertical"/>
         </LinearLayout>
 
