@@ -96,10 +96,10 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
         timerText.setText(timers[0]);
         timer.setText(timers[1]);
 
-        if(isOnline) {
-            onlineLinksLayout.setVisibility(View.VISIBLE);
-        }else{
-            onlineLinksLayout.setVisibility(View.GONE);
-        }
+//        if(isOnline) {
+//            onlineLinksLayout.setVisibility(View.VISIBLE);
+//        }else{
+//            onlineLinksLayout.setVisibility(View.GONE);
+//        }
     }
 }

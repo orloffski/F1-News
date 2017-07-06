@@ -223,7 +223,7 @@ public class NewsListFragment extends Fragment
         timer = (TextView) ((NewsListActivity)getActivity()).getTimerLink();
         timerText = (TextView) ((NewsListActivity)getActivity()).getTimerTextLink();
 
-        onlineLinksLayout = (LinearLayout) ((NewsListActivity)getActivity()).getOnlineLinksLayout();
+//        onlineLinksLayout = (LinearLayout) ((NewsListActivity)getActivity()).getOnlineLinksLayout();
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();

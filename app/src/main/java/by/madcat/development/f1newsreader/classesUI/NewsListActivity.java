@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -70,9 +71,9 @@ public class NewsListActivity extends AppCompatActivity
     private TextView timerText;
     private TextView timer;
 
-    private LinearLayout onlineLinksLayout;
-    private ImageView videoOnlineImage;
-    private ImageView textOnlineImage;
+    private FloatingActionButton info;
+    private FloatingActionButton video;
+    private FloatingActionButton text;
 
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
@@ -92,11 +93,37 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
 
+        info = (FloatingActionButton) findViewById(R.id.fab_weekend_info);
+        video = (FloatingActionButton) findViewById(R.id.fab_gp_video);
+        text = (FloatingActionButton) findViewById(R.id.fab_gp_text);
+
         appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_list);
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                switch (state) {
+                    case COLLAPSED:
+                        info.hide();
+                        video.hide();
+                        text.hide();
+                        break;
+                    case EXPANDED:
+                        info.show();
+                        video.show();
+                        text.show();
+                        break;
+                    case IDLE:
+                        info.show();
+                        video.show();
+                        text.show();
+                        break;
+                }
+            }
+        });
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
+        loadFabLinks();
         loadTimerLinks();
-        loadOnlineLinks();
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -405,25 +432,15 @@ public class NewsListActivity extends AppCompatActivity
         return timer;
     }
 
-    public View getOnlineLinksLayout(){
-        return onlineLinksLayout;
-    }
-
     private void loadTimerLinks(){
         timerText = (TextView) findViewById(R.id.timerText);
         timer = (TextView) findViewById(R.id.timer);
-
-        timerText.setOnClickListener(this);
-        timer.setOnClickListener(this);
     }
 
-    private void loadOnlineLinks(){
-        onlineLinksLayout = (LinearLayout) findViewById(R.id.online_links_layout);
-        videoOnlineImage = (ImageView) findViewById(R.id.video_online_image);
-        textOnlineImage = (ImageView) findViewById(R.id.text_online_image);
-
-        videoOnlineImage.setOnClickListener(this);
-        textOnlineImage.setOnClickListener(this);
+    private void loadFabLinks(){
+        info.setOnClickListener(this);
+        video.setOnClickListener(this);
+        text.setOnClickListener(this);
     }
 
     @Override
@@ -439,15 +456,15 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.text_online_image:
+            case R.id.fab_gp_text:
                 Intent textIntent = new Intent(this, TextOnlineActivity.class);
                 startActivity(textIntent);
                 break;
-            case R.id.video_online_image:
+            case R.id.fab_gp_video:
                 Intent videoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(InternetDataRouting.VIDEO_ONLINE));
                 startActivity(videoIntent);
                 break;
-            case R.id.timer: case R.id.timerText:
+            case R.id.fab_weekend_info:
                 String timerGpTitle = SystemUtils.getNextGpCountry(this);
                 String weekendTitle = SystemUtils.getWeekendTitle(this);
 

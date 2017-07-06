@@ -23,4 +23,6 @@
     <dimen name="image_view_layout_height">100dp</dimen>
     <dimen name="text_view_padding">10dp</dimen>
     <dimen name="text_size">15dp</dimen>
+
+    <dimen name="weekend_text_size">22sp</dimen>
 </resources>
