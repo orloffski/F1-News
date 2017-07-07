@@ -77,9 +77,12 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                posts.clear();
-
                 String data = intent.getStringExtra("online_posts_data");
+
+                if(data == null)
+                    return;
+
+                posts.clear();
 
                 try {
                     JSONObject jsonObject = new JSONObject(data);
