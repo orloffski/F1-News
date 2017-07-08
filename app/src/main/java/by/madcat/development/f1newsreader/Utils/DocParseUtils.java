@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -83,13 +82,26 @@ public final class DocParseUtils {
     public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
     public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
 
+    public static String getJsonString(String urlString) throws IOException {
+        String line;
+        StringBuilder doc = new StringBuilder();
+
+        URL url = new URL(urlString);
+        InputStreamReader isReader = new InputStreamReader(url.openStream());
+        BufferedReader reader = new BufferedReader(isReader);
+
+        while((line = reader.readLine()) != null)
+            doc.append(line);
+
+        return doc.toString();
+    }
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
 
         URL url = new URL(urlString);
-        InputStreamReader isReader = new InputStreamReader(url.openConnection().getInputStream());
+        InputStreamReader isReader = new InputStreamReader(url.openStream());
         BufferedReader reader = new BufferedReader(isReader);
 
         while((line = reader.readLine()) != null)

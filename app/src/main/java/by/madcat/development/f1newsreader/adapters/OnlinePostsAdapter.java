@@ -30,7 +30,7 @@ public class OnlinePostsAdapter extends RecyclerView.Adapter<OnlineViewHolder>{
         OnlinePost post = onlinePosts.get(position);
 
         holder.time.setText(post.getOnlinePostTime());
-        holder.post.setText(post.getOnlinePostText());
+        holder.post.loadData(post.getOnlinePostText(), "text/html; charset=UTF-8", null);
     }
 
     @Override

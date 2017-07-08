@@ -5,16 +5,12 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import org.jsoup.nodes.Document;
-
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
 import static by.madcat.development.f1newsreader.classesUI.TextOnlineActivity.BROADCAST_ACTION;
 
@@ -53,7 +49,7 @@ public class OnlinePostsLoadService extends Service {
                 sendDataLoading();
             }
         };
-        timer.schedule(task, 0, 15000);
+        timer.schedule(task, 0, 60000);
     }
 
     void sendDataLoading(){
@@ -63,15 +59,16 @@ public class OnlinePostsLoadService extends Service {
     }
 
     String loadOnlinePosts(){
-        Document jsDoc = null;
+        String jsonString = null;
+
         try {
-            jsDoc = DocParseUtils.getJsDoc(InternetDataRouting.TEXT_ONLINE);
+            jsonString = DocParseUtils.getJsonString(InternetDataRouting.TEXT_ONLINE);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if(jsDoc != null)
-            return jsDoc.text();
+        if(jsonString != null)
+            return jsonString;
 
         return "";
     }
