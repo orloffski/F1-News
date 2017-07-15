@@ -72,7 +72,6 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
         recyclerView = (RecyclerView) findViewById(R.id.online_posts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
 
         receiver = new BroadcastReceiver() {
             @Override

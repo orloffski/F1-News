@@ -89,13 +89,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"
         android:orientation="horizontal"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingBottom="65dp">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include
-            layout="@layout/content_news_list"/>
+        <include layout="@layout/content_news_list" />
     </LinearLayout>
 
     <LinearLayout
@@ -103,6 +102,7 @@
         android:layout_height="65dp"
         android:layout_gravity="bottom"
         android:background="@color/colorAccent"
+        android:clickable="false"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingLeft="5dp"
