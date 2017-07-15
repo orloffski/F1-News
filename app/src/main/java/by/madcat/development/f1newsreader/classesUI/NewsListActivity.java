@@ -71,9 +71,9 @@ public class NewsListActivity extends AppCompatActivity
     private TextView timerText;
     private TextView timer;
 
-    private FloatingActionButton info;
-    private FloatingActionButton video;
-    private FloatingActionButton text;
+    private ImageView info;
+    private ImageView video;
+    private ImageView text;
 
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
@@ -93,33 +93,12 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
 
-        info = (FloatingActionButton) findViewById(R.id.fab_weekend_info);
-        video = (FloatingActionButton) findViewById(R.id.fab_gp_video);
-        text = (FloatingActionButton) findViewById(R.id.fab_gp_text);
+        info = (ImageView) findViewById(R.id.weekend_info);
+        video = (ImageView) findViewById(R.id.gp_video);
+        text = (ImageView) findViewById(R.id.gp_text);
 
-        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout_list);
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                switch (state) {
-                    case COLLAPSED:
-                        info.hide();
-                        video.hide();
-                        text.hide();
-                        break;
-                    case EXPANDED:
-                        info.show();
-                        video.show();
-                        text.show();
-                        break;
-                    case IDLE:
-                        info.show();
-                        video.show();
-                        text.show();
-                        break;
-                }
-            }
-        });
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout_list);
+
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
         loadFabLinks();
@@ -456,15 +435,15 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.fab_gp_text:
+            case R.id.gp_text:
                 Intent textIntent = new Intent(this, TextOnlineActivity.class);
                 startActivity(textIntent);
                 break;
-            case R.id.fab_gp_video:
+            case R.id.gp_video:
                 Intent videoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(InternetDataRouting.VIDEO_ONLINE));
                 startActivity(videoIntent);
                 break;
-            case R.id.fab_weekend_info:
+            case R.id.weekend_info:
                 String timerGpTitle = SystemUtils.getNextGpCountry(this);
                 String weekendTitle = SystemUtils.getWeekendTitle(this);
 
