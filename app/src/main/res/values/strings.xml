@@ -111,4 +111,23 @@
 
     <string name="action_share">Поделиться</string>
     <string name="action_backpress">Вернуться к разделу</string>
+
+    <string name="gp_title_font_size">Размер шрифта заголовка Гран-При</string>
+    <string name="gp_timer_font_size">Размер шрифта таймера Гран-При</string>
+
+    <string-array name="font_size">
+        <item>5</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>24</item>
+        <item>26</item>
+        <item>30</item>
+        <item>32</item>
+        <item>36</item>
+    </string-array>
+    <string name="font_size_default">12</string>
 </resources>

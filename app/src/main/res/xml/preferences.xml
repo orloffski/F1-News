@@ -31,6 +31,18 @@
             android:entries="@array/list_news_view_title"
             android:entryValues="@array/list_news_view"
             android:title="@string/list_news_view_title"/>
+        <ListPreference
+            android:key="gp_title_font_size"
+            android:entries="@array/font_size"
+            android:entryValues="@array/font_size"
+            android:defaultValue="@string/font_size_default"
+            android:title="@string/gp_title_font_size"/>
+        <ListPreference
+            android:key="gp_timer_font_size"
+            android:entries="@array/font_size"
+            android:entryValues="@array/font_size"
+            android:defaultValue="@string/font_size_default"
+            android:title="@string/gp_timer_font_size"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/category_autorefresh">

@@ -96,6 +96,9 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
         timerText.setText(timers[0]);
         timer.setText(timers[1]);
 
+        timerText.setTextSize((float)SystemUtils.getWeekendTitleFontSize(context));
+        timer.setTextSize((float)SystemUtils.getWeekendTimerFontSize(context));
+
 //        if(isOnline) {
 //            onlineLinksLayout.setVisibility(View.VISIBLE);
 //        }else{
