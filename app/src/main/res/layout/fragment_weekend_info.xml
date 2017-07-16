@@ -1,166 +1,78 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:layout_marginBottom="5dp"
     tools:context="by.madcat.development.f1newsreader.classesUI.WeekendInfoFragment">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/titleTextCard"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="20dp"
-        app:cardElevation="5dp">
-        <ImageView
-            android:id="@+id/weekendImage"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top" />
-        <TextView
-            android:id="@+id/weekendTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif-monospace"
-            android:text="Gran Prix Russia"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:layout_gravity="center_vertical"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-    </android.support.v7.widget.CardView>
+            android:orientation="vertical" >
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/firstDayTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="10dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/titleTextCard">
+            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+                android:id="@+id/weekend_title"
+                style="@style/WeekendTitleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/first_day_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:paddingLeft="15dp"
-            android:text="28 april, Friday"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/weekend_track"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/autosport" />
 
-    </android.support.v7.widget.CardView>
+            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+                android:id="@+id/first_day_title"
+                style="@style/WeekendDateStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="28 июля пятница" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/firstDayText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="5dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/firstDayTitle">
+            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+                android:id="@+id/first_day_text"
+                style="@style/WeekendDayStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10:00 1st practice\n15:00 2nd practice" />
 
-        <TextView
-            android:id="@+id/first_day_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="25dp"
-            android:text="1-st day \n1-st day part 2 \npress"
-            android:textSize="20sp" />
+            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+                android:id="@+id/second_day_title"
+                style="@style/WeekendDateStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="28 июля пятница" />
 
-    </android.support.v7.widget.CardView>
+            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+                android:id="@+id/second_day_text"
+                style="@style/WeekendDayStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10:00 1st practice\n15:00 2nd practice" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/secondDayTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="10dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/firstDayText">
+            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+                android:id="@+id/third_day_title"
+                style="@style/WeekendDateStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="28 июля пятница" />
 
-        <TextView
-            android:id="@+id/second_day_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="15dp"
-            android:text="28 april, Friday"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+                android:id="@+id/third_day_text"
+                style="@style/WeekendDayStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10:00 1st practice\n15:00 2nd practice" />
 
-    </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/secondDayText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="5dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/secondDayTitle">
-
-        <TextView
-            android:id="@+id/second_day_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="25dp"
-            android:text="1-st day \n1-st day part 2 \npress"
-            android:textSize="20sp" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/thirdDayTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="10dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/secondDayText">
-
-        <TextView
-            android:id="@+id/third_day_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="15dp"
-            android:text="28 april, Friday"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/thirdDayText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="5dp"
-        app:cardElevation="5dp"
-        android:layout_below="@+id/thirdDayTitle">
-
-        <TextView
-            android:id="@+id/third_day_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="25dp"
-            android:text="1-st day \n1-st day part 2 \npress"
-            android:textSize="20sp" />
-
-    </android.support.v7.widget.CardView>
-
-</RelativeLayout>
+</LinearLayout>

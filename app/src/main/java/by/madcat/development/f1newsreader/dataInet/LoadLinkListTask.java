@@ -1,6 +1,5 @@
 package by.madcat.development.f1newsreader.dataInet;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -43,7 +42,7 @@ public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<News
 
         try {
             DocParseUtils.loadTimersData(mainSiteAdress, context);
-            DocParseUtils.loadNextGranPriWeekend(mainSiteAdress, context);
+            DocParseUtils.loadNextGranPrixWeekend(mainSiteAdress, context);
             loadNewsLinks(routeMap);
             SystemUtils.updateReminder(context);
         } catch (IOException e) {

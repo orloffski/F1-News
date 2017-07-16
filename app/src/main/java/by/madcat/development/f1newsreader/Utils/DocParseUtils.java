@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -432,19 +433,26 @@ public final class DocParseUtils {
                 context);
     }
 
-    public static void loadNextGranPriWeekend(String urlString, Context context) throws IOException{
+    public static void loadNextGranPrixWeekend(String urlString, Context context) throws IOException{
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
 
         Element weekend = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_HEAD_STREAM).first();
         String weekendTitle = weekend.getElementsByClass(NEXT_WEEKEND_GP_TITLE_STREAM).text();
 
-        Element weekendImage = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_IMAGE_STREAM).first();
-        String weekendImageLink =
-                weekendImage.attr(NEXT_WEEKEND_GP_BIMAGE_LINK_ID).replace(WORDS_TO_CLEAR_3, ""). replace(WORDS_TO_CLEAR_4,"");
+        String weekendTrackMap = "";
+        Elements links = jsDoc.getElementsByTag("a");
+        for(Element link : links){
+            if(link.text().equals("Трасса и статистика")){
+                Document subDoc = DocParseUtils.getJsDoc(link.attr("href"));
+                Element weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "-track.png").first();
+                weekendTrackMap = StringUtils.getImageNameFromURL(weekendTrack.attr("src"));
+            }
+
+        }
 
         Element weekendTable = weekend.getElementsByClass(NEXT_WEEKEND_GP_BODY_STREAM).first();
 
-        SystemUtils.saveWeekendData(weekendTitle, weekendImageLink, getWeekendData(weekendTable), context);
+        SystemUtils.saveWeekendData(weekendTitle, weekendTrackMap, getWeekendData(weekendTable), context);
     }
 
     public static Map<String, String> getWeekendData(Element weekendTable){

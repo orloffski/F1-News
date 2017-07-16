@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -15,18 +14,20 @@ import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
+import by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView;
+import by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView;
 
 public class WeekendInfoFragment extends Fragment {
 
-    private ImageView weekendImage;
-    private TextView weekendTitle;
-    private TextView firstDayTitle;
-    private TextView firstDayText;
-    private TextView secondDayTitle;
-    private TextView secondDayText;
-    private TextView thirdDayTitle;
-    private TextView thirdDayText;
+    private AGBengalyTextView weekendTitle;
+    private PerfogramaTextView firstDayTitle;
+    private AGBengalyTextView firstDayText;
+    private PerfogramaTextView secondDayTitle;
+    private AGBengalyTextView secondDayText;
+    private PerfogramaTextView thirdDayTitle;
+    private AGBengalyTextView thirdDayText;
+
+    private ImageView weekendTrack;
 
     public WeekendInfoFragment() {
     }
@@ -43,14 +44,15 @@ public class WeekendInfoFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_weekend_info, container, false);
 
-        weekendImage = (ImageView) view.findViewById(R.id.weekendImage);
-        weekendTitle = (TextView) view.findViewById(R.id.weekendTitle);
-        firstDayTitle = (TextView) view.findViewById(R.id.first_day_title);
-        firstDayText = (TextView) view.findViewById(R.id.first_day_text);
-        secondDayTitle = (TextView) view.findViewById(R.id.second_day_title);
-        secondDayText = (TextView) view.findViewById(R.id.second_day_text);
-        thirdDayTitle = (TextView) view.findViewById(R.id.third_day_title);
-        thirdDayText = (TextView) view.findViewById(R.id.third_day_text);
+        weekendTitle = (AGBengalyTextView) view.findViewById(R.id.weekend_title);
+        firstDayTitle = (PerfogramaTextView) view.findViewById(R.id.first_day_title);
+        firstDayText = (AGBengalyTextView) view.findViewById(R.id.first_day_text);
+        secondDayTitle = (PerfogramaTextView) view.findViewById(R.id.second_day_title);
+        secondDayText = (AGBengalyTextView) view.findViewById(R.id.second_day_text);
+        thirdDayTitle = (PerfogramaTextView) view.findViewById(R.id.third_day_title);
+        thirdDayText = (AGBengalyTextView) view.findViewById(R.id.third_day_text);
+
+        weekendTrack = (ImageView) view.findViewById(R.id.weekend_track);
 
         loadWeekendTableData(getContext());
 
@@ -58,12 +60,11 @@ public class WeekendInfoFragment extends Fragment {
     }
 
     private void loadWeekendTableData(Context context){
-        String weekendImageName = SystemUtils.getWeekendImage(context);
-        String fullPathImage = SystemUtils.getImagesPath(getContext()) + "/" + weekendImageName;
-        Glide.with(context).load(fullPathImage).into(weekendImage);
-
         String weekendTitleString = SystemUtils.getWeekendTitle(context);
         weekendTitle.setText(weekendTitleString);
+
+        String fullPathImage = SystemUtils.getImagesPath(getContext()) + "/" + getWeekendTrackMap();
+        Glide.with(context).load(fullPathImage).into(weekendTrack);
 
         Map<String, String> weekendData = SystemUtils.getWeekendData(context);
 
@@ -86,5 +87,9 @@ public class WeekendInfoFragment extends Fragment {
 
             counter++;
         }
+    }
+
+    private String getWeekendTrackMap(){
+        return SystemUtils.getWeekendImage(getContext());
     }
 }

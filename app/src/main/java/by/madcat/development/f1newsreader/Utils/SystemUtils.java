@@ -128,14 +128,11 @@ public class SystemUtils {
         return ringtone.getTitle(context);
     }
 
-    public static void saveWeekendData(String weekendTitle, String weekendImageLink, Map<String, String> weekendData, Context context){
+    public static void saveWeekendData(String weekendTitle, String weekendImage, Map<String, String> weekendData, Context context){
         SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putString(WEEKEND_TITLE, weekendTitle);
-        try {
-            editor.putString(WEEKEND_IMAGE, loadWeekendImage(weekendImageLink, context));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        editor.putString(WEEKEND_IMAGE, weekendImage);
 
         int counter = 1;
 
@@ -192,38 +189,6 @@ public class SystemUtils {
     private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.edit();
-    }
-
-    private static String loadWeekendImage(String imageUrl, Context context) throws IOException {
-        File sdPath = context.getFilesDir();
-
-        sdPath = new File(sdPath.getAbsolutePath() + "/" + IMAGE_PATH);
-
-        if(!sdPath.exists())
-            sdPath.mkdirs();
-
-        String filename = StringUtils.getImageNameFromURL(imageUrl);
-        File imageOnMemory = new File(sdPath, filename);
-
-        Bitmap image;
-
-        OutputStream fOut;
-        fOut = new FileOutputStream(imageOnMemory);
-
-        InputStream in = new URL(imageUrl).openStream();
-        if(in != null) {
-            image = BitmapFactory.decodeStream(in);
-            if(image != null)
-                image.compress(Bitmap.CompressFormat.JPEG, 55, fOut);
-            else
-                filename = "";
-        }
-
-        fOut.flush();
-        fOut.close();
-        in.close();
-
-        return filename;
     }
 
     public static boolean imagesOnSdCard(Context context){

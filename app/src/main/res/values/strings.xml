@@ -130,4 +130,8 @@
         <item>36</item>
     </string-array>
     <string name="font_size_default">12</string>
+
+    <!-- Fonts -->
+    <string name="font_AGBengaly">fonts/agbengaly.ttf</string>
+    <string name="font_Perfograma">fonts/Perfograma.ttf</string>
 </resources>

@@ -447,7 +447,7 @@ public class NewsListActivity extends AppCompatActivity
                 String timerGpTitle = SystemUtils.getNextGpCountry(this);
                 String weekendTitle = SystemUtils.getWeekendTitle(this);
 
-                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
+//                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
                     if(searchMenu != null)
                         searchMenu.findItem(R.id.action_search).setVisible(false);
 
@@ -459,7 +459,7 @@ public class NewsListActivity extends AppCompatActivity
                     transaction.commit();
 
                     collapsingToolbarLayout.setTitle(weekendTitle);
-                }
+//                }
                 break;
         }
     }
