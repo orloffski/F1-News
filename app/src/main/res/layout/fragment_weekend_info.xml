@@ -44,6 +44,11 @@
                 android:layout_height="wrap_content"
                 android:text="10:00 1st practice\n15:00 2nd practice" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:background="@drawable/separator"
+                android:layout_height="1dp" />
+
             <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
                 android:id="@+id/second_day_title"
                 style="@style/WeekendDateStyle"
@@ -58,6 +63,11 @@
                 android:layout_height="wrap_content"
                 android:text="10:00 1st practice\n15:00 2nd practice" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:background="@drawable/separator"
+                android:layout_height="1dp" />
+
             <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
                 android:id="@+id/third_day_title"
                 style="@style/WeekendDateStyle"
@@ -71,6 +81,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="10:00 1st practice\n15:00 2nd practice" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:background="@drawable/separator"
+                android:layout_height="1dp" />
 
         </LinearLayout>
     </ScrollView>
