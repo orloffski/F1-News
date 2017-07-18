@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +50,7 @@ public class NewsListActivity extends AppCompatActivity
     public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
 
     private CoordinatorLayout coordinatorLayout;
+    private LinearLayout linksLayout;
 
     private int sectionItemsCount;
     private ArrayList<String> newsIDs;
@@ -97,12 +97,14 @@ public class NewsListActivity extends AppCompatActivity
         video = (ImageView) findViewById(R.id.gp_video);
         text = (ImageView) findViewById(R.id.gp_text);
 
+        linksLayout = (LinearLayout) findViewById(R.id.links_layout);
+
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout_list);
 
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
-        loadFabLinks();
-        loadTimerLinks();
+        loadOnlineButtonsListener();
+        loadTimerViews();
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -411,15 +413,17 @@ public class NewsListActivity extends AppCompatActivity
         return timer;
     }
 
-    private void loadTimerLinks(){
+    private void loadTimerViews(){
         timerText = (TextView) findViewById(R.id.timerText);
         timer = (TextView) findViewById(R.id.timer);
     }
 
-    private void loadFabLinks(){
+    private void loadOnlineButtonsListener(){
         info.setOnClickListener(this);
         video.setOnClickListener(this);
         text.setOnClickListener(this);
+
+        linksLayout.setOnClickListener(this);
     }
 
     @Override
@@ -460,6 +464,8 @@ public class NewsListActivity extends AppCompatActivity
 
                     collapsingToolbarLayout.setTitle(weekendTitle);
 //                }
+                break;
+            case R.id.links_layout:
                 break;
         }
     }
