@@ -50,7 +50,6 @@ public class NewsListActivity extends AppCompatActivity
     public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
 
     private CoordinatorLayout coordinatorLayout;
-    private LinearLayout linksLayout;
 
     private int sectionItemsCount;
     private ArrayList<String> newsIDs;
@@ -71,9 +70,9 @@ public class NewsListActivity extends AppCompatActivity
     private TextView timerText;
     private TextView timer;
 
-    private ImageView info;
-    private ImageView video;
-    private ImageView text;
+    private OnlineImageButton info;
+    private OnlineImageButton video;
+    private OnlineImageButton text;
 
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
@@ -93,11 +92,9 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
 
-        info = (ImageView) findViewById(R.id.weekend_info);
-        video = (ImageView) findViewById(R.id.gp_video);
-        text = (ImageView) findViewById(R.id.gp_text);
-
-        linksLayout = (LinearLayout) findViewById(R.id.links_layout);
+        info = (OnlineImageButton) findViewById(R.id.weekend_info);
+        video = (OnlineImageButton) findViewById(R.id.gp_video);
+        text = (OnlineImageButton) findViewById(R.id.gp_text);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout_list);
 
@@ -422,8 +419,6 @@ public class NewsListActivity extends AppCompatActivity
         info.setOnClickListener(this);
         video.setOnClickListener(this);
         text.setOnClickListener(this);
-
-        linksLayout.setOnClickListener(this);
     }
 
     @Override
@@ -464,8 +459,6 @@ public class NewsListActivity extends AppCompatActivity
 
                     collapsingToolbarLayout.setTitle(weekendTitle);
 //                }
-                break;
-            case R.id.links_layout:
                 break;
         }
     }
