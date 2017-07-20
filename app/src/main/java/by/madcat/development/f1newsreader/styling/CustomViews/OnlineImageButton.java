@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.classesUI;
+package by.madcat.development.f1newsreader.styling.CustomViews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -22,7 +22,7 @@ public class OnlineImageButton extends LinearLayout{
     private Drawable linkImageActive;
     private Drawable linkImageInactive;
 
-    public OnlineImageButton(Context context, boolean isActive) {
+    public OnlineImageButton(Context context) {
         super(context);
         init(context);
         handleAttributes(context, null);

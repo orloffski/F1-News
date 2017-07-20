@@ -109,7 +109,7 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp">
 
-        <by.madcat.development.f1newsreader.classesUI.OnlineImageButton
+        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
             android:id="@+id/weekend_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -118,7 +118,7 @@
             app:inactive_image="@drawable/info_inactive"
             app:link_text="Gran-Prix Info" />
 
-        <by.madcat.development.f1newsreader.classesUI.OnlineImageButton
+        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
             android:id="@+id/gp_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -127,7 +127,7 @@
             app:inactive_image="@drawable/video_inactive"
             app:link_text="Video Online" />
 
-        <by.madcat.development.f1newsreader.classesUI.OnlineImageButton
+        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
             android:id="@+id/gp_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
