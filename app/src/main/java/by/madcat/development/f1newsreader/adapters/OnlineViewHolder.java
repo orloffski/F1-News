@@ -9,13 +9,13 @@ import by.madcat.development.f1newsreader.R;
 
 public class OnlineViewHolder extends RecyclerView.ViewHolder{
 
-    public final WebView post;
+    public final TextView post;
     public final TextView time;
 
     public OnlineViewHolder(View itemView) {
         super(itemView);
 
         time = (TextView) itemView.findViewById(R.id.online_post_time);
-        post = (WebView) itemView.findViewById(R.id.online_post_web_view);
+        post = (TextView) itemView.findViewById(R.id.online_post_text_view);
     }
 }

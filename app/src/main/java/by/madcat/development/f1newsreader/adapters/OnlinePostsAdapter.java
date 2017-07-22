@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class OnlinePostsAdapter extends RecyclerView.Adapter<OnlineViewHolder>{
         OnlinePost post = onlinePosts.get(position);
 
         holder.time.setText(post.getOnlinePostTime());
-        holder.post.loadData(post.getOnlinePostText(), "text/html; charset=UTF-8", null);
+        holder.post.setText(Html.fromHtml(post.getOnlinePostText()));
     }
 
     @Override

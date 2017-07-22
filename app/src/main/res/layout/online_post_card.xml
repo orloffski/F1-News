@@ -23,10 +23,11 @@
                 android:paddingLeft="10dp"
                 android:id="@+id/online_post_time" />
 
-            <WebView
-                android:id="@+id/online_post_web_view"
+            <TextView
+                android:id="@+id/online_post_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_below="@+id/online_post_time" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
