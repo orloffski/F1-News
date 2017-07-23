@@ -13,26 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
+import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
-import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ARRAY;
-import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ELEMENT_DATE;
-import static by.madcat.development.f1newsreader.Utils.DocParseUtils.ONLINE_JSON_ELEMENT_MESSAGE;
+import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_ACTION_DATA;
+import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_SERVICE_ACTION;
 
 public class TextOnlineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     public final static String BROADCAST_ACTION = "online_posts_receiver";
-    public final static String BIND_FLAG = "online_posts_bind";
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
@@ -42,7 +37,7 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
     BroadcastReceiver receiver;
 
     boolean bound = false;
-    ServiceConnection sConn;
+    private ServiceConnection sConn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,31 +71,25 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String data = intent.getStringExtra("online_posts_data");
 
-                if(data == null)
+                String data = intent.getStringExtra(BROADCAST_ACTION_DATA);
+
+                if (data == null || data.equals(""))
                     return;
 
-                posts.clear();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(data);
-                    JSONArray jsonArray = jsonObject.getJSONArray(ONLINE_JSON_ARRAY);
-
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        JSONObject currJsonObject = jsonArray.getJSONObject(i);
-                        posts.add(
-                                new OnlinePost(
-                                        currJsonObject.getString(ONLINE_JSON_ELEMENT_MESSAGE),
-                                        currJsonObject.getString(ONLINE_JSON_ELEMENT_DATE)
-                                )
-                        );
+                if(posts.isEmpty()) {
+                    // первоначальная загрузка данных трансляции
+                    posts.clear();
+                    posts.addAll(JsonParseUtils.getPostsFromJsonString(data));
+                    adapter.notifyDataSetChanged();
+                }else{
+                    // добавление первого нового поста трансляции
+                    if(JsonParseUtils.getPostFromJsonString(data, 0) != null) {
+                        posts.add(0, JsonParseUtils.getPostFromJsonString(data, 0));
+                        adapter.notifyItemInserted(0);
+                        recyclerView.smoothScrollToPosition(0);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-
-                adapter.notifyDataSetChanged();
             }
         };
 
@@ -124,9 +113,8 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
     @Override
     public void onRefresh() {
         // обновление текстовой трансляции
-        unbindService(sConn);
-        Intent intent = new Intent(this, OnlinePostsLoadService.class);
-        bindService(intent, sConn, BIND_AUTO_CREATE);
+        Intent intent = new Intent(BROADCAST_SERVICE_ACTION);
+        sendBroadcast(intent);
 
         swipeRefreshLayout.setRefreshing(false);
     }

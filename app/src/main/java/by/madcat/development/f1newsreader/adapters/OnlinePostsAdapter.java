@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.adapters;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -31,7 +32,11 @@ public class OnlinePostsAdapter extends RecyclerView.Adapter<OnlineViewHolder>{
         OnlinePost post = onlinePosts.get(position);
 
         holder.time.setText(post.getOnlinePostTime());
-        holder.post.setText(Html.fromHtml(post.getOnlinePostText()));
+        if(Build.VERSION.SDK_INT < 24){
+            holder.post.setText(Html.fromHtml(post.getOnlinePostText()));
+        }else{
+            holder.post.setText(Html.fromHtml(post.getOnlinePostText(), Html.FROM_HTML_MODE_COMPACT));
+        }
     }
 
     @Override
