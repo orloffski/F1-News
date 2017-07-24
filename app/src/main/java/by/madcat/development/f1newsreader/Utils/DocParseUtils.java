@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -426,7 +425,7 @@ public final class DocParseUtils {
     public static void loadTimersData(String urlString, Context context) throws IOException {
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
 
-        SystemUtils.saveTimersData(
+        PreferencesUtils.saveTimersData(
                 getNextGpTitle(jsDoc),
                 getNextGpDate(jsDoc),
                 Integer.parseInt(getNextGpTimestamp(jsDoc)),
@@ -452,7 +451,7 @@ public final class DocParseUtils {
 
         Element weekendTable = weekend.getElementsByClass(NEXT_WEEKEND_GP_BODY_STREAM).first();
 
-        SystemUtils.saveWeekendData(weekendTitle, weekendTrackMap, getWeekendData(weekendTable), context);
+        PreferencesUtils.saveWeekendData(weekendTitle, weekendTrackMap, getWeekendData(weekendTable), context);
     }
 
     public static Map<String, String> getWeekendData(Element weekendTable){

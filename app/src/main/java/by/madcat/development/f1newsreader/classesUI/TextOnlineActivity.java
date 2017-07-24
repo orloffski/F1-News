@@ -12,13 +12,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
@@ -87,7 +89,9 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
                     if(JsonParseUtils.getPostFromJsonString(data, 0) != null) {
                         posts.add(0, JsonParseUtils.getPostFromJsonString(data, 0));
                         adapter.notifyItemInserted(0);
-                        recyclerView.smoothScrollToPosition(0);
+
+                        if(PreferencesUtils.getAutoscrollingFlag(getApplicationContext()))
+                            recyclerView.smoothScrollToPosition(0);
                     }
                 }
             }
@@ -96,7 +100,42 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
         IntentFilter filter = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(receiver, filter);
 
-        setTitle(SystemUtils.getNextGpCountry(this));
+        setTitle(PreferencesUtils.getNextGpCountry(this));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.online_text_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.autoscroll_top).setChecked(PreferencesUtils.getAutoscrollingFlag(getApplicationContext()));
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.autoscroll_top:
+                if(item.isChecked()){
+                    PreferencesUtils.disableAutoScrolling(getApplicationContext());
+                    item.setChecked(false);
+                }else{
+                    PreferencesUtils.enableAutoScrolling(getApplicationContext());
+                    item.setChecked(true);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

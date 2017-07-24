@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 
 public class NotificationDismissedReceiver extends BroadcastReceiver {
     @Override
@@ -13,6 +13,6 @@ public class NotificationDismissedReceiver extends BroadcastReceiver {
         int notificationId = intent.getExtras().getInt(BackgroundLoadNewsService.NOTIFICATION_CODE);
 
         if(notificationId == BackgroundLoadNewsService.NOTIFICATION_ID)
-            SystemUtils.clearIssetNotificationsCount(context);
+            PreferencesUtils.clearIssetNotificationsCount(context);
     }
 }

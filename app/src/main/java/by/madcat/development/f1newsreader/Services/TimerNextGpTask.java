@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
@@ -39,7 +40,7 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
         String text;
 
         while(true){
-            int timestamp = SystemUtils.getNextGpTime(context);
+            int timestamp = PreferencesUtils.getNextGpTime(context);
 
             if(timestamp != 0 && timestamp > System.currentTimeMillis()/1000) {
                 toNextGP = DateUtils.getNextGpString(timestamp);
@@ -58,7 +59,7 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
                     DocParseUtils.loadTimersData(InternetDataRouting.getInstance().getMainSiteAdress(), context);
 
                     // перезагружаем данные о следующем гран-при
-                    timestamp = SystemUtils.getNextGpTime(context);
+                    timestamp = PreferencesUtils.getNextGpTime(context);
 
                     // вдруг гонка онлайн и данные о текущем - фикс отсчета таймера в минус
                     if(timestamp > System.currentTimeMillis()/1000) {
@@ -96,8 +97,8 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
         timerText.setText(timers[0]);
         timer.setText(timers[1]);
 
-        timerText.setTextSize((float)SystemUtils.getWeekendTitleFontSize(context));
-        timer.setTextSize((float)SystemUtils.getWeekendTimerFontSize(context));
+        timerText.setTextSize((float)PreferencesUtils.getWeekendTitleFontSize(context));
+        timer.setTextSize((float)PreferencesUtils.getWeekendTimerFontSize(context));
 
 //        if(isOnline) {
 //            onlineLinksLayout.setVisibility(View.VISIBLE);

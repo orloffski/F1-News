@@ -36,7 +36,7 @@ import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton;
@@ -443,8 +443,8 @@ public class NewsListActivity extends AppCompatActivity
                 startActivity(videoIntent);
                 break;
             case R.id.weekend_info:
-                String timerGpTitle = SystemUtils.getNextGpCountry(this);
-                String weekendTitle = SystemUtils.getWeekendTitle(this);
+                String timerGpTitle = PreferencesUtils.getNextGpCountry(this);
+                String weekendTitle = PreferencesUtils.getWeekendTitle(this);
 
 //                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
                     if(searchMenu != null)

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView;
 import by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView;
@@ -60,13 +61,13 @@ public class WeekendInfoFragment extends Fragment {
     }
 
     private void loadWeekendTableData(Context context){
-        String weekendTitleString = SystemUtils.getWeekendTitle(context);
+        String weekendTitleString = PreferencesUtils.getWeekendTitle(context);
         weekendTitle.setText(weekendTitleString);
 
         String fullPathImage = SystemUtils.getImagesPath(getContext()) + "/" + getWeekendTrackMap();
         Glide.with(context).load(fullPathImage).into(weekendTrack);
 
-        Map<String, String> weekendData = SystemUtils.getWeekendData(context);
+        Map<String, String> weekendData = PreferencesUtils.getWeekendData(context);
 
         int counter = 1;
         for(Map.Entry entry : weekendData.entrySet()){
@@ -90,6 +91,6 @@ public class WeekendInfoFragment extends Fragment {
     }
 
     private String getWeekendTrackMap(){
-        return SystemUtils.getWeekendImage(getContext());
+        return PreferencesUtils.getWeekendImage(getContext());
     }
 }

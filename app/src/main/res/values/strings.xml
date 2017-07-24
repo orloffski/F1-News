@@ -134,4 +134,7 @@
     <!-- Fonts -->
     <string name="font_AGBengaly">fonts/agbengaly.ttf</string>
     <string name="font_Perfograma">fonts/Perfograma.ttf</string>
+
+    <!-- Online text translation -->
+    <string name="online_text_autoscroll_top">Автопрокрутка</string>
 </resources>

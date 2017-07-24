@@ -21,6 +21,7 @@ import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.ReminderService;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.Utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
@@ -115,7 +116,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     reminder_ringtone.setEnabled(reminder_on.isChecked());
                     reminder_vibro.setEnabled(reminder_on.isChecked());
                 }else{
-                    if(SystemUtils.getNextGpTime(getContext()) == 0){
+                    if(PreferencesUtils.getNextGpTime(getContext()) == 0){
                         ViewCreator.sendSnackbarMessage(
                                 ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                                 getString(R.string.reminder_data_null),
@@ -125,7 +126,7 @@ public class PreferencesFragment extends PreferenceFragment {
                     }else{
                         int defaultValue = Integer.parseInt(reminder_interval.getValue());
                         boolean vibroValue = reminder_vibro.isChecked();
-                        String ringtoneUri = SystemUtils.loadRingtoneData(getContext());
+                        String ringtoneUri = PreferencesUtils.loadRingtoneData(getContext());
 
                         ReminderService.setServiceAlarm(getContext(), true, defaultValue, vibroValue, ringtoneUri);
 
@@ -144,7 +145,7 @@ public class PreferencesFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String value = newValue.toString();
                 int timePause = Integer.parseInt(value);
-                String ringtoneUri = SystemUtils.loadRingtoneData(getContext());
+                String ringtoneUri = PreferencesUtils.loadRingtoneData(getContext());
 
                 ReminderService.setServiceAlarm(getContext(), false, 0, false, null);
                 ReminderService.setServiceAlarm(getContext(), true, timePause, reminder_vibro.isChecked(), ringtoneUri);
@@ -156,7 +157,7 @@ public class PreferencesFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 int timePause = Integer.parseInt(reminder_interval.getValue());
-                String ringtoneUri = SystemUtils.loadRingtoneData(getContext());
+                String ringtoneUri = PreferencesUtils.loadRingtoneData(getContext());
 
                 ReminderService.setServiceAlarm(getActivity(), false, 0, false, null);
                 ReminderService.setServiceAlarm(getActivity(), true, timePause, reminder_vibro.isChecked(), ringtoneUri);
@@ -251,11 +252,11 @@ public class PreferencesFragment extends PreferenceFragment {
             ringtone = RingtoneManager.getRingtone(getContext(), uri);
             title = ringtone.getTitle(getContext());
 
-            SystemUtils.saveRingtoneData(ringTonePath, getContext());
+            PreferencesUtils.saveRingtoneData(ringTonePath, getContext());
 
             reminder_ringtone.setSummary(title);
         }else{
-            SystemUtils.saveRingtoneData("", getContext());
+            PreferencesUtils.saveRingtoneData("", getContext());
             reminder_ringtone.setSummary(getString(R.string.ringtone_null));
         }
 

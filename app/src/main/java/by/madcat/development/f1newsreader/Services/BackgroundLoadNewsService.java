@@ -16,6 +16,7 @@ import android.util.Log;
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Receivers.NotificationDismissedReceiver;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
@@ -65,7 +66,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
         countNews += SystemUtils.getNumberInIssetNotificationsCount(NOTIFICATION_ID, (NotificationManager)getSystemService(NOTIFICATION_SERVICE), getApplicationContext());
 
-        SystemUtils.setIssetNotificationsCount(getApplicationContext(), countNews);
+        PreferencesUtils.setIssetNotificationsCount(getApplicationContext(), countNews);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setTicker(resources.getString(R.string.get_new_news))

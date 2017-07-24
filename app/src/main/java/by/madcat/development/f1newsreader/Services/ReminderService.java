@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 
@@ -51,7 +52,7 @@ public class ReminderService extends IntentService {
     public static void setServiceAlarm(Context context, boolean isOn, int timePause, boolean vibroIsOn, String ringtoneUri){
         Intent i = ReminderService.newIntent(context, vibroIsOn, ringtoneUri, timePause);
         PendingIntent pi = PendingIntent.getService(context, SERVICE_INTENT_ID, i, PendingIntent.FLAG_ONE_SHOT);
-        int delay = (int)(SystemUtils.getNextGpTime(context) - System.currentTimeMillis()/1000 - timePause/1000);
+        int delay = (int)(PreferencesUtils.getNextGpTime(context) - System.currentTimeMillis()/1000 - timePause/1000);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, delay);
 
@@ -101,7 +102,7 @@ public class ReminderService extends IntentService {
 
     private String getReminderNotification(){
         return getResources().getString(R.string.reminder_content_text,
-                SystemUtils.getNextGpCountry(getApplicationContext()),
+                PreferencesUtils.getNextGpCountry(getApplicationContext()),
                 SystemUtils.getNextGpTimeout(getApplicationContext()));
     }
 }

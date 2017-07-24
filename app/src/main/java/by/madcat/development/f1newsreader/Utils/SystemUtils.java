@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.media.Ringtone;
@@ -15,9 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,39 +23,17 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.MoveToSdTask;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 
+import static by.madcat.development.f1newsreader.Utils.PreferencesUtils.IMAGE_PATH;
+
 public class SystemUtils {
-    public static final String NOTIFICATIONS_COUNT_ID = "notifications_count";
-    public static final String GP_DATA_COUNTRY = "gp_country";
-    public static final String GP_DATA_DATE = "gp_date";
-    public static final String GP_DATA_TIMESTAMP = "gp_timestamp";
-
-    public final static String REMINDER_RINGTONE = "reminder_ringtone";
-
-    public final static String WEEKEND_TITLE = "weekend_title";
-    public final static String WEEKEND_IMAGE = "weekend_image";
-    public final static String WEEKEND_1ST_DAY_TITLE = "weekend_1st_day_title";
-    public final static String WEEKEND_2ND_DAY_TITLE = "weekend_2nd_day_title";
-    public final static String WEEKEND_3RD_DAY_TITLE = "weekend_3rd_day_title";
-    public final static String WEEKEND_1ST_DAY_TEXT = "weekend_1st_day_text";
-    public final static String WEEKEND_2ND_DAY_TEXT = "weekend_2nd_day_text";
-    public final static String WEEKEND_3RD_DAY_TEXT = "weekend_3rd_day_text";
-
-    public static final String IMAGE_PATH = "F1NewsImages";
     public static final String APP_ON_SD_PATH = "F1NewsReader";
-
-    public static final String SAVE_IMAGES_ON_SD = "move_pic_to_sd";
-
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     public static final boolean isNetworkAvailableAndConnected(Context context){
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -70,21 +45,13 @@ public class SystemUtils {
     }
 
     public static String getNextGpData(Context context){
-        return getNextGpCountry(context)
+        return PreferencesUtils.getNextGpCountry(context)
                 + "\n"
-                + getNextGpDate(context);
-    }
-
-    public static String getNextGpCountry(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_COUNTRY, "");
-    }
-
-    public static String getNextGpDate(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(GP_DATA_DATE, "");
+                + PreferencesUtils.getNextGpDate(context);
     }
 
     public static String getNextGpTimeout(Context context){
-        int timeout = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("reminder_interval", "0"));
+        int timeout = Integer.parseInt(PreferencesUtils.getReminderInterval(context));
         List<String> intervals = Arrays.asList(context.getResources().getStringArray(R.array.intervals_milliseconds));
 
         int index = intervals.indexOf(String.valueOf(timeout));
@@ -94,107 +61,17 @@ public class SystemUtils {
         return intervals_titles[index];
     }
 
-    public static int getNextGpTime(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(GP_DATA_TIMESTAMP, 0);
-    }
-
-    public static void saveTimersData(String country, String date, int timestamp, Context context){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-
-        editor.putString(SystemUtils.GP_DATA_COUNTRY, country);
-        editor.putString(SystemUtils.GP_DATA_DATE, date);
-        editor.putInt(SystemUtils.GP_DATA_TIMESTAMP, timestamp);
-        editor.commit();
-    }
-
-    public static void saveRingtoneData(String ringtonUri, Context context){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putString(REMINDER_RINGTONE, ringtonUri);
-        editor.commit();
-    }
-
-    public static String loadRingtoneData(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(REMINDER_RINGTONE, "");
-    }
-
     public static String loadRingtoneTitle(Context context){
-        String ringtoneUriString = PreferenceManager.getDefaultSharedPreferences(context).getString(REMINDER_RINGTONE, "");
+        String ringtoneUriString = PreferencesUtils.getRingtoneTitle(context);
         Uri ringtoneUri = Uri.parse(ringtoneUriString);
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
         return ringtone.getTitle(context);
     }
 
-    public static void saveWeekendData(String weekendTitle, String weekendImage, Map<String, String> weekendData, Context context){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putString(WEEKEND_TITLE, weekendTitle);
-
-        editor.putString(WEEKEND_IMAGE, weekendImage);
-
-        int counter = 1;
-
-        for(Map.Entry entry : weekendData.entrySet()){
-            switch (counter){
-                case 1:
-                    editor.putString(WEEKEND_1ST_DAY_TITLE, entry.getKey().toString());
-                    editor.putString(WEEKEND_1ST_DAY_TEXT, entry.getValue().toString());
-                    break;
-                case 2:
-                    editor.putString(WEEKEND_2ND_DAY_TITLE, entry.getKey().toString());
-                    editor.putString(WEEKEND_2ND_DAY_TEXT, entry.getValue().toString());
-                    break;
-                case 3:
-                    editor.putString(WEEKEND_3RD_DAY_TITLE, entry.getKey().toString());
-                    editor.putString(WEEKEND_3RD_DAY_TEXT, entry.getValue().toString());
-                    break;
-            }
-            counter++;
-        }
-
-        editor.commit();
-    }
-
-    public static String getWeekendTitle(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_TITLE, "");
-    }
-
-    public static String getWeekendImage(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_IMAGE, "");
-    }
-
-    public static Map<String, String> getWeekendData(Context context){
-        Map<String, String> weekendData = new LinkedHashMap<>();
-
-        weekendData.put(
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_1ST_DAY_TITLE, ""),
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_1ST_DAY_TEXT, "")
-        );
-
-        weekendData.put(
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_2ND_DAY_TITLE, ""),
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_2ND_DAY_TEXT, "")
-        );
-
-        weekendData.put(
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_3RD_DAY_TITLE, ""),
-                PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_3RD_DAY_TEXT, "")
-        );
-
-        return weekendData;
-    }
-
-    private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.edit();
-    }
-
-    public static boolean imagesOnSdCard(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SAVE_IMAGES_ON_SD, false);
-    }
-
     public static String getImagesPath(Context context){
         String imagesPath = imagesPathInMemory(context);
 
-        if(imagesOnSdCard(context)){
+        if(PreferencesUtils.imagesOnSdCard(context)){
             if(externalSdIsMounted()) {
                 imagesPath = imagesPathOnSd();
             }
@@ -233,10 +110,10 @@ public class SystemUtils {
     }
 
     public static void updateReminder(Context context){
-        if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("reminder_on", false)){
-            int reminderInterval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("reminder_interval", "0"));
-            boolean reminderVibration = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("reminder_vibration", false);
-            String reminderRingtoneUri = loadRingtoneData(context);
+        if(PreferencesUtils.reminderIntervalIsOn(context)){
+            int reminderInterval = Integer.parseInt(PreferencesUtils.getReminderInterval(context));
+            boolean reminderVibration = PreferencesUtils.reminderVibrationIsOn(context);
+            String reminderRingtoneUri = PreferencesUtils.loadRingtoneData(context);
 
             ReminderService.setServiceAlarm(context, false, 0, false, null);
             ReminderService.setServiceAlarm(context, true, reminderInterval, reminderVibration, reminderRingtoneUri);
@@ -315,33 +192,19 @@ public class SystemUtils {
                     number = notification.number;
                 }
         }else if(Build.VERSION.SDK_INT < 23 && Build.VERSION.SDK_INT >= 18){
-            number = PreferenceManager.getDefaultSharedPreferences(context).getInt(NOTIFICATIONS_COUNT_ID, 0);
+            number = PreferencesUtils.getNotificationsCount(context);
         }
 
         return number;
     }
 
-    public static void setIssetNotificationsCount(Context context, int count){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putInt(NOTIFICATIONS_COUNT_ID, count);
-        editor.commit();
-    }
-
-    public static void clearIssetNotificationsCount(Context context){
-        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
-        editor.putInt(NOTIFICATIONS_COUNT_ID, 0);
-        editor.commit();
-    }
-
     public static void addServiceToAlarmManager(Context context, boolean serviceStart, int timePause){
-        Log.d("test", "addServiceToAlarmManager started");
         Intent i = BackgroundLoadNewsService.newIntent(context);
         PendingIntent pi = PendingIntent.getService(context, BackgroundLoadNewsService.SERVICE_INTENT_ID, i, 0);
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         if(serviceStart) {
-            Log.d("test", "service add to AlarmManager");
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MILLISECOND, timePause);
 
@@ -353,17 +216,8 @@ public class SystemUtils {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             }
         }else{
-            Log.d("test", "service stopped");
             alarmManager.cancel(pi);
             pi.cancel();
         }
-    }
-
-    public static int getWeekendTitleFontSize(Context context){
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("gp_title_font_size", "12"));
-    }
-
-    public static int getWeekendTimerFontSize(Context context){
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("gp_timer_font_size", "12"));
     }
 }
