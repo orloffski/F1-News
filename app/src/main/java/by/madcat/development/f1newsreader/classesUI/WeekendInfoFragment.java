@@ -15,18 +15,18 @@ import java.util.Map;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView;
 import by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView;
+import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
 
 public class WeekendInfoFragment extends Fragment {
 
-    private AGBengalyTextView weekendTitle;
+    private RobotoRegularTextView weekendTitle;
     private PerfogramaTextView firstDayTitle;
-    private AGBengalyTextView firstDayText;
+    private RobotoRegularTextView firstDayText;
     private PerfogramaTextView secondDayTitle;
-    private AGBengalyTextView secondDayText;
+    private RobotoRegularTextView secondDayText;
     private PerfogramaTextView thirdDayTitle;
-    private AGBengalyTextView thirdDayText;
+    private RobotoRegularTextView thirdDayText;
 
     private ImageView weekendTrack;
 
@@ -45,13 +45,13 @@ public class WeekendInfoFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_weekend_info, container, false);
 
-        weekendTitle = (AGBengalyTextView) view.findViewById(R.id.weekend_title);
+        weekendTitle = (RobotoRegularTextView) view.findViewById(R.id.weekend_title);
         firstDayTitle = (PerfogramaTextView) view.findViewById(R.id.first_day_title);
-        firstDayText = (AGBengalyTextView) view.findViewById(R.id.first_day_text);
+        firstDayText = (RobotoRegularTextView) view.findViewById(R.id.first_day_text);
         secondDayTitle = (PerfogramaTextView) view.findViewById(R.id.second_day_title);
-        secondDayText = (AGBengalyTextView) view.findViewById(R.id.second_day_text);
+        secondDayText = (RobotoRegularTextView) view.findViewById(R.id.second_day_text);
         thirdDayTitle = (PerfogramaTextView) view.findViewById(R.id.third_day_title);
-        thirdDayText = (AGBengalyTextView) view.findViewById(R.id.third_day_text);
+        thirdDayText = (RobotoRegularTextView) view.findViewById(R.id.third_day_text);
 
         weekendTrack = (ImageView) view.findViewById(R.id.weekend_track);
 

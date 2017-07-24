@@ -132,9 +132,8 @@
     <string name="font_size_default">12</string>
 
     <!-- Fonts -->
-    <string name="font_AGBengaly">fonts/AGBengaly.ttf</string>
     <string name="font_Perfograma">fonts/Perfograma.ttf</string>
-    <string name="font_Europe">fonts/Europe.ttf</string>
+    <string name="font_Roboto_Regular">fonts/Roboto-Regular.ttf</string>
 
     <!-- Online text translation -->
     <string name="online_text_autoscroll_top">Автопрокрутка</string>

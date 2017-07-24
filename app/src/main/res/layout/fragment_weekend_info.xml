@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/weekend_title"
                 style="@style/WeekendTitleStyle"
                 android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/first_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/second_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.AGBengalyTextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/third_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"

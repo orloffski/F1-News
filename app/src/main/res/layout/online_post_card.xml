@@ -24,7 +24,7 @@
                 android:gravity="left"
                 android:text="16:58:13" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.EuropeTextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/online_post_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
