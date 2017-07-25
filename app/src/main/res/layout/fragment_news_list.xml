@@ -1,20 +1,32 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="by.madcat.development.f1newsreader.classesUI.NewsListFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    app:layout_anchorGravity="center_horizontal"
+    tools:context="by.madcat.development.f1newsreader.classesUI.NewsListFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.webianks.library.PopupBubble
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/popup_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:pb_backgroundColor="@color/red"
+        style="@style/PopupButtonStyle"
+        android:elevation="5dp"
+        app:pb_text="@string/popup_button_text" />
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recyclerView"/>
+            android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

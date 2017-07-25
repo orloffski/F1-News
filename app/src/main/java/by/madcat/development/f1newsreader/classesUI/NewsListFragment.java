@@ -21,12 +21,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.webianks.library.PopupBubble;
 
 import java.util.ArrayList;
 
@@ -59,6 +62,8 @@ public class NewsListFragment extends Fragment
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     BroadcastReceiver receiver;
+
+    private PopupBubble popupBubble;
 
     private TextView timer;
     private TextView timerText;
@@ -185,8 +190,40 @@ public class NewsListFragment extends Fragment
 
         checkServiceIsRun();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        popupBubble = (PopupBubble) view.findViewById(R.id.popup_bubble);
+
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if(linearLayoutManager.findFirstVisibleItemPosition() != 0){
+                    popupBubble.show();
+                }else{
+                    popupBubble.hide();
+                }
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+
+        popupBubble.setRecyclerView(recyclerView);
+        popupBubble.withAnimation(true);
+        popupBubble.hide();
+
+        popupBubble.setPopupBubbleListener(new PopupBubble.PopupBubbleClickListener() {
+            @Override
+            public void bubbleClicked(Context context) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
 
         if(listStyle.equals("list")) {
             adapter = new NewsListAdapter(new NewsListAdapter.ClickListener() {

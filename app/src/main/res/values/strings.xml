@@ -137,4 +137,7 @@
 
     <!-- Online text translation -->
     <string name="online_text_autoscroll_top">Автопрокрутка</string>
+
+    <!-- popup button -->
+    <string name="popup_button_text">вверх</string>
 </resources>

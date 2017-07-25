@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.webianks.library.PopupBubble;
+
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
@@ -37,6 +39,8 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
 
     public LinkedList<OnlinePost> posts;
     BroadcastReceiver receiver;
+
+    private PopupBubble popupBubble;
 
     boolean bound = false;
     private ServiceConnection sConn;
@@ -66,9 +70,34 @@ public class TextOnlineActivity extends AppCompatActivity implements SwipeRefres
 
         adapter = new OnlinePostsAdapter(posts);
 
+        popupBubble = (PopupBubble) findViewById(R.id.popup_bubble);
+
         recyclerView = (RecyclerView) findViewById(R.id.online_posts);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if(linearLayoutManager.findFirstVisibleItemPosition() != 0){
+                    popupBubble.show();
+                }else{
+                    popupBubble.hide();
+                }
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        popupBubble.setRecyclerView(recyclerView);
+        popupBubble.withAnimation(true);
+        popupBubble.hide();
 
         receiver = new BroadcastReceiver() {
             @Override
