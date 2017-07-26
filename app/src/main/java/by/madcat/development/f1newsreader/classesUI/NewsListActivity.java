@@ -285,7 +285,7 @@ public class NewsListActivity extends AppCompatActivity
 //                }
                 return true;
             case R.id.online_menu:
-                Intent textIntent = new Intent(this, TextOnlineActivity.class);
+                Intent textIntent = new Intent(this, OnlineActivity.class);
                 startActivity(textIntent);
                 return true;
         }

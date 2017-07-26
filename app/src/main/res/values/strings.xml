@@ -135,13 +135,13 @@
     <string name="font_Perfograma">fonts/Perfograma.ttf</string>
     <string name="font_Roboto_Regular">fonts/Roboto-Regular.ttf</string>
 
-    <!-- Online text translation -->
-    <string name="online_text_autoscroll_top">Автопрокрутка</string>
-
     <!-- popup button -->
     <string name="popup_button_text">вверх</string>
 
     <!-- main menu items -->
     <string name="weekend_info_menu">О Гран-При</string>
     <string name="online_menu">Онлайн</string>
+
+    <!-- bottom bar strings -->
+    <string name="text_online">Текст</string>
 </resources>

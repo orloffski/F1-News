@@ -29,19 +29,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".classesUI.NewsPageActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".classesUI.TextOnlineActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".classesUI.OnlineActivity" />
 
         <provider
             android:name=".data.F1NewsReaderContentProvider"
             android:authorities="by.madcat.development.f1newsreader.data"
             android:enabled="true"
-            android:exported="false"></provider>
+            android:exported="false" />
 
         <service
             android:name=".Services.OnlinePostsLoadService"
@@ -92,7 +91,7 @@
         </receiver>
         <receiver
             android:name=".Receivers.NotificationDismissedReceiver"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"

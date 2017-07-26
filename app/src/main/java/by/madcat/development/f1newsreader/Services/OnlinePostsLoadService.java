@@ -18,7 +18,7 @@ import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.OnlinePost;
 
-import static by.madcat.development.f1newsreader.classesUI.TextOnlineActivity.BROADCAST_ACTION;
+import static by.madcat.development.f1newsreader.classesUI.OnlineTextFragment.BROADCAST_ACTION;
 
 public class OnlinePostsLoadService extends Service {
 
