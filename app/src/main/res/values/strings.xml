@@ -140,4 +140,8 @@
 
     <!-- popup button -->
     <string name="popup_button_text">вверх</string>
+
+    <!-- main menu items -->
+    <string name="weekend_info_menu">О Гран-При</string>
+    <string name="online_menu">Онлайн</string>
 </resources>

@@ -90,52 +90,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="65dp"
         android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/content_news_list" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_gravity="bottom"
-        android:background="@color/colorAccent"
-        android:clickable="false"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp">
-
-        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
-            android:id="@+id/weekend_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:active_image="@drawable/info_active"
-            app:inactive_image="@drawable/info_inactive"
-            app:link_text="Gran-Prix Info" />
-
-        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
-            android:id="@+id/gp_video"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:active_image="@drawable/video_active"
-            app:inactive_image="@drawable/video_inactive"
-            app:link_text="Video Online" />
-
-        <by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton
-            android:id="@+id/gp_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:active_image="@drawable/text_active"
-            app:inactive_image="@drawable/text_inactive"
-            app:link_text="Text Online" />
-
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

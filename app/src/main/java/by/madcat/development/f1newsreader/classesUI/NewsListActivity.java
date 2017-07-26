@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -38,14 +37,12 @@ import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.styling.CustomViews.OnlineImageButton;
 
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
 
 public class NewsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        NewsOpenListener, View.OnClickListener {
+        NewsOpenListener{
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
     public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
 
@@ -70,10 +67,6 @@ public class NewsListActivity extends AppCompatActivity
     private TextView timerText;
     private TextView timer;
 
-    private OnlineImageButton info;
-    private OnlineImageButton video;
-    private OnlineImageButton text;
-
     public static Intent newIntent(Context context){
         return new Intent(context, NewsListActivity.class);
     }
@@ -92,15 +85,10 @@ public class NewsListActivity extends AppCompatActivity
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
 
-        info = (OnlineImageButton) findViewById(R.id.weekend_info);
-        video = (OnlineImageButton) findViewById(R.id.gp_video);
-        text = (OnlineImageButton) findViewById(R.id.gp_text);
-
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout_list);
 
         imageView = (ImageView) findViewById(R.id.toolbar_image_list);
 
-        loadOnlineButtonsListener();
         loadTimerViews();
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
@@ -273,6 +261,37 @@ public class NewsListActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.weekend_menu:
+                String timerGpTitle = PreferencesUtils.getNextGpCountry(this);
+                String weekendTitle = PreferencesUtils.getWeekendTitle(this);
+
+//                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
+                if(searchMenu != null)
+                    searchMenu.findItem(R.id.action_search).setVisible(false);
+
+                appBarLayout.setExpanded(false);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                collapsingToolbarLayout.setTitle(weekendTitle);
+//                }
+                return true;
+            case R.id.online_menu:
+                Intent textIntent = new Intent(this, TextOnlineActivity.class);
+                startActivity(textIntent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void openSectionNews(NewsTypes type, String searchQuery){
         if(searchMenu != null)
             searchMenu.findItem(R.id.action_search).setVisible(true);
@@ -415,12 +434,6 @@ public class NewsListActivity extends AppCompatActivity
         timer = (TextView) findViewById(R.id.timer);
     }
 
-    private void loadOnlineButtonsListener(){
-        info.setOnClickListener(this);
-        video.setOnClickListener(this);
-        text.setOnClickListener(this);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -428,38 +441,6 @@ public class NewsListActivity extends AppCompatActivity
         if(resultCode == RESULT_OK){
             PreferencesFragment pref_fragment = (PreferencesFragment)getSupportFragmentManager().findFragmentById(R.id.content_news_list);
             pref_fragment.updateReminderRingtone(data);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.gp_text:
-                Intent textIntent = new Intent(this, TextOnlineActivity.class);
-                startActivity(textIntent);
-                break;
-            case R.id.gp_video:
-                Intent videoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(InternetDataRouting.VIDEO_ONLINE));
-                startActivity(videoIntent);
-                break;
-            case R.id.weekend_info:
-                String timerGpTitle = PreferencesUtils.getNextGpCountry(this);
-                String weekendTitle = PreferencesUtils.getWeekendTitle(this);
-
-//                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
-                    if(searchMenu != null)
-                        searchMenu.findItem(R.id.action_search).setVisible(false);
-
-                    appBarLayout.setExpanded(false);
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                    collapsingToolbarLayout.setTitle(weekendTitle);
-//                }
-                break;
         }
     }
 
