@@ -144,4 +144,6 @@
 
     <!-- bottom bar strings -->
     <string name="text_online">Текст</string>
+    <string name="video_online">Видео</string>
+
 </resources>

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -82,6 +83,8 @@ public final class DocParseUtils {
     public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
     public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
 
+    public static final String VIDEO_ONLINE_CONTAINER = "video";
+
     public static String getJsonString(String urlString) throws IOException {
         String line;
         StringBuilder doc = new StringBuilder();
@@ -129,7 +132,6 @@ public final class DocParseUtils {
         }catch (Exception e){
             return "";
         }
-
     }
 
     public static ArrayList<String> getNewsBodyImageLinks(Document jsDoc){
@@ -496,5 +498,17 @@ public final class DocParseUtils {
         }
 
         return posts;
+    }
+
+    public static String getVideoOnlineContainer(Document jsDoc){
+        try {
+            Element online_container = jsDoc.getElementsByClass(VIDEO_ONLINE_CONTAINER).first();
+
+            Log.d("test", online_container.text());
+
+            return online_container.toString();
+        }catch (Exception e){
+            return "";
+        }
     }
 }
