@@ -64,7 +64,7 @@ public class WeekendInfoFragment extends Fragment {
         String weekendTitleString = PreferencesUtils.getWeekendTitle(context);
         weekendTitle.setText(weekendTitleString);
 
-        String fullPathImage = SystemUtils.getImagesPath(getContext()) + "/" + getWeekendTrackMap();
+        String fullPathImage = SystemUtils.getImagesPath(getContext()) + getWeekendTrackMap();
         Glide.with(context).load(fullPathImage).into(weekendTrack);
 
         Map<String, String> weekendData = PreferencesUtils.getWeekendData(context);

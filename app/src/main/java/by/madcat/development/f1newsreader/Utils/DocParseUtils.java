@@ -446,6 +446,8 @@ public final class DocParseUtils {
             if(link.text().equals("Трасса и статистика")){
                 Document subDoc = DocParseUtils.getJsDoc(link.attr("href"));
                 Element weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "-track.png").first();
+                if(weekendTrack == null)
+                    weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "_track.png").first();
                 weekendTrackMap = StringUtils.getImageNameFromURL(weekendTrack.attr("src"));
             }
 
