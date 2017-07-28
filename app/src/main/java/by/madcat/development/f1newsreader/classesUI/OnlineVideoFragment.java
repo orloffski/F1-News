@@ -129,12 +129,14 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
             // TODO: make this more robust, and sync with audio demo
             ArrayList<String> options = new ArrayList<String>();
             //options.add("--subsdec-encoding <encoding>");
-            options.add("--aout=opensles");
+//            options.add("--aout=opensles");
 //            options.add(":network-caching=2000");
-            options.add("--audio-time-stretch"); // time stretching
+//            options.add("--audio-time-stretch"); // time stretching
 //            options.add("-vvv"); // verbosity
 //            options.add("--file-caching=2000");
 //            options.add("-vvv");
+            options.add("--http-reconnect");
+            options.add("--network-caching=2000");
             libvlc = new LibVLC(getContext(), options);
             holder.setKeepScreenOn(true);
 
@@ -153,7 +155,7 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
             m.setHWDecoderEnabled(true, false);
             m.addOption(":clock-jitter=0");
             m.addOption(":clock-synchro=0");
-            m.addOption(":codec=all");
+            m.addOption(":codec=video/mpeg2");
             m.addOption(":file-caching=1500");
             m.addOption(":network-caching=1500");
 
@@ -225,6 +227,11 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
                 case MediaPlayer.Event.EndReached:
                     Log.d(TAG, "MediaPlayerEndReached");
                     player.releasePlayer();
+                    player.recreatePlayer();
+                    break;
+                case MediaPlayer.Event.Buffering:
+                    float percent = event.getBuffering();
+                    Log.d(TAG, "buffering: " + percent + "%");
                     break;
                 case MediaPlayer.Event.Playing:
                 case MediaPlayer.Event.Paused:
@@ -233,5 +240,10 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
                     break;
             }
         }
+    }
+
+    private void recreatePlayer(){
+        holder = mSurface.getHolder();
+        createPlayer(VIDEO_RTSP_URL);
     }
 }
