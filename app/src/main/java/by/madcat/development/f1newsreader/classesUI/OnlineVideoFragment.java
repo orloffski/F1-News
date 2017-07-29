@@ -242,43 +242,13 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
     }
 
     @Override
-    public int getDuration() {
-        return 0;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return 0;
-    }
-
-    @Override
-    public void seekTo(int pos) {
-
-    }
-
-    @Override
     public boolean isPlaying() {
         return mMediaPlayer.isPlaying();
     }
 
     @Override
-    public int getBufferPercentage() {
-        return 0;
-    }
-
-    @Override
     public boolean canPause() {
         return true;
-    }
-
-    @Override
-    public boolean canSeekBackward() {
-        return false;
-    }
-
-    @Override
-    public boolean canSeekForward() {
-        return false;
     }
 
     @Override

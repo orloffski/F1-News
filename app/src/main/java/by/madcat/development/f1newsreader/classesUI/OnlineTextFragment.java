@@ -137,6 +137,13 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
         popupBubble.withAnimation(true);
         popupBubble.hide();
 
+        popupBubble.setPopupBubbleListener(new PopupBubble.PopupBubbleClickListener() {
+            @Override
+            public void bubbleClicked(Context context) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+
         getActivity().setTitle(PreferencesUtils.getNextGpCountry(getActivity()));
 
         return view;
