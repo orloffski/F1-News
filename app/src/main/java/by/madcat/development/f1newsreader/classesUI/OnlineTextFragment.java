@@ -87,6 +87,9 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
                     if(JsonParseUtils.getPostFromJsonString(data, 0) != null) {
                         posts.add(0, JsonParseUtils.getPostFromJsonString(data, 0));
                         adapter.notifyItemInserted(0);
+                        if(PreferencesUtils.getAutoscrollingFlag(getActivity().getApplicationContext())) {
+                            recyclerView.smoothScrollToPosition(0);
+                        }
                     }
                 }
             }
@@ -155,6 +158,17 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
 
         if (!bound) return;
         unregisterService();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        posts.clear();
+        loadOnlinePostsData();
+
+        IntentFilter filter = new IntentFilter(BROADCAST_ACTION);
+        getActivity().registerReceiver(receiver, filter);
     }
 
     @Override

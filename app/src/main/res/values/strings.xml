@@ -148,4 +148,6 @@
 
     <!-- Video -->
     <string name="description">description</string>
+
+    <string name="autoscroll">Автопрокрутка</string>
 </resources>

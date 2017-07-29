@@ -2,15 +2,20 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import me.riddhimanadib.library.BottomBarHolderActivity;
 import me.riddhimanadib.library.NavigationPage;
 
 public class OnlineActivity extends BottomBarHolderActivity {
+
+    private boolean autoscroll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,4 +43,38 @@ public class OnlineActivity extends BottomBarHolderActivity {
         super.setupBottomBarHolderActivity(navigationPages);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.online_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.autoscroll).setChecked(PreferencesUtils.getAutoscrollingFlag(this));
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.autoscroll:
+                if(item.isChecked()){
+                    PreferencesUtils.disableAutoScrolling(getApplicationContext());
+                    item.setChecked(false);
+                }else{
+                    PreferencesUtils.enableAutoScrolling(getApplicationContext());
+                    item.setChecked(true);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
