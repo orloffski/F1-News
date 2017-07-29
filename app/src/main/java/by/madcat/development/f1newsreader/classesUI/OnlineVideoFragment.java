@@ -4,14 +4,18 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import org.videolan.libvlc.IVLCVout;
@@ -23,8 +27,9 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.styling.CustomViews.VideoControllerView;
 
-public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
+public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, VideoControllerView.MediaPlayerControl {
 
     public final static String TAG = "MainActivity";
 
@@ -34,6 +39,9 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
     private MediaPlayer mMediaPlayer = null;
     private int mVideoWidth;
     private int mVideoHeight;
+    private View view;
+
+    private VideoControllerView controller;
 
     private final static String VIDEO_RTSP_URL = "http://176.118.13.59:81/udp/239.195.0.11:1234";
 
@@ -49,10 +57,19 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_online_video, container, false);
+        view = inflater.inflate(R.layout.fragment_online_video, container, false);
 
         mSurface = (SurfaceView) view.findViewById(R.id.surface);
         holder = mSurface.getHolder();
+
+        controller = new VideoControllerView(getContext());
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                controller.show();
+                return false;
+            }
+        });
 
         return view;
     }
@@ -160,6 +177,8 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
             m.addOption(":network-caching=1500");
 
             mMediaPlayer.setMedia(m);
+            controller.setMediaPlayer(this);
+            controller.setAnchorView((FrameLayout) view.findViewById(R.id.videoSurfaceContainer));
             mMediaPlayer.play();
         } catch (Exception e) {
             Toast.makeText(getContext(), "Error in creating player!", Toast
@@ -210,6 +229,75 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback {
         Log.e(TAG, "Error with hardware acceleration");
         this.releasePlayer();
         Toast.makeText(getContext(), "Error with hardware acceleration", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void start() {
+        mMediaPlayer.play();
+    }
+
+    @Override
+    public void pause() {
+        mMediaPlayer.stop();
+    }
+
+    @Override
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return 0;
+    }
+
+    @Override
+    public void seekTo(int pos) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return mMediaPlayer.isPlaying();
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullScreen() {
+        return false;
+    }
+
+    @Override
+    public void toggleFullScreen() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        android.widget.LinearLayout.LayoutParams params =
+                (android.widget.LinearLayout.LayoutParams) view.findViewById(R.id.videoSurfaceContainer).getLayoutParams();
+        params.width = metrics.widthPixels;
+        params.height = metrics.heightPixels;
+        params.leftMargin = 0;
+        view.findViewById(R.id.videoSurfaceContainer).setLayoutParams(params);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     private static class MyPlayerListener implements MediaPlayer.EventListener {

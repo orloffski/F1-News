@@ -21,7 +21,7 @@ public class OnlineActivity extends BottomBarHolderActivity {
                 ContextCompat.getDrawable(this, R.drawable.ic_text_format_black_24dp),
                 OnlineTextFragment.newInstance());
 
-        NavigationPage page2 = new NavigationPage(
+        NavigationPage videoOnline = new NavigationPage(
                 getString(R.string.video_online),
                 ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
                 OnlineVideoFragment.newInstance());
@@ -31,7 +31,7 @@ public class OnlineActivity extends BottomBarHolderActivity {
 
         List<NavigationPage> navigationPages = new ArrayList<>();
         navigationPages.add(textOnline);
-        navigationPages.add(page2);
+        navigationPages.add(videoOnline);
         navigationPages.add(page3);
         navigationPages.add(page4);
 

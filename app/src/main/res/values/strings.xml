@@ -146,4 +146,6 @@
     <string name="text_online">Текст</string>
     <string name="video_online">Видео</string>
 
+    <!-- Video -->
+    <string name="description">description</string>
 </resources>
