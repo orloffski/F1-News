@@ -54,6 +54,7 @@ public class OnlineActivity extends BottomBarHolderActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
+        menu.findItem(R.id.autoscroll).setEnabled(autoscroll);
         menu.findItem(R.id.autoscroll).setChecked(PreferencesUtils.getAutoscrollingFlag(this));
 
         return true;
@@ -76,5 +77,9 @@ public class OnlineActivity extends BottomBarHolderActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void updateAutoscrollMenu(boolean isNeed){
+        autoscroll = isNeed;
     }
 }

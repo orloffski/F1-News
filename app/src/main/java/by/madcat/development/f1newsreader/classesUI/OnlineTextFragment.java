@@ -156,6 +156,8 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
     public void onPause() {
         super.onPause();
 
+        ((OnlineActivity)getActivity()).updateAutoscrollMenu(false);
+
         if (!bound) return;
         unregisterService();
     }
@@ -163,6 +165,8 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onResume() {
         super.onResume();
+
+        ((OnlineActivity)getActivity()).updateAutoscrollMenu(true);
 
         posts.clear();
         loadOnlinePostsData();
