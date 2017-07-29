@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,8 +30,6 @@ import by.madcat.development.f1newsreader.styling.CustomViews.VideoControllerVie
 
 public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, VideoControllerView.MediaPlayerControl {
 
-    public final static String TAG = "MainActivity";
-
     private SurfaceView mSurface;
     private SurfaceHolder holder;
     private LibVLC libvlc;
@@ -43,7 +40,10 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
 
     private VideoControllerView controller;
 
+    // w: 720 h: 578
     private final static String VIDEO_RTSP_URL = "http://176.118.13.59:81/udp/239.195.0.11:1234";
+    // w: 1920 h: 1090
+//    private final static String VIDEO_RTSP_URL = "http://91.105.135.29:55555/udp/239.54.7.152:1224";
 
     public static OnlineVideoFragment newInstance() {
         return new OnlineVideoFragment();
@@ -101,6 +101,7 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
     private void setSize(int width, int height) {
         mVideoWidth = width;
         mVideoHeight = height;
+
         if (mVideoWidth * mVideoHeight <= 1)
             return;
 
@@ -143,11 +144,9 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
             }
 
             // Create LibVLC
-            // TODO: make this more robust, and sync with audio demo
             ArrayList<String> options = new ArrayList<String>();
             //options.add("--subsdec-encoding <encoding>");
 //            options.add("--aout=opensles");
-//            options.add(":network-caching=2000");
 //            options.add("--audio-time-stretch"); // time stretching
 //            options.add("-vvv"); // verbosity
 //            options.add("--file-caching=2000");
@@ -164,7 +163,6 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
             // Seting up video output
             final IVLCVout vout = mMediaPlayer.getVLCVout();
             vout.setVideoView(mSurface);
-            //vout.setSubtitlesView(mSurfaceSubtitles);
             vout.addCallback(this);
             vout.attachViews();
 
@@ -226,7 +224,6 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
 
     @Override
     public void onHardwareAccelerationError(IVLCVout vlcVout) {
-        Log.e(TAG, "Error with hardware acceleration");
         this.releasePlayer();
         Toast.makeText(getContext(), "Error with hardware acceleration", Toast.LENGTH_LONG).show();
     }
@@ -283,13 +280,11 @@ public class OnlineVideoFragment extends Fragment implements IVLCVout.Callback, 
 
             switch (event.type) {
                 case MediaPlayer.Event.EndReached:
-                    Log.d(TAG, "MediaPlayerEndReached");
                     player.releasePlayer();
                     player.recreatePlayer();
                     break;
                 case MediaPlayer.Event.Buffering:
                     float percent = event.getBuffering();
-                    Log.d(TAG, "buffering: " + percent + "%");
                     break;
                 case MediaPlayer.Event.Playing:
                 case MediaPlayer.Event.Paused:
