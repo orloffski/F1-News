@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.adapters;
+package by.madcat.development.f1newsreader.adapters.ViewHolders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public final TextView title;

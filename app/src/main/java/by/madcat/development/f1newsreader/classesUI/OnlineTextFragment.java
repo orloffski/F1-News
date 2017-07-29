@@ -26,7 +26,7 @@ import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
-import by.madcat.development.f1newsreader.dataInet.OnlinePost;
+import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_ACTION_DATA;
@@ -104,8 +104,6 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_text_online, container, false);
 
-        loadOnlinePostsData();
-
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_online);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -148,6 +146,8 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
         });
 
         getActivity().setTitle(PreferencesUtils.getNextGpCountry(getActivity()));
+
+        loadOnlinePostsData();
 
         return view;
     }

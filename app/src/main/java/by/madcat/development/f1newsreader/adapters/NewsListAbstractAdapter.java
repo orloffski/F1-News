@@ -11,6 +11,7 @@ import java.io.File;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.adapters.ViewHolders.NewsViewHolder;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 
 public abstract class NewsListAbstractAdapter extends RecyclerView.Adapter<NewsViewHolder>{

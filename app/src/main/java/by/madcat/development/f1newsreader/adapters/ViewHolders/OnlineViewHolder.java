@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.adapters;
+package by.madcat.development.f1newsreader.adapters.ViewHolders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -31,13 +31,17 @@ public class OnlineActivity extends BottomBarHolderActivity {
                 ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
                 OnlineVideoFragment.newInstance());
 
-        NavigationPage page3 = new NavigationPage("Billing", ContextCompat.getDrawable(this, R.drawable.ic_assessment_black_24dp), OnlineTextFragment.newInstance());
+        NavigationPage sessionOnline = new NavigationPage(
+                getString(R.string.session_online),
+                ContextCompat.getDrawable(this, R.drawable.ic_access_alarm_black_24dp),
+                OnlineSessionFragment.newInstance());
+
         NavigationPage page4 = new NavigationPage("Profile", ContextCompat.getDrawable(this, R.drawable.ic_person_black_24dp), OnlineTextFragment.newInstance());
 
         List<NavigationPage> navigationPages = new ArrayList<>();
         navigationPages.add(textOnline);
         navigationPages.add(videoOnline);
-        navigationPages.add(page3);
+        navigationPages.add(sessionOnline);
         navigationPages.add(page4);
 
         super.setupBottomBarHolderActivity(navigationPages);

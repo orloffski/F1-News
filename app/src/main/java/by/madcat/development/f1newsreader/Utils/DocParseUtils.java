@@ -42,7 +42,7 @@ import java.util.Map;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.classesUI.VideoFragment;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.OnlinePost;
+import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
 
 public final class DocParseUtils {
     public static final String DOCUMENT_ENCODING = "UTF-8";
@@ -82,8 +82,17 @@ public final class DocParseUtils {
     public static final String ONLINE_JSON_ARRAY = "messages";
     public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
     public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
+    public static final String ONLINE_JSON_SESSION_ID = "session_id";
 
     public static final String VIDEO_ONLINE_CONTAINER = "video";
+
+    public static final String ONLINE_JSON_ARRAY_SESSION = "drivers";
+    public static final String ONLINE_JSON_ARRAY_SESSION_NAME = "name";
+    public static final String ONLINE_JSON_ARRAY_SESSION_POSITION = "position";
+    public static final String ONLINE_JSON_ARRAY_SESSION_GAP = "gap";
+    public static final String ONLINE_JSON_ARRAY_SESSION_BESTLAP = "best_lap";
+    public static final String ONLINE_JSON_ARRAY_SESSION_PITS = "pits";
+    public static final String ONLINE_JSON_ARRAY_SESSION_LASTLAP = "last_lap";
 
     public static String getJsonString(String urlString) throws IOException {
         String line;

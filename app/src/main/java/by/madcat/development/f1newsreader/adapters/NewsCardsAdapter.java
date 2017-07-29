@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.adapters.ViewHolders.NewsViewHolder;
 
 public class NewsCardsAdapter extends NewsListAbstractAdapter {
 
