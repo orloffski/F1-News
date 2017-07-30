@@ -77,15 +77,15 @@ public class JsonParseUtils {
                                 currJsonObject.getString(ONLINE_JSON_ARRAY_SESSION_NAME),
                                 currJsonObject.getInt(ONLINE_JSON_ARRAY_SESSION_POSITION),
                                 currJsonObject.getString(ONLINE_JSON_ARRAY_SESSION_GAP),
-                                currJsonObject.getString(ONLINE_JSON_ARRAY_SESSION_BESTLAP),
                                 currJsonObject.getString(ONLINE_JSON_ARRAY_SESSION_PITS),
-                                currJsonObject.getInt(ONLINE_JSON_ARRAY_SESSION_LASTLAP)
+                                currJsonObject.getString(ONLINE_JSON_ARRAY_SESSION_LASTLAP)
                         )
                 );
             }
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("test", "parse error");
+            Log.d("test", e.toString());
         }
 
         Log.d("test", "timings in parse: " + timings.size());

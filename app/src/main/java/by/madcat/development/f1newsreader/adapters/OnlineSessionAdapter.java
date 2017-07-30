@@ -44,9 +44,8 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
         holder.name.setText(element.getName());
         holder.position.setText(String.valueOf(element.getPosition()));
         holder.gap.setText(element.getGap().equals("-")?element.getGap():"+" + element.getGap());
-        holder.bestLap.setText(element.getBestLap());
         holder.pits.setText(element.getPits());
-        holder.lastLap.setText(String.valueOf(element.getLastLap()));
+        holder.lastLap.setText(element.getLastLap());
 
         Glide.with(context).load(getHelmetFromDrawable(element.getName())).placeholder(R.drawable.helmets_default).into(holder.helmet);
     }

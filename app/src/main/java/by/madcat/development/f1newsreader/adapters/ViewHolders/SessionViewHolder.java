@@ -12,7 +12,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder{
     public final TextView name;
     public final TextView position;
     public final TextView gap;
-    public final TextView bestLap;
     public final TextView pits;
     public final TextView lastLap;
     public final ImageView helmet;
@@ -23,7 +22,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder{
         name = (TextView) itemView.findViewById(R.id.name);
         position = (TextView) itemView.findViewById(R.id.position);
         gap = (TextView) itemView.findViewById(R.id.gap);
-        bestLap = (TextView) itemView.findViewById(R.id.best_lap);
         pits = (TextView) itemView.findViewById(R.id.pits);
         lastLap = (TextView) itemView.findViewById(R.id.last_lap);
         helmet = (ImageView) itemView.findViewById(R.id.helmet);

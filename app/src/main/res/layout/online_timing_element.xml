@@ -110,8 +110,7 @@
                         <TextView
                             android:id="@+id/textView3"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Лучший круг: " />
+                            android:layout_height="wrap_content" />
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                             android:id="@+id/best_lap"
@@ -125,7 +124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="5dp"
-                            android:text="Круги: " />
+                            android:text="Последний круг: " />
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                             android:id="@+id/last_lap"
