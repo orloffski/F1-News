@@ -333,31 +333,31 @@ public class NewsListActivity extends AppCompatActivity
         switch (type){
             case NEWS:
                 title = getString(R.string.nav_news_title);
-                image = getResources().getDrawable(R.drawable.news);
+                image = getResources().getDrawable(R.drawable.drawerimage_news);
                 break;
             case MEMUAR:
                 title = getString(R.string.nav_memuar_title);
-                image = getResources().getDrawable(R.drawable.memuar);
+                image = getResources().getDrawable(R.drawable.drawerimage_memuar);
                 break;
             case TECH:
                 title = getString(R.string.nav_tech_title);
-                image = getResources().getDrawable(R.drawable.tech);
+                image = getResources().getDrawable(R.drawable.drawerimage_tech);
                 break;
             case HISTORY:
                 title = getString(R.string.nav_history_title);
-                image = getResources().getDrawable(R.drawable.history);
+                image = getResources().getDrawable(R.drawable.drawerimage_history);
                 break;
             case COLUMNS:
                 title = getString(R.string.nav_columns_title);
-                image = getResources().getDrawable(R.drawable.columns);
+                image = getResources().getDrawable(R.drawable.drawerimage_columns);
                 break;
             case AUTOSPORT:
                 title = getString(R.string.nav_autosport_title);
-                image = getResources().getDrawable(R.drawable.autosport);
+                image = getResources().getDrawable(R.drawable.drawerimage_autosport);
                 break;
             case INTERVIEW:
                 title = getString(R.string.nav_interview_title);
-                image = getResources().getDrawable(R.drawable.interview);
+                image = getResources().getDrawable(R.drawable.drawerimage_interview);
                 break;
         }
 
