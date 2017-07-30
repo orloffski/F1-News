@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -37,7 +36,6 @@ public class OnlineSessionLoadService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("test", "session service bind");
         timer = new Timer();
 
         timerTaskReSchedule(0, INTERVAL);
@@ -65,7 +63,6 @@ public class OnlineSessionLoadService extends Service {
     }
 
     private void timerTaskReSchedule(int delay, int interval){
-        Log.d("test", "timerTaskReSchedule");
         if (timer != null) timer.cancel();
         timer = new Timer();
 
@@ -79,7 +76,6 @@ public class OnlineSessionLoadService extends Service {
     }
 
     private String loadOnlineSessionData(){
-        Log.d("test", "loadOnlineSessionData start");
         String jsonString = null;
 
         try {
@@ -92,19 +88,13 @@ public class OnlineSessionLoadService extends Service {
         if(session_id == 0)
             return "";
 
-        Log.d("test", "session id: " + session_id);
-
         String session_link = getResources().getString(R.string.session_link, session_id);
-
-        Log.d("test", "session link: " + session_link);
 
         try {
             jsonString = DocParseUtils.getJsonString(session_link);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Log.d("test", "data: " + jsonString);
         return jsonString;
     }
 

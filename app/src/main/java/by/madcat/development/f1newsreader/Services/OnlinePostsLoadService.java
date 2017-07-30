@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -41,7 +40,6 @@ public class OnlinePostsLoadService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("test", "posts service bind");
         timer = new Timer();
         longInterval = true;
 

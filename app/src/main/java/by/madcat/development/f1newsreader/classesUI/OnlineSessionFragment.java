@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,15 +71,11 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
                 // получение данных от сервиса
                 String data = intent.getStringExtra(BROADCAST_ACTION_DATA);
 
-                Log.d("test", "received data: " + data);
-
                 if (data == null || data.equals(""))
                     return;
 
                 timings.clear();
                 timings.addAll(JsonParseUtils.getTimingsFromJsonString(data));
-
-                Log.d("test", "timings: " + timings.size());
                 adapter.notifyDataSetChanged();
             }
         };
