@@ -2,6 +2,7 @@ package by.madcat.development.f1newsreader.adapters.ViewHolders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.R;
@@ -14,6 +15,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder{
     public final TextView bestLap;
     public final TextView pits;
     public final TextView lastLap;
+    public final ImageView helmet;
 
     public SessionViewHolder(View itemView) {
         super(itemView);
@@ -24,5 +26,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder{
         bestLap = (TextView) itemView.findViewById(R.id.best_lap);
         pits = (TextView) itemView.findViewById(R.id.pits);
         lastLap = (TextView) itemView.findViewById(R.id.last_lap);
+        helmet = (ImageView) itemView.findViewById(R.id.helmet);
     }
 }

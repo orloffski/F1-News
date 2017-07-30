@@ -28,7 +28,7 @@
                 android:id="@+id/weekend_track"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/drawerimage-autosport" />
+                app:srcCompat="@drawable/drawerimage_autosport" />
 
             <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
                 android:id="@+id/first_day_title"

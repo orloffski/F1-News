@@ -92,7 +92,7 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_session);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        adapter = new OnlineSessionAdapter(timings);
+        adapter = new OnlineSessionAdapter(timings, getContext());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.online_session);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

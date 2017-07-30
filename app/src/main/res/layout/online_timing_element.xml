@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/online_session_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,30 +13,29 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/helmet"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/helmets_massa" />
 
             <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/position"
-                style="@style/DateTextSmallTitle"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="30sp" />
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:gravity="center_vertical|center_horizontal"
+                style="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
+                android:textColor="@color/white"
+                android:textSize="55sp" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingLeft="15dp"
-                android:textSize="30sp" />
-
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,66 +44,99 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
                 <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Отставание: " />
-
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/gap"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:padding="2dp"
-                    android:textSize="15sp" />
-
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="Пит-стопы: " />
-
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/pits"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="2dp"
-                    android:textSize="15sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp">
 
-                <TextView
-                    android:id="@+id/textView3"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Лучший круг: " />
+                    android:orientation="vertical">
 
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/best_lap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="2dp"
-                    android:textSize="15sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/last_lap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="2dp"
-                    android:textSize="15sp" />
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Отставание: " />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/gap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp" />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="Пит-стопы: " />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/pits"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Лучший круг: " />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/best_lap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="Круги: " />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/last_lap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

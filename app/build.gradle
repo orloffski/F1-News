@@ -22,8 +22,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'de.mrmaffen:vlc-android-sdk:2.0.6'
-    compile 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:builder:1.0.7'
     compile 'me.riddhimanadib.bottom-nav-bar:bottom-nav-bar:1.0.1'
     compile 'com.webianks.library:popup-bubble:1.0.5'
     compile 'com.android.support:appcompat-v7:25.3.1'
