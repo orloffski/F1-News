@@ -26,23 +26,26 @@ public class OnlineActivity extends BottomBarHolderActivity {
                 ContextCompat.getDrawable(this, R.drawable.ic_text_format_black_24dp),
                 OnlineTextFragment.newInstance());
 
-        NavigationPage videoOnline = new NavigationPage(
-                getString(R.string.video_online),
-                ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
-                OnlineVideoFragment.newInstance());
-
         NavigationPage sessionOnline = new NavigationPage(
                 getString(R.string.session_online),
                 ContextCompat.getDrawable(this, R.drawable.ic_access_alarm_black_24dp),
                 OnlineSessionFragment.newInstance());
 
-        NavigationPage page4 = new NavigationPage("Profile", ContextCompat.getDrawable(this, R.drawable.ic_person_black_24dp), OnlineTextFragment.newInstance());
+        NavigationPage onLap = new NavigationPage(
+                getString(R.string.on_lap),
+                ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
+                OnlineVideoFragment.newInstance());
+
+        NavigationPage onLap2 = new NavigationPage(
+                getString(R.string.on_lap),
+                ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
+                OnlineVideoFragment.newInstance());
 
         List<NavigationPage> navigationPages = new ArrayList<>();
         navigationPages.add(textOnline);
-        navigationPages.add(videoOnline);
         navigationPages.add(sessionOnline);
-        navigationPages.add(page4);
+        navigationPages.add(onLap);
+        navigationPages.add(onLap2);
 
         super.setupBottomBarHolderActivity(navigationPages);
     }

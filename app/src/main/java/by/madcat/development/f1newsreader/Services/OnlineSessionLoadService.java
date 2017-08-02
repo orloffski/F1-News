@@ -91,8 +91,6 @@ public class OnlineSessionLoadService extends Service {
 
         String session_link = getResources().getString(R.string.session_link, session_id);
 
-        session_link = "https://lc.f1news.ru/live/session/2937.json";
-
         try {
             jsonString = DocParseUtils.getJsonString(session_link);
             JsonParseUtils.getRaceMode(jsonString);

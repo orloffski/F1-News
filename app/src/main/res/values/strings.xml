@@ -143,9 +143,9 @@
     <string name="online_menu">Онлайн</string>
 
     <!-- bottom bar strings -->
-    <string name="text_online">Текст</string>
-    <string name="video_online">Видео</string>
-    <string name="session_online">Тайминги</string>
+    <string name="text_online">Text</string>
+    <string name="on_lap">On-lap</string>
+    <string name="session_online">Timings</string>
 
     <!-- Video -->
     <string name="description">description</string>
