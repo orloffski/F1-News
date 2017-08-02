@@ -25,6 +25,7 @@ import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlineSessionAdapter;
+import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -40,6 +41,7 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
     private OnlineSessionAdapter adapter;
 
     public LinkedList<TimingElement> timings;
+    private RaceMode raceMode;
     BroadcastReceiver receiver;
 
     private ServiceConnection sConn;
@@ -75,7 +77,14 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
                     return;
 
                 timings.clear();
-                timings.addAll(JsonParseUtils.getTimingsFromJsonString(data));
+                raceMode = JsonParseUtils.getRaceMode(data);
+
+                if(raceMode.getMode().equals("race")){
+                    timings.addAll(JsonParseUtils.getRaceTimings(data));
+                }else if(raceMode.getMode().equals("practice")){
+                    timings.addAll(JsonParseUtils.getPracticeTimings(data));
+                }
+
                 adapter.notifyDataSetChanged();
             }
         };

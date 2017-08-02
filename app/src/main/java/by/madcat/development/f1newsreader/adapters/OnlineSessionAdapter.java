@@ -1,8 +1,6 @@
 package by.madcat.development.f1newsreader.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +8,11 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.adapters.ViewHolders.SessionViewHolder;
-import by.madcat.development.f1newsreader.dataInet.Models.HelmetsDataModel;
+import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
 public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder>{
@@ -43,9 +38,33 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
 
         holder.name.setText(element.getName());
         holder.position.setText(String.valueOf(element.getPosition()));
+
+        RaceMode mode = RaceMode.getInstance();
+
+        // leader gap
+        holder.gapText.setText(context.getString(R.string.leader_gap_text));
         holder.gap.setText(element.getGap().equals("-")?element.getGap():"+" + element.getGap());
-        holder.pits.setText(element.getPits());
-        holder.lastLap.setText(element.getLastLap());
+        if(mode.getMode().equals("race")){
+            // gap to prev driver
+            holder.bestLapText.setText(R.string.gap_text);
+            holder.bestLap.setText(element.getBestLap());
+            // pits
+            holder.pitsText.setText(R.string.pits_text);
+            holder.pits.setText(element.getPits());
+            // last lap time
+            holder.lastLapText.setText(R.string.last_lap_text);
+            holder.lastLap.setText(element.getLastLap());
+        }else if(mode.getMode().equals("practice")){
+            // laps count
+            holder.lastLapText.setText(R.string.last_laps);
+            holder.lastLap.setText(element.getBestLap());
+            // best lap time
+            holder.bestLapText.setText(R.string.best_lap_text);
+            holder.bestLap.setText(element.getLastLap());
+            // pits
+            holder.pitsText.setText(R.string.pits_text);
+            holder.pits.setText(element.getPits());
+        }
 
         Glide.with(context).load(getHelmetFromDrawable(element.getName())).placeholder(R.drawable.helmets_default).into(holder.helmet);
     }

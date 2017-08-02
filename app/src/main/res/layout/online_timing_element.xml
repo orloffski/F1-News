@@ -66,36 +66,22 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/textView"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/gap_text"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Отставание: " />
+                            android:text="@string/leader_gap_text" />
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                             android:id="@+id/gap"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textSize="12sp" />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="Пит-стопы: " />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/pits"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:textSize="12sp" />
@@ -104,31 +90,61 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="5dp">
 
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/best_lap_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/best_lap_text" />
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                             android:id="@+id/best_lap"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:textSize="12sp" />
+                    </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/last_lap_text"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="5dp"
-                            android:text="Последний круг: " />
+                            android:text="@string/last_lap_text" />
 
                         <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                             android:id="@+id/last_lap"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="5dp">
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/pits_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="@string/pits_text" />
+
+                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                            android:id="@+id/pits"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:textSize="12sp" />

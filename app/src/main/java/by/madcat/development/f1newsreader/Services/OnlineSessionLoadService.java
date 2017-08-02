@@ -17,6 +17,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
+import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 
 import static by.madcat.development.f1newsreader.classesUI.OnlineSessionFragment.BROADCAST_ACTION;
 
@@ -90,8 +91,11 @@ public class OnlineSessionLoadService extends Service {
 
         String session_link = getResources().getString(R.string.session_link, session_id);
 
+        session_link = "https://lc.f1news.ru/live/session/2937.json";
+
         try {
             jsonString = DocParseUtils.getJsonString(session_link);
+            JsonParseUtils.getRaceMode(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }

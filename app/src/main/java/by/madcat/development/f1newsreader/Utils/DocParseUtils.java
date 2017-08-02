@@ -79,20 +79,28 @@ public final class DocParseUtils {
     public static final String WORDS_TO_CLEAR_3 = "background: url(";
     public static final String WORDS_TO_CLEAR_4 = ");";
 
+    public static final String VIDEO_ONLINE_CONTAINER = "video";
+
+    public static final String ONLINE_JSON_RACE_MODE = "mode";
+    public static final String ONLINE_JSON_RACE_FLAG = "flag";
+    public static final String ONLINE_JSON_RACE_SAFETY_CAR = "safety_car";
+    public static final String ONLINE_JSON_RACE_CURRENT_LAP = "current_lap";
+    public static final String ONLINE_JSON_RACE_TOTAL_LAPS = "total_laps";
+    public static final String ONLINE_JSON_RACE_TRACK_TEMP = "tracktemp";
+    public static final String ONLINE_JSON_RACE_AIR_TEMP = "airtemp";
+
     public static final String ONLINE_JSON_ARRAY = "messages";
     public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
     public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
     public static final String ONLINE_JSON_SESSION_ID = "session_id";
-
-    public static final String VIDEO_ONLINE_CONTAINER = "video";
-
-    public static final String ONLINE_JSON_ARRAY_SESSION = "drivers";
-    public static final String ONLINE_JSON_ARRAY_SESSION_NAME = "name";
-    public static final String ONLINE_JSON_ARRAY_SESSION_POSITION = "position";
-    public static final String ONLINE_JSON_ARRAY_SESSION_GAP = "gap";
+    public static final String ONLINE_JSON_ARRAY_RACE = "drivers";
+    public static final String ONLINE_JSON_ARRAY_RACE_NAME = "name";
+    public static final String ONLINE_JSON_ARRAY_RACE_POSITION = "position";
+    public static final String ONLINE_JSON_ARRAY_RACE_GAP = "gap";
+    public static final String ONLINE_JSON_ARRAY_RACE_INTERVAL = "interval";
+    public static final String ONLINE_JSON_ARRAY_RACE_PITS = "pits";
+    public static final String ONLINE_JSON_ARRAY_RACE_LASTLAP = "last_lap";
     public static final String ONLINE_JSON_ARRAY_SESSION_BESTLAP = "best_lap";
-    public static final String ONLINE_JSON_ARRAY_SESSION_PITS = "pits";
-    public static final String ONLINE_JSON_ARRAY_SESSION_LASTLAP = "last_lap";
 
     public static String getJsonString(String urlString) throws IOException {
         String line;
@@ -514,8 +522,6 @@ public final class DocParseUtils {
     public static String getVideoOnlineContainer(Document jsDoc){
         try {
             Element online_container = jsDoc.getElementsByClass(VIDEO_ONLINE_CONTAINER).first();
-
-            Log.d("test", online_container.text());
 
             return online_container.toString();
         }catch (Exception e){
