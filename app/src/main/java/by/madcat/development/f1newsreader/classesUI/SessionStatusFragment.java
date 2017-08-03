@@ -13,13 +13,14 @@ import com.bumptech.glide.Glide;
 
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
+import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
 
 public class SessionStatusFragment extends Fragment {
 
     private ImageView flag;
-    private TextView trackTempData;
-    private TextView airTempData;
-    private TextView lapsData;
+    private RobotoRegularTextView trackTempData;
+    private RobotoRegularTextView airTempData;
+    private RobotoRegularTextView lapsData;
 
     private RaceMode raceMode;
 
@@ -34,9 +35,9 @@ public class SessionStatusFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_session_status, container, false);
 
         flag = (ImageView) view.findViewById(R.id.flag);
-        trackTempData = (TextView) view.findViewById(R.id.track_temp_data);
-        airTempData = (TextView) view.findViewById(R.id.air_temp_data);
-        lapsData = (TextView) view.findViewById(R.id.laps_data);
+        trackTempData = (RobotoRegularTextView) view.findViewById(R.id.track_temp_data);
+        airTempData = (RobotoRegularTextView) view.findViewById(R.id.air_temp_data);
+        lapsData = (RobotoRegularTextView) view.findViewById(R.id.laps_data);
 
         return view;
     }

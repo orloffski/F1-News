@@ -34,13 +34,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/track_temp_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="32" />
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/track_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,13 +54,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/air_temp_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="22" />
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/air_temp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,13 +73,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/laps_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18/71" />
 
-                <TextView
+                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                     android:id="@+id/laps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
