@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +42,8 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
     private RecyclerView recyclerView;
     private OnlineSessionAdapter adapter;
 
+    private SessionStatusFragment sessionStatusFragment;
+
     public LinkedList<TimingElement> timings;
     private RaceMode raceMode;
     BroadcastReceiver receiver;
@@ -56,6 +60,11 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
 
         timings = new LinkedList<>();
+
+        sessionStatusFragment = new SessionStatusFragment();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.track_status, sessionStatusFragment);
+        fragmentTransaction.commit();
 
         sConn = new ServiceConnection() {
             public void onServiceConnected(ComponentName name, IBinder binder) {
@@ -78,6 +87,8 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
 
                 timings.clear();
                 raceMode = JsonParseUtils.getRaceMode(data);
+
+                sessionStatusFragment.updateRace(raceMode);
 
                 if(raceMode.getMode().equals("race")){
                     timings.addAll(JsonParseUtils.getRaceTimings(data));

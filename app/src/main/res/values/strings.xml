@@ -152,12 +152,15 @@
 
     <string name="autoscroll">Автопрокрутка</string>
 
+    <!-- Online timing strings -->
     <string name="session_link">https://lc.f1news.ru/live/session/%1$d.json</string>
-
     <string name="leader_gap_text">-leader gap-</string>
     <string name="gap_text">-gap-</string>
     <string name="pits_text">-pits-</string>
     <string name="last_lap_text">-last lap-</string>
     <string name="best_lap_text">-best lap-</string>
     <string name="last_laps">-laps-</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
