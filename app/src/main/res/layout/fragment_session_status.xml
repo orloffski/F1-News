@@ -44,7 +44,7 @@
                     android:id="@+id/track_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="\u2103   track temp" />
+                    android:text="@string/track_temp_text" />
 
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:id="@+id/air_temp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="\u2103   air temp" />
+                    android:text="@string/air_temp_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,7 +83,7 @@
                     android:id="@+id/laps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="   lap/laps" />
+                    android:text="@string/laps_text" />
             </LinearLayout>
 
         </LinearLayout>

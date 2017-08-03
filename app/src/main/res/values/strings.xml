@@ -161,6 +161,8 @@
     <string name="best_lap_text">-best lap-</string>
     <string name="last_laps">-laps-</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Online timing status strings -->
+    <string name="track_temp_text">"\u2103   track temp"</string>
+    <string name="air_temp_text">"\u2103   air temp"</string>
+    <string name="laps_text">"   lap/laps"</string>
 </resources>
