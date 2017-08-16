@@ -127,10 +127,10 @@ public class NewsListFragment extends Fragment
     public NewsListFragment() {
     }
 
-    public static NewsListFragment newInstance(NewsTypes type, String searchQuery) {
+    public static NewsListFragment newInstance(String title, String searchQuery) {
         NewsListFragment fragment = new NewsListFragment();
         Bundle args = new Bundle();
-        args.putString(NEWS_TYPE, String.valueOf(type));
+        args.putString(NEWS_TYPE, title);
         args.putString(SEARCH_QUERY, searchQuery);
         fragment.setArguments(args);
         return fragment;
@@ -155,7 +155,7 @@ public class NewsListFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
+            this.type = NewsTypes.fromString(getArguments().getString(NEWS_TYPE));
             this.searchQuery = getArguments().getString(SEARCH_QUERY);
         }
 
@@ -166,6 +166,7 @@ public class NewsListFragment extends Fragment
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
                 Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
+
             }
         };
 
@@ -256,11 +257,13 @@ public class NewsListFragment extends Fragment
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
 
+
         timer = (TextView) ((MainActivity)getActivity()).getTimerLink();
         timerText = (TextView) ((MainActivity)getActivity()).getTimerTextLink();
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
+
     }
 
     private void checkServiceIsRun(){
@@ -293,7 +296,7 @@ public class NewsListFragment extends Fragment
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
             swipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);

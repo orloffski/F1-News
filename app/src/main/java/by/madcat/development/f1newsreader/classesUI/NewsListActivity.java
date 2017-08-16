@@ -299,7 +299,7 @@ public class NewsListActivity extends AppCompatActivity
         appBarLayout.setExpanded(true);
         nowType = type;
 
-        fragment = NewsListFragment.newInstance(type, searchQuery);
+        fragment = NewsListFragment.newInstance(type.toString(), searchQuery);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(TRANSIT_FRAGMENT_FADE)

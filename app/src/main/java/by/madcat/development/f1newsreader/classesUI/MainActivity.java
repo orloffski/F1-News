@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
@@ -35,9 +38,11 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
     private Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private void updateToolbarData(String title, int imageR){
         collapsingToolbarLayout.setTitle(title);
         Glide.with(MainActivity.this).load(imageR).into(backdrop);
+
     }
 
     @Override
