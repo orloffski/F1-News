@@ -165,7 +165,7 @@ public class NewsListFragment extends Fragment
                 swipeRefreshLayout.setRefreshing(false);
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
-                Snackbar.make(((MainActivity)getActivity()).getLinearLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
             }
         };
 

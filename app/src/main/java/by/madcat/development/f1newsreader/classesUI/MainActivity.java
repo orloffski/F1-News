@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private ViewPager viewPager;
     private TextView timerText;
     private TextView timer;
-    private LinearLayout linearLayout;
+    private CoordinatorLayout coordinatorLayout;
 
     private Toolbar toolbar;
 
@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         return timerText;
     }
 
-    public LinearLayout getLinearLayout(){
-        return this.linearLayout;
+    public CoordinatorLayout getCoordinatorLayout(){
+        return this.coordinatorLayout;
     }
 
     private void loadTimerViews(){
