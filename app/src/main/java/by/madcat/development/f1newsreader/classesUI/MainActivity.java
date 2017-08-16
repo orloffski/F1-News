@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 
@@ -45,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_list);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
         backdrop = (ImageView) findViewById(R.id.backdrop);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -57,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
             @Override
             public void onPageSelected(int position) {
-                updateToolbarData(String.valueOf(adapter.getPageTitle(position)),
-                        StringUtils.getImageByTitle(String.valueOf(adapter.getPageTitle(position))));
+                String title = String.valueOf(adapter.getPageTitle(position));
+                updateToolbarData(title, StringUtils.getImageByTitle(title));
             }
 
             @Override

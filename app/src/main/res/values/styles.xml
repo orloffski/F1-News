@@ -68,7 +68,7 @@
     </style>
 
     <style name="CollapsedTextAppearance" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">0sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
