@@ -1,7 +1,10 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Calendar;
 
+import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 
 public final class StringUtils {
@@ -73,5 +76,26 @@ public final class StringUtils {
         }
 
         return tmpLine.toString();
+    }
+
+    public static int getImageByTitle(String title){
+        switch (title){
+            case "Новости":
+                return R.drawable.drawerimage_news;
+            case "Статьи":
+                return R.drawable.drawerimage_memuar;
+            case "Интервью":
+                return R.drawable.drawerimage_interview;
+            case "Техника":
+                return R.drawable.drawerimage_tech;
+            case "История":
+                return R.drawable.drawerimage_history;
+            case "Авторские колонки":
+                return R.drawable.drawerimage_columns;
+            case "Автоспорт":
+                return R.drawable.drawerimage_autosport;
+            default:
+                return R.drawable.drawerimage_news;
+        }
     }
 }
