@@ -1,19 +1,13 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
@@ -26,11 +20,14 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription;
 
 public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
+    private NewsPagesAdapter adapter;
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView timerText;
     private TextView timer;
     private CoordinatorLayout coordinatorLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private Toolbar toolbar;
 
@@ -42,17 +39,36 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_list);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateToolbarData(String.valueOf(adapter.getPageTitle(position)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         loadTimerViews();
+        updateToolbarData("Новости");
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        NewsPagesAdapter adapter = new NewsPagesAdapter(getSupportFragmentManager());
+        adapter = new NewsPagesAdapter(getSupportFragmentManager());
         adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.NEWS, ""), "Новости");
         adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.MEMUAR, ""), "Статьи");
         adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.INTERVIEW, ""), "Интервью");
@@ -78,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private void loadTimerViews(){
         timerText = new TextView(this);
         timer = new TextView(this);
+    }
+
+    private void updateToolbarData(String title){
+        collapsingToolbarLayout.setTitle(title);
     }
 
     @Override
