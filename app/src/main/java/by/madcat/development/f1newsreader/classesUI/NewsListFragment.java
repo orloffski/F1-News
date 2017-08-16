@@ -21,7 +21,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -166,7 +165,7 @@ public class NewsListFragment extends Fragment
                 swipeRefreshLayout.setRefreshing(false);
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
-                Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(((MainActivity)getActivity()).getLinearLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
             }
         };
 
@@ -257,8 +256,8 @@ public class NewsListFragment extends Fragment
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
 
-        timer = (TextView) ((NewsListActivity)getActivity()).getTimerLink();
-        timerText = (TextView) ((NewsListActivity)getActivity()).getTimerTextLink();
+        timer = (TextView) ((MainActivity)getActivity()).getTimerLink();
+        timerText = (TextView) ((MainActivity)getActivity()).getTimerTextLink();
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
