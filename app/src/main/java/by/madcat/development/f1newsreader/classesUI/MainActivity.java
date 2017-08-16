@@ -7,7 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ImageView backdrop;
     private TextView timerText;
     private TextView timer;
     private CoordinatorLayout coordinatorLayout;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         setSupportActionBar(toolbar);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_list);
+        backdrop = (ImageView) findViewById(R.id.backdrop);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -51,7 +57,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
             @Override
             public void onPageSelected(int position) {
-                updateToolbarData(String.valueOf(adapter.getPageTitle(position)));
+                updateToolbarData(String.valueOf(adapter.getPageTitle(position)),
+                        StringUtils.getImageByTitle(String.valueOf(adapter.getPageTitle(position))));
             }
 
             @Override
@@ -64,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         tabLayout.setupWithViewPager(viewPager);
 
         loadTimerViews();
-        updateToolbarData("Новости");
+        updateToolbarData("Новости", StringUtils.getImageByTitle("Новости"));
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -96,8 +103,9 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         timer = new TextView(this);
     }
 
-    private void updateToolbarData(String title){
+    private void updateToolbarData(String title, int imageR){
         collapsingToolbarLayout.setTitle(title);
+        Glide.with(MainActivity.this).load(imageR).into(backdrop);
     }
 
     @Override
