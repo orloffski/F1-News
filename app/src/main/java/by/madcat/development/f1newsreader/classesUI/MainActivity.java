@@ -1,6 +1,7 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,7 +23,9 @@ import by.madcat.development.f1newsreader.R;
 
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
-import by.madcat.development.f1newsreader.data.DatabaseDescription;
+import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.*;
 
 public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
@@ -37,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private Toolbar toolbar;
+
+    private ArrayList<String> newsIDs;
+    private ArrayList<String> newsLinks;
+    private int sectionItemsCount;
 
 
     @Override
@@ -77,18 +84,18 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         tabLayout.setupWithViewPager(viewPager);
 
         loadTimerViews();
-        updateToolbarData("Новости", StringUtils.getImageByTitle("Новости"));
+        updateToolbarData(NEWS.toString(), StringUtils.getImageByTitle("Новости"));
     }
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new NewsPagesAdapter(getSupportFragmentManager());
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.NEWS, ""), "Новости");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.MEMUAR, ""), "Статьи");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.INTERVIEW, ""), "Интервью");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.TECH, ""), "Техника");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.HISTORY, ""), "История");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.COLUMNS, ""), "Авторские колонки");
-        adapter.addFragment(NewsListFragment.newInstance(DatabaseDescription.NewsTypes.AUTOSPORT, ""), "Автоспорт");
+        adapter.addFragment(NewsListFragment.newInstance(NEWS.toString(), ""), "Новости");
+        adapter.addFragment(NewsListFragment.newInstance(MEMUAR.toString(), ""), "Статьи");
+        adapter.addFragment(NewsListFragment.newInstance(INTERVIEW.toString(), ""), "Интервью");
+        adapter.addFragment(NewsListFragment.newInstance(TECH.toString(), ""), "Техника");
+        adapter.addFragment(NewsListFragment.newInstance(HISTORY.toString(), ""), "История");
+        adapter.addFragment(NewsListFragment.newInstance(COLUMNS.toString(), ""), "Авторские колонки");
+        adapter.addFragment(NewsListFragment.newInstance(AUTOSPORT.toString(), ""), "Автоспорт");
         viewPager.setAdapter(adapter);
     }
 
@@ -116,17 +123,19 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     }
 
     @Override
-    public void sectionItemOpen(DatabaseDescription.NewsTypes type, int positionID) {
-
+    public void sectionItemOpen(NewsTypes type, int positionID) {
+        Intent intent = NewsPageActivity.getIntent(MainActivity.this, type, positionID, sectionItemsCount, newsIDs, newsLinks);
+        startActivity(intent);
     }
 
     @Override
     public void setSectionItemsCount(int count) {
-
+        this.sectionItemsCount = count;
     }
 
     @Override
     public void setSectionNewsLinks(ArrayList<String> newsIDs, ArrayList<String> newsLinks) {
-
+        this.newsIDs = newsIDs;
+        this.newsLinks = newsLinks;
     }
 }

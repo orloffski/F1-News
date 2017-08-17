@@ -155,7 +155,7 @@ public class NewsListFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.type = NewsTypes.fromString(getArguments().getString(NEWS_TYPE));
+            this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
             this.searchQuery = getArguments().getString(SEARCH_QUERY);
         }
 
