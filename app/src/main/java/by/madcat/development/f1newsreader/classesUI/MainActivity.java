@@ -15,17 +15,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
-
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.*;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.AUTOSPORT;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.COLUMNS;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.HISTORY;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.INTERVIEW;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.MEMUAR;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.NEWS;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.TECH;
 
 public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
     private Toolbar toolbar;
 
+    private NewsListFragment fragment;
     private ArrayList<String> newsIDs;
     private ArrayList<String> newsLinks;
     private int sectionItemsCount;
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
             public void onPageSelected(int position) {
                 String title = String.valueOf(adapter.getPageTitle(position));
                 updateToolbarData(title, StringUtils.getImageByTitle(title));
+
+                initFragmentData();
             }
 
             @Override
@@ -85,6 +92,16 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
         loadTimerViews();
         updateToolbarData(NEWS.toString(), StringUtils.getImageByTitle("Новости"));
+    }
+
+    public void initFragmentData(){
+        fragment = ((NewsListFragment) viewPager.getAdapter().instantiateItem(viewPager, 0));
+
+        if(fragment != null) {
+            sectionItemsCount = fragment.getSectionItemsCount();
+            newsIDs = fragment.getNewsIDs();
+            newsLinks = fragment.getNewsLinks();
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -126,16 +143,5 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     public void sectionItemOpen(NewsTypes type, int positionID) {
         Intent intent = NewsPageActivity.getIntent(MainActivity.this, type, positionID, sectionItemsCount, newsIDs, newsLinks);
         startActivity(intent);
-    }
-
-    @Override
-    public void setSectionItemsCount(int count) {
-        this.sectionItemsCount = count;
-    }
-
-    @Override
-    public void setSectionNewsLinks(ArrayList<String> newsIDs, ArrayList<String> newsLinks) {
-        this.newsIDs = newsIDs;
-        this.newsLinks = newsLinks;
     }
 }
