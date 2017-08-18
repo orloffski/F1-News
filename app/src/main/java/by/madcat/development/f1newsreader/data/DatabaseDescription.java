@@ -27,36 +27,13 @@ public class DatabaseDescription {
     }
 
     public enum NewsTypes{
-        NEWS("Новости"),
-        MEMUAR("Статьи"),
-        INTERVIEW("Интервью"),
-        TECH("Техника"),
-        HISTORY("История"),
-        COLUMNS("Колонки"),
-        AUTOSPORT("Автоспорт"),
-        SETTINGS("Настройки");
-
-        private final String typeName;
-
-        NewsTypes(String s) {
-            typeName = s;
-        }
-
-        public boolean equalsName(String otherName) {
-            return typeName.equals(otherName);
-        }
-
-        public String toString() {
-            return this.typeName;
-        }
-
-        public static NewsTypes fromString(String text) {
-            for (NewsTypes b : NewsTypes.values()) {
-                if (b.typeName.equalsIgnoreCase(text)) {
-                    return b;
-                }
-            }
-            return null;
-        }
+        NEWS,
+        MEMUAR,
+        INTERVIEW,
+        TECH,
+        HISTORY,
+        COLUMNS,
+        AUTOSPORT,
+        SETTINGS;
     }
 }

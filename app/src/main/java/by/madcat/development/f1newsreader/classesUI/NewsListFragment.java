@@ -62,6 +62,10 @@ public class NewsListFragment extends Fragment
     private Context context;
     BroadcastReceiver receiver;
 
+    private ArrayList<String> newsIDs;
+    private ArrayList<String> newsLinks;
+    private int sectionItemsCount;
+
     private PopupBubble popupBubble;
 
     private TextView timer;
@@ -98,8 +102,8 @@ public class NewsListFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ArrayList<String> newsIDs = new ArrayList<>();
-        ArrayList<String> newsLinks = new ArrayList<>();
+        newsIDs = new ArrayList<>();
+        newsLinks = new ArrayList<>();
 
         if(data != null && data.moveToFirst()){
             int idIndex = data.getColumnIndex(News._ID);
@@ -115,8 +119,9 @@ public class NewsListFragment extends Fragment
 
         adapter.swapCursor(data);
 
-        newsOpenListener.setSectionItemsCount((data != null) ? data.getCount() : 0);
-        newsOpenListener.setSectionNewsLinks(newsIDs, newsLinks);
+        sectionItemsCount = (data != null) ? data.getCount() : 0;
+
+        dataLoadComplete();
     }
 
     @Override
@@ -155,7 +160,7 @@ public class NewsListFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.type = NewsTypes.fromString(getArguments().getString(NEWS_TYPE));
+            this.type = NewsTypes.valueOf(getArguments().getString(NEWS_TYPE));
             this.searchQuery = getArguments().getString(SEARCH_QUERY);
         }
 
@@ -311,5 +316,21 @@ public class NewsListFragment extends Fragment
     private void loadTimer(){
         timerTask = new TimerNextGpTask(context);
         timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer, onlineLinksLayout);
+    }
+
+    public ArrayList<String> getNewsIDs(){
+        return this.newsIDs;
+    }
+
+    public ArrayList<String> getNewsLinks(){
+        return this.newsLinks;
+    }
+
+    public int getSectionItemsCount(){
+        return this.sectionItemsCount;
+    }
+
+    private void dataLoadComplete(){
+        ((MainActivity)getActivity()).initFragmentData();
     }
 }

@@ -373,17 +373,6 @@ public class NewsListActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    @Override
-    public void setSectionItemsCount(int count) {
-        this.sectionItemsCount = count;
-    }
-
-    @Override
-    public void setSectionNewsLinks(ArrayList<String> newsIDs, ArrayList<String> newsLinks) {
-        this.newsIDs = newsIDs;
-        this.newsLinks = newsLinks;
-    }
-
     private void updateOnBackPressed(NewsTypes type){
         if(!type.equals(NewsTypes.SETTINGS))
             setActivityTitle(type);
