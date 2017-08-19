@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,6 +123,7 @@ public class NewsPageActivity extends AppCompatActivity {
         intent.putExtra(SECTION_ITEMS_COUNT, itemsCount);
         intent.putStringArrayListExtra(SECTION_NEWS_IDS, ids);
         intent.putStringArrayListExtra(SECTION_NEWS_LINKS, links);
+        Log.d("test", "links: " + links + ", position: " + positionID);
         return intent;
     }
 

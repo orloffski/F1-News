@@ -331,6 +331,6 @@ public class NewsListFragment extends Fragment
     }
 
     private void dataLoadComplete(){
-        ((MainActivity)getActivity()).initFragmentData();
+        ((MainActivity)getActivity()).initFragmentData(0);
     }
 }

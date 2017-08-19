@@ -238,13 +238,21 @@ public final class DocParseUtils {
         for(Element child : body.children()){
 
             if(child.tagName().equals(NEWS_BODY_TABLE_ELEMENTS_PARSE)){
-                View table = createView(child.toString(), "", "TableView", context, fragmentManager);
-                views.add(table);
+                final WebView web = new WebView(context);
+                web.getSettings().setJavaScriptEnabled(true);
+                web.loadData(child.toString(), null, null);
+                views.add(web);
+//                View table = createView(child.toString(), "", "TableView", context, fragmentManager);
+//                views.add(table);
             }
 
             if(child.tagName().equals(NEWS_BODY_H3_ELEMENTS_PARSE)){
-                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context, fragmentManager);
-                views.add(table);
+                final WebView web = new WebView(context);
+                web.getSettings().setJavaScriptEnabled(true);
+                web.loadData(child.toString(), null, null);
+                views.add(web);
+//                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context, fragmentManager);
+//                views.add(table);
             }
 
             if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE) || child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE_2)) {
@@ -268,42 +276,54 @@ public final class DocParseUtils {
                         }
 
                         if(modifierTag.equals("iframe")){
-                            String videoLink = StringUtils.getVideoIdFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                            View bodyVideo = createView(videoLink, modifierTag, "VideoView", context, fragmentManager);
-                            views.add(bodyVideo);
+                            final WebView web = new WebView(context);
+                            web.getSettings().setJavaScriptEnabled(true);
+                            web.loadData(children.toString(), null, null);
+                            views.add(web);
+//                            String videoLink = StringUtils.getVideoIdFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
+//                            View bodyVideo = createView(videoLink, modifierTag, "VideoView", context, fragmentManager);
+//                            views.add(bodyVideo);
                         }
 
                         if(modifierTag.equals("twitter-video twitter-video-error")){
-                            View twitterView = createView(modifiedText, modifierTag, "TwitterView", context, fragmentManager);
-                            views.add(twitterView);
+                            final WebView web = new WebView(context);
+                            web.getSettings().setJavaScriptEnabled(true);
+                            web.loadData(children.toString(), null, null);
+                            views.add(web);
+//                            View twitterView = createView(modifiedText, modifierTag, "TwitterView", context, fragmentManager);
+//                            views.add(twitterView);
                         }
 
-                        // при повторении нескольких модификаторов между парой кусков текста есть пробел
-                        if (lengthOfChildrens != 0)
-                            lengthOfChildrens += 1;
-
-                        // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
-                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
-                            lengthOfChildrens += modifiedText.length();
-                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context, fragmentManager);
-                            views.add(headerText);
-                        }
+//                        // при повторении нескольких модификаторов между парой кусков текста есть пробел
+//                        if (lengthOfChildrens != 0)
+//                            lengthOfChildrens += 1;
+//
+//                        // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
+//                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
+//                            lengthOfChildrens += modifiedText.length();
+//                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context, fragmentManager);
+//                            views.add(headerText);
+//                        }
                     }
                 }
 
-                // пустые абзацы выбрасываем
-                if (child.text().length() != 0) {
-                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
-                            "", "TextView", context, fragmentManager);
-                    views.add(text);
-                }
+//                // пустые абзацы выбрасываем
+//                if (child.text().length() != 0) {
+//                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
+//                            "", "TextView", context, fragmentManager);
+//                    views.add(text);
+//                }
             }
         }
 
         // если новость была загружена до внедрения CustomView у нее нет тегов, грузим без оформления
         if(views.size() == 0){
-            View text = createView(htmlText, "", "TextView", context, fragmentManager);
-            views.add(text);
+            final WebView web = new WebView(context);
+            web.getSettings().setJavaScriptEnabled(true);
+            web.loadData(htmlText, null, null);
+            views.add(web);
+//            View text = createView(htmlText, "", "TextView", context, fragmentManager);
+//            views.add(text);
         }
 
         return views;
@@ -335,20 +355,20 @@ public final class DocParseUtils {
         View view = null;
 
         switch (viewType){
-            case "TextView":
-                view = new TextView(context);
-                ((TextView)view).setText(text);
-                view.setLayoutParams(textViewLayoutParams);
-                view.setPadding(0, 5, 0, 0);
-                break;
-            case "TableView":
-                view = new TableLayout(context);
-                view.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-
-                view = completeTheTable(view, text, context);
-                view.setPadding(0, 10, 0, 0);
-                break;
+//            case "TextView":
+//                view = new TextView(context);
+//                ((TextView)view).setText(text);
+//                view.setLayoutParams(textViewLayoutParams);
+//                view.setPadding(0, 5, 0, 0);
+//                break;
+//            case "TableView":
+//                view = new TableLayout(context);
+//                view.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+//                    TableLayout.LayoutParams.WRAP_CONTENT));
+//
+//                view = completeTheTable(view, text, context);
+//                view.setPadding(0, 10, 0, 0);
+//                break;
             case "ImageView":
                 final String pathToImage = SystemUtils.getImagesPath(context) + "/" + text;
 
@@ -366,22 +386,22 @@ public final class DocParseUtils {
 
                 view.setPadding(0, 10, 0, 0);
                 break;
-            case "VideoView":
-                view = new LinearLayout(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT));
-                view.setId(1);
-                view.setPadding(0,10,0,0);
-
-                fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
-                break;
-            case "TwitterView":
-                view = new WebView(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT));
-                ((WebView)view).getSettings().setJavaScriptEnabled(true);
-                ((WebView)view).loadData(text, "text/html; charset=utf-8", "UTF-8");
-                break;
+//            case "VideoView":
+//                view = new LinearLayout(context);
+//                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.MATCH_PARENT));
+//                view.setId(1);
+//                view.setPadding(0,10,0,0);
+//
+//                fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
+//                break;
+//            case "TwitterView":
+//                view = new WebView(context);
+//                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.MATCH_PARENT));
+//                ((WebView)view).getSettings().setJavaScriptEnabled(true);
+//                ((WebView)view).loadData(text, "text/html; charset=utf-8", "UTF-8");
+//                break;
         }
 
         switch (modifier){
@@ -400,46 +420,46 @@ public final class DocParseUtils {
         return view;
     }
 
-    private static View completeTheTable(View tableView, String table, Context context){
-        Document jsDoc = Jsoup.parse(table.toString(), DOCUMENT_ENCODING);
-        Element body = jsDoc.getElementsByTag(NEWS_BODY_TABLE_TBODY_PARSE).first();
-        String modifier = "";
-        int counter = 1;
-
-        for(Element childRows: body.children()){
-            counter++;
-
-            if(childRows.attr("class").equals("firstLine")) {
-                modifier = "b";
-            }else{
-                modifier = "";
-            }
-
-            TableRow row = new TableRow(context);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            row.setMinimumHeight(20);
-
-            for(Element childColumns : childRows.children()){
-                View columnText = new TextView(context);
-                ((TextView)columnText).setText(childColumns.text());
-                ((TextView)columnText).setTextSize(11);
-                if(modifier.equals("b"))
-                    ((TextView)columnText).setTypeface(null, Typeface.BOLD);
-
-                columnText.setPadding(0,0,15,0);
-
-                row.addView(columnText);
-            }
-
-            if(counter%2 == 0)
-                row.setBackgroundColor(Color.rgb(233,233,233));
-
-            ((TableLayout)tableView).addView(row);
-        }
-
-        return tableView;
-    }
+//    private static View completeTheTable(View tableView, String table, Context context){
+//        Document jsDoc = Jsoup.parse(table.toString(), DOCUMENT_ENCODING);
+//        Element body = jsDoc.getElementsByTag(NEWS_BODY_TABLE_TBODY_PARSE).first();
+//        String modifier = "";
+//        int counter = 1;
+//
+//        for(Element childRows: body.children()){
+//            counter++;
+//
+//            if(childRows.attr("class").equals("firstLine")) {
+//                modifier = "b";
+//            }else{
+//                modifier = "";
+//            }
+//
+//            TableRow row = new TableRow(context);
+//            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+//                    TableRow.LayoutParams.WRAP_CONTENT));
+//            row.setMinimumHeight(20);
+//
+//            for(Element childColumns : childRows.children()){
+//                View columnText = new TextView(context);
+//                ((TextView)columnText).setText(childColumns.text());
+//                ((TextView)columnText).setTextSize(11);
+//                if(modifier.equals("b"))
+//                    ((TextView)columnText).setTypeface(null, Typeface.BOLD);
+//
+//                columnText.setPadding(0,0,15,0);
+//
+//                row.addView(columnText);
+//            }
+//
+//            if(counter%2 == 0)
+//                row.setBackgroundColor(Color.rgb(233,233,233));
+//
+//            ((TableLayout)tableView).addView(row);
+//        }
+//
+//        return tableView;
+//    }
 
     public static void loadTimersData(String urlString, Context context) throws IOException {
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);

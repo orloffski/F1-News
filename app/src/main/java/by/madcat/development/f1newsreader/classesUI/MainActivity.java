@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
                 String title = String.valueOf(adapter.getPageTitle(position));
                 updateToolbarData(title, StringUtils.getImageByTitle(title));
 
-                initFragmentData();
+                initFragmentData(position);
             }
 
             @Override
@@ -94,13 +95,19 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         updateToolbarData(NEWS.toString(), StringUtils.getImageByTitle("Новости"));
     }
 
-    public void initFragmentData(){
-        fragment = ((NewsListFragment) viewPager.getAdapter().instantiateItem(viewPager, 0));
+    public void initFragmentData(int pageID){
+        if(pageID == viewPager.getCurrentItem()) {
 
-        if(fragment != null) {
-            sectionItemsCount = fragment.getSectionItemsCount();
-            newsIDs = fragment.getNewsIDs();
-            newsLinks = fragment.getNewsLinks();
+            fragment = ((NewsListFragment) viewPager.getAdapter().instantiateItem(viewPager, pageID));
+
+            if (fragment != null) {
+                sectionItemsCount = fragment.getSectionItemsCount();
+                newsIDs = fragment.getNewsIDs();
+                newsLinks = fragment.getNewsLinks();
+
+                Log.d("test", "links: " + newsLinks);
+            }else
+                Log.d("test", "fragment is null");
         }
     }
 
