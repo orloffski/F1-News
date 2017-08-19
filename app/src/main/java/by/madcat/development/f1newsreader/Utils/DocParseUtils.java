@@ -3,17 +3,15 @@ package by.madcat.development.f1newsreader.Utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,70 +36,65 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.classesUI.VideoFragment;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
 
 public final class DocParseUtils {
-    public static final String DOCUMENT_ENCODING = "UTF-8";
-    public static final String LINK_ITEM = "item";
-    public static final String LINK_TAG = "guid";
-    public static final String LINK_DATE = "pubDate";
-    public static final String NEWS_TITLE_PARSE = "post_title";
-    public static final String NEWS_BODY_PARSE = "post_content";
-    public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
-    public static final String NEWS_BODY_TEXT_ELEMENTS_PARSE_2 = "blockquote";
-    public static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
-    public static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
-    public static final String NEWS_BODY_TABLE_TBODY_PARSE = "tbody";
-    public static final String NEWS_BODY_ROOT_ELEMENT = "body";
-    public static final String NEWS_BODY_BR_ELEMENT = "br";
-    public static final String NEWS_BODY_IMG_ELEMENT = "img";
-    public static final String NEWS_DATE_PARSE = "post_date";
-    public static final String NEWS_IMAGE_DIV_PARSE = "post_thumbnail";
-    public static final String NEWS_IMAGE_TAG_PARSE = "img";
-    public static final String NEWS_IMAGE_LINK_ATTR_PARSE = "src";
+    private static final String DOCUMENT_ENCODING = "UTF-8";
+    private static final String LINK_ITEM = "item";
+    private static final String LINK_TAG = "guid";
+    private static final String LINK_DATE = "pubDate";
+    private static final String NEWS_TITLE_PARSE = "post_title";
+    private static final String NEWS_BODY_PARSE = "post_content";
+    private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
+    private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE_2 = "blockquote";
+    private static final String NEWS_BODY_BR_ELEMENT = "br";
+    private static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
+    private static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
+    private static final String NEWS_BODY_ROOT_ELEMENT = "body";
+    private static final String NEWS_BODY_IMG_ELEMENT = "img";
+    private static final String NEWS_DATE_PARSE = "post_date";
+    private static final String NEWS_IMAGE_DIV_PARSE = "post_thumbnail";
+    private static final String NEWS_IMAGE_TAG_PARSE = "img";
+    private static final String NEWS_IMAGE_LINK_ATTR_PARSE = "src";
 
-    public static final String NEXT_GP_TITLE = "stream_title";
-    public static final String NEXT_GP_DATE = "stream_date";
-    public static final String NEXT_GP_TIMESTAMP = "stream_countdown";
-    public static final String NEXT_GP_TIMESTAMP_ATTR = "data-timestamp";
+    private static final String NEXT_GP_TITLE = "stream_title";
+    private static final String NEXT_GP_DATE = "stream_date";
+    private static final String NEXT_GP_TIMESTAMP = "stream_countdown";
+    private static final String NEXT_GP_TIMESTAMP_ATTR = "data-timestamp";
 
-    public static final String NEXT_WEEKEND_GP_HEAD_STREAM = "widget stream widget_danger";
-    public static final String NEXT_WEEKEND_GP_IMAGE_STREAM = "stream_wrap";
-    public static final String NEXT_WEEKEND_GP_TITLE_STREAM = "widget_title";
-    public static final String NEXT_WEEKEND_GP_BODY_STREAM = "list_featured";
-    public static final String NEXT_WEEKEND_GP_BIMAGE_LINK_ID = "style";
-    public static final String WORDS_TO_CLEAR_1 = "Online ";
-    public static final String WORDS_TO_CLEAR_2 = "Стартовое поле ";
-    public static final String WORDS_TO_CLEAR_3 = "background: url(";
-    public static final String WORDS_TO_CLEAR_4 = ");";
+    private static final String NEXT_WEEKEND_GP_HEAD_STREAM = "widget stream widget_danger";
+    private static final String NEXT_WEEKEND_GP_TITLE_STREAM = "widget_title";
+    private static final String NEXT_WEEKEND_GP_BODY_STREAM = "list_featured";
+    private static final String WORDS_TO_CLEAR_1 = "Online ";
+    private static final String WORDS_TO_CLEAR_2 = "Стартовое поле ";
 
-    public static final String VIDEO_ONLINE_CONTAINER = "video";
+    static final String ONLINE_JSON_RACE_MODE = "mode";
+    static final String ONLINE_JSON_RACE_FLAG = "flag";
+    static final String ONLINE_JSON_RACE_SAFETY_CAR = "safety_car";
+    static final String ONLINE_JSON_RACE_CURRENT_LAP = "current_lap";
+    static final String ONLINE_JSON_RACE_TOTAL_LAPS = "total_laps";
+    static final String ONLINE_JSON_RACE_TRACK_TEMP = "tracktemp";
+    static final String ONLINE_JSON_RACE_AIR_TEMP = "airtemp";
 
-    public static final String ONLINE_JSON_RACE_MODE = "mode";
-    public static final String ONLINE_JSON_RACE_FLAG = "flag";
-    public static final String ONLINE_JSON_RACE_SAFETY_CAR = "safety_car";
-    public static final String ONLINE_JSON_RACE_CURRENT_LAP = "current_lap";
-    public static final String ONLINE_JSON_RACE_TOTAL_LAPS = "total_laps";
-    public static final String ONLINE_JSON_RACE_TRACK_TEMP = "tracktemp";
-    public static final String ONLINE_JSON_RACE_AIR_TEMP = "airtemp";
-
-    public static final String ONLINE_JSON_ARRAY = "messages";
-    public static final String ONLINE_JSON_ELEMENT_DATE = "tm";
-    public static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
-    public static final String ONLINE_JSON_SESSION_ID = "session_id";
-    public static final String ONLINE_JSON_ARRAY_RACE = "drivers";
-    public static final String ONLINE_JSON_ARRAY_RACE_NAME = "name";
-    public static final String ONLINE_JSON_ARRAY_RACE_POSITION = "position";
-    public static final String ONLINE_JSON_ARRAY_RACE_GAP = "gap";
-    public static final String ONLINE_JSON_ARRAY_RACE_INTERVAL = "interval";
-    public static final String ONLINE_JSON_ARRAY_RACE_PITS = "pits";
-    public static final String ONLINE_JSON_ARRAY_RACE_LASTLAP = "last_lap";
-    public static final String ONLINE_JSON_ARRAY_SESSION_BESTLAP = "best_lap";
+    static final String ONLINE_JSON_ARRAY = "messages";
+    static final String ONLINE_JSON_ELEMENT_DATE = "tm";
+    static final String ONLINE_JSON_ELEMENT_MESSAGE = "msg";
+    static final String ONLINE_JSON_SESSION_ID = "session_id";
+    static final String ONLINE_JSON_ARRAY_RACE = "drivers";
+    static final String ONLINE_JSON_ARRAY_RACE_NAME = "name";
+    static final String ONLINE_JSON_ARRAY_RACE_POSITION = "position";
+    static final String ONLINE_JSON_ARRAY_RACE_GAP = "gap";
+    static final String ONLINE_JSON_ARRAY_RACE_INTERVAL = "interval";
+    static final String ONLINE_JSON_ARRAY_RACE_PITS = "pits";
+    static final String ONLINE_JSON_ARRAY_RACE_LASTLAP = "last_lap";
+    static final String ONLINE_JSON_ARRAY_SESSION_BESTLAP = "best_lap";
 
     public static String getJsonString(String urlString) throws IOException {
         String line;
@@ -169,15 +163,15 @@ public final class DocParseUtils {
                 images_array.add(link);
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
         return images_array;
     }
 
     public static String getNewsDate(Document jsDoc, Date rssDate){
-        String dateTime = "";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm");
+        String dateTime;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault());
 
         Elements news_date = jsDoc.getElementsByClass(NEWS_DATE_PARSE);
         if(news_date.isEmpty()){
@@ -216,7 +210,12 @@ public final class DocParseUtils {
             if(!link.contains("https"))
                 link = link.replace("http", "https");
 
-            Date date = new Date(item.getElementsByTag(LINK_DATE).first().text());
+            Date date = null;
+            try {
+                date = DateFormat.getInstance().parse(item.getElementsByTag(LINK_DATE).first().text());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             NewsTypes type = StringUtils.getNewsSection(link);
             if(type != null) {
@@ -229,115 +228,92 @@ public final class DocParseUtils {
         return links;
     }
 
-    public static ArrayList<View> getViews(String htmlText, Context context, FragmentManager fragmentManager){
+    public static ArrayList<View> getViews(String htmlText, Context context){
         ArrayList<View> views = new ArrayList<>();
 
 
-        Document jsDoc = Jsoup.parse(htmlText.toString(), DOCUMENT_ENCODING);
+        Document jsDoc = Jsoup.parse(htmlText, DOCUMENT_ENCODING);
         Element body = jsDoc.getElementsByTag(NEWS_BODY_ROOT_ELEMENT).first();
+
+        StringBuilder newsBodyTmp = new StringBuilder();
         for(Element child : body.children()){
 
             if(child.tagName().equals(NEWS_BODY_TABLE_ELEMENTS_PARSE)){
-                final WebView web = new WebView(context);
-                web.getSettings().setJavaScriptEnabled(true);
-                web.loadData(child.toString(), null, null);
-                views.add(web);
-//                View table = createView(child.toString(), "", "TableView", context, fragmentManager);
-//                views.add(table);
+                newsBodyTmp.append(child.toString());
+                continue;
             }
 
             if(child.tagName().equals(NEWS_BODY_H3_ELEMENTS_PARSE)){
-                final WebView web = new WebView(context);
-                web.getSettings().setJavaScriptEnabled(true);
-                web.loadData(child.toString(), null, null);
-                views.add(web);
-//                View table = createView(child.text(), NEWS_BODY_H3_ELEMENTS_PARSE, "TextView", context, fragmentManager);
-//                views.add(table);
+                newsBodyTmp.append(child.toString());
+                continue;
             }
 
-            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE) || child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE_2)) {
-                String modifiedText = "";
-                String modifierTag = "";
-                int lengthOfChildrens = 0;
+            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE) ||
+                    child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE_2)) {
+                String modifierTag;
 
                 if (child.children().size() != 0) {
                     for (Element children : child.children()) {
-                        modifiedText = children.text();
                         modifierTag = children.tagName();
 
-                        // пока все ссылки выброшены
-                        if (modifierTag.equals("a"))
-                            break;
-
                         if(modifierTag.equals("img")) {
+                            if(newsBodyTmp.length() != 0){
+                                views.add(createWebView(context, newsBodyTmp.toString()));
+                                newsBodyTmp.setLength(0);
+                            }
+
                             String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                            View bodyImage = createView(image, modifierTag, "ImageView", context, fragmentManager);
+                            View bodyImage = createView(image, modifierTag, "ImageView", context);
                             views.add(bodyImage);
                         }
 
                         if(modifierTag.equals("iframe")){
-                            final WebView web = new WebView(context);
-                            web.getSettings().setJavaScriptEnabled(true);
-                            web.loadData(children.toString(), null, null);
-                            views.add(web);
-//                            String videoLink = StringUtils.getVideoIdFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-//                            View bodyVideo = createView(videoLink, modifierTag, "VideoView", context, fragmentManager);
-//                            views.add(bodyVideo);
+                            newsBodyTmp.append(children.toString());
                         }
 
                         if(modifierTag.equals("twitter-video twitter-video-error")){
-                            final WebView web = new WebView(context);
-                            web.getSettings().setJavaScriptEnabled(true);
-                            web.loadData(children.toString(), null, null);
-                            views.add(web);
-//                            View twitterView = createView(modifiedText, modifierTag, "TwitterView", context, fragmentManager);
-//                            views.add(twitterView);
+                            newsBodyTmp.append(children.toString());
                         }
-
-//                        // при повторении нескольких модификаторов между парой кусков текста есть пробел
-//                        if (lengthOfChildrens != 0)
-//                            lengthOfChildrens += 1;
-//
-//                        // переходы на новую строку в блоке <p> и пустые абзацы не обрабатываются
-//                        if (!modifierTag.equals(NEWS_BODY_BR_ELEMENT) && modifiedText.length() != 0) {
-//                            lengthOfChildrens += modifiedText.length();
-//                            View headerText = createView(modifiedText.trim(), modifierTag, "TextView", context, fragmentManager);
-//                            views.add(headerText);
-//                        }
                     }
                 }
 
-//                // пустые абзацы выбрасываем
-//                if (child.text().length() != 0) {
-//                    View text = createView(child.text().toString().substring(lengthOfChildrens).trim(),
-//                            "", "TextView", context, fragmentManager);
-//                    views.add(text);
-//                }
+                if(child.text().length() != 0){
+                    newsBodyTmp.append(child.toString());
+                }
             }
+        }
+
+        if(newsBodyTmp.length() != 0){
+            views.add(createWebView(context, newsBodyTmp.toString()));
+            newsBodyTmp.setLength(0);
         }
 
         // если новость была загружена до внедрения CustomView у нее нет тегов, грузим без оформления
         if(views.size() == 0){
-            final WebView web = new WebView(context);
-            web.getSettings().setJavaScriptEnabled(true);
-            web.loadData(htmlText, null, null);
+            WebView web = createWebView(context, htmlText);
             views.add(web);
-//            View text = createView(htmlText, "", "TextView", context, fragmentManager);
-//            views.add(text);
         }
 
         return views;
     }
 
-    public static String getNextGpTitle(Document jsDoc){
+    private static WebView createWebView(Context context, String htmlText){
+        final WebView web = new WebView(context);
+        web.getSettings().setJavaScriptEnabled(true);
+        web.setWebViewClient(new WebClient());
+        web.loadData(htmlText, null, null);
+        return web;
+    }
+
+    private static String getNextGpTitle(Document jsDoc){
         return jsDoc.getElementsByClass(NEXT_GP_TITLE).text();
     }
 
-    public static String getNextGpDate(Document jsDoc){
+    private static String getNextGpDate(Document jsDoc){
         return jsDoc.getElementsByClass(NEXT_GP_DATE).text();
     }
 
-    public static String getNextGpTimestamp(Document jsDoc){
+    private static String getNextGpTimestamp(Document jsDoc){
         String timestamp = "";
 
         Elements next_gp_timestamps = jsDoc.getElementsByClass(NEXT_GP_TIMESTAMP);
@@ -348,27 +324,10 @@ public final class DocParseUtils {
         return timestamp;
     }
 
-    private static View createView(final String text, final String modifier, String viewType, final Context context, FragmentManager fragmentManager){
-        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
+    private static View createView(final String text, final String modifier, String viewType, final Context context){
         View view = null;
 
         switch (viewType){
-//            case "TextView":
-//                view = new TextView(context);
-//                ((TextView)view).setText(text);
-//                view.setLayoutParams(textViewLayoutParams);
-//                view.setPadding(0, 5, 0, 0);
-//                break;
-//            case "TableView":
-//                view = new TableLayout(context);
-//                view.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-//                    TableLayout.LayoutParams.WRAP_CONTENT));
-//
-//                view = completeTheTable(view, text, context);
-//                view.setPadding(0, 10, 0, 0);
-//                break;
             case "ImageView":
                 final String pathToImage = SystemUtils.getImagesPath(context) + "/" + text;
 
@@ -386,22 +345,6 @@ public final class DocParseUtils {
 
                 view.setPadding(0, 10, 0, 0);
                 break;
-//            case "VideoView":
-//                view = new LinearLayout(context);
-//                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.MATCH_PARENT));
-//                view.setId(1);
-//                view.setPadding(0,10,0,0);
-//
-//                fragmentManager.beginTransaction().add(1, VideoFragment.newInstance(text)).commitAllowingStateLoss();
-//                break;
-//            case "TwitterView":
-//                view = new WebView(context);
-//                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.MATCH_PARENT));
-//                ((WebView)view).getSettings().setJavaScriptEnabled(true);
-//                ((WebView)view).loadData(text, "text/html; charset=utf-8", "UTF-8");
-//                break;
         }
 
         switch (modifier){
@@ -419,47 +362,6 @@ public final class DocParseUtils {
 
         return view;
     }
-
-//    private static View completeTheTable(View tableView, String table, Context context){
-//        Document jsDoc = Jsoup.parse(table.toString(), DOCUMENT_ENCODING);
-//        Element body = jsDoc.getElementsByTag(NEWS_BODY_TABLE_TBODY_PARSE).first();
-//        String modifier = "";
-//        int counter = 1;
-//
-//        for(Element childRows: body.children()){
-//            counter++;
-//
-//            if(childRows.attr("class").equals("firstLine")) {
-//                modifier = "b";
-//            }else{
-//                modifier = "";
-//            }
-//
-//            TableRow row = new TableRow(context);
-//            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-//                    TableRow.LayoutParams.WRAP_CONTENT));
-//            row.setMinimumHeight(20);
-//
-//            for(Element childColumns : childRows.children()){
-//                View columnText = new TextView(context);
-//                ((TextView)columnText).setText(childColumns.text());
-//                ((TextView)columnText).setTextSize(11);
-//                if(modifier.equals("b"))
-//                    ((TextView)columnText).setTypeface(null, Typeface.BOLD);
-//
-//                columnText.setPadding(0,0,15,0);
-//
-//                row.addView(columnText);
-//            }
-//
-//            if(counter%2 == 0)
-//                row.setBackgroundColor(Color.rgb(233,233,233));
-//
-//            ((TableLayout)tableView).addView(row);
-//        }
-//
-//        return tableView;
-//    }
 
     public static void loadTimersData(String urlString, Context context) throws IOException {
         org.jsoup.nodes.Document jsDoc = DocParseUtils.getJsDoc(urlString);
@@ -495,7 +397,7 @@ public final class DocParseUtils {
         PreferencesUtils.saveWeekendData(weekendTitle, weekendTrackMap, getWeekendData(weekendTable), context);
     }
 
-    public static Map<String, String> getWeekendData(Element weekendTable){
+    private static Map<String, String> getWeekendData(Element weekendTable){
         Map<String, String> weekendData = new LinkedHashMap<>();
 
         Elements theads = weekendTable.getElementsByTag("thead");
@@ -537,15 +439,5 @@ public final class DocParseUtils {
         }
 
         return posts;
-    }
-
-    public static String getVideoOnlineContainer(Document jsDoc){
-        try {
-            Element online_container = jsDoc.getElementsByClass(VIDEO_ONLINE_CONTAINER).first();
-
-            return online_container.toString();
-        }catch (Exception e){
-            return "";
-        }
     }
 }

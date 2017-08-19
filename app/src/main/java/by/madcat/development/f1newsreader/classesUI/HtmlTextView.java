@@ -14,7 +14,6 @@ import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 public class HtmlTextView extends LinearLayout{
 
     private LinearLayout linearLayout;
-    private FragmentManager fragmentManager;
 
     public HtmlTextView(Context context) {
         super(context);
@@ -36,12 +35,8 @@ public class HtmlTextView extends LinearLayout{
         linearLayout.setOrientation(VERTICAL);
     }
 
-    public void setFragmentManager(FragmentManager fragmentManager){
-        this.fragmentManager = fragmentManager;
-    }
-
     public void setHtmlText(String htmlText){
-        ArrayList<View> views = DocParseUtils.getViews(htmlText, getContext(), fragmentManager);
+        ArrayList<View> views = DocParseUtils.getViews(htmlText, getContext());
 
         if(linearLayout.getChildCount() == 0)
             for(View view : views) {
