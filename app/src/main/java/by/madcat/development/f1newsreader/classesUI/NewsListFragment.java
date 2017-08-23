@@ -21,6 +21,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -168,6 +169,7 @@ public class NewsListFragment extends Fragment
             @Override
             public void onReceive(Context context, Intent intent) {
                 swipeRefreshLayout.setRefreshing(false);
+                Log.d("test", "receive");
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
                 Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
@@ -287,6 +289,8 @@ public class NewsListFragment extends Fragment
             message = context.getResources().getQuantityString(R.plurals.news_plurals, count, count);
         }
 
+        Log.d("test", message);
+
         return message;
     }
 
@@ -301,7 +305,7 @@ public class NewsListFragment extends Fragment
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
             swipeRefreshLayout.setRefreshing(false);
-            //Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);

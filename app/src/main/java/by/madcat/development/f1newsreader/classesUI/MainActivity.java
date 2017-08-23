@@ -1,6 +1,5 @@
 package by.madcat.development.f1newsreader.classesUI;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -89,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
         updateToolbarData(NEWS.toString(), StringUtils.getImageByTitle("Новости"));
