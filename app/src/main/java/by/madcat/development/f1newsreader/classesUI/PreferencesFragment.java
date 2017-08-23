@@ -15,7 +15,6 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
@@ -63,7 +62,6 @@ public class PreferencesFragment extends PreferenceFragment {
                 refresh_interval.setEnabled(refresh_interval_on.isChecked());
 
                 if(refresh_interval_on.isChecked()) {
-                    Log.d("test", "Manualy set service ON");
                     SystemUtils.addServiceToAlarmManager(
                             getContext(),
                             true,
@@ -72,7 +70,6 @@ public class PreferencesFragment extends PreferenceFragment {
                             .getString("refresh_interval", getContext().getString(R.string.intervals_default_value)))
                     );
                 }else{
-                    Log.d("test", "Manualy set service OFF");
                     SystemUtils.addServiceToAlarmManager(getContext(), false, 0);
                     NewsLinkListToLoad.getInstance(null, getContext()).setLock(false);
                 }
@@ -84,7 +81,6 @@ public class PreferencesFragment extends PreferenceFragment {
         refresh_interval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Log.d("test", "Manualy service settings change " + newValue.toString());
                 SystemUtils.addServiceToAlarmManager(getContext(), false, 0);
                 SystemUtils.addServiceToAlarmManager(
                         getContext(),

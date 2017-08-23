@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.adapters.ViewHolders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import by.madcat.development.f1newsreader.R;

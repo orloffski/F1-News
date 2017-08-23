@@ -1,7 +1,5 @@
 package by.madcat.development.f1newsreader.Utils;
 
-import android.graphics.drawable.Drawable;
-
 import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.R;

@@ -2,7 +2,6 @@ package by.madcat.development.f1newsreader.dataInet;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -72,8 +71,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         newsCount = 0;
         lock = false;
 
-        Log.d("test", "news load completed");
-
         SystemUtils.addServiceToAlarmManager(
                 context,
                 PreferenceManager
@@ -90,8 +87,6 @@ public class NewsLinkListToLoad implements NewsLinkListObservable{
         sender.sendNotification(0);
         newsCount = 0;
         lock = false;
-
-        Log.d("test", "news load canceled");
 
         SystemUtils.addServiceToAlarmManager(
                 context,

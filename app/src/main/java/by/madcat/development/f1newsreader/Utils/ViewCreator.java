@@ -3,12 +3,7 @@ package by.madcat.development.f1newsreader.Utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 public class ViewCreator {
     public static void sendSnackbarMessage(View rootView, String message, int lenght){

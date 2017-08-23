@@ -1,7 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;

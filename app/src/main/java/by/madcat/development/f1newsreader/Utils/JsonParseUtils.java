@@ -1,7 +1,5 @@
 package by.madcat.development.f1newsreader.Utils;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,12 +93,7 @@ public class JsonParseUtils {
                 );
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d("test", "parse error");
-            Log.d("test", e.toString());
         }
-
-        Log.d("test", "timings in parse: " + timings.size());
 
         return timings;
     }
@@ -127,11 +120,7 @@ public class JsonParseUtils {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("test", "parse error");
-            Log.d("test", e.toString());
         }
-
-        Log.d("test", "timings in parse: " + timings.size());
 
         return timings;
     }

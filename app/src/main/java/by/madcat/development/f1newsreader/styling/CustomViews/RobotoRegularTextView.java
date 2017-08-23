@@ -1,11 +1,11 @@
 package by.madcat.development.f1newsreader.styling.CustomViews;
 
-        import android.content.Context;
-        import android.graphics.Typeface;
-        import android.util.AttributeSet;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.util.AttributeSet;
 
-        import by.madcat.development.f1newsreader.R;
-        import by.madcat.development.f1newsreader.styling.Typefaces;
+import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.styling.Typefaces;
 
 public class RobotoRegularTextView extends android.support.v7.widget.AppCompatTextView {
 

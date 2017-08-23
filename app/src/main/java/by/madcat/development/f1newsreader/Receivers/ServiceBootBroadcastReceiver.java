@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 
 public class ServiceBootBroadcastReceiver extends BroadcastReceiver {

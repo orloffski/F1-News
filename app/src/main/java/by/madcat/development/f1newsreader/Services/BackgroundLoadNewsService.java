@@ -11,7 +11,6 @@ import android.media.RingtoneManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
@@ -43,7 +42,6 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
         if(!NewsLinkListToLoad.getInstance(this, getApplicationContext()).isLock())
             runLoad();
         else {
-            Log.d("test", "Load is locked - set service to AlarmManager");
             SystemUtils.addServiceToAlarmManager(
                     getApplicationContext(),
                     true,
@@ -86,7 +84,6 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     private void runLoad(){
         if(!SystemUtils.isNetworkAvailableAndConnected(getApplicationContext())) {
-            Log.d("test", "Network disconnected - set service to AlarmManager");
             SystemUtils.addServiceToAlarmManager(
                     getApplicationContext(),
                     true,
