@@ -23,7 +23,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public final class DocParseUtils {
     private static final String NEWS_BODY_PARSE = "post_content";
     private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
     private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE_2 = "blockquote";
-    private static final String NEWS_BODY_BR_ELEMENT = "br";
     private static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
     private static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
     private static final String NEWS_BODY_ROOT_ELEMENT = "body";
@@ -272,7 +270,7 @@ public final class DocParseUtils {
     private static WebView createWebView(Context context, String htmlText){
         final WebView web = new WebView(context);
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadData(removeAllLinks(htmlText), null, null);
+        web.loadData(removeAllLinks(htmlText), "text/html","utf-8");
         return web;
     }
 

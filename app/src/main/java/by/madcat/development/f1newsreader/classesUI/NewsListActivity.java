@@ -41,8 +41,7 @@ import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import static android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE;
 
 public class NewsListActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        NewsOpenListener{
+        implements NewsOpenListener{
     public static final String LIST_FRAGMENT_NAME = "list_fragment";
     public static final String SETTINGS_FRAGMENT_NAME = "settings_fragment";
 
@@ -75,7 +74,7 @@ public class NewsListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         setUncaughtExceptionHandler();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
+        //setContentView(R.layout.activity_news_list);
         toolbar = (Toolbar) findViewById(R.id.toolbar_list);
         setSupportActionBar(toolbar);
 
@@ -122,14 +121,14 @@ public class NewsListActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
             nowType = NewsTypes.NEWS;
@@ -179,75 +178,75 @@ public class NewsListActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
-        } else if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+//    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (searchView.isSearchOpen()) {
+//            searchView.closeSearch();
+//        } else if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//
+//            if(searchMenu != null)
+//                searchMenu.findItem(R.id.action_search).setVisible(true);
+//        }
+//
+//        NewsTypes type;
+//
+//        Fragment reopenFragment = getSupportFragmentManager().findFragmentById(R.id.content_news_list);
+//        if(reopenFragment.getClass().equals(NewsListFragment.class)){
+//            type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
+//            if(type == null || type.toString().equals("")) {
+//                type = NewsTypes.NEWS;
+//            }
+//        }else{
+//            type = NewsTypes.SETTINGS;
+//        }
+//
+//        if(getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME) != null){
+//            getSupportFragmentManager().beginTransaction().remove(
+//                    getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME)).commit();
+//        }
+//
+//        updateOnBackPressed(type);
+//    }
 
-            if(searchMenu != null)
-                searchMenu.findItem(R.id.action_search).setVisible(true);
-        }
-
-        NewsTypes type;
-
-        Fragment reopenFragment = getSupportFragmentManager().findFragmentById(R.id.content_news_list);
-        if(reopenFragment.getClass().equals(NewsListFragment.class)){
-            type = ((NewsListFragment)getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_NAME)).getNewsType();
-            if(type == null || type.toString().equals("")) {
-                type = NewsTypes.NEWS;
-            }
-        }else{
-            type = NewsTypes.SETTINGS;
-        }
-
-        if(getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME) != null){
-            getSupportFragmentManager().beginTransaction().remove(
-                    getSupportFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_NAME)).commit();
-        }
-
-        updateOnBackPressed(type);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.nav_news:
-                openSectionNews(NewsTypes.NEWS, null);
-                break;
-            case R.id.nav_memuar:
-                openSectionNews(NewsTypes.MEMUAR, null);
-                break;
-            case R.id.nav_interview:
-                openSectionNews(NewsTypes.INTERVIEW, null);
-                break;
-            case R.id.nav_tech:
-                openSectionNews(NewsTypes.TECH, null);
-                break;
-            case R.id.nav_history:
-                openSectionNews(NewsTypes.HISTORY, null);
-                break;
-            case R.id.nav_columns:
-                openSectionNews(NewsTypes.COLUMNS, null);
-                break;
-            case R.id.nav_autosport:
-                openSectionNews(NewsTypes.AUTOSPORT, null);
-                break;
-            case R.id.nav_settings:
-                openSettings(true);
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//
+//        switch (item.getItemId()){
+//            case R.id.nav_news:
+//                openSectionNews(NewsTypes.NEWS, null);
+//                break;
+//            case R.id.nav_memuar:
+//                openSectionNews(NewsTypes.MEMUAR, null);
+//                break;
+//            case R.id.nav_interview:
+//                openSectionNews(NewsTypes.INTERVIEW, null);
+//                break;
+//            case R.id.nav_tech:
+//                openSectionNews(NewsTypes.TECH, null);
+//                break;
+//            case R.id.nav_history:
+//                openSectionNews(NewsTypes.HISTORY, null);
+//                break;
+//            case R.id.nav_columns:
+//                openSectionNews(NewsTypes.COLUMNS, null);
+//                break;
+//            case R.id.nav_autosport:
+//                openSectionNews(NewsTypes.AUTOSPORT, null);
+//                break;
+//            case R.id.nav_settings:
+//                openSettings(true);
+//                break;
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -373,34 +372,34 @@ public class NewsListActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void updateOnBackPressed(NewsTypes type){
-        if(!type.equals(NewsTypes.SETTINGS))
-            setActivityTitle(type);
-
-        switch (type){
-            case NEWS:
-                navigationView.setCheckedItem(R.id.nav_news);
-                break;
-            case MEMUAR:
-                navigationView.setCheckedItem(R.id.nav_memuar);
-                break;
-            case INTERVIEW:
-                navigationView.setCheckedItem(R.id.nav_interview);
-                break;
-            case TECH:
-                navigationView.setCheckedItem(R.id.nav_tech);
-                break;
-            case HISTORY:
-                navigationView.setCheckedItem(R.id.nav_history);
-                break;
-            case COLUMNS:
-                navigationView.setCheckedItem(R.id.nav_columns);
-                break;
-            case AUTOSPORT:
-                navigationView.setCheckedItem(R.id.nav_autosport);
-                break;
-        }
-    }
+//    private void updateOnBackPressed(NewsTypes type){
+//        if(!type.equals(NewsTypes.SETTINGS))
+//            setActivityTitle(type);
+//
+//        switch (type){
+//            case NEWS:
+//                navigationView.setCheckedItem(R.id.nav_news);
+//                break;
+//            case MEMUAR:
+//                navigationView.setCheckedItem(R.id.nav_memuar);
+//                break;
+//            case INTERVIEW:
+//                navigationView.setCheckedItem(R.id.nav_interview);
+//                break;
+//            case TECH:
+//                navigationView.setCheckedItem(R.id.nav_tech);
+//                break;
+//            case HISTORY:
+//                navigationView.setCheckedItem(R.id.nav_history);
+//                break;
+//            case COLUMNS:
+//                navigationView.setCheckedItem(R.id.nav_columns);
+//                break;
+//            case AUTOSPORT:
+//                navigationView.setCheckedItem(R.id.nav_autosport);
+//                break;
+//        }
+//    }
 
     private void setUncaughtExceptionHandler(){
         Thread.UncaughtExceptionHandler myHandler = new ExceptionReporter(
