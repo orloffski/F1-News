@@ -42,7 +42,7 @@ public final class DocParseUtils {
     private static final String DOCUMENT_ENCODING = "UTF-8";
     private static final String LINK_ITEM = "item";
     private static final String LINK_TAG = "guid";
-    private static final String LINK_DATE = "pubDate";
+    private static final String LINK_DATE = "pubdate";
     private static final String NEWS_TITLE_PARSE = "post_title";
     private static final String NEWS_BODY_PARSE = "post_content";
     private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
@@ -203,12 +203,7 @@ public final class DocParseUtils {
             if(!link.contains("https"))
                 link = link.replace("http", "https");
 
-            Date date = null;
-            try {
-                date = DateFormat.getInstance().parse(item.getElementsByTag(LINK_DATE).first().text());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            Date date = new Date(item.getElementsByTag(LINK_DATE).first().text());
 
             NewsTypes type = StringUtils.getNewsSection(link);
             if(type != null) {
