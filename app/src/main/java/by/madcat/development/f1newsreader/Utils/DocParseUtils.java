@@ -3,12 +3,10 @@ package by.madcat.development.f1newsreader.Utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -18,6 +16,7 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
@@ -231,50 +230,34 @@ public final class DocParseUtils {
 
         StringBuilder newsBodyTmp = new StringBuilder();
         for(Element child : body.children()){
+            boolean childAdded = false;
 
-            if(child.tagName().equals(NEWS_BODY_TABLE_ELEMENTS_PARSE)){
-                newsBodyTmp.append(child.toString());
-                continue;
-            }
-
-            if(child.tagName().equals(NEWS_BODY_H3_ELEMENTS_PARSE)){
-                newsBodyTmp.append(child.toString());
-                continue;
-            }
-
-            if(child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE) ||
-                    child.tagName().equals(NEWS_BODY_TEXT_ELEMENTS_PARSE_2)) {
-                String modifierTag;
-
-                if (child.children().size() != 0) {
-                    for (Element children : child.children()) {
-                        modifierTag = children.tagName();
-
-                        if(modifierTag.equals("img")) {
-                            if(newsBodyTmp.length() != 0){
-                                views.add(createWebView(context, newsBodyTmp.toString()));
-                                newsBodyTmp.setLength(0);
-                            }
-
-                            String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                            View bodyImage = createView(image, modifierTag, "ImageView", context);
-                            views.add(bodyImage);
-                        }
-
-                        if(modifierTag.equals("iframe")){
-                            newsBodyTmp.append(children.toString());
-                        }
-
-                        if(modifierTag.equals("twitter-video twitter-video-error")){
-                            newsBodyTmp.append(children.toString());
-                        }
-                    }
-                }
-
-                if(child.text().length() != 0){
+            switch (child.tagName()){
+                case NEWS_BODY_TABLE_ELEMENTS_PARSE:case NEWS_BODY_H3_ELEMENTS_PARSE:
                     newsBodyTmp.append(child.toString());
-                }
+                    childAdded = true;
+                    break;
+                case NEWS_BODY_TEXT_ELEMENTS_PARSE:case NEWS_BODY_TEXT_ELEMENTS_PARSE_2:
+                    if(child.getElementsByTag("img").size() != 0){
+                        if(newsBodyTmp.length() != 0){
+                            views.add(createWebView(context, newsBodyTmp.toString()));
+                            newsBodyTmp.setLength(0);
+                        }
+
+                        Element children = child.getElementsByTag("img").first();
+                        String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
+                        View bodyImage = createView(image, "ImageView", context);
+                        views.add(bodyImage);
+                        childAdded = true;
+                    }else {
+                        newsBodyTmp.append(child.toString());
+                        childAdded = true;
+                    }
+                    break;
             }
+
+            if(!childAdded)
+                newsBodyTmp.append(child.toString());
         }
 
         if(newsBodyTmp.length() != 0){
@@ -294,9 +277,15 @@ public final class DocParseUtils {
     private static WebView createWebView(Context context, String htmlText){
         final WebView web = new WebView(context);
         web.getSettings().setJavaScriptEnabled(true);
-        web.setWebViewClient(new WebClient());
-        web.loadData(htmlText, null, null);
+        web.loadData(removeAllLinks(htmlText), null, null);
         return web;
+    }
+
+    private static String removeAllLinks(String text){
+        Whitelist wl = new Whitelist().relaxed().removeTags("a");
+        String cleanText = Jsoup.clean(text ,wl);
+
+        return cleanText;
     }
 
     private static String getNextGpTitle(Document jsDoc){
@@ -318,7 +307,7 @@ public final class DocParseUtils {
         return timestamp;
     }
 
-    private static View createView(final String text, final String modifier, String viewType, final Context context){
+    private static View createView(final String text, String viewType, final Context context){
         View view = null;
 
         switch (viewType){
@@ -338,19 +327,6 @@ public final class DocParseUtils {
                 Glide.with(context).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into((ImageView) view);
 
                 view.setPadding(0, 10, 0, 0);
-                break;
-        }
-
-        switch (modifier){
-            case "b": case "span":  // на портале стиль жирного текста ради стиля
-                ((TextView)view).setTypeface(null, Typeface.BOLD);
-                break;
-            case "i":
-                ((TextView)view).setTypeface(null, Typeface.ITALIC);
-                break;
-            case "h3":
-                ((TextView)view).setAllCaps(true);
-                ((TextView)view).setTypeface(null, Typeface.BOLD);
                 break;
         }
 
