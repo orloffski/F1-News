@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -153,24 +155,28 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // on full text search
-                return false;
+                updateFragmentData(query);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // on search text changed
+                updateFragmentData(newText);
                 return false;
             }
         });
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-
+                updateFragmentData("");
             }
 
             @Override
             public void onSearchViewClosed() {
-
+                updateFragmentData(null);
             }
         });
     }
@@ -209,8 +215,28 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     }
 
     @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void sectionItemOpen(NewsTypes type, int positionID) {
         Intent intent = NewsPageActivity.getIntent(MainActivity.this, type, positionID, sectionItemsCount, newsIDs, newsLinks);
         startActivity(intent);
+    }
+
+    private void updateFragmentData(String searchQuery){
+        if(searchMenu != null)
+            searchMenu.findItem(R.id.action_search).setVisible(true);
+
+        int position = viewPager.getCurrentItem();
+        NewsListFragment fragment = (NewsListFragment)adapter.getFragment(position);
+
+        fragment.updateSearchQuery(searchQuery);
+        fragment.updateNewsList();
     }
 }

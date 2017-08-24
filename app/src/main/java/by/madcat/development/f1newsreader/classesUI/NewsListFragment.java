@@ -21,7 +21,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -169,7 +168,6 @@ public class NewsListFragment extends Fragment
             @Override
             public void onReceive(Context context, Intent intent) {
                 swipeRefreshLayout.setRefreshing(false);
-                Log.d("test", "receive");
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
                 Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
@@ -289,17 +287,11 @@ public class NewsListFragment extends Fragment
             message = context.getResources().getQuantityString(R.plurals.news_plurals, count, count);
         }
 
-        Log.d("test", message);
-
         return message;
     }
 
     public void updateNewsList(){
         getLoaderManager().restartLoader(NEWS_LOADER, null, this);
-    }
-
-    public NewsTypes getNewsType(){
-        return this.type;
     }
 
     public void loadMoreNews(){
@@ -336,5 +328,9 @@ public class NewsListFragment extends Fragment
 
     private void dataLoadComplete(){
         ((MainActivity)getActivity()).initFragmentData(0);
+    }
+
+    public void updateSearchQuery(String searchQuery){
+        this.searchQuery = searchQuery;
     }
 }

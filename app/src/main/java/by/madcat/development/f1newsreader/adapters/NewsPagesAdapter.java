@@ -34,4 +34,8 @@ public class NewsPagesAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
+
+    public Fragment getFragment(int index){
+        return mFragmentList.get(index);
+    }
 }
