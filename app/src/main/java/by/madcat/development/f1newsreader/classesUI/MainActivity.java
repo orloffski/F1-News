@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private Toolbar toolbar;
+    private MaterialSearchView searchView;
+    private Menu searchMenu;
 
     private NewsListFragment fragment;
     private ArrayList<String> newsIDs;
@@ -66,40 +69,24 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
         backdrop = (ImageView) findViewById(R.id.backdrop);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                String title = String.valueOf(adapter.getPageTitle(position));
-                updateToolbarData(title, StringUtils.getImageByTitle(title));
-
-                initFragmentData(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        initSearchView();
+        initViewPager();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
-        updateToolbarData(NEWS.toString(), StringUtils.getImageByTitle("Новости"));
+        updateToolbarData("Новости", StringUtils.getImageByTitle("Новости"));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        searchMenu = menu;
+
         return true;
     }
 
@@ -158,6 +145,61 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private void loadTimerViews(){
         timerText = new TextView(this);
         timer = new TextView(this);
+    }
+
+    private void initSearchView(){
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // on full text search
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // on search text changed
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
+    }
+
+    private void initViewPager(){
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String title = String.valueOf(adapter.getPageTitle(position));
+                updateToolbarData(title, StringUtils.getImageByTitle(title));
+
+                initFragmentData(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void updateToolbarData(String title, int imageR){

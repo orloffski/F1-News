@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:support="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_action_search"
+        android:orderInCategory="100"
+        android:title="@string/abc_search_hint"
+        support:showAsAction="ifRoom" />
     <item
         android:id="@+id/online_granprix"
         android:icon="@drawable/race_flags"
-        android:orderInCategory="1"
+        android:orderInCategory="200"
         android:title="online"
-        app:showAsAction="always" />
+        support:showAsAction="always" />
     <item
         android:id="@+id/settings"
         android:icon="@drawable/settings"
-        android:orderInCategory="2"
+        android:orderInCategory="300"
         android:title="settings"
-        app:showAsAction="always" />
+        support:showAsAction="always" />
 </menu>
