@@ -250,7 +250,8 @@ public final class DocParseUtils {
             }
 
             if(!childAdded)
-                newsBodyTmp.append(child.toString());
+                if(!child.className().equals("menu_floated"))
+                    newsBodyTmp.append(child.toString());
         }
 
         if(newsBodyTmp.length() != 0){
