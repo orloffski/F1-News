@@ -248,48 +248,48 @@ public class NewsListActivity extends AppCompatActivity
 //        return true;
 //    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
+//
+//        searchMenu = menu;
+//
+//        return true;
+//    }
 
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-
-        searchMenu = menu;
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.weekend_menu:
-                String timerGpTitle = PreferencesUtils.getNextGpCountry(this);
-                String weekendTitle = PreferencesUtils.getWeekendTitle(this);
-
-//                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
-                if(searchMenu != null)
-                    searchMenu.findItem(R.id.action_search).setVisible(false);
-
-                appBarLayout.setExpanded(false);
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                collapsingToolbarLayout.setTitle(weekendTitle);
-//                }
-                return true;
-            case R.id.online_menu:
-                Intent textIntent = new Intent(this, OnlineActivity.class);
-                startActivity(textIntent);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        switch (id){
+//            case R.id.weekend_menu:
+//                String timerGpTitle = PreferencesUtils.getNextGpCountry(this);
+//                String weekendTitle = PreferencesUtils.getWeekendTitle(this);
+//
+////                if(timerGpTitle.toUpperCase().equals(weekendTitle.toUpperCase())){
+//                if(searchMenu != null)
+//                    searchMenu.findItem(R.id.action_search).setVisible(false);
+//
+//                appBarLayout.setExpanded(false);
+//
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.content_news_list, new WeekendInfoFragment());
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//
+//                collapsingToolbarLayout.setTitle(weekendTitle);
+////                }
+//                return true;
+//            case R.id.online_menu:
+//                Intent textIntent = new Intent(this, OnlineActivity.class);
+//                startActivity(textIntent);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void openSectionNews(NewsTypes type, String searchQuery){
         if(searchMenu != null)

@@ -7,16 +7,4 @@
         android:orderInCategory="100"
         android:title="@string/abc_search_hint"
         support:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/weekend_menu"
-        android:icon="@drawable/info_active"
-        android:title="@string/weekend_info_menu"
-        android:orderInCategory="101"
-        support:showAsAction="never" />
-    <item
-        android:id="@+id/online_menu"
-        android:icon="@drawable/video_active"
-        android:title="@string/online_menu"
-        android:orderInCategory="102"
-        support:showAsAction="never" />
 </menu>

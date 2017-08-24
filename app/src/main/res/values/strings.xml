@@ -143,6 +143,7 @@
     <string name="online_menu">Онлайн</string>
 
     <!-- bottom bar strings -->
+    <string name="weekend_info">Weekend</string>
     <string name="text_online">Text</string>
     <string name="on_lap">On-lap</string>
     <string name="session_online">Timings</string>

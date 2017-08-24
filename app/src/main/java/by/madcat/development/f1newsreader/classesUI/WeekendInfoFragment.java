@@ -30,7 +30,8 @@ public class WeekendInfoFragment extends Fragment {
 
     private ImageView weekendTrack;
 
-    public WeekendInfoFragment() {
+    public static WeekendInfoFragment newInstance() {
+        return new WeekendInfoFragment();
     }
 
     @Override

@@ -21,31 +21,31 @@ public class OnlineActivity extends BottomBarHolderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        NavigationPage weekendInfo = new NavigationPage(
+                getString(R.string.weekend_info),
+                ContextCompat.getDrawable(this, R.drawable.weekend_info_black),
+                WeekendInfoFragment.newInstance());
+
         NavigationPage textOnline = new NavigationPage(
                 getString(R.string.text_online),
-                ContextCompat.getDrawable(this, R.drawable.ic_text_format_black_24dp),
+                ContextCompat.getDrawable(this, R.drawable.text_online_black),
                 OnlineTextFragment.newInstance());
 
         NavigationPage sessionOnline = new NavigationPage(
                 getString(R.string.session_online),
-                ContextCompat.getDrawable(this, R.drawable.ic_access_alarm_black_24dp),
+                ContextCompat.getDrawable(this, R.drawable.timings_online_black),
                 OnlineSessionFragment.newInstance());
 
         NavigationPage onLap = new NavigationPage(
                 getString(R.string.on_lap),
-                ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
-                OnlineVideoFragment.newInstance());
-
-        NavigationPage onLap2 = new NavigationPage(
-                getString(R.string.on_lap),
-                ContextCompat.getDrawable(this, R.drawable.ic_slow_motion_video_black_24dp),
+                ContextCompat.getDrawable(this, R.drawable.onlap_black),
                 OnlineVideoFragment.newInstance());
 
         List<NavigationPage> navigationPages = new ArrayList<>();
+        navigationPages.add(weekendInfo);
         navigationPages.add(textOnline);
         navigationPages.add(sessionOnline);
         navigationPages.add(onLap);
-        navigationPages.add(onLap2);
 
         super.setupBottomBarHolderActivity(navigationPages);
     }
