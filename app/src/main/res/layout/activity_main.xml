@@ -19,6 +19,7 @@
             android:id="@+id/toolbar_layout_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?attr/actionModeSplitBackground"
             app:expandedTitleMarginBottom="70dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -36,7 +37,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/transparent"
                 android:gravity="top"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
             </android.support.v7.widget.Toolbar>
 
@@ -50,11 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                app:tabMode="scrollable"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:tabIndicatorHeight="2dp"
+                app:tabMode="scrollable"
                 app:tabSelectedTextColor="#fff"
-                app:tabTextColor="#fff"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                app:tabTextColor="#fff" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
