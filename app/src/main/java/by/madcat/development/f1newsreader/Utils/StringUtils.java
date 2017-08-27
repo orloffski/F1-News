@@ -1,7 +1,5 @@
 package by.madcat.development.f1newsreader.Utils;
 
-import android.util.Log;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,13 +22,6 @@ public final class StringUtils {
 
     public static String getImageNameFromURL(String url){
         return url.split("/")[url.split("/").length - 1];
-    }
-
-    public static String getVideoIdFromURL(String url){
-        String idTemp = url.split("/")[url.split("/").length - 1];
-        idTemp = idTemp.split("\\?")[0];
-
-        return idTemp;
     }
 
     public static DatabaseDescription.NewsTypes getNewsSection(String link){

@@ -1,13 +1,17 @@
 package by.madcat.development.f1newsreader.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
@@ -66,7 +70,10 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
             holder.pits.setText(element.getPits());
         }
 
-        Glide.with(context).load(getHelmetFromDrawable(element.getName())).placeholder(R.drawable.helmets_default).into(holder.helmet);
+        Glide.with(context)
+                .load(Uri.parse(getHelmetFromAssets(element.getName())))
+                .placeholder(R.drawable.helmet_default)
+                .into(holder.helmet);
     }
 
     @Override
@@ -74,52 +81,80 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
         return timings.size();
     }
 
-    private int getHelmetFromDrawable(String driverName){
-        if(driverName.equals("Алонсо"))
-            return R.drawable.helmets_alonso;
-        if(driverName.equals("Боттас"))
-            return R.drawable.helmets_bottas;
-        if(driverName.equals("Эриксон"))
-            return R.drawable.helmets_ericsson;
-        if(driverName.equals("Джовинацци"))
-            return R.drawable.helmets_giovinazzi;
-        if(driverName.equals("Грожан"))
-            return R.drawable.helmets_grojean;
-        if(driverName.equals("Хэмилтон"))
-            return R.drawable.helmets_hamilton;
-        if(driverName.equals("Хюлкенберг"))
-            return R.drawable.helmets_hulkenberg;
-        if(driverName.equals("Квят"))
-            return R.drawable.helmets_kvyat;
-        if(driverName.equals("Магнуссен"))
-            return R.drawable.helmets_magnussen;
-        if(driverName.equals("Масса"))
-            return R.drawable.helmets_massa;
-        if(driverName.equals("Окон"))
-            return R.drawable.helmets_ocon;
-        if(driverName.equals("Палмер"))
-            return R.drawable.helmets_palmer;
-        if(driverName.equals("Перес"))
-            return R.drawable.helmets_perez;
-        if(driverName.equals("Райкконен"))
-            return R.drawable.helmets_raikkonen;
-        if(driverName.equals("Риккардо"))
-            return R.drawable.helmets_ricciardo;
-        if(driverName.equals("Сайнс"))
-            return R.drawable.helmets_sainz;
-        if(driverName.equals("Сироткин"))
-            return R.drawable.helmets_sirotkin;
-        if(driverName.equals("Стролл"))
-            return R.drawable.helmets_stroll;
-        if(driverName.equals("Вандорн"))
-            return R.drawable.helmets_vandorne;
-        if(driverName.equals("Ферстаппен"))
-            return R.drawable.helmets_verstappen;
-        if(driverName.equals("Феттель"))
-            return R.drawable.helmets_vettel;
-        if(driverName.equals("Верляйн"))
-            return R.drawable.helmets_wehrlein;
+    private String getHelmetFromAssets(String driverName){
+        String helmet = "file:///android_asset/";
 
-        return R.drawable.helmets_default;
+        switch (driverName){
+            case "Алонсо":
+                helmet += "helmets/alonso.jpg";
+                break;
+            case "Боттас":
+                helmet += "helmets/bottas.jpg";
+                break;
+            case"Эриксон":
+                helmet += "helmets/ericsson.jpg";
+                break;
+            case "Джовинацци":
+                helmet += "helmets/giovinazzi.jpg";
+                break;
+            case "Грожан":
+                helmet += "helmets/grojean.jpg";
+                break;
+            case "Хэмилтон":
+                helmet += "helmets/hamilton.jpg";
+                break;
+            case "Хюлкенберг":
+                helmet += "helmets/hulkenberg.jpg";
+                break;
+            case "Квят":
+                helmet += "helmets/kvyat.jpg";
+                break;
+            case "Магнуссен":
+                helmet += "helmets/magnussen.jpg";
+                break;
+            case "Масса":
+                helmet += "helmets/massa.jpg";
+                break;
+            case "Окон":
+                helmet += "helmets/ocon.jpg";
+                break;
+            case "Палмер":
+                helmet += "helmets/palmer.jpg";
+                break;
+            case "Перес":
+                helmet += "helmets/perez.jpg";
+                break;
+            case "Райкконен":
+                helmet += "helmets/raikkonen.jpg";
+                break;
+            case "Риккардо":
+                helmet += "helmets/ricciardo.jpg";
+                break;
+            case "Сайнс":
+                helmet += "helmets/sainz.jpg";
+                break;
+            case "Сироткин":
+                helmet += "helmets/sirotkin.jpg";
+                break;
+            case "Стролл":
+                helmet += "helmets/stroll.jpg";
+                break;
+            case "Вандорн":
+                helmet += "helmets/vandorne.jpg";
+                break;
+            case "Ферстаппен":
+                helmet += "helmets/verstappen.jpg";
+                break;
+            case "Феттель":
+                helmet += "helmets/vettel.jpg";
+                break;
+            case "Верляйн":
+                helmet += "helmets/wehrlein.jpg";
+                break;
+            default:
+                helmet += "helmets/default.jpg";
+        }
+
+        return helmet;
     }
 }
