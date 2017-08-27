@@ -226,7 +226,11 @@ public final class DocParseUtils {
             boolean childAdded = false;
 
             switch (child.tagName()){
-                case NEWS_BODY_TABLE_ELEMENTS_PARSE:case NEWS_BODY_H3_ELEMENTS_PARSE:
+                case NEWS_BODY_TABLE_ELEMENTS_PARSE:
+                    newsBodyTmp.append(StringUtils.replaceImagesInWebView(child.toString()));
+                    childAdded = true;
+                    break;
+                case NEWS_BODY_H3_ELEMENTS_PARSE:
                     newsBodyTmp.append(child.toString());
                     childAdded = true;
                     break;

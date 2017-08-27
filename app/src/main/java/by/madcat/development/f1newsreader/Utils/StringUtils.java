@@ -1,5 +1,12 @@
 package by.madcat.development.f1newsreader.Utils;
 
+import android.util.Log;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.R;
@@ -95,5 +102,18 @@ public final class StringUtils {
             default:
                 return R.drawable.drawerimage_news;
         }
+    }
+
+    public static String replaceImagesInWebView(String htmlText){
+        Document doc = Jsoup.parse(htmlText);
+
+        Elements imgs = doc.getElementsByTag("img");
+
+        for(Element img : imgs){
+            String imgName = StringUtils.getImageNameFromURL(img.attr("src"));
+            img.attr("src", "file:///android_asset/tableImages/" + imgName);
+        }
+
+        return doc.toString();
     }
 }
