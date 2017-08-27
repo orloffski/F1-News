@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
-        updateToolbarData("Новости", StringUtils.getImageByTitle("Новости"));
+        updateToolbarData(StringUtils.getImageByTitle("Новости"));
     }
 
     @Override
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
             @Override
             public void onPageSelected(int position) {
                 String title = String.valueOf(adapter.getPageTitle(position));
-                updateToolbarData(title, StringUtils.getImageByTitle(title));
+                updateToolbarData(StringUtils.getImageByTitle(title));
 
                 initFragmentData(position);
             }
@@ -208,8 +208,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void updateToolbarData(String title, int imageR){
-        collapsingToolbarLayout.setTitle(title);
+    private void updateToolbarData(int imageR){
+        collapsingToolbarLayout.setTitle(" ");
         Glide.with(MainActivity.this).load(imageR).into(backdrop);
 
     }
