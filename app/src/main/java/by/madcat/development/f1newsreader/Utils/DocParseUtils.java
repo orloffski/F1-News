@@ -232,15 +232,17 @@ public final class DocParseUtils {
                     break;
                 case NEWS_BODY_TEXT_ELEMENTS_PARSE:case NEWS_BODY_TEXT_ELEMENTS_PARSE_2:
                     if(child.getElementsByTag("img").size() != 0){
-                        if(newsBodyTmp.length() != 0){
-                            views.add(createWebView(context, newsBodyTmp.toString()));
-                            newsBodyTmp.setLength(0);
-                        }
-
                         Element children = child.getElementsByTag("img").first();
-                        String image = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
-                        View bodyImage = createView(image, "ImageView", context);
-                        views.add(bodyImage);
+                        String imageName = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
+                        String pathToImage = SystemUtils.getImagesPath(context) + "/" + imageName;
+
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("<img src=\"");
+                        sb.append(pathToImage);
+                        sb.append("\" width=\"100%\">");
+
+                        newsBodyTmp.append(sb.toString());
+
                         childAdded = true;
                     }else {
                         newsBodyTmp.append(child.toString());
@@ -304,32 +306,6 @@ public final class DocParseUtils {
         }
 
         return timestamp;
-    }
-
-    private static View createView(final String text, String viewType, final Context context){
-        View view = null;
-
-        switch (viewType){
-            case "ImageView":
-                final String pathToImage = SystemUtils.getImagesPath(context) + "/" + text;
-
-                Bitmap image = BitmapFactory.decodeFile(pathToImage);
-                if(image == null)
-                    image = BitmapFactory.decodeResource(context.getResources() ,R.drawable.f1_logo);
-
-                int imageHeight = SystemUtils.getResizedImageHeight(image);
-
-                view = new ImageView(context);
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        imageHeight));
-
-                Glide.with(context).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into((ImageView) view);
-
-                view.setPadding(0, 10, 0, 0);
-                break;
-        }
-
-        return view;
     }
 
     public static void loadTimersData(String urlString, Context context) throws IOException {
