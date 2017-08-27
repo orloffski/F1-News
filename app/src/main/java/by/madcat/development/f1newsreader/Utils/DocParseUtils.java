@@ -269,9 +269,14 @@ public final class DocParseUtils {
     }
 
     private static WebView createWebView(Context context, String htmlText){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<HTML><HEAD><LINK href=\"styles.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
+        sb.append(htmlText);
+        sb.append("</body></HTML>");
+
         final WebView web = new WebView(context);
         web.getSettings().setJavaScriptEnabled(true);
-        web.loadData(removeAllLinks(htmlText), "text/html","utf-8");
+        web.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html", "utf-8", null);
         return web;
     }
 
