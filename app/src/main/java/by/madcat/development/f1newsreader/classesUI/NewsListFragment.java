@@ -67,12 +67,15 @@ public class NewsListFragment extends Fragment
     private int sectionItemsCount;
 
     private PopupBubble popupBubble;
+    private RecyclerView recyclerView;
 
     private TextView timer;
     private TextView timerText;
     private TimerNextGpTask timerTask;
 
     private LinearLayout onlineLinksLayout;
+
+    String listStyle;
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -183,7 +186,7 @@ public class NewsListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
-        String listStyle = PreferenceManager.getDefaultSharedPreferences(context).getString("list_news_view", "list");
+        listStyle = PreferenceManager.getDefaultSharedPreferences(context).getString("list_news_view", "list");
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -197,7 +200,7 @@ public class NewsListFragment extends Fragment
 
         popupBubble = (PopupBubble) view.findViewById(R.id.popup_bubble);
 
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

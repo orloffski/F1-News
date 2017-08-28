@@ -26,7 +26,8 @@
             android:key="list_news_view"
             android:entries="@array/list_news_view_title"
             android:entryValues="@array/list_news_view"
-            android:title="@string/list_news_view_title"/>
+            android:title="@string/list_news_view_title"
+            android:summary="@string/list_news_view_title_summary"/>
         <ListPreference
             android:key="gp_title_font_size"
             android:entries="@array/font_size"
