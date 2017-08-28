@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
+import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
@@ -110,6 +113,14 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        clearNotifications(BackgroundLoadNewsService.NOTIFICATION_ID);
+        clearNotifications(ReminderService.NOTIFICATION_ID);
+    }
+
     public void initFragmentData(int pageID){
         if(pageID == viewPager.getCurrentItem()) {
 
@@ -148,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     }
 
     private void loadTimerViews(){
-        timerText = new TextView(this);
-        timer = new TextView(this);
+        timerText = (TextView) findViewById(R.id.timerText);
+        timer = (TextView) findViewById(R.id.timer);
     }
 
     private void initSearchView(){
@@ -241,5 +252,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
         fragment.updateSearchQuery(searchQuery);
         fragment.updateNewsList();
+    }
+
+    private void clearNotifications(int notificationsId){
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationsId);
     }
 }

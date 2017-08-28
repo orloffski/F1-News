@@ -23,13 +23,51 @@
             app:expandedTitleMarginBottom="70dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <ImageView
-                android:id="@+id/backdrop"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="none"
-                app:srcCompat="@drawable/drawerimage_news" />
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="none"
+                    app:srcCompat="@drawable/drawerimage_news" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/timerText"
+                            style="@style/TimerTextStyleOverlayShadow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="?actionBarSize"
+                            android:textSize="@dimen/weekend_text_size" />
+
+                        <TextView
+                            android:id="@+id/timer"
+                            style="@style/TimerTextStyleOverlayShadow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/weekend_text_size" />
+                    </LinearLayout>
+
+                </FrameLayout>
+            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
