@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
             @Override
             public void onSearchViewClosed() {
-                updateFragmentData(null);
+                updateFragmentData("");
             }
         });
     }
