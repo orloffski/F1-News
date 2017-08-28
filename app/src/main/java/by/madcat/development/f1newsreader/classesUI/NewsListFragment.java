@@ -81,7 +81,7 @@ public class NewsListFragment extends Fragment
                 String selection;
                 String[] selectionArgs;
 
-                if(searchQuery == null) {
+                if(searchQuery.isEmpty()) {
                     if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_read_news", false)) {
                         selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
                         selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
@@ -269,6 +269,13 @@ public class NewsListFragment extends Fragment
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getLoaderManager().restartLoader(NEWS_LOADER, null, this);
     }
 
     private void checkServiceIsRun(){
