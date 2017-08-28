@@ -35,8 +35,10 @@
     <string name="fullscreen_video">Видео в полноэкранном режиме</string>
     <string name="fullscreen_video_summary">Включите данную опцию если при просмотре видео оно постоянно становится в паузу</string>
     <string name="list_news_view_title">Оформление списка новостей</string>
-    <string name="list_news_view_title_summary">Настройка активируется в силу после перезапуска приложения</string>
+    <string name="list_news_view_title_summary">Настройка активируется после перезапуска приложения</string>
     <string name="hide_read_news_checkbox_summary">В списке новостей будут скрыты прочитанные новости</string>
+    <string name="sections_news_view_title">Включить разделы новостей</string>
+    <string name="sections_news_view_title_summary">Новости будут выводиться по разделам. Настройка активируется после перезапуска приложения</string>
 
     <string name="category_autorefresh">Автообновление новостей</string>
     <string name="refresh_interval_on">Включить автообновление</string>
@@ -139,10 +141,6 @@
     <!-- popup button -->
     <string name="popup_button_text">вверх</string>
 
-    <!-- main menu items -->
-    <string name="weekend_info_menu">О Гран-При</string>
-    <string name="online_menu">Онлайн</string>
-
     <!-- bottom bar strings -->
     <string name="weekend_info">Weekend</string>
     <string name="text_online">Text</string>
@@ -167,5 +165,6 @@
     <string name="track_temp_text">"\u2103   track temp"</string>
     <string name="air_temp_text">"\u2103   air temp"</string>
     <string name="laps_text">"   lap/laps"</string>
+
     <string name="title_activity_preferences">Настройки приложения</string>
 </resources>

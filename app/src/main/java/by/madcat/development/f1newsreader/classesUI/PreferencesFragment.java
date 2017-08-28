@@ -41,6 +41,9 @@ public class PreferencesFragment extends PreferenceFragment {
         // скрытие прочитанных новостей
         final CheckBoxPreference hide_read_news = (CheckBoxPreference)findPreference("hide_read_news");
 
+        // скрытие прочитанных новостей
+        final CheckBoxPreference sections_news = (CheckBoxPreference)findPreference("sections_news");
+
         // автообновление новостей
         final CheckBoxPreference refresh_interval_on = (CheckBoxPreference)findPreference("refresh_interval_on");
         final ListPreference refresh_interval = (ListPreference)findPreference("refresh_interval");

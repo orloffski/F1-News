@@ -27,6 +27,7 @@ public class DatabaseDescription {
     }
 
     public enum NewsTypes{
+        ALL,
         NEWS,
         MEMUAR,
         INTERVIEW,

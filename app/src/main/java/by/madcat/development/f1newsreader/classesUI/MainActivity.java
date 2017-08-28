@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -32,6 +33,7 @@ import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.ALL;
 import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.AUTOSPORT;
 import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.COLUMNS;
 import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.HISTORY;
@@ -142,13 +144,19 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new NewsPagesAdapter(getSupportFragmentManager());
-        adapter.addFragment(NewsListFragment.newInstance(NEWS.toString(), ""), "Новости");
-        adapter.addFragment(NewsListFragment.newInstance(MEMUAR.toString(), ""), "Статьи");
-        adapter.addFragment(NewsListFragment.newInstance(INTERVIEW.toString(), ""), "Интервью");
-        adapter.addFragment(NewsListFragment.newInstance(TECH.toString(), ""), "Техника");
-        adapter.addFragment(NewsListFragment.newInstance(HISTORY.toString(), ""), "История");
-        adapter.addFragment(NewsListFragment.newInstance(COLUMNS.toString(), ""), "Авторские колонки");
-        adapter.addFragment(NewsListFragment.newInstance(AUTOSPORT.toString(), ""), "Автоспорт");
+
+        if( PreferenceManager.getDefaultSharedPreferences(this).getBoolean("sections_news", true)) {
+            adapter.addFragment(NewsListFragment.newInstance(NEWS.toString(), ""), "Новости");
+            adapter.addFragment(NewsListFragment.newInstance(MEMUAR.toString(), ""), "Статьи");
+            adapter.addFragment(NewsListFragment.newInstance(INTERVIEW.toString(), ""), "Интервью");
+            adapter.addFragment(NewsListFragment.newInstance(TECH.toString(), ""), "Техника");
+            adapter.addFragment(NewsListFragment.newInstance(HISTORY.toString(), ""), "История");
+            adapter.addFragment(NewsListFragment.newInstance(COLUMNS.toString(), ""), "Авторские колонки");
+            adapter.addFragment(NewsListFragment.newInstance(AUTOSPORT.toString(), ""), "Автоспорт");
+        }else{
+            adapter.addFragment(NewsListFragment.newInstance(ALL.toString(), ""), "Все новости");
+        }
+
         viewPager.setAdapter(adapter);
     }
 

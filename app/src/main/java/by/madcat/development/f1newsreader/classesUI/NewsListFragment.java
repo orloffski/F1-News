@@ -82,15 +82,30 @@ public class NewsListFragment extends Fragment
 
                 if(searchQuery.isEmpty()) {
                     if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_read_news", false)) {
-                        selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
-                        selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
+                        if(type != NewsTypes.ALL) {
+                            selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_READ_FLAG + "=?";
+                            selectionArgs = new String[]{String.valueOf(type), String.valueOf(0)};
+                        }else{
+                            selection = News.COLUMN_READ_FLAG + "=?";
+                            selectionArgs = new String[]{String.valueOf(0)};
+                        }
                     } else {
-                        selection = News.COLUMN_NEWS_TYPE + "=?";
-                        selectionArgs = new String[]{String.valueOf(type)};
+                        if(type != NewsTypes.ALL) {
+                            selection = News.COLUMN_NEWS_TYPE + "=?";
+                            selectionArgs = new String[]{String.valueOf(type)};
+                        }else{
+                            selection = "";
+                            selectionArgs = new String[]{};
+                        }
                     }
                 }else{
-                    selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
-                    selectionArgs = new String[]{String.valueOf(type)};
+                    if(type != NewsTypes.ALL) {
+                        selection = News.COLUMN_NEWS_TYPE + "=? and " + News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
+                        selectionArgs = new String[]{String.valueOf(type)};
+                    }else{
+                        selection = News.COLUMN_TITLE + " LIKE '%" + searchQuery + "%'";
+                        selectionArgs = new String[]{};
+                    }
                 }
 
                 return new CursorLoader(getActivity(), News.CONTENT_URI, null, selection, selectionArgs, News.COLUMN_DATE + " COLLATE NOCASE DESC");
