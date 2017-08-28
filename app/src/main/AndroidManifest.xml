@@ -20,13 +20,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-
         android:theme="@style/MyMaterialTheme">
- 
-        <activity android:name=".classesUI.MainActivity"
+        <activity
+            android:name=".classesUI.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,22 +32,18 @@
             </intent-filter>
         </activity>
 
-        <!-- to delete start -->
-        <activity
-            android:name=".classesUI.NewsListActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <!-- to delete end -->
-
         <activity
             android:name=".classesUI.NewsPageActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".classesUI.OnlineActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".classesUI.PreferencesActivity"
+            android:label="@string/title_activity_preferences"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <provider
             android:name=".data.F1NewsReaderContentProvider"

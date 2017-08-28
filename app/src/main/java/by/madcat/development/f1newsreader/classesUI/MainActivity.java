@@ -95,13 +95,16 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent intent;
 
         switch (id){
             case R.id.online_granprix:
-                Intent textIntent = new Intent(this, OnlineActivity.class);
-                startActivity(textIntent);
+                intent = new Intent(this, OnlineActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.settings:
+                intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
