@@ -22,7 +22,6 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
 
     private TextView timerText;
     private TextView timer;
-    private LinearLayout onlineLinksLayout;
 
     private boolean isOnline;
 
@@ -34,7 +33,6 @@ public class TimerNextGpTask extends AsyncTask<View, String, Void>{
     protected Void doInBackground(View... views) {
         timerText = (TextView) views[0];
         timer = (TextView) views[1];
-        onlineLinksLayout = (LinearLayout) views[2];
 
         String toNextGP;
         String text;

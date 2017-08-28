@@ -3,6 +3,7 @@ package by.madcat.development.f1newsreader.classesUI;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -26,6 +27,7 @@ import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
+import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private ArrayList<String> newsLinks;
     private int sectionItemsCount;
 
+    private TimerNextGpTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
         loadTimerViews();
         updateToolbarData(StringUtils.getImageByTitle("Новости"));
+
+        if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
+            loadTimer();
     }
 
     @Override
@@ -257,5 +263,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     private void clearNotifications(int notificationsId){
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(notificationsId);
+    }
+
+    private void loadTimer(){
+        timerTask = new TimerNextGpTask(this);
+        timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer);
     }
 }

@@ -69,10 +69,6 @@ public class NewsListFragment extends Fragment
     private PopupBubble popupBubble;
     private RecyclerView recyclerView;
 
-    private TextView timer;
-    private TextView timerText;
-    private TimerNextGpTask timerTask;
-
     private LinearLayout onlineLinksLayout;
 
     String listStyle;
@@ -264,14 +260,6 @@ public class NewsListFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
 
         getLoaderManager().initLoader(NEWS_LOADER, null, this);
-
-
-        timer = (TextView) ((MainActivity)getActivity()).getTimerLink();
-        timerText = (TextView) ((MainActivity)getActivity()).getTimerTextLink();
-
-        if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
-            loadTimer();
-
     }
 
     @Override
@@ -317,11 +305,6 @@ public class NewsListFragment extends Fragment
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
-
-    private void loadTimer(){
-        timerTask = new TimerNextGpTask(context);
-        timerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, timerText, timer, onlineLinksLayout);
     }
 
     public ArrayList<String> getNewsIDs(){
