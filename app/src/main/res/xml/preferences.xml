@@ -21,10 +21,6 @@
             android:key="hide_read_news"
             android:summary="@string/hide_read_news_checkbox_summary"
             android:title="@string/hide_read_news_checkbox"/>
-        <CheckBoxPreference
-            android:key="fullscreen_video"
-            android:title="@string/fullscreen_video"
-            android:summary="@string/fullscreen_video_summary"/>
         <ListPreference
             android:defaultValue="@string/list_news_view_default"
             android:key="list_news_view"
