@@ -221,7 +221,13 @@ public final class DocParseUtils {
 
             switch (child.tagName()){
                 case NEWS_BODY_TABLE_ELEMENTS_PARSE:
+                    views.add(createWebView(context, newsBodyTmp.toString()));
+                    newsBodyTmp.setLength(0);
+
                     newsBodyTmp.append(StringUtils.replaceImagesInWebView(child.toString()));
+                    views.add(createWebView(context, newsBodyTmp.toString()));
+                    newsBodyTmp.setLength(0);
+                    
                     childAdded = true;
                     break;
                 case NEWS_BODY_H3_ELEMENTS_PARSE:
