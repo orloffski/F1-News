@@ -2,17 +2,13 @@ package by.madcat.development.f1newsreader.classesUI;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -39,7 +35,6 @@ public class NewsPageActivity extends AppCompatActivity {
 
     private NewsPageAdapter pagerAdapter;
 
-    private ShareActionProvider mShareActionProvider;
     private String shareLink;
 
     private Toolbar toolbar;
@@ -49,12 +44,9 @@ public class NewsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
         toolbar = (Toolbar) findViewById(R.id.newsPageToolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setSupportActionBar(toolbar);
+
+        setTitle(" ");
 
         type = NewsTypes.valueOf(getIntent().getStringExtra(NEWS_TYPE));
         positionID = getIntent().getIntExtra(POSITION_ID, 1);
@@ -83,7 +75,6 @@ public class NewsPageActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 openNewsUri = News.buildNewsUri(Long.valueOf(ids.get(position)));
                 DBUtils.setNewsRead(openNewsUri, getApplicationContext());
-                //setShareIntent(createShareIntent(links.get(position)));
             }
 
             @Override
@@ -97,9 +88,6 @@ public class NewsPageActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.news_page_menu, menu);
 
-        MenuItem shareItem = menu.findItem(R.id.share);
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-        setShareIntent(createShareIntent(shareLink));
         return true;
     }
 
@@ -110,6 +98,10 @@ public class NewsPageActivity extends AppCompatActivity {
                 onBackPressed();
                 return false;
             case R.id.share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareLink);
+                startActivity(Intent.createChooser(shareIntent, "Share news"));
                 return false;
         }
         return super.onOptionsItemSelected(item);
@@ -125,25 +117,9 @@ public class NewsPageActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void setNewsData(Uri newsUri, String title){
-    //public void setNewsData(Uri newsUri, String title, Bitmap image, String link, String date){
+    public void setNewsData(Uri newsUri, String link){
         if(newsUri.equals(openNewsUri)) {
-            toolbar.setTitleTextColor(Color.BLACK);
-            toolbar.setTitle(title);
-
-            //setShareIntent(createShareIntent(link));
+            shareLink = link;
         }
-    }
-
-    private void setShareIntent(Intent shareIntent){
-        if(mShareActionProvider != null)
-            mShareActionProvider.setShareIntent(shareIntent);
-    }
-
-    private Intent createShareIntent(String link){
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, link);
-        return shareIntent;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,66 +27,35 @@
                 android:paddingTop="@dimen/text_padding"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
+                android:id="@+id/content_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content_image"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/red"/>
+
+            <TextView
+                android:id="@+id/content_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/NewsHeaderImageText">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        card_view:srcCompat="@drawable/ic_share_black_24dp"
-                        android:id="@+id/shareBtn"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/button_border"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/content_title"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/title_text_size"
-                        android:paddingLeft="@dimen/text_padding"
-                        android:paddingRight="@dimen/text_padding"
-                        android:paddingTop="@dimen/text_padding"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/content_date"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:paddingLeft="@dimen/text_padding"
-                        android:paddingRight="@dimen/text_padding"
-                        android:paddingTop="@dimen/text_padding"/>
-
-                </LinearLayout>
-            </LinearLayout>
-
-
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content_date"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <by.madcat.development.f1newsreader.classesUI.HtmlTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/content_image"
+                android:layout_below="@id/content_title"
                 android:padding="@dimen/text_padding"
-                android:id="@+id/html_text_view"/>
+                android:id="@+id/html_text_view" />
         </RelativeLayout>
     </ScrollView>
 </android.support.v7.widget.CardView>

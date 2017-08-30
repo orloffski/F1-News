@@ -1,6 +1,5 @@
 package by.madcat.development.f1newsreader.classesUI;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +33,6 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
     private HtmlTextView htmlTextView;
     private ImageView imageView;
     private TextView date;
-    private ImageButton shareBtn;
 
     public NewsPageFragment() {
     }
@@ -66,7 +63,6 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
         imageView = (ImageView) view.findViewById(R.id.content_image);
         imageView.setPadding(20, 0, 20, 0);
         date = (TextView) view.findViewById(R.id.content_date);
-        shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
         getLoaderManager().initLoader(LOADER, null, this);
 
@@ -116,17 +112,8 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             Glide.with(getContext()).load(pathToImage).asBitmap().placeholder(R.drawable.f1_logo).into(imageView);
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
-            shareBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, data.getString(linkIndex));
-                    startActivity(Intent.createChooser(shareIntent, "Share news"));
-                }
-            });
 
-            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(titleIndex));
+            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(linkIndex));
         }
     }
 
