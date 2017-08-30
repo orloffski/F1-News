@@ -1,14 +1,8 @@
 package by.madcat.development.f1newsreader.Utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +27,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
 
@@ -47,6 +40,7 @@ public final class DocParseUtils {
     private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE = "p";
     private static final String NEWS_BODY_TEXT_ELEMENTS_PARSE_2 = "blockquote";
     private static final String NEWS_BODY_H3_ELEMENTS_PARSE = "h3";
+    private static final String NEWS_BODY_IFRAME_ELEMENTS_PARSE = "iframe";
     private static final String NEWS_BODY_TABLE_ELEMENTS_PARSE = "table";
     private static final String NEWS_BODY_ROOT_ELEMENT = "body";
     private static final String NEWS_BODY_IMG_ELEMENT = "img";
@@ -235,8 +229,8 @@ public final class DocParseUtils {
                     childAdded = true;
                     break;
                 case NEWS_BODY_TEXT_ELEMENTS_PARSE:case NEWS_BODY_TEXT_ELEMENTS_PARSE_2:
-                    if(child.getElementsByTag("img").size() != 0){
-                        Element children = child.getElementsByTag("img").first();
+                    if(child.getElementsByTag(NEWS_IMAGE_TAG_PARSE).size() != 0){
+                        Element children = child.getElementsByTag(NEWS_IMAGE_TAG_PARSE).first();
                         String imageName = StringUtils.getImageNameFromURL(children.attr(NEWS_IMAGE_LINK_ATTR_PARSE));
                         String pathToImage = SystemUtils.getImagesPath(context) + "/" + imageName;
 
@@ -247,6 +241,11 @@ public final class DocParseUtils {
 
                         newsBodyTmp.append(sb.toString());
 
+                        childAdded = true;
+                    }else if(child.getElementsByTag(NEWS_BODY_IFRAME_ELEMENTS_PARSE).size() != 0){
+                        Element children = child.getElementsByTag(NEWS_BODY_IFRAME_ELEMENTS_PARSE).first();
+                        children.attr("width", "100%");
+                        newsBodyTmp.append(children.toString());
                         childAdded = true;
                     }else {
                         newsBodyTmp.append(child.toString());
