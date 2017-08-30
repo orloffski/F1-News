@@ -98,6 +98,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
             int imageIndex = data.getColumnIndex(News.COLUMN_IMAGE);
             int dateIndex = data.getColumnIndex(News.COLUMN_DATE);
             final int linkIndex = data.getColumnIndex(News.COLUMN_LINK_NEWS);
+            int typeIndex = data.getColumnIndex(News.COLUMN_NEWS_TYPE);
 
             title.setText(data.getString(titleIndex));
 
@@ -113,7 +114,7 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
             date.setText(DateUtils.untransformDateTime(data.getString(dateIndex)));
 
-            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(linkIndex));
+            ((NewsPageActivity)getActivity()).setNewsData(newsUri, data.getString(linkIndex), data.getString(typeIndex));
         }
     }
 

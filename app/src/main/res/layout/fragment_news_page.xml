@@ -31,12 +31,12 @@
                 android:id="@+id/content_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/content_image"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
+                android:textColor="@color/red"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/red"/>
+                android:layout_below="@+id/content_image"/>
 
             <TextView
                 android:id="@+id/content_title"
@@ -54,7 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/content_title"
-                android:padding="@dimen/text_padding"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 android:id="@+id/html_text_view" />
         </RelativeLayout>
     </ScrollView>

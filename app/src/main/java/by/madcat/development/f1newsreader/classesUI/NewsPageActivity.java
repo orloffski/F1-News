@@ -117,9 +117,10 @@ public class NewsPageActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void setNewsData(Uri newsUri, String link){
+    public void setNewsData(Uri newsUri, String link, String newsType){
         if(newsUri.equals(openNewsUri)) {
             shareLink = link;
+            setTitle(newsType);
         }
     }
 }
