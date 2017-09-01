@@ -2,29 +2,31 @@
 <PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/system_pref_title">
+        android:title="@string/system_pref_title"
+        android:layout="@layout/preferences_category_style">
 
         <CheckBoxPreference
             android:key="move_pic_to_sd"
             android:title="@string/move_pictures_to_sd"
-            android:summary="@string/move_pictures_to_sd_summary"/>
+            android:summary="@string/move_pictures_to_sd_summary" />
 
         <CheckBoxPreference
             android:key="doze_disable"
             android:title="@string/doze_disabled_title"
-            android:summary="@string/doze_disabled_summary"/>
+            android:summary="@string/doze_disabled_summary" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/category_hide_news">
+        android:title="@string/category_hide_news"
+        android:layout="@layout/preferences_category_style">
 
         <CheckBoxPreference
             android:key="hide_read_news"
             android:summary="@string/hide_read_news_checkbox_summary"
-            android:title="@string/hide_read_news_checkbox"/>
+            android:title="@string/hide_read_news_checkbox" />
         <CheckBoxPreference
             android:key="sections_news"
             android:summary="@string/sections_news_view_title_summary"
-            android:title="@string/sections_news_view_title"/>
+            android:title="@string/sections_news_view_title" />
         <ListPreference
             android:defaultValue="@string/list_news_view_default"
             android:key="list_news_view"
@@ -46,7 +48,8 @@
             android:title="@string/gp_timer_font_size"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/category_autorefresh">
+        android:title="@string/category_autorefresh"
+        android:layout="@layout/preferences_category_style">
 
         <CheckBoxPreference
             android:key="refresh_interval_on"
@@ -60,7 +63,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/reminder_to_gp">
+        android:title="@string/reminder_to_gp"
+        android:layout="@layout/preferences_category_style">
 
         <CheckBoxPreference
             android:key="reminder_on"
