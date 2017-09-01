@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar.getBackground().setAlpha(0);
+
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_list);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedTextAppearance);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);

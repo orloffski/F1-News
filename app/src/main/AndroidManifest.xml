@@ -35,7 +35,7 @@
         <activity
             android:name=".classesUI.NewsPageActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/MyMaterialTheme" />
         <activity
             android:name=".classesUI.OnlineActivity"
             android:configChanges="orientation|screenSize"

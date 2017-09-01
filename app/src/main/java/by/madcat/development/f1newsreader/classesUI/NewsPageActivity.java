@@ -43,8 +43,11 @@ public class NewsPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_page);
-        toolbar = (Toolbar) findViewById(R.id.newsPageToolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.getBackground().setAlpha(0);
 
         setTitle(" ");
 
