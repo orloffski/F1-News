@@ -227,7 +227,7 @@ public final class DocParseUtils {
                     newsBodyTmp.append(StringUtils.replaceImagesInWebView(child.toString()));
                     views.add(createWebView(context, newsBodyTmp.toString()));
                     newsBodyTmp.setLength(0);
-                    
+
                     childAdded = true;
                     break;
                 case NEWS_BODY_H3_ELEMENTS_PARSE:
@@ -341,7 +341,11 @@ public final class DocParseUtils {
                 Element weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "-track.png").first();
                 if(weekendTrack == null)
                     weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "_track.png").first();
-                weekendTrackMap = StringUtils.getImageNameFromURL(weekendTrack.attr("src"));
+
+                if(weekendTrack != null)
+                    weekendTrackMap = StringUtils.getImageNameFromURL(weekendTrack.attr("src"));
+                else
+                    weekendTrackMap = "";
             }
 
         }
