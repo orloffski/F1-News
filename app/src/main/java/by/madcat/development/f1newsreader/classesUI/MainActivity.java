@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         backdrop = (ImageView) findViewById(R.id.backdrop);
 
         initViewPager();
-//        initSearchView();
+        initSearchView();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
@@ -99,10 +99,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
 
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        searchView.setMenuItem(item);
-//
-//        searchMenu = menu;
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        searchMenu = menu;
 
         return true;
     }
@@ -266,11 +266,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         if(searchMenu != null)
             searchMenu.findItem(R.id.action_search).setVisible(true);
 
-        int position = viewPager.getCurrentItem();
-        NewsListFragment fragment = (NewsListFragment)adapter.getFragment(position);
-
-        fragment.updateSearchQuery(searchQuery);
-        fragment.updateNewsList();
+        if(fragment != null && fragment.isAdded()) {
+            fragment.updateSearchQuery(searchQuery);
+            fragment.updateNewsList();
+        }
     }
 
     private void clearNotifications(int notificationsId){
