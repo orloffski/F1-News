@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -26,7 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.webianks.library.PopupBubble;
 
@@ -41,7 +39,6 @@ import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
 
 
 public class NewsListFragment extends Fragment

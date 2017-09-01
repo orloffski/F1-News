@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedTextAppearance);
         backdrop = (ImageView) findViewById(R.id.backdrop);
 
-        initSearchView();
         initViewPager();
+//        initSearchView();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
@@ -99,10 +99,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
 
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-
-        searchMenu = menu;
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
+//
+//        searchMenu = menu;
 
         return true;
     }
@@ -196,7 +196,8 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
             @Override
             public boolean onQueryTextChange(String newText) {
                 // on search text changed
-                updateFragmentData(newText);
+                if(!newText.isEmpty())
+                    updateFragmentData(newText);
                 return false;
             }
         });
