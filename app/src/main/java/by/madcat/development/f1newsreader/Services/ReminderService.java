@@ -18,7 +18,7 @@ import java.util.Calendar;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
+import by.madcat.development.f1newsreader.classesUI.MainActivity;
 
 public class ReminderService extends IntentService {
 
@@ -75,7 +75,7 @@ public class ReminderService extends IntentService {
 
     private void runReminder(final Intent intent){
         Resources resources = getResources();
-        Intent i = NewsListActivity.newIntent(getApplicationContext());
+        Intent i = MainActivity.newIntent(getApplicationContext());
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_INTENT_ID, i, 0);
 
         long[] vibrate;

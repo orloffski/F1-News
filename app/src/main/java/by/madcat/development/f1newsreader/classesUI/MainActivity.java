@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements NewsOpenListener{
 
     private TimerNextGpTask timerTask;
 
+    public static Intent newIntent(Context context){
+        return new Intent(context, MainActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

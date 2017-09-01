@@ -17,7 +17,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Receivers.NotificationDismissedReceiver;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
+import by.madcat.development.f1newsreader.classesUI.MainActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
@@ -59,7 +59,7 @@ public class BackgroundLoadNewsService extends IntentService implements NewsLoad
 
     public void sendMessage(int countNews){
         Resources resources = getResources();
-        Intent i = NewsListActivity.newIntent(this);
+        Intent i = MainActivity.newIntent(this);
         PendingIntent pi = PendingIntent.getActivity(this, NOTIFICATION_INTENT_ID, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
         countNews += SystemUtils.getNumberInIssetNotificationsCount(NOTIFICATION_ID, (NotificationManager)getSystemService(NOTIFICATION_SERVICE), getApplicationContext());
