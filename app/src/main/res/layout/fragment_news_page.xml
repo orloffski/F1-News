@@ -27,7 +27,7 @@
                 android:paddingTop="@dimen/text_padding"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
-            <TextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/content_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,25 +38,27 @@
                 android:textStyle="bold"
                 android:layout_below="@+id/content_image"/>
 
-            <TextView
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoMediumTextView
                 android:id="@+id/content_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/content_date"
+                android:paddingBottom="5dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="10dp"
+                android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <by.madcat.development.f1newsreader.classesUI.HtmlTextView
+                android:id="@+id/html_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/content_title"
                 android:paddingLeft="15dp"
-                android:paddingRight="10dp"
-                android:id="@+id/html_text_view" />
+                android:paddingRight="5dp"
+                android:paddingTop="5dp" />
         </RelativeLayout>
     </ScrollView>
 </android.support.v7.widget.CardView>

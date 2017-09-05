@@ -19,6 +19,8 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.styling.CustomViews.RobotoMediumTextView;
+import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
 
 
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -29,10 +31,10 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
 
     private Uri newsUri;
 
-    private TextView title;
+    private RobotoMediumTextView title;
     private HtmlTextView htmlTextView;
     private ImageView imageView;
-    private TextView date;
+    private RobotoRegularTextView date;
 
     public NewsPageFragment() {
     }
@@ -58,11 +60,11 @@ public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_page, container, false);
 
-        title = (TextView) view.findViewById(R.id.content_title);
+        title = (RobotoMediumTextView) view.findViewById(R.id.content_title);
         htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text_view);
         imageView = (ImageView) view.findViewById(R.id.content_image);
         imageView.setPadding(20, 0, 20, 0);
-        date = (TextView) view.findViewById(R.id.content_date);
+        date = (RobotoRegularTextView) view.findViewById(R.id.content_date);
 
         getLoaderManager().initLoader(LOADER, null, this);
 
