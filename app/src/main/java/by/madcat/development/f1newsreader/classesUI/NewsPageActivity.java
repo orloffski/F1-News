@@ -45,6 +45,7 @@ public class NewsPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_page);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setSupportActionBar(toolbar);
 
         toolbar.getBackground().setAlpha(0);
@@ -97,7 +98,7 @@ public class NewsPageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.back_press:
+            case android.R.id.home:
                 onBackPressed();
                 return false;
             case R.id.share:
