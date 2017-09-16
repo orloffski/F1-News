@@ -39,7 +39,7 @@ public class OnlineActivity extends BottomBarHolderActivity {
         NavigationPage onLap = new NavigationPage(
                 getString(R.string.on_lap),
                 ContextCompat.getDrawable(this, R.drawable.onlap_black),
-                OnlineVideoFragment.newInstance());
+                OnLapTranslationFragment.newInstance());
 
         List<NavigationPage> navigationPages = new ArrayList<>();
         navigationPages.add(weekendInfo);
