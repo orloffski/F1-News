@@ -41,7 +41,7 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         int[] timers = new int[]{60, 120, 240};
 
-        racerDrawOnLap = new RacerDrawOnLap(getHolder(), screenWidth, screenHeight,
+        racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight,
                 BitmapFactory.decodeResource(getResources(), R.drawable.dot), timers);
         racerDrawOnLap.setRunning(true);
         racerDrawOnLap.start();

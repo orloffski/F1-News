@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.styling.drawingThread;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,16 +9,22 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PointF;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import by.madcat.development.f1newsreader.R;
 
 public class RacerDrawOnLap extends Thread {
 
     private boolean runFlag = false;
 
     private SurfaceHolder surfaceHolder;
+    private Context context;
 
     private Paint paint;
     private Path ptCurve = new Path(); //curve
@@ -38,7 +45,7 @@ public class RacerDrawOnLap extends Thread {
 
     private static Bitmap bmSprite;
 
-    public RacerDrawOnLap(SurfaceHolder surfaceHolder, int width, int height, Bitmap bitmap, int[] timers) {
+    public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, Bitmap bitmap, int[] timers) {
 
         time = timers;
         segmentLenght = new float[timers.length];
@@ -51,6 +58,7 @@ public class RacerDrawOnLap extends Thread {
         screenHeight = height;
 
         this.surfaceHolder = surfaceHolder;
+        this.context = context;
 
         pointsMap = generatePointsMap();
 
@@ -91,10 +99,16 @@ public class RacerDrawOnLap extends Thread {
 
                     for(int i = 0; i < time.length; i++){
                         if(nowTime[i] < time[i]) {
+                            View racerView = getRacerView();
+                            setRacerName(racerView, String.valueOf(i));
+
+                            canvas.save();
                             pm.getMatrix(segmentLenght[i] * nowTime[i], mxTransform,
-                                    PathMeasure.POSITION_MATRIX_FLAG + PathMeasure.TANGENT_MATRIX_FLAG);
-                            mxTransform.preTranslate(-bmSprite.getWidth(), -bmSprite.getHeight());
-                            canvas.drawBitmap(bmSprite, mxTransform, null);
+                                    PathMeasure.POSITION_MATRIX_FLAG);
+                            mxTransform.preTranslate(-racerView.getWidth(), -racerView.getHeight());
+                            canvas.setMatrix(mxTransform);
+                            racerView.draw(canvas);
+                            canvas.restore();
 
                             nowTime[i]++; //advance to the next step
                         }else{
@@ -111,6 +125,21 @@ public class RacerDrawOnLap extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private View getRacerView(){
+        LayoutInflater li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = li.inflate(R.layout.racer_view, null);
+            v.measure(View.MeasureSpec.getSize(v.getMeasuredWidth()), View.MeasureSpec.getSize(v.getMeasuredHeight()));
+        v.layout(10, 10, 10, 10);
+        v.setRotation(180);
+
+        return v;
+    }
+
+    private void setRacerName(View view, String racerName){
+        TextView name = (TextView)view.findViewById(R.id.racerName);
+        name.setText(racerName);
     }
 
     private float[][] generatePointsMap(){
