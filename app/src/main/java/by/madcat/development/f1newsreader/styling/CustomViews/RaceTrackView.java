@@ -2,14 +2,14 @@ package by.madcat.development.f1newsreader.styling.CustomViews;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Models.TracksPoints;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.styling.drawingThread.RacerDrawOnLap;
 
 public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback {
@@ -18,6 +18,8 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
 
     private int screenWidth;
     private int screenHeight;
+
+    private float[][] mapTrack;
 
     public RaceTrackView(Context context) {
         super(context);
@@ -40,9 +42,9 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         int[] timers = new int[]{60, 120, 240};
+        mapTrack = TracksPoints.getTrackPoints(PreferencesUtils.getNextGpCountry(getContext()));
 
-        racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight,
-                BitmapFactory.decodeResource(getResources(), R.drawable.dot), timers);
+        racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight, timers, mapTrack);
         racerDrawOnLap.setRunning(true);
         racerDrawOnLap.start();
     }

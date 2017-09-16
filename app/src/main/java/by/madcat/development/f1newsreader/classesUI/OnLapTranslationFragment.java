@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.styling.CustomViews.RaceTrackView;
 
-public class OnLapTranslationFragment extends Fragment {
+public class OnLapTranslationFragment extends Fragment{
 
     private RaceTrackView raceTrackView;
 

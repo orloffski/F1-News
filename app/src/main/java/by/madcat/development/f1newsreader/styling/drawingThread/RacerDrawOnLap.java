@@ -1,7 +1,6 @@
 package by.madcat.development.f1newsreader.styling.drawingThread;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -43,24 +42,19 @@ public class RacerDrawOnLap extends Thread {
     private float pathLenght;
     private float segmentLenght[];
 
-    private static Bitmap bmSprite;
-
-    public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, Bitmap bitmap, int[] timers) {
+    public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, int[] timers, float[][] mapTrack) {
 
         time = timers;
         segmentLenght = new float[timers.length];
         nowTime = new int[timers.length];
 
-        if (bmSprite == null)
-            bmSprite = bitmap;
+        pointsMap = mapTrack;
 
         screenWidth = width;
         screenHeight = height;
 
         this.surfaceHolder = surfaceHolder;
         this.context = context;
-
-        pointsMap = generatePointsMap();
 
         getScalingFactor(getMaxX(), getMaxY());
 
@@ -92,6 +86,7 @@ public class RacerDrawOnLap extends Thread {
             synchronized (surfaceHolder) {
 
                 while(runFlag){
+
                     canvas = surfaceHolder.lockCanvas(null);
 
                     canvas.drawColor(Color.WHITE);
@@ -140,13 +135,6 @@ public class RacerDrawOnLap extends Thread {
     private void setRacerName(View view, String racerName){
         TextView name = (TextView)view.findViewById(R.id.racerName);
         name.setText(racerName);
-    }
-
-    private float[][] generatePointsMap(){
-
-        return new float[][]{{307,250},{160,236},{153,224},{128,235},{82,231},{70,225},{43,199},{33,176},
-                {31,130},{32,96},{20,87},{23,73},{2,31},{7,10},{73,3},{106,76},{194,168},{213,169},{225,174},
-                {237,189},{424,203},{436,219},{429,242},{406,255},{307,250},{300,249}};
     }
 
     private float getMaxX(){
