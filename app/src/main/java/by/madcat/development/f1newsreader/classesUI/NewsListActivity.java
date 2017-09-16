@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -167,14 +166,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         }
 
         viewPager.setAdapter(adapter);
-    }
-
-    public View getTimerLink(){
-        return timer;
-    }
-
-    public View getTimerTextLink(){
-        return timerText;
     }
 
     public CoordinatorLayout getCoordinatorLayout(){
