@@ -15,6 +15,8 @@ import java.util.List;
 
 public class RacerDrawOnLap extends Thread {
 
+    private boolean runFlag = false;
+
     private SurfaceHolder surfaceHolder;
 
     private Paint paint;
@@ -69,6 +71,10 @@ public class RacerDrawOnLap extends Thread {
         }
     }
 
+    public void setRunning(boolean run) {
+        runFlag = run;
+    }
+
     @Override
     public void run() {
         Canvas canvas = null;
@@ -77,7 +83,7 @@ public class RacerDrawOnLap extends Thread {
         try {
             synchronized (surfaceHolder) {
 
-                while(true){
+                while(runFlag){
                     canvas = surfaceHolder.lockCanvas(null);
 
                     canvas.drawColor(Color.WHITE);

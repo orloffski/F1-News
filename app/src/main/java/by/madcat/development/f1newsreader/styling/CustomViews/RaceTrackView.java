@@ -43,6 +43,7 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
 
         racerDrawOnLap = new RacerDrawOnLap(getHolder(), screenWidth, screenHeight,
                 BitmapFactory.decodeResource(getResources(), R.drawable.dot), timers);
+        racerDrawOnLap.setRunning(true);
         racerDrawOnLap.start();
     }
 
@@ -53,7 +54,17 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        boolean retry = true;
+        // завершаем работу потока
+        racerDrawOnLap.setRunning(false);
+        while (retry) {
+            try {
+                racerDrawOnLap.join();
+                retry = false;
+            } catch (InterruptedException e) {
+                // если не получилось, то будем пытаться еще и еще
+            }
+        }
     }
 
     private void init(){
