@@ -25,7 +25,10 @@ public class OnlineSessionLoadService extends Service {
     public final static String BROADCAST_SERVICE_ACTION = "online_session_service";
     public final static String BROADCAST_ACTION_DATA = "online_session_data";
 
-    private final static int INTERVAL = 60000;
+    public final static String INTERVAL_DATA = "interval_data";
+
+    private final static int INTERVAL = 20000;
+    private int interval = 0;
 
     BroadcastReceiver receiver;
 
@@ -38,12 +41,14 @@ public class OnlineSessionLoadService extends Service {
     public IBinder onBind(Intent intent) {
         timer = new Timer();
 
-        timerTaskReSchedule(0, INTERVAL);
+        interval = intent.getIntExtra(INTERVAL_DATA, 0);
+
+        timerTaskReSchedule(0, getInterval());
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                timerTaskReSchedule(0, INTERVAL);
+                timerTaskReSchedule(0, getInterval());
             }
         };
 
@@ -104,6 +109,13 @@ public class OnlineSessionLoadService extends Service {
         intent.putExtra(BROADCAST_ACTION_DATA, data);
         sendBroadcast(intent);
 
-        timerTaskReSchedule(INTERVAL, INTERVAL);
+        timerTaskReSchedule(getInterval(), getInterval());
+    }
+
+    private int getInterval(){
+        if(this.interval == 0)
+            return INTERVAL;
+        else
+            return interval;
     }
 }
