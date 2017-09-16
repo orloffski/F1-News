@@ -107,7 +107,7 @@ public class PreferencesFragment extends PreferenceFragment {
                 }else{
                     if(PreferencesUtils.getNextGpTime(getContext()) == 0){
                         ViewCreator.sendSnackbarMessage(
-                                ((MainActivity)getActivity()).getCoordinatorLayout(),
+                                ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                                 getString(R.string.reminder_data_null),
                                 Snackbar.LENGTH_SHORT);
                         cancelReminder();
@@ -167,7 +167,7 @@ public class PreferencesFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 if(NewsLinkListToLoad.getInstance(null, getContext()).isLock()){
                     ViewCreator.sendSnackbarMessage(
-                            ((MainActivity)getActivity()).getCoordinatorLayout(),
+                            ((NewsListActivity)getActivity()).getCoordinatorLayout(),
                             getString(R.string.news_load_running),
                             Snackbar.LENGTH_LONG);
                     move_to_sd.setChecked(!move_to_sd.isChecked());

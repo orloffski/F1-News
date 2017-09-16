@@ -181,7 +181,7 @@ public class NewsListFragment extends Fragment
                 swipeRefreshLayout.setRefreshing(false);
 
                 int data = intent.getIntExtra(SERVICE_DATA, 0);
-                Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), createLoadMessage(data), Snackbar.LENGTH_SHORT).show();
 
             }
         };
@@ -307,7 +307,7 @@ public class NewsListFragment extends Fragment
     public void loadMoreNews(){
         if(!SystemUtils.isNetworkAvailableAndConnected(context)) {
             swipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(((MainActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(((NewsListActivity)getActivity()).getCoordinatorLayout(), getString(R.string.network_not_available), Snackbar.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(context, UILoadNewsService.class);
             context.startService(intent);
@@ -332,7 +332,7 @@ public class NewsListFragment extends Fragment
     }
 
     private void dataLoadComplete(){
-        ((MainActivity)getActivity()).initFragmentData(0);
+        ((NewsListActivity)getActivity()).initFragmentData(0);
     }
 
     public void updateSearchQuery(String searchQuery){
