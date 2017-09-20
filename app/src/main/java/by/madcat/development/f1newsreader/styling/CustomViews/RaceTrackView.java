@@ -8,8 +8,11 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.LinkedList;
+
 import by.madcat.development.f1newsreader.Models.TracksPoints;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 import by.madcat.development.f1newsreader.styling.drawingThread.RacerDrawOnLap;
 
 public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback {
@@ -41,10 +44,10 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        int[] timers = new int[]{60, 120, 240};
-        mapTrack = TracksPoints.getTrackPoints(PreferencesUtils.getNextGpCountry(getContext()));
+//        mapTrack = TracksPoints.getTrackPoints(PreferencesUtils.getNextGpCountry(getContext()));
+        mapTrack = TracksPoints.getTrackPoints("Гран При Сингапура");
 
-        racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight, timers, mapTrack);
+        racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight, mapTrack);
         racerDrawOnLap.setRunning(true);
         racerDrawOnLap.start();
     }
@@ -80,5 +83,9 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screenWidth = displaymetrics.widthPixels;
         screenHeight = displaymetrics.heightPixels;
+    }
+
+    public void updateRaceData(LinkedList<TimingElement> timings){
+        racerDrawOnLap.setRaceData(timings);
     }
 }

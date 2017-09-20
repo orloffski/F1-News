@@ -7,8 +7,10 @@ import org.jsoup.select.Elements;
 
 import java.util.Calendar;
 
+import by.madcat.development.f1newsreader.Models.RaceDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
+import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
 public final class StringUtils {
     private static final String NEWS_PREFIX = "f1news.ru/news/f1-";
@@ -106,5 +108,42 @@ public final class StringUtils {
         }
 
         return doc.toString();
+    }
+
+    public static RaceDataModel getRaceDataModel(TimingElement element, float pathLenght, int fps, boolean needGap){
+        float seconds = getSeconds(element.getLastLap());
+        float gap = getGap(element.getGap());
+
+        if(needGap)
+            seconds += gap;
+
+        if(seconds != 0)
+            return new RaceDataModel(seconds * fps, pathLenght / (seconds * fps), 0);
+        else
+            return new RaceDataModel(0, 0f, 0);
+    }
+
+    private static float getSeconds(String secondsString){
+        float tmpSeconds = 0;
+
+        if(!secondsString.equals("STOP")) {
+            tmpSeconds += Integer.valueOf(secondsString.split(":")[0]) * 60;
+            tmpSeconds += Float.valueOf(secondsString.split(":")[1]);
+        }
+
+        return tmpSeconds;
+    }
+
+    private static float getGap(String gapString){
+        float tmpGap = 0;
+
+        if(gapString.contains(":")) {
+            tmpGap += Integer.valueOf(gapString.split(":")[0]) * 60;
+            tmpGap += Float.valueOf(gapString.split(":")[1]);
+        }else if(gapString.length() != 0 && !gapString.contains("L")){
+            tmpGap += Float.valueOf(gapString);
+        }
+
+        return tmpGap;
     }
 }

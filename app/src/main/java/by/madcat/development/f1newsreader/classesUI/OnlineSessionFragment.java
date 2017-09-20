@@ -86,6 +86,9 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
                 timings.clear();
                 raceMode = JsonParseUtils.getRaceMode(data);
 
+                if(raceMode == null)
+                    return;
+
                 sessionStatusFragment.updateRace(raceMode);
 
                 if(raceMode.getMode().equals("race")){

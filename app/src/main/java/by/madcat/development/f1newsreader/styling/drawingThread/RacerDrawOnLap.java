@@ -14,11 +14,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
+import by.madcat.development.f1newsreader.Models.RaceDataModel;
+import by.madcat.development.f1newsreader.Models.Racers;
 import by.madcat.development.f1newsreader.R;
+import by.madcat.development.f1newsreader.Utils.StringUtils;
+import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
 public class RacerDrawOnLap extends Thread {
+
+    private int fps = 15;
 
     private boolean runFlag = false;
 
@@ -35,19 +44,13 @@ public class RacerDrawOnLap extends Thread {
     private float[][] pointsMap;
     List<PointF> aPoints;
 
-    int[] time;  // test time to lap
-    int[] nowTime;  // test timer
-
     private PathMeasure pm;
     private float pathLenght;
-    private float segmentLenght[];
 
-    public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, int[] timers, float[][] mapTrack) {
+    private HashMap<Racers, RaceDataModel> raceData, tmpRaceData;
+    private Racers[] racers = Racers.values();
 
-        time = timers;
-        segmentLenght = new float[timers.length];
-        nowTime = new int[timers.length];
-
+    public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, float[][] mapTrack) {
         pointsMap = mapTrack;
 
         screenWidth = width;
@@ -67,10 +70,6 @@ public class RacerDrawOnLap extends Thread {
 
         pm = new PathMeasure(ptCurve, false);
         pathLenght = pm.getLength();
-        for(int i = 0; i < time.length; i++) {
-            segmentLenght[i] = pathLenght / time[i];
-            nowTime[i] = 0;
-        }
     }
 
     public void setRunning(boolean run) {
@@ -82,39 +81,74 @@ public class RacerDrawOnLap extends Thread {
         Canvas canvas = null;
         Matrix mxTransform = new Matrix();
 
+        canvas = surfaceHolder.lockCanvas(null);
+        canvas.drawColor(Color.WHITE);
+        canvas.drawPath(ptCurve, paint);
+        if (canvas != null) {
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+
         try {
             synchronized (surfaceHolder) {
 
                 while(runFlag){
+                    long timestamp = System.nanoTime();
 
                     canvas = surfaceHolder.lockCanvas(null);
 
                     canvas.drawColor(Color.WHITE);
                     canvas.drawPath(ptCurve, paint);
 
-                    for(int i = 0; i < time.length; i++){
-                        if(nowTime[i] < time[i]) {
-                            View racerView = getRacerView();
-                            setRacerName(racerView, String.valueOf(i));
-
-                            canvas.save();
-                            pm.getMatrix(segmentLenght[i] * nowTime[i], mxTransform,
-                                    PathMeasure.POSITION_MATRIX_FLAG);
-                            mxTransform.preTranslate(-racerView.getWidth(), -racerView.getHeight());
-                            canvas.setMatrix(mxTransform);
-                            racerView.draw(canvas);
-                            canvas.restore();
-
-                            nowTime[i]++; //advance to the next step
-                        }else{
-                            nowTime[i] = 0;
+                    for(int i = 0; i < racers.length; i++) {
+                        if (raceData == null) {
+                            Thread.sleep(10);
+                            continue;
                         }
+
+                            if (raceData.get(racers[i]) != null) {
+                                RaceDataModel tmpModel = raceData.get(racers[i]);
+
+                                if (tmpModel.getTimer() < tmpModel.getSeconds()) {
+                                    View racerView = getRacerView();
+                                    setRacerName(racerView, String.valueOf(racers[i]));
+
+                                    canvas.save();
+                                    pm.getMatrix(tmpModel.getSegmentLenght() * tmpModel.getTimer(), mxTransform,
+                                            PathMeasure.POSITION_MATRIX_FLAG);
+                                    mxTransform.preTranslate(-racerView.getWidth(), -racerView.getHeight());
+                                    canvas.setMatrix(mxTransform);
+                                    racerView.draw(canvas);
+                                    canvas.restore();
+
+                                    tmpModel.setTimer(tmpModel.getTimer() + 1);
+                                } else {
+                                    timestamp = System.nanoTime();
+                                    tmpModel.setTimer(0);
+
+                                    if (raceData.get(racers[i]).isToDelete()) {
+                                        tmpModel.setSeconds(0);
+                                        tmpModel.setSegmentLenght(0);
+                                    } else {
+                                        tmpModel.setSeconds(tmpRaceData.get(racers[i]).getSeconds());
+                                        tmpModel.setSegmentLenght(pathLenght / tmpModel.getSeconds());
+                                    }
+                                }
+
+                                raceData.put(racers[i], tmpModel);
+                            }
                     }
                     if (canvas != null) {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                     }
 
-                    Thread.sleep(100);
+                    long interval = System.nanoTime() - timestamp;
+                    if((1000/fps)*1000000 > interval){
+                        interval = (1000/fps)*1000000 - interval;
+                        long millis = interval / 999999;
+                        int nanos = (int)(interval - millis * 999999);
+
+                        Thread.sleep(millis, nanos);
+                    }
                 }
             }
         } catch (InterruptedException e) {
@@ -194,5 +228,28 @@ public class RacerDrawOnLap extends Thread {
             PointF next = aPoints.get(i+1);
             ptCurve.quadTo(point.x, point.y, (next.x + point.x) / 2, (point.y + next.y) / 2);
         }
+    }
+
+    public void setRaceData(LinkedList<TimingElement> timings) {
+
+            if (raceData == null) {
+                raceData = new LinkedHashMap<>();
+
+                synchronized (raceData) {
+                    for (TimingElement element : timings) {
+                        raceData.put(Racers.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, true));
+                    }
+                }
+            } else {
+                if(tmpRaceData == null)
+                    tmpRaceData = new LinkedHashMap<>();
+
+                synchronized (tmpRaceData) {
+                    for (TimingElement element : timings) {
+                        tmpRaceData.put(Racers.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, false));
+                    }
+                }
+            }
+
     }
 }
