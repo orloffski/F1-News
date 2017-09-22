@@ -34,14 +34,7 @@ import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.ALL;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.AUTOSPORT;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.COLUMNS;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.HISTORY;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.INTERVIEW;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.MEMUAR;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.NEWS;
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.TECH;
+import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.*;
 
 public class NewsListActivity extends AppCompatActivity implements NewsOpenListener{
 

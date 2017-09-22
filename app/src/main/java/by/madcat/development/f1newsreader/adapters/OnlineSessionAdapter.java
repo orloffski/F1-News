@@ -1,17 +1,14 @@
 package by.madcat.development.f1newsreader.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
