@@ -76,27 +76,6 @@ public final class StringUtils {
         return tmpLine.toString();
     }
 
-    public static int getImageByTitle(String title){
-        switch (title){
-            case "Новости":
-                return R.drawable.drawerimage_news;
-            case "Статьи":
-                return R.drawable.drawerimage_memuar;
-            case "Интервью":
-                return R.drawable.drawerimage_interview;
-            case "Техника":
-                return R.drawable.drawerimage_tech;
-            case "История":
-                return R.drawable.drawerimage_history;
-            case "Авторские колонки":
-                return R.drawable.drawerimage_columns;
-            case "Автоспорт":
-                return R.drawable.drawerimage_autosport;
-            default:
-                return R.drawable.drawerimage_news;
-        }
-    }
-
     public static String replaceImagesInWebView(String htmlText){
         Document doc = Jsoup.parse(htmlText);
 

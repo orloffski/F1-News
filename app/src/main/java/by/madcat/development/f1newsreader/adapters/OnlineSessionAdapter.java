@@ -83,73 +83,73 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
 
         switch (driverName){
             case "Алонсо":
-                helmet += "helmets/alonso.jpg";
+                helmet += "helmets/alonso.webp";
                 break;
             case "Боттас":
-                helmet += "helmets/bottas.jpg";
+                helmet += "helmets/bottas.webp";
                 break;
             case"Эриксон":
-                helmet += "helmets/ericsson.jpg";
+                helmet += "helmets/ericsson.webp";
                 break;
             case "Джовинацци":
-                helmet += "helmets/giovinazzi.jpg";
+                helmet += "helmets/giovinazzi.webp";
                 break;
             case "Грожан":
-                helmet += "helmets/grojean.jpg";
+                helmet += "helmets/grojean.webp";
                 break;
             case "Хэмилтон":
-                helmet += "helmets/hamilton.jpg";
+                helmet += "helmets/hamilton.webp";
                 break;
             case "Хюлкенберг":
-                helmet += "helmets/hulkenberg.jpg";
+                helmet += "helmets/hulkenberg.webp";
                 break;
             case "Квят":
-                helmet += "helmets/kvyat.jpg";
+                helmet += "helmets/kvyat.webp";
                 break;
             case "Магнуссен":
-                helmet += "helmets/magnussen.jpg";
+                helmet += "helmets/magnussen.webp";
                 break;
             case "Масса":
-                helmet += "helmets/massa.jpg";
+                helmet += "helmets/massa.webp";
                 break;
             case "Окон":
-                helmet += "helmets/ocon.jpg";
+                helmet += "helmets/ocon.webp";
                 break;
             case "Палмер":
-                helmet += "helmets/palmer.jpg";
+                helmet += "helmets/palmer.webp";
                 break;
             case "Перес":
-                helmet += "helmets/perez.jpg";
+                helmet += "helmets/perez.webp";
                 break;
             case "Райкконен":
-                helmet += "helmets/raikkonen.jpg";
+                helmet += "helmets/raikkonen.webp";
                 break;
             case "Риккардо":
-                helmet += "helmets/ricciardo.jpg";
+                helmet += "helmets/ricciardo.webp";
                 break;
             case "Сайнс":
-                helmet += "helmets/sainz.jpg";
+                helmet += "helmets/sainz.webp";
                 break;
             case "Сироткин":
-                helmet += "helmets/sirotkin.jpg";
+                helmet += "helmets/sirotkin.webp";
                 break;
             case "Стролл":
-                helmet += "helmets/stroll.jpg";
+                helmet += "helmets/stroll.webp";
                 break;
             case "Вандорн":
-                helmet += "helmets/vandorne.jpg";
+                helmet += "helmets/vandorne.webp";
                 break;
             case "Ферстаппен":
-                helmet += "helmets/verstappen.jpg";
+                helmet += "helmets/verstappen.webp";
                 break;
             case "Феттель":
-                helmet += "helmets/vettel.jpg";
+                helmet += "helmets/vettel.webp";
                 break;
             case "Верляйн":
-                helmet += "helmets/wehrlein.jpg";
+                helmet += "helmets/wehrlein.webp";
                 break;
             default:
-                helmet += "helmets/default.jpg";
+                helmet += "helmets/default.webp";
         }
 
         return helmet;

@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="none"
-                    app:srcCompat="@drawable/drawerimage_news" />
+                    app:srcCompat="@drawable/f1_logo" />
 
                 <FrameLayout
                     android:layout_width="match_parent"

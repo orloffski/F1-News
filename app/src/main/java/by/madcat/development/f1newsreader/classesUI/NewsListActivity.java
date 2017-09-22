@@ -3,6 +3,7 @@ package by.madcat.development.f1newsreader.classesUI;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +31,6 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
-import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
@@ -86,7 +86,8 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
-        updateToolbarData(StringUtils.getImageByTitle("Новости"));
+        setToolbarImage("file:///android_asset/mainImages/top_image.webp");
+        collapsingToolbarLayout.setTitle(" ");
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
             loadTimer();
@@ -214,9 +215,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
 
             @Override
             public void onPageSelected(int position) {
-                String title = String.valueOf(adapter.getPageTitle(position));
-                updateToolbarData(StringUtils.getImageByTitle(title));
-
+                collapsingToolbarLayout.setTitle(" ");
                 initFragmentData(position);
             }
 
@@ -230,9 +229,10 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void updateToolbarData(int imageR){
-        collapsingToolbarLayout.setTitle(" ");
-        Glide.with(NewsListActivity.this).load(imageR).into(backdrop);
+    private void setToolbarImage(String imagePath){
+        Glide.with(NewsListActivity.this)
+                .load(Uri.parse(imagePath))
+                .into(backdrop);
 
     }
 
