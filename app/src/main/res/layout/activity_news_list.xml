@@ -52,17 +52,17 @@
 
                         <TextView
                             android:id="@+id/timerText"
-                            style="@style/TimerTextStyleOverlayShadow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="?actionBarSize"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/weekend_text_size" />
 
                         <TextView
                             android:id="@+id/timer"
-                            style="@style/TimerTextStyleOverlayShadow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
                             android:textSize="@dimen/weekend_text_size" />
                     </LinearLayout>
 

@@ -86,7 +86,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
-        setToolbarImage("file:///android_asset/mainImages/top_image.webp");
+        setToolbarImage("file:///android_asset/mainImages/top_image1.webp");
         collapsingToolbarLayout.setTitle(" ");
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
