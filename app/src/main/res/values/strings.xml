@@ -136,6 +136,7 @@
     <string name="reminder_content_text">До старта %1$s осталось %2$s</string>
     <string name="gp_online">ОНЛАЙН</string>
 
+    <string name="open_in_browser">Открыть в браузере</string>
     <string name="action_share">Поделиться</string>
     <string name="action_backpress">Вернуться к разделу</string>
 

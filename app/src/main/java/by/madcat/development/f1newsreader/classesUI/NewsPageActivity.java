@@ -99,6 +99,10 @@ public class NewsPageActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return false;
+            case R.id.open_in_browser:
+                Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse(shareLink));
+                startActivity(intent);
+                return false;
             case R.id.share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
