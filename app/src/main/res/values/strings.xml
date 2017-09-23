@@ -65,6 +65,30 @@
     <string name="doze_disabled_title">Отключить энергосбережение</string>
     <string name="doze_disabled_summary">Данная функция необходима для работы приложения в режиме Doze. Актуальна для Android 6.0 и выше</string>
 
+    <!-- choose main image -->
+    <string name="main_image_choose_title">Выбор главного изображения</string>
+    <string-array name="entries">
+        <item>Item 1</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+        <item>Item 4</item>
+        <item>Item 5</item>
+    </string-array>
+    <string-array name="entryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="entryImages">
+        <item>file:///android_asset/mainImages/top_image1.webp</item>
+        <item>file:///android_asset/mainImages/top_image2.webp</item>
+        <item>file:///android_asset/mainImages/top_image3.webp</item>
+        <item>file:///android_asset/mainImages/top_image4.webp</item>
+        <item>file:///android_asset/mainImages/top_image5.webp</item>
+    </string-array>
+
     <!-- intervals -->
     <string-array name="intervals_title">
         <item>5 минут</item>

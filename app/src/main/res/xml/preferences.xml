@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="@string/system_pref_title"
         android:layout="@layout/preferences_category_style">
@@ -19,6 +20,14 @@
         android:title="@string/category_hide_news"
         android:layout="@layout/preferences_category_style">
 
+        <by.madcat.development.f1newsreader.styling.CustomViews.ImageListPreference
+            android:key="main_image_choose"
+            android:title="@string/main_image_choose_title"
+            android:summary=""
+            android:dialogTitle="@string/main_image_choose_title"
+            android:entries="@array/entries"
+            android:entryValues="@array/entryValues"
+            app:entryImages="@array/entryImages" />
         <CheckBoxPreference
             android:key="hide_read_news"
             android:summary="@string/hide_read_news_checkbox_summary"

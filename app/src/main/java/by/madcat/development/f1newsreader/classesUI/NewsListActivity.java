@@ -31,6 +31,7 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
 import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
+import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
 
@@ -86,7 +87,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.news_pages_layout);
 
         loadTimerViews();
-        setToolbarImage("file:///android_asset/mainImages/top_image1.webp");
+        setToolbarImage(PreferencesUtils.getMainImageNum(this));
         collapsingToolbarLayout.setTitle(" ");
 
         if(timerTask == null || timerTask.getStatus() != AsyncTask.Status.RUNNING)
@@ -126,6 +127,8 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
     @Override
     protected void onResume() {
         super.onResume();
+
+        setToolbarImage(PreferencesUtils.getMainImageNum(this));
 
         clearNotifications(BackgroundLoadNewsService.NOTIFICATION_ID);
         clearNotifications(ReminderService.NOTIFICATION_ID);
@@ -229,7 +232,10 @@ public class NewsListActivity extends AppCompatActivity implements NewsOpenListe
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setToolbarImage(String imagePath){
+    private void setToolbarImage(String imageNum){
+
+        String imagePath = getResources().getStringArray(R.array.entryImages)[Integer.parseInt(imageNum)];
+
         Glide.with(NewsListActivity.this)
                 .load(Uri.parse(imagePath))
                 .into(backdrop);

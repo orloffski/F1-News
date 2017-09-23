@@ -33,6 +33,8 @@ public class PreferencesUtils {
 
     public static final String AUTOSCROLLING_FLAG = "autoscrolling_text_online";
 
+    public static final String MAIN_IMAGE = "main_image_choose";
+
     private static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.edit();
@@ -185,5 +187,9 @@ public class PreferencesUtils {
 
     public static boolean getAutoscrollingFlag(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(AUTOSCROLLING_FLAG, false);
+    }
+
+    public static String getMainImageNum(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(MAIN_IMAGE, "0");
     }
 }

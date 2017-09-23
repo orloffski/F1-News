@@ -24,6 +24,7 @@ import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.Utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
+import by.madcat.development.f1newsreader.styling.CustomViews.ImageListPreference;
 
 public class PreferencesFragment extends PreferenceFragment {
 
@@ -41,8 +42,11 @@ public class PreferencesFragment extends PreferenceFragment {
         // скрытие прочитанных новостей
         final CheckBoxPreference hide_read_news = (CheckBoxPreference)findPreference("hide_read_news");
 
-        // скрытие прочитанных новостей
+        // включение разделов новостей
         final CheckBoxPreference sections_news = (CheckBoxPreference)findPreference("sections_news");
+
+        // выбор главного изображения
+        final ImageListPreference imageListPreference = (ImageListPreference)findPreference("main_image_choose");
 
         // автообновление новостей
         final CheckBoxPreference refresh_interval_on = (CheckBoxPreference)findPreference("refresh_interval_on");
@@ -209,6 +213,7 @@ public class PreferencesFragment extends PreferenceFragment {
                 return false;
             }
         });
+
     }
 
     @Override
