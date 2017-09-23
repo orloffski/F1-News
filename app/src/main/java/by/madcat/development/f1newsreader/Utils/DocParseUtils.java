@@ -333,26 +333,9 @@ public final class DocParseUtils {
         Element weekend = jsDoc.getElementsByClass(NEXT_WEEKEND_GP_HEAD_STREAM).first();
         String weekendTitle = weekend.getElementsByClass(NEXT_WEEKEND_GP_TITLE_STREAM).text();
 
-        String weekendTrackMap = "";
-        Elements links = jsDoc.getElementsByTag("a");
-        for(Element link : links){
-            if(link.text().equals("Трасса и статистика")){
-                Document subDoc = DocParseUtils.getJsDoc(link.attr("href"));
-                Element weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "-track.png").first();
-                if(weekendTrack == null)
-                    weekendTrack = subDoc.getElementsByAttributeValueContaining("src", "_track.png").first();
-
-                if(weekendTrack != null)
-                    weekendTrackMap = StringUtils.getImageNameFromURL(weekendTrack.attr("src"));
-                else
-                    weekendTrackMap = "";
-            }
-
-        }
-
         Element weekendTable = weekend.getElementsByClass(NEXT_WEEKEND_GP_BODY_STREAM).first();
 
-        PreferencesUtils.saveWeekendData(weekendTitle, weekendTrackMap, getWeekendData(weekendTable), context);
+        PreferencesUtils.saveWeekendData(weekendTitle, getWeekendData(weekendTable), context);
     }
 
     private static Map<String, String> getWeekendData(Element weekendTable){

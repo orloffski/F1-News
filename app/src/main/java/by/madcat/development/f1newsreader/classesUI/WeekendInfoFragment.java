@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.Map;
 
+import by.madcat.development.f1newsreader.Models.TracksDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
@@ -65,7 +66,9 @@ public class WeekendInfoFragment extends Fragment {
         String weekendTitleString = PreferencesUtils.getWeekendTitle(context);
         weekendTitle.setText(weekendTitleString);
 
-        String fullPathImage = SystemUtils.getImagesPath(getContext()) + getWeekendTrackMap();
+        String fullPathImage = "file:///android_asset/tracks_maps/" +
+                TracksDataModel.getTrackName(weekendTitleString) +
+                ".webp";
         Glide.with(context).load(fullPathImage).into(weekendTrack);
 
         Map<String, String> weekendData = PreferencesUtils.getWeekendData(context);
@@ -89,9 +92,5 @@ public class WeekendInfoFragment extends Fragment {
 
             counter++;
         }
-    }
-
-    private String getWeekendTrackMap(){
-        return PreferencesUtils.getWeekendImage(getContext());
     }
 }

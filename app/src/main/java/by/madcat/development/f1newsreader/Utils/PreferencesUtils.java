@@ -75,11 +75,9 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(REMINDER_RINGTONE, "");
     }
 
-    public static void saveWeekendData(String weekendTitle, String weekendImage, Map<String, String> weekendData, Context context){
+    public static void saveWeekendData(String weekendTitle, Map<String, String> weekendData, Context context){
         SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
         editor.putString(WEEKEND_TITLE, weekendTitle);
-
-        editor.putString(WEEKEND_IMAGE, weekendImage);
 
         int counter = 1;
 
@@ -127,10 +125,6 @@ public class PreferencesUtils {
 
     public static String getWeekendTitle(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_TITLE, "");
-    }
-
-    public static String getWeekendImage(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(WEEKEND_IMAGE, "");
     }
 
     public static String getReminderInterval(Context context){
