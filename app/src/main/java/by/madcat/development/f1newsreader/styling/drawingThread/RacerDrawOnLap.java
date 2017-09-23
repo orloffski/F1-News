@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import by.madcat.development.f1newsreader.Models.RaceDataModel;
-import by.madcat.development.f1newsreader.Models.Racers;
+import by.madcat.development.f1newsreader.Models.RacersDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
@@ -47,8 +47,8 @@ public class RacerDrawOnLap extends Thread {
     private PathMeasure pm;
     private float pathLenght;
 
-    private HashMap<Racers, RaceDataModel> raceData, tmpRaceData;
-    private Racers[] racers = Racers.values();
+    private HashMap<RacersDataModel, RaceDataModel> raceData, tmpRaceData;
+    private RacersDataModel[] racers = RacersDataModel.values();
 
     public RacerDrawOnLap(SurfaceHolder surfaceHolder, Context context, int width, int height, float[][] mapTrack) {
         pointsMap = mapTrack;
@@ -168,7 +168,7 @@ public class RacerDrawOnLap extends Thread {
 
     private void setRacerName(View view, String racerName){
         TextView name = (TextView)view.findViewById(R.id.racerName);
-        name.setText(racerName);
+        name.setText(RacersDataModel.getRacerAbr(racerName));
     }
 
     private float getMaxX(){
@@ -237,7 +237,7 @@ public class RacerDrawOnLap extends Thread {
 
                 synchronized (raceData) {
                     for (TimingElement element : timings) {
-                        raceData.put(Racers.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, true));
+                        raceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, true));
                     }
                 }
             } else {
@@ -246,7 +246,7 @@ public class RacerDrawOnLap extends Thread {
 
                 synchronized (tmpRaceData) {
                     for (TimingElement element : timings) {
-                        tmpRaceData.put(Racers.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, false));
+                        tmpRaceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, false));
                     }
                 }
             }
