@@ -145,8 +145,6 @@ public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.O
             }
         });
 
-        getActivity().setTitle(PreferencesUtils.getNextGpCountry(getActivity()));
-
         loadOnlinePostsData();
 
         return view;

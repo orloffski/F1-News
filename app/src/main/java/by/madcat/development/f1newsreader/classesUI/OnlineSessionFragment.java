@@ -119,8 +119,6 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
-        getActivity().setTitle(PreferencesUtils.getNextGpCountry(getActivity()));
-
         loadOnlineSessionData();
 
         return view;

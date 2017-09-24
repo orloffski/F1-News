@@ -48,6 +48,8 @@ public class OnlineActivity extends BottomBarHolderActivity {
         navigationPages.add(onLap);
 
         super.setupBottomBarHolderActivity(navigationPages);
+
+        setTitle(PreferencesUtils.getNextGpCountry(this));
     }
 
     @Override
