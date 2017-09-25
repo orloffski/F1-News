@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.styling.CustomViews.SpeedwayTextView;
 
 public class SessionStatusFragment extends Fragment {
 
@@ -20,6 +21,7 @@ public class SessionStatusFragment extends Fragment {
     private RobotoRegularTextView airTempData;
     private RobotoRegularTextView lapsData;
     private RobotoRegularTextView laps;
+    private SpeedwayTextView raceModeSymbol;
 
     private RaceMode raceMode;
 
@@ -38,6 +40,7 @@ public class SessionStatusFragment extends Fragment {
         airTempData = (RobotoRegularTextView) view.findViewById(R.id.air_temp_data);
         lapsData = (RobotoRegularTextView) view.findViewById(R.id.laps_data);
         laps = (RobotoRegularTextView) view.findViewById(R.id.laps);
+        raceModeSymbol = (SpeedwayTextView) view.findViewById(R.id.race_mode_symbol);
 
         return view;
     }
@@ -54,11 +57,13 @@ public class SessionStatusFragment extends Fragment {
         Glide.with(getContext()).load(getFlagFromDrawable(raceMode.getFlag())).placeholder(R.drawable.flag_green).into(flag);
         trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
         airTempData.setText(String.valueOf(raceMode.getAirTemp()));
-        if(raceMode.getMode().equals("race"))
+        if(raceMode.getMode().equals("race")) {
             lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
-        else {
+            raceModeSymbol.setText("R");
+        }else {
             lapsData.setText("");
             laps.setText("");
+            raceModeSymbol.setText("Q");
         }
 
     }

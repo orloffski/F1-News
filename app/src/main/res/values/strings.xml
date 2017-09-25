@@ -161,6 +161,7 @@
 
     <!-- Fonts -->
     <string name="font_Perfograma">fonts/Perfograma.ttf</string>
+    <string name="font_Speedway">fonts/Speedway.ttf</string>
     <string name="font_Roboto_Regular">fonts/Roboto-Regular.ttf</string>
     <string name="font_Roboto_Medium">fonts/Roboto-Medium.ttf</string>
 
