@@ -19,6 +19,7 @@ public class SessionStatusFragment extends Fragment {
     private RobotoRegularTextView trackTempData;
     private RobotoRegularTextView airTempData;
     private RobotoRegularTextView lapsData;
+    private RobotoRegularTextView laps;
 
     private RaceMode raceMode;
 
@@ -36,6 +37,7 @@ public class SessionStatusFragment extends Fragment {
         trackTempData = (RobotoRegularTextView) view.findViewById(R.id.track_temp_data);
         airTempData = (RobotoRegularTextView) view.findViewById(R.id.air_temp_data);
         lapsData = (RobotoRegularTextView) view.findViewById(R.id.laps_data);
+        laps = (RobotoRegularTextView) view.findViewById(R.id.laps);
 
         return view;
     }
@@ -52,7 +54,13 @@ public class SessionStatusFragment extends Fragment {
         Glide.with(getContext()).load(getFlagFromDrawable(raceMode.getFlag())).placeholder(R.drawable.flag_green).into(flag);
         trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
         airTempData.setText(String.valueOf(raceMode.getAirTemp()));
-        lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
+        if(raceMode.getMode().equals("race"))
+            lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
+        else {
+            lapsData.setText("");
+            laps.setText("");
+        }
+
     }
 
     private int getFlagFromDrawable(String flagColor){
