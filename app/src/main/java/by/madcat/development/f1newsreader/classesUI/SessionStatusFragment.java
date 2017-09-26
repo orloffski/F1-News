@@ -20,7 +20,9 @@ public class SessionStatusFragment extends Fragment {
 
     private ImageView flag;
     private ImageView trackTempImage;
+    private ImageView airTempImage;
     private TextView trackTempText;
+    private TextView airTempText;
     private SpeedwayTextView raceModeSymbol;
 
     private RaceMode raceMode;
@@ -37,7 +39,9 @@ public class SessionStatusFragment extends Fragment {
 
         flag = (ImageView) view.findViewById(R.id.flag);
         trackTempImage = (ImageView) view.findViewById(R.id.trackTempImage);
+        airTempImage = (ImageView) view.findViewById(R.id.airTempImage);
         trackTempText = (TextView) view.findViewById(R.id.trackTempText);
+        airTempText = (TextView) view.findViewById(R.id.airTempText);
         raceModeSymbol = (SpeedwayTextView) view.findViewById(R.id.race_mode_symbol);
 
         return view;
@@ -57,8 +61,9 @@ public class SessionStatusFragment extends Fragment {
         Glide.with(getContext()).load(Uri.parse("file:///android_asset/sessionImages/track.png")).into(trackTempImage);
         trackTempText.setText(String.valueOf(raceMode.getTrackTemp()) + getString(R.string.temperature_celsium));
 
-//        trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
-//        airTempData.setText(String.valueOf(raceMode.getAirTemp()));
+        Glide.with(getContext()).load(Uri.parse("file:///android_asset/sessionImages/cloud.png")).into(airTempImage);
+        airTempText.setText(String.valueOf(raceMode.getAirTemp()) + getString(R.string.temperature_celsium));
+
         if(raceMode.getMode().equals("race")) {
 //            lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
             raceModeSymbol.setText("R");
