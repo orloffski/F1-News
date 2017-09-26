@@ -190,7 +190,6 @@
 
     <!-- Online timing status strings -->
     <string name="temperature_celsium">"\u2103"</string>
-    <string name="laps_text">"   lap/laps"</string>
 
     <string name="title_activity_preferences">Настройки приложения</string>
 </resources>

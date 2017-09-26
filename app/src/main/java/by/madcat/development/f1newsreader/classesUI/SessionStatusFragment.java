@@ -24,6 +24,8 @@ public class SessionStatusFragment extends Fragment {
     private TextView trackTempText;
     private TextView airTempText;
     private SpeedwayTextView raceModeSymbol;
+    private TextView lapText;
+    private TextView lapsText;
 
     private RaceMode raceMode;
 
@@ -43,6 +45,8 @@ public class SessionStatusFragment extends Fragment {
         trackTempText = (TextView) view.findViewById(R.id.trackTempText);
         airTempText = (TextView) view.findViewById(R.id.airTempText);
         raceModeSymbol = (SpeedwayTextView) view.findViewById(R.id.race_mode_symbol);
+        lapText = (TextView) view.findViewById(R.id.lapText);
+        lapsText = (TextView) view.findViewById(R.id.lapsText);
 
         return view;
     }
@@ -65,11 +69,12 @@ public class SessionStatusFragment extends Fragment {
         airTempText.setText(String.valueOf(raceMode.getAirTemp()) + getString(R.string.temperature_celsium));
 
         if(raceMode.getMode().equals("race")) {
-//            lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
+            lapText.setText(raceMode.getCurrentLap());
+            lapsText.setText(String.valueOf(raceMode.getTotalLaps()));
             raceModeSymbol.setText("R");
         }else {
-//            lapsData.setText("");
-//            laps.setText("");
+            lapText.setText("");
+            lapsText.setText("");
             raceModeSymbol.setText("Q");
         }
 
