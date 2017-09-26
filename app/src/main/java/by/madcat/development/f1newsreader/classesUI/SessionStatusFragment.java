@@ -1,5 +1,6 @@
 package by.madcat.development.f1newsreader.classesUI;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class SessionStatusFragment extends Fragment {
         if(raceMode == null)
             return;
 
-        Glide.with(getContext()).load(getFlagFromDrawable(raceMode.getFlag())).placeholder(R.drawable.flag_green).into(flag);
+        Glide.with(getContext()).load(Uri.parse(getFlagFromAssets(raceMode.getFlag()))).into(flag);
         trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
         airTempData.setText(String.valueOf(raceMode.getAirTemp()));
         if(raceMode.getMode().equals("race")) {
@@ -68,15 +69,24 @@ public class SessionStatusFragment extends Fragment {
 
     }
 
-    private int getFlagFromDrawable(String flagColor){
-        if(flagColor.equals("green"))
-            return R.drawable.flag_green;
-        if(flagColor.equals("red"))
-            return R.drawable.flag_red;
-        if(flagColor.equals("black"))
-            return R.drawable.flag_black;
+    private String getFlagFromAssets(String flagColor){
+        String flagPath = "file:///android_asset/sessionImages/";
 
-        return R.drawable.flag_green;
+        switch (flagColor){
+            case "green":
+                flagPath += "flag_green.webp";
+                break;
+            case "red":
+                flagPath += "flag_red.webp";
+                break;
+            case "black":
+                flagPath += "flag_black.webp";
+                break;
+            default:
+                flagPath += "flag_green.webp";
+        }
+
+        return flagPath;
     }
 
 }
