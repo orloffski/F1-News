@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -18,10 +19,8 @@ import by.madcat.development.f1newsreader.styling.CustomViews.SpeedwayTextView;
 public class SessionStatusFragment extends Fragment {
 
     private ImageView flag;
-    private RobotoRegularTextView trackTempData;
-    private RobotoRegularTextView airTempData;
-    private RobotoRegularTextView lapsData;
-    private RobotoRegularTextView laps;
+    private ImageView trackTempImage;
+    private TextView trackTempText;
     private SpeedwayTextView raceModeSymbol;
 
     private RaceMode raceMode;
@@ -37,10 +36,8 @@ public class SessionStatusFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_session_status, container, false);
 
         flag = (ImageView) view.findViewById(R.id.flag);
-        trackTempData = (RobotoRegularTextView) view.findViewById(R.id.track_temp_data);
-        airTempData = (RobotoRegularTextView) view.findViewById(R.id.air_temp_data);
-        lapsData = (RobotoRegularTextView) view.findViewById(R.id.laps_data);
-        laps = (RobotoRegularTextView) view.findViewById(R.id.laps);
+        trackTempImage = (ImageView) view.findViewById(R.id.trackTempImage);
+        trackTempText = (TextView) view.findViewById(R.id.trackTempText);
         raceModeSymbol = (SpeedwayTextView) view.findViewById(R.id.race_mode_symbol);
 
         return view;
@@ -56,14 +53,18 @@ public class SessionStatusFragment extends Fragment {
             return;
 
         Glide.with(getContext()).load(Uri.parse(getFlagFromAssets(raceMode.getFlag()))).into(flag);
-        trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
-        airTempData.setText(String.valueOf(raceMode.getAirTemp()));
+
+        Glide.with(getContext()).load(Uri.parse("file:///android_asset/sessionImages/track.png")).into(trackTempImage);
+        trackTempText.setText(String.valueOf(raceMode.getTrackTemp()) + getString(R.string.temperature_celsium));
+
+//        trackTempData.setText(String.valueOf(raceMode.getTrackTemp()));
+//        airTempData.setText(String.valueOf(raceMode.getAirTemp()));
         if(raceMode.getMode().equals("race")) {
-            lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
+//            lapsData.setText(String.valueOf(raceMode.getCurrentLap()) + "/" + String.valueOf(raceMode.getTotalLaps()));
             raceModeSymbol.setText("R");
         }else {
-            lapsData.setText("");
-            laps.setText("");
+//            lapsData.setText("");
+//            laps.setText("");
             raceModeSymbol.setText("Q");
         }
 
