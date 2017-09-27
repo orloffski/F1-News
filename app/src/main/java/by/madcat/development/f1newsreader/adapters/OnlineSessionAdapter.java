@@ -43,28 +43,12 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
         RaceMode mode = RaceMode.getInstance();
 
         // leader gap
-        holder.gapText.setText(context.getString(R.string.leader_gap_text));
-        holder.gap.setText(element.getGap().equals("-")?element.getGap():"+" + element.getGap());
         if(mode.getMode().equals("race")){
-            // gap to prev driver
-            holder.bestLapText.setText(R.string.gap_text);
-            holder.bestLap.setText(element.getBestLap());
-            // pits
-            holder.pitsText.setText(R.string.pits_text);
-            holder.pits.setText(element.getPits());
-            // last lap time
-            holder.lastLapText.setText(R.string.last_lap_text);
-            holder.lastLap.setText(element.getLastLap());
+            holder.bestLap_gap.setText(element.getGap().equals("")?element.getGap():"+" + element.getGap());
+            holder.interval_pits.setText("pits: " + element.getPits());
         }else if(mode.getMode().equals("practice")){
-            // laps count
-            holder.lastLapText.setText(R.string.last_laps);
-            holder.lastLap.setText(element.getBestLap());
-            // best lap time
-            holder.bestLapText.setText(R.string.best_lap_text);
-            holder.bestLap.setText(element.getLastLap());
-            // pits
-            holder.pitsText.setText(R.string.pits_text);
-            holder.pits.setText(element.getPits());
+            holder.bestLap_gap.setText(element.getLastLap());
+            holder.interval_pits.setText(element.getGap().equals("-")?"":"+" + element.getGap());
         }
 
         Glide.with(context)

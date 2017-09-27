@@ -37,120 +37,43 @@
         </FrameLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp">
+
+            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/bestLap_gap"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textSize="20sp" />
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textSize="18sp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/gap_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/leader_gap_text" />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/gap"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingLeft="5dp">
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/best_lap_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/best_lap_text" />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/best_lap"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/last_lap_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/last_lap_text" />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/last_lap"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingLeft="5dp">
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/pits_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="@string/pits_text" />
-
-                        <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
-                            android:id="@+id/pits"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/interval_pits"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>
