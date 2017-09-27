@@ -132,6 +132,9 @@ public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder
             case "Верляйн":
                 helmet += "helmets/wehrlein.webp";
                 break;
+            case "ди Реста":
+                helmet += "helmets/diResta.webp";
+                break;
             default:
                 helmet += "helmets/default.webp";
         }
