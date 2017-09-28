@@ -96,8 +96,13 @@ public class RacerDrawOnLap extends Thread {
 
                     canvas = surfaceHolder.lockCanvas(null);
 
-                    canvas.drawColor(Color.WHITE);
-                    canvas.drawPath(ptCurve, paint);
+                    if(canvas != null) {
+                        canvas.drawColor(Color.WHITE);
+                        canvas.drawPath(ptCurve, paint);
+                    }else {
+                        Thread.sleep(10);
+                        continue;
+                    }
 
                     for(int i = 0; i < racers.length; i++) {
                         if (raceData == null) {
