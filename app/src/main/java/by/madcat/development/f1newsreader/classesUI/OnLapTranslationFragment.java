@@ -22,8 +22,8 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.adapters.OnLapTimingsAdapter;
-import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
-import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
+import by.madcat.development.f1newsreader.Models.RaceMode;
+import by.madcat.development.f1newsreader.Models.TimingElement;
 import by.madcat.development.f1newsreader.styling.CustomViews.RaceTrackView;
 
 import static android.content.Context.BIND_AUTO_CREATE;

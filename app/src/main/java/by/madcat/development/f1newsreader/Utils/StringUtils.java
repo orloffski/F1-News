@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.Models.RaceDataModel;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
-import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
+import by.madcat.development.f1newsreader.Models.TimingElement;
 
 public final class StringUtils {
     private static final String NEWS_PREFIX = "f1news.ru/news/f1-";

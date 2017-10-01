@@ -26,7 +26,7 @@ import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
-import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
+import by.madcat.development.f1newsreader.Models.OnlinePost;
 
 import static android.content.Context.BIND_AUTO_CREATE;
 import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_ACTION_DATA;

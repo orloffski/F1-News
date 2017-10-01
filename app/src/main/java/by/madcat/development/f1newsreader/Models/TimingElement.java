@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet.Models;
+package by.madcat.development.f1newsreader.Models;
 
 public class TimingElement {
     private String name;

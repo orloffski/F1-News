@@ -19,11 +19,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import by.madcat.development.f1newsreader.Models.RaceDataModel;
-import by.madcat.development.f1newsreader.Models.RacersDataModel;
+import by.madcat.development.f1newsreader.Models.*;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
-import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
 public class RacerDrawOnLap extends Thread {
 

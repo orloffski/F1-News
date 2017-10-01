@@ -16,7 +16,7 @@ import java.util.TimerTask;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
+import by.madcat.development.f1newsreader.Models.OnlinePost;
 
 import static by.madcat.development.f1newsreader.classesUI.OnlineTextFragment.BROADCAST_ACTION;
 

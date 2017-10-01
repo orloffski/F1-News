@@ -14,8 +14,8 @@ import java.util.LinkedList;
 import by.madcat.development.f1newsreader.Models.RacersDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.adapters.ViewHolders.SessionViewHolder;
-import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
-import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
+import by.madcat.development.f1newsreader.Models.RaceMode;
+import by.madcat.development.f1newsreader.Models.TimingElement;
 
 public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder>{
 

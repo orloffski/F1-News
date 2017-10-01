@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
-import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
-import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
+import by.madcat.development.f1newsreader.Models.OnlinePost;
+import by.madcat.development.f1newsreader.Models.RaceMode;
+import by.madcat.development.f1newsreader.Models.TimingElement;
 
 import static by.madcat.development.f1newsreader.Utils.DocParseUtils.*;
 

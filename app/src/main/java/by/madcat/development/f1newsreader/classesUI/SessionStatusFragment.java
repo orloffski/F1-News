@@ -12,8 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.Models.RaceMode;
 import by.madcat.development.f1newsreader.styling.CustomViews.SpeedwayTextView;
 
 public class SessionStatusFragment extends Fragment {

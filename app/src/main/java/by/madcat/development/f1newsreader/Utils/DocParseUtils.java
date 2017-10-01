@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.dataInet.Models.OnlinePost;
+import by.madcat.development.f1newsreader.Models.OnlinePost;
 
 public final class DocParseUtils {
     private static final String DOCUMENT_ENCODING = "UTF-8";
