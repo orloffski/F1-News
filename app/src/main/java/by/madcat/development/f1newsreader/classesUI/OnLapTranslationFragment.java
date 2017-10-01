@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import java.util.LinkedList;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
+import by.madcat.development.f1newsreader.adapters.OnLapTimingsAdapter;
 import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 import by.madcat.development.f1newsreader.styling.CustomViews.RaceTrackView;
@@ -29,6 +32,10 @@ import static by.madcat.development.f1newsreader.Services.OnlineSessionLoadServi
 
 public class OnLapTranslationFragment extends Fragment{
     public final static String BROADCAST_ACTION = "online_session_receiver";
+
+    private GridLayoutManager lLayout;
+    private RecyclerView onlapTimings;
+    private OnLapTimingsAdapter onLapAdapter;
 
     private RaceTrackView raceTrackView;
 
@@ -82,9 +89,10 @@ public class OnLapTranslationFragment extends Fragment{
                 }
 
                 // start race animate
-                if(!raceMode.getStatus().equals("completed"))
+                if(!raceMode.getStatus().equals("completed")){
                     raceTrackView.updateRaceData(timings);
-                else
+                    setOnLapTimings(timings);
+                }else
                     raceTrackView.updateRaceData(null);
             }
         };
@@ -98,6 +106,11 @@ public class OnLapTranslationFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_on_lap_translation, container, false);
 
         raceTrackView = (RaceTrackView)rootView.findViewById(R.id.map_view);
+        onlapTimings = (RecyclerView)rootView.findViewById(R.id.onlap_timings);
+
+        lLayout = new GridLayoutManager(getContext(), 6, GridLayoutManager.HORIZONTAL, false);
+        onlapTimings.setHasFixedSize(true);
+        onlapTimings.setLayoutManager(lLayout);
 
         loadOnlineSessionData();
 
@@ -143,5 +156,10 @@ public class OnLapTranslationFragment extends Fragment{
         if (!bound) return;
         getActivity().unbindService(sConn);
         bound = false;
+    }
+
+    private void setOnLapTimings(LinkedList<TimingElement> timings){
+        onLapAdapter = new OnLapTimingsAdapter(timings);
+        onlapTimings.setAdapter(onLapAdapter);
     }
 }
