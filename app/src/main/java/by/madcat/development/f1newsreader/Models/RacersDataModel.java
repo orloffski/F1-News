@@ -2,7 +2,7 @@ package by.madcat.development.f1newsreader.Models;
 
 public enum RacersDataModel {
     VET ("Феттель"),
-    VES ("Ферстаппен"),
+    VER ("Ферстаппен"),
     RIC ("Риккардо"),
     RAI ("Райкконен"),
     HAM ("Хэмилтон"),
@@ -19,8 +19,9 @@ public enum RacersDataModel {
     MAG ("Магнуссен"),
     MAS ("Масса"),
     STR ("Стролл"),
-    VEH ("Верляйн"),
-    ERI ("Эриксон");
+    WEH ("Верляйн"),
+    ERI ("Эриксон"),
+    GAS("Гасли");
 
     private final String name;
 
@@ -108,8 +109,94 @@ public enum RacersDataModel {
             case "Эриксон":
                 racerAbr = "ERI";
                 break;
+            case "Гасли":
+                racerAbr = "GAS";
+                break;
         }
 
         return racerAbr;
+    }
+
+    public static String getHelmetFromAssets(String driverName){
+        String helmet = "file:///android_asset/helmets/";
+
+        switch (driverName){
+            case "Алонсо":
+                helmet += "alonso.webp";
+                break;
+            case "Боттас":
+                helmet += "bottas.webp";
+                break;
+            case"Эриксон":
+                helmet += "ericsson.webp";
+                break;
+            case "Джовинацци":
+                helmet += "giovinazzi.webp";
+                break;
+            case "Грожан":
+                helmet += "grojean.webp";
+                break;
+            case "Хэмилтон":
+                helmet += "hamilton.webp";
+                break;
+            case "Хюлкенберг":
+                helmet += "hulkenberg.webp";
+                break;
+            case "Квят":
+                helmet += "kvyat.webp";
+                break;
+            case "Магнуссен":
+                helmet += "magnussen.webp";
+                break;
+            case "Масса":
+                helmet += "massa.webp";
+                break;
+            case "Окон":
+                helmet += "ocon.webp";
+                break;
+            case "Палмер":
+                helmet += "palmer.webp";
+                break;
+            case "Перес":
+                helmet += "perez.webp";
+                break;
+            case "Райкконен":
+                helmet += "raikkonen.webp";
+                break;
+            case "Риккардо":
+                helmet += "ricciardo.webp";
+                break;
+            case "Сайнс":
+                helmet += "sainz.webp";
+                break;
+            case "Сироткин":
+                helmet += "sirotkin.webp";
+                break;
+            case "Стролл":
+                helmet += "stroll.webp";
+                break;
+            case "Вандорн":
+                helmet += "vandorne.webp";
+                break;
+            case "Ферстаппен":
+                helmet += "verstappen.webp";
+                break;
+            case "Феттель":
+                helmet += "vettel.webp";
+                break;
+            case "Верляйн":
+                helmet += "wehrlein.webp";
+                break;
+            case "ди Реста":
+                helmet += "diResta.webp";
+                break;
+            case "Гасли":
+                helmet += "gasly.webp";
+                break;
+            default:
+                helmet += "helmets/default.webp";
+        }
+
+        return helmet;
     }
 }
