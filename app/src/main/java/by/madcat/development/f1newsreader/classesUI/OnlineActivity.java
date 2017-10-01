@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,9 @@ public class OnlineActivity extends BottomBarHolderActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(PreferencesUtils.getScreenOffDisable(getApplicationContext()))
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         NavigationPage weekendInfo = new NavigationPage(
                 getString(R.string.weekend_info),
@@ -65,6 +69,7 @@ public class OnlineActivity extends BottomBarHolderActivity {
 
         menu.findItem(R.id.autoscroll).setEnabled(autoscroll);
         menu.findItem(R.id.autoscroll).setChecked(PreferencesUtils.getAutoscrollingFlag(this));
+        menu.findItem(R.id.screenoff).setChecked(PreferencesUtils.getScreenOffDisable(this));
 
         return true;
     }
@@ -81,6 +86,17 @@ public class OnlineActivity extends BottomBarHolderActivity {
                 }else{
                     PreferencesUtils.enableAutoScrolling(getApplicationContext());
                     item.setChecked(true);
+                }
+                return true;
+            case R.id.screenoff:
+                if(item.isChecked()){
+                    PreferencesUtils.unsetScreenOffDisable(getApplicationContext());
+                    item.setChecked(false);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }else{
+                    PreferencesUtils.setScreenOffDisable(getApplicationContext());
+                    item.setChecked(true);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 }
                 return true;
             default:

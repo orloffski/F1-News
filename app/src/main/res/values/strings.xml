@@ -178,6 +178,7 @@
     <string name="description">description</string>
 
     <string name="autoscroll">Автопрокрутка</string>
+    <string name="screenoff">Не гасить экран</string>
 
     <!-- Online timing strings -->
     <string name="session_link">https://lc.f1news.ru/live/session/%1$d.json</string>

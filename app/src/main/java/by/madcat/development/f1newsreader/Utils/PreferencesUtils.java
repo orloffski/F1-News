@@ -32,6 +32,7 @@ public class PreferencesUtils {
     public static final String NOTIFICATIONS_COUNT_ID = "notifications_count";
 
     public static final String AUTOSCROLLING_FLAG = "autoscrolling_text_online";
+    public static final String SCREENOF_FLAG = "screen_off_disable";
 
     public static final String MAIN_IMAGE = "main_image_choose";
 
@@ -185,5 +186,21 @@ public class PreferencesUtils {
 
     public static String getMainImageNum(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context).getString(MAIN_IMAGE, "0");
+    }
+
+    public static void setScreenOffDisable(Context context){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.putBoolean(SCREENOF_FLAG, true);
+        editor.commit();
+    }
+
+    public static void unsetScreenOffDisable(Context context){
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.putBoolean(SCREENOF_FLAG, false);
+        editor.commit();
+    }
+
+    public static boolean getScreenOffDisable(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SCREENOF_FLAG, false);
     }
 }
