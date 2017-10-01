@@ -239,10 +239,12 @@ public class RacerDrawOnLap extends Thread {
 
             if (raceData == null) {
                 raceData = new LinkedHashMap<>();
+                float interval = 0;
 
                 synchronized (raceData) {
                     for (TimingElement element : timings) {
-                        raceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, true));
+                        interval += element.getBestLap().equals("") ? 0 : Float.parseFloat(element.getBestLap());
+                        raceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, interval));
                     }
                 }
             } else {
@@ -251,7 +253,7 @@ public class RacerDrawOnLap extends Thread {
 
                 synchronized (tmpRaceData) {
                     for (TimingElement element : timings) {
-                        tmpRaceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, false));
+                        tmpRaceData.put(RacersDataModel.find(element.getName()), StringUtils.getRaceDataModel(element, pathLenght, fps, 0));
                     }
                 }
             }

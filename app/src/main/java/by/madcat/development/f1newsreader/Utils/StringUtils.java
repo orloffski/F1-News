@@ -89,12 +89,10 @@ public final class StringUtils {
         return doc.toString();
     }
 
-    public static RaceDataModel getRaceDataModel(TimingElement element, float pathLenght, int fps, boolean needGap){
+    public static RaceDataModel getRaceDataModel(TimingElement element, float pathLenght, int fps, float interval){
         float seconds = getSeconds(element.getLastLap());
-        float gap = getGap(element.getGap());
 
-        if(needGap)
-            seconds += gap;
+        seconds += interval;
 
         if(seconds != 0)
             return new RaceDataModel(seconds * fps, pathLenght / (seconds * fps), 0);
@@ -113,16 +111,17 @@ public final class StringUtils {
         return tmpSeconds;
     }
 
-    private static float getGap(String gapString){
-        float tmpGap = 0;
-
-        if(gapString.contains(":")) {
-            tmpGap += Integer.valueOf(gapString.split(":")[0]) * 60;
-            tmpGap += Float.valueOf(gapString.split(":")[1]);
-        }else if(gapString.length() != 0 && !gapString.contains("L")){
-            tmpGap += Float.valueOf(gapString);
-        }
-
-        return tmpGap;
-    }
+//    private static float getGap(String gapString){
+//        float tmpGap = 0;
+//
+////        if(gapString.contains(":")) {
+////            tmpGap += Integer.valueOf(gapString.split(":")[0]) * 60;
+////            tmpGap += Float.valueOf(gapString.split(":")[1]);
+////        }else
+//        if(gapString.length() != 0 && !gapString.contains("L")){
+//            tmpGap += Float.valueOf(gapString);
+//        }
+//
+//        return tmpGap;
+//    }
 }

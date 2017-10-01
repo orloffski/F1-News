@@ -53,7 +53,7 @@ public enum RacersDataModel {
                 racerAbr = "VET";
                 break;
             case "Ферстаппен":
-                racerAbr = "VES";
+                racerAbr = "VER";
                 break;
             case "Риккардо":
                 racerAbr = "RIC";
