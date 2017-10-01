@@ -104,7 +104,7 @@ public enum RacersDataModel {
                 racerAbr = "STR";
                 break;
             case "Верляйн":
-                racerAbr = "VEH";
+                racerAbr = "WEH";
                 break;
             case "Эриксон":
                 racerAbr = "ERI";
