@@ -67,6 +67,7 @@ public final class DocParseUtils {
     static final String ONLINE_JSON_RACE_TOTAL_LAPS = "total_laps";
     static final String ONLINE_JSON_RACE_TRACK_TEMP = "tracktemp";
     static final String ONLINE_JSON_RACE_AIR_TEMP = "airtemp";
+    static final String ONLINE_JSON_RACE_STATUS = "status";
 
     static final String ONLINE_JSON_ARRAY = "messages";
     static final String ONLINE_JSON_ELEMENT_DATE = "tm";

@@ -27,7 +27,8 @@ public class JsonParseUtils {
                     jsonObject.getString(ONLINE_JSON_RACE_CURRENT_LAP),
                     jsonObject.getString(ONLINE_JSON_RACE_TOTAL_LAPS),
                     jsonObject.getInt(ONLINE_JSON_RACE_TRACK_TEMP),
-                    jsonObject.getInt(ONLINE_JSON_RACE_AIR_TEMP)
+                    jsonObject.getInt(ONLINE_JSON_RACE_AIR_TEMP),
+                    jsonObject.getString(ONLINE_JSON_RACE_STATUS)
             );
         } catch (JSONException e) {
             e.printStackTrace();

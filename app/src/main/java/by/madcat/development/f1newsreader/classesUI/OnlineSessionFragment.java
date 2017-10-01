@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlineSessionAdapter;
 import by.madcat.development.f1newsreader.dataInet.Models.RaceMode;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
@@ -84,6 +83,7 @@ public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayou
                     return;
 
                 timings.clear();
+
                 raceMode = JsonParseUtils.getRaceMode(data);
 
                 if(raceMode == null)

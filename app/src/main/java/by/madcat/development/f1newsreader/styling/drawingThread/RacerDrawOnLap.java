@@ -236,6 +236,11 @@ public class RacerDrawOnLap extends Thread {
     }
 
     public void setRaceData(LinkedList<TimingElement> timings) {
+        if(timings == null){
+            runFlag = false;
+            return;
+        }
+
         if (raceData == null) {
             raceData = new LinkedHashMap<>();
             float interval = 0;

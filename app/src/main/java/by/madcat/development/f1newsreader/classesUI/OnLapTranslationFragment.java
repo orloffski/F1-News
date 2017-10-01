@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import java.util.LinkedList;
 
-import by.madcat.development.f1newsreader.Models.TestData;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
 import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
@@ -71,19 +70,22 @@ public class OnLapTranslationFragment extends Fragment{
                 if (data == null || data.equals(""))
                     return;
 
-                // test - to delete
-                data = TestData.getTestString();
-
                 timings.clear();
                 raceMode = JsonParseUtils.getRaceMode(data);
 
+                if(raceMode == null || raceMode.getMode().equals("practice"))
+                    return;
+
+
                 if(raceMode.getMode().equals("race")){
                     timings.addAll(JsonParseUtils.getRaceTimings(data));
-                }else if(raceMode.getMode().equals("practice")){
-                    timings.addAll(JsonParseUtils.getPracticeTimings(data));
                 }
+
                 // start race animate
-                raceTrackView.updateRaceData(timings);
+                if(!raceMode.getStatus().equals("completed"))
+                    raceTrackView.updateRaceData(timings);
+                else
+                    raceTrackView.updateRaceData(null);
             }
         };
 

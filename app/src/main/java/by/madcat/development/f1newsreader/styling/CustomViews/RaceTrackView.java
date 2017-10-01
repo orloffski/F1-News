@@ -44,8 +44,7 @@ public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-//        mapTrack = TracksPoints.getTrackPoints(PreferencesUtils.getNextGpCountry(getContext()));
-        mapTrack = TracksPoints.getTrackPoints("Гран При Сингапура");
+        mapTrack = TracksPoints.getTrackPoints(PreferencesUtils.getNextGpCountry(getContext()));
 
         racerDrawOnLap = new RacerDrawOnLap(getHolder(), getContext(), screenWidth, screenHeight, mapTrack);
         racerDrawOnLap.setRunning(true);
