@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.Models.RaceDataModel;
-import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.data.DatabaseDescription;
 import by.madcat.development.f1newsreader.dataInet.Models.TimingElement;
 
@@ -110,18 +109,4 @@ public final class StringUtils {
 
         return tmpSeconds;
     }
-
-//    private static float getGap(String gapString){
-//        float tmpGap = 0;
-//
-////        if(gapString.contains(":")) {
-////            tmpGap += Integer.valueOf(gapString.split(":")[0]) * 60;
-////            tmpGap += Float.valueOf(gapString.split(":")[1]);
-////        }else
-//        if(gapString.length() != 0 && !gapString.contains("L")){
-//            tmpGap += Float.valueOf(gapString);
-//        }
-//
-//        return tmpGap;
-//    }
 }
