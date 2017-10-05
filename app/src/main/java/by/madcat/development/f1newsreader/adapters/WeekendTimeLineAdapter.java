@@ -48,9 +48,7 @@ public class WeekendTimeLineAdapter extends RecyclerView.Adapter<WeekendTimeLine
 
         WeekendTimeLineModel timeLineModel = mFeedList.get(position);
 
-        if(timeLineModel.getStatus() == WeekendItemStatus.INACTIVE) {
-            holder.itemMarker.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_inactive, android.R.color.darker_gray));
-        } else if(timeLineModel.getStatus() == WeekendItemStatus.ACTIVE) {
+        if(timeLineModel.getStatus() == WeekendItemStatus.ACTIVE) {
             holder.itemMarker.setMarker(VectorDrawableUtils.getDrawable(mContext, R.drawable.ic_marker_active, R.color.colorPrimary));
         } else {
             holder.itemMarker.setMarker(ContextCompat.getDrawable(mContext, R.drawable.ic_marker), ContextCompat.getColor(mContext, R.color.colorPrimary));

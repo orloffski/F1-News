@@ -1,5 +1,8 @@
 package by.madcat.development.f1newsreader.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class DateUtils {
@@ -102,5 +105,22 @@ public final class DateUtils {
 
     private static long getMinutesCount(long seconds){
         return seconds / SECONDS_IN_MINUTE;
+    }
+
+    private static Date getDateFromString(String formatteredString){
+        DateFormat formatter = new SimpleDateFormat("EEEE, d MMMM yyyy");
+        Date date = new Date();
+
+        try {
+            date = formatter.parse(formatteredString + " 2017");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+    }
+
+    public static boolean checkDate(String stringDate){
+        return (getDateFromString(stringDate).after(new Date()));
     }
 }

@@ -21,9 +21,13 @@ import by.madcat.development.f1newsreader.models.TracksDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.models.WeekendItemStatus;
 import by.madcat.development.f1newsreader.models.WeekendTimeLineModel;
+import by.madcat.development.f1newsreader.utils.DateUtils;
 import by.madcat.development.f1newsreader.utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.styling.customViews.PerfogramaTextView;
 import by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView;
+
+import static by.madcat.development.f1newsreader.models.WeekendItemStatus.ACTIVE;
+import static by.madcat.development.f1newsreader.models.WeekendItemStatus.COMPLETED;
 
 public class WeekendInfoFragment extends Fragment {
 
@@ -82,7 +86,7 @@ public class WeekendInfoFragment extends Fragment {
                     new WeekendTimeLineModel(
                             entry.getValue().toString(),
                             entry.getKey().toString(),
-                            WeekendItemStatus.COMPLETED
+                            DateUtils.checkDate(entry.getKey().toString())?ACTIVE:COMPLETED
                     )
             );
         }
