@@ -63,6 +63,10 @@ public class JsonParseUtils {
     public static int getSessionId(String jsonString){
         JSONObject jsonObject;
         int session_id = 0;
+
+        if(jsonString == null || jsonString.equals(""))
+            return session_id;
+
         try {
             jsonObject = new JSONObject(jsonString);
             session_id = jsonObject.getInt(ONLINE_JSON_SESSION_ID);
