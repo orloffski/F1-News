@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.classesUI.NewsPageFragment;
-import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.*;
 
 public class NewsPageAdapter extends FragmentStatePagerAdapter {
 

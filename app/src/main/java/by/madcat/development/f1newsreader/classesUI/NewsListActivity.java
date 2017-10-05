@@ -25,17 +25,17 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
-import by.madcat.development.f1newsreader.AnalyticsTrackers.AnalyticsTrackers;
-import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
+import by.madcat.development.f1newsreader.analyticsTrackers.AnalyticsTrackers;
+import by.madcat.development.f1newsreader.interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
-import by.madcat.development.f1newsreader.Services.ReminderService;
-import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.services.BackgroundLoadNewsService;
+import by.madcat.development.f1newsreader.services.ReminderService;
+import by.madcat.development.f1newsreader.services.TimerNextGpTask;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
-import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
 
-import static by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes.*;
+import static by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes.*;
 
 public class NewsListActivity extends AppCompatActivity implements NewsOpenListener{
 

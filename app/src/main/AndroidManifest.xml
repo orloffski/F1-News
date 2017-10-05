@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
-        android:name=".AnalyticsTrackers.AnalyticsTrackers"
+        android:name=".analyticsTrackers.AnalyticsTrackers"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -46,25 +46,25 @@
             android:theme="@style/AppTheme"/>
 
         <provider
-            android:name=".DataSQLite.F1NewsReaderContentProvider"
-            android:authorities="by.madcat.development.f1newsreader.DataSQLite"
+            android:name=".dataSQLite.F1NewsReaderContentProvider"
+            android:authorities="by.madcat.development.f1newsreader.dataSQLite"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".Services.OnlinePostsLoadService"
+            android:name=".services.OnlinePostsLoadService"
             android:exported="true" />
         <service
-            android:name=".Services.OnlineSessionLoadService"
+            android:name=".services.OnlineSessionLoadService"
             android:exported="true" />
         <service
-            android:name=".Services.BackgroundLoadNewsService"
+            android:name=".services.BackgroundLoadNewsService"
             android:exported="true" />
         <service
-            android:name=".Services.ReminderService"
+            android:name=".services.ReminderService"
             android:exported="true" />
         <service
-            android:name=".Services.UILoadNewsService"
+            android:name=".services.UILoadNewsService"
             android:enabled="true"
             android:exported="false" />
         <service
@@ -88,21 +88,21 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".Receivers.ServiceBootBroadcastReceiver"
+            android:name=".receivers.ServiceBootBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".Receivers.ReminderBootBroadcastReceiver"
+            android:name=".receivers.ReminderBootBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".Receivers.NotificationDismissedReceiver"
+            android:name=".receivers.NotificationDismissedReceiver"
             android:exported="false" />
 
         <meta-data

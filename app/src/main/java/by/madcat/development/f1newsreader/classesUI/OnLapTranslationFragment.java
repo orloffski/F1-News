@@ -19,16 +19,16 @@ import android.view.ViewGroup;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
-import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
+import by.madcat.development.f1newsreader.services.OnlineSessionLoadService;
+import by.madcat.development.f1newsreader.utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.adapters.OnLapTimingsAdapter;
-import by.madcat.development.f1newsreader.Models.RaceMode;
-import by.madcat.development.f1newsreader.Models.TimingElement;
-import by.madcat.development.f1newsreader.Styling.CustomViews.RaceTrackView;
+import by.madcat.development.f1newsreader.models.RaceMode;
+import by.madcat.development.f1newsreader.models.TimingElement;
+import by.madcat.development.f1newsreader.styling.customViews.RaceTrackView;
 
 import static android.content.Context.BIND_AUTO_CREATE;
-import static by.madcat.development.f1newsreader.Services.OnlineSessionLoadService.BROADCAST_ACTION_DATA;
-import static by.madcat.development.f1newsreader.Services.OnlineSessionLoadService.INTERVAL_DATA;
+import static by.madcat.development.f1newsreader.services.OnlineSessionLoadService.BROADCAST_ACTION_DATA;
+import static by.madcat.development.f1newsreader.services.OnlineSessionLoadService.INTERVAL_DATA;
 
 public class OnLapTranslationFragment extends Fragment{
     public final static String BROADCAST_ACTION = "online_session_receiver";

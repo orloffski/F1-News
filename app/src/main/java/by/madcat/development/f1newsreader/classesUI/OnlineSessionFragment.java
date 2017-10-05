@@ -21,15 +21,15 @@ import android.view.ViewGroup;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.OnlineSessionLoadService;
-import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
+import by.madcat.development.f1newsreader.services.OnlineSessionLoadService;
+import by.madcat.development.f1newsreader.utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.adapters.OnlineSessionAdapter;
-import by.madcat.development.f1newsreader.Models.RaceMode;
-import by.madcat.development.f1newsreader.Models.TimingElement;
+import by.madcat.development.f1newsreader.models.RaceMode;
+import by.madcat.development.f1newsreader.models.TimingElement;
 
 import static android.content.Context.BIND_AUTO_CREATE;
-import static by.madcat.development.f1newsreader.Services.OnlineSessionLoadService.BROADCAST_ACTION_DATA;
-import static by.madcat.development.f1newsreader.Services.OnlineSessionLoadService.BROADCAST_SERVICE_ACTION;
+import static by.madcat.development.f1newsreader.services.OnlineSessionLoadService.BROADCAST_ACTION_DATA;
+import static by.madcat.development.f1newsreader.services.OnlineSessionLoadService.BROADCAST_SERVICE_ACTION;
 
 public class OnlineSessionFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

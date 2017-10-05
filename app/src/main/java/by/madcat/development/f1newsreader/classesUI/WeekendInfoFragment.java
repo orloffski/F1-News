@@ -12,11 +12,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.Models.TracksDataModel;
+import by.madcat.development.f1newsreader.models.TracksDataModel;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
-import by.madcat.development.f1newsreader.Styling.CustomViews.PerfogramaTextView;
-import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.styling.customViews.PerfogramaTextView;
+import by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView;
 
 public class WeekendInfoFragment extends Fragment {
 
