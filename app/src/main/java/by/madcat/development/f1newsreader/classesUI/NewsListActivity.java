@@ -33,9 +33,9 @@ import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Services.TimerNextGpTask;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPagesAdapter;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes;
 
-import static by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes.*;
+import static by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes.*;
 
 public class NewsListActivity extends AppCompatActivity implements NewsOpenListener{
 

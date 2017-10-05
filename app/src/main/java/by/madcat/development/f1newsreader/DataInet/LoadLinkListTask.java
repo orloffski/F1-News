@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet;
+package by.madcat.development.f1newsreader.DataInet;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -13,7 +13,7 @@ import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<NewsTypes, Date>>> {
 

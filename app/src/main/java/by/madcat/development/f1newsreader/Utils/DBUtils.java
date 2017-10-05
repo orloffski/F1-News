@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import by.madcat.development.f1newsreader.data.DatabaseDescription;
-import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription;
+import by.madcat.development.f1newsreader.DataSQLite.F1NewsReaderDatabaseHelper;
 
 public class DBUtils {
     public static boolean checkIssetNewsLinkInDB(Context context, String link){

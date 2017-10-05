@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import java.util.Calendar;
 
 import by.madcat.development.f1newsreader.Models.RaceDataModel;
-import by.madcat.development.f1newsreader.data.DatabaseDescription;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription;
 import by.madcat.development.f1newsreader.Models.TimingElement;
 
 public final class StringUtils {

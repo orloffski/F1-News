@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes;
 import by.madcat.development.f1newsreader.Models.OnlinePost;
 
 public final class DocParseUtils {

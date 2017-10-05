@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet;
+package by.madcat.development.f1newsreader.DataInet;
 
 public class InternetDataRouting {
 

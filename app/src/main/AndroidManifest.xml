@@ -46,8 +46,8 @@
             android:theme="@style/AppTheme"/>
 
         <provider
-            android:name=".data.F1NewsReaderContentProvider"
-            android:authorities="by.madcat.development.f1newsreader.data"
+            android:name=".DataSQLite.F1NewsReaderContentProvider"
+            android:authorities="by.madcat.development.f1newsreader.DataSQLite"
             android:enabled="true"
             android:exported="false" />
 

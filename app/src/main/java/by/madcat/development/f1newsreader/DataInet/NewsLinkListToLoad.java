@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet;
+package by.madcat.development.f1newsreader.DataInet;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

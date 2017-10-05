@@ -6,9 +6,9 @@ import android.os.IBinder;
 
 import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.classesUI.NewsListFragment;
-import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
-import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
+import by.madcat.development.f1newsreader.DataInet.InternetDataRouting;
+import by.madcat.development.f1newsreader.DataInet.LoadLinkListTask;
+import by.madcat.development.f1newsreader.DataInet.NewsLinkListToLoad;
 
 public class UILoadNewsService extends Service implements NewsLoadSender {
     private Intent intent;

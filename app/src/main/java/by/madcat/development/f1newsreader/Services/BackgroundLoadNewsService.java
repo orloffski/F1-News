@@ -18,9 +18,9 @@ import by.madcat.development.f1newsreader.Receivers.NotificationDismissedReceive
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
-import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
-import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
+import by.madcat.development.f1newsreader.DataInet.InternetDataRouting;
+import by.madcat.development.f1newsreader.DataInet.LoadLinkListTask;
+import by.madcat.development.f1newsreader.DataInet.NewsLinkListToLoad;
 
 public class BackgroundLoadNewsService extends IntentService implements NewsLoadSender{
     private static final String TAG = "BackgroundLoadNewsService";

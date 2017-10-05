@@ -10,7 +10,7 @@ import java.io.IOException;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.Utils.ViewCreator;
-import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
+import by.madcat.development.f1newsreader.DataInet.NewsLinkListToLoad;
 
 public class MoveToSdTask extends AsyncTask<Void, Integer, Void> {
 

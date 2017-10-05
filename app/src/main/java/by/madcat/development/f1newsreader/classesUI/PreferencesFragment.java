@@ -23,7 +23,7 @@ import by.madcat.development.f1newsreader.Services.ReminderService;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.Utils.ViewCreator;
-import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
+import by.madcat.development.f1newsreader.DataInet.NewsLinkListToLoad;
 import by.madcat.development.f1newsreader.Styling.CustomViews.ImageListPreference;
 
 public class PreferencesFragment extends PreferenceFragment {

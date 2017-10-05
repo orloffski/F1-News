@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.data;
+package by.madcat.development.f1newsreader.DataSQLite;
 
 import android.content.ContentUris;
 import android.net.Uri;

@@ -1,6 +1,6 @@
 package by.madcat.development.f1newsreader.Interfaces;
 
-import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
+import by.madcat.development.f1newsreader.DataInet.LoadNewsTask;
 
 public interface NewsLinkListObservable {
     void addLoadNewsTask(LoadNewsTask task);

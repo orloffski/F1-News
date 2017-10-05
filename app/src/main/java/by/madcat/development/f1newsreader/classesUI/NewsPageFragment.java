@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoMediumTextView;
 import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView;
 

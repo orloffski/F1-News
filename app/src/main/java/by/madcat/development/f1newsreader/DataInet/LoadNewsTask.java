@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.dataInet;
+package by.madcat.development.f1newsreader.DataInet;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,8 +21,8 @@ import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.StringUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.NewsTypes;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 

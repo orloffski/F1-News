@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.data;
+package by.madcat.development.f1newsreader.DataSQLite;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.DataSQLite.DatabaseDescription.*;
 
 public class F1NewsReaderContentProvider extends ContentProvider {
 

@@ -13,7 +13,7 @@ import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.DocParseUtils;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
+import by.madcat.development.f1newsreader.DataInet.InternetDataRouting;
 
 public class TimerNextGpTask extends AsyncTask<View, String, Void>{
 
