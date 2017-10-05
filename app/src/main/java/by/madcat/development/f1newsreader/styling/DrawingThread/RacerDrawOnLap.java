@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.styling.drawingThread;
+package by.madcat.development.f1newsreader.styling.DrawingThread;
 
 import android.content.Context;
 import android.graphics.Canvas;

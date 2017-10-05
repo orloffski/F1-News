@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import by.madcat.development.f1newsreader.Models.TracksPoints;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Models.TimingElement;
-import by.madcat.development.f1newsreader.styling.drawingThread.RacerDrawOnLap;
+import by.madcat.development.f1newsreader.styling.DrawingThread.RacerDrawOnLap;
 
 public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback {
 
