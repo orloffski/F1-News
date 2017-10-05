@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.models.RacersDataModel;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.adapters.viewHolders.SessionViewHolder;
+import by.madcat.development.f1newsreader.viewHolders.SessionViewHolder;
 import by.madcat.development.f1newsreader.models.RaceMode;
 import by.madcat.development.f1newsreader.models.TimingElement;
 

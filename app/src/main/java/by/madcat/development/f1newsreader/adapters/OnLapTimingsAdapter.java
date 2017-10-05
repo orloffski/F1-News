@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.models.RacersDataModel;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.adapters.viewHolders.OnLapTimingsHolder;
+import by.madcat.development.f1newsreader.viewHolders.OnLapTimingsHolder;
 import by.madcat.development.f1newsreader.models.TimingElement;
 
 public class OnLapTimingsAdapter extends RecyclerView.Adapter<OnLapTimingsHolder>{

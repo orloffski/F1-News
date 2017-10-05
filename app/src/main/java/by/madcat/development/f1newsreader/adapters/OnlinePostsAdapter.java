@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.adapters.viewHolders.OnlineViewHolder;
+import by.madcat.development.f1newsreader.viewHolders.OnlineViewHolder;
 import by.madcat.development.f1newsreader.models.OnlinePost;
 
 public class OnlinePostsAdapter extends RecyclerView.Adapter<OnlineViewHolder>{
