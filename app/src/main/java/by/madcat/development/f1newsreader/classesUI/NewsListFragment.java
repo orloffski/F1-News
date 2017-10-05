@@ -30,15 +30,15 @@ import com.webianks.library.PopupBubble;
 
 import java.util.ArrayList;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsOpenListener;
+import by.madcat.development.f1newsreader.interfaces.NewsOpenListener;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.UILoadNewsService;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.services.UILoadNewsService;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
 import by.madcat.development.f1newsreader.adapters.NewsCardsAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAbstractAdapter;
 import by.madcat.development.f1newsreader.adapters.NewsListAdapter;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
 
 
 public class NewsListFragment extends Fragment

@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Services;
+package by.madcat.development.f1newsreader.services;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -13,10 +13,10 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
+import by.madcat.development.f1newsreader.utils.DocParseUtils;
+import by.madcat.development.f1newsreader.utils.JsonParseUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
-import by.madcat.development.f1newsreader.Models.OnlinePost;
+import by.madcat.development.f1newsreader.models.OnlinePost;
 
 import static by.madcat.development.f1newsreader.classesUI.OnlineTextFragment.BROADCAST_ACTION;
 

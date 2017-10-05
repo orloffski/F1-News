@@ -5,10 +5,10 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsLinkListObservable;
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.interfaces.NewsLinkListObservable;
+import by.madcat.development.f1newsreader.interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
 
 public class NewsLinkListToLoad implements NewsLinkListObservable{
     private static NewsLinkListToLoad ourInstance;

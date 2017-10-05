@@ -1,11 +1,11 @@
-package by.madcat.development.f1newsreader.Receivers;
+package by.madcat.development.f1newsreader.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.services.BackgroundLoadNewsService;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
 
 public class NotificationDismissedReceiver extends BroadcastReceiver {
     @Override

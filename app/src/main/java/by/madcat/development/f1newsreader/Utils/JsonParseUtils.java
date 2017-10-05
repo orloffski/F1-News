@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -7,11 +7,11 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import by.madcat.development.f1newsreader.Models.OnlinePost;
-import by.madcat.development.f1newsreader.Models.RaceMode;
-import by.madcat.development.f1newsreader.Models.TimingElement;
+import by.madcat.development.f1newsreader.models.OnlinePost;
+import by.madcat.development.f1newsreader.models.RaceMode;
+import by.madcat.development.f1newsreader.models.TimingElement;
 
-import static by.madcat.development.f1newsreader.Utils.DocParseUtils.*;
+import static by.madcat.development.f1newsreader.utils.DocParseUtils.*;
 
 public class JsonParseUtils {
 

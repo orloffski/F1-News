@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Interfaces;
+package by.madcat.development.f1newsreader.interfaces;
 
 import by.madcat.development.f1newsreader.dataInet.LoadNewsTask;
 

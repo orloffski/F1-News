@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.AnalyticsTrackers;
+package by.madcat.development.f1newsreader.analyticsTrackers;
 
 import android.app.Application;
 

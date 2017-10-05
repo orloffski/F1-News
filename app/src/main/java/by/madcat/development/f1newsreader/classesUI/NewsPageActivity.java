@@ -13,10 +13,11 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.DBUtils;
+import by.madcat.development.f1newsreader.utils.DBUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPageAdapter;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.styling.animations.ZoomOutPageTransformer;
 
 public class NewsPageActivity extends AppCompatActivity {
 

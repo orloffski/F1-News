@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
+import by.madcat.development.f1newsreader.utils.DocParseUtils;
 
 public class HtmlTextView extends LinearLayout{
 

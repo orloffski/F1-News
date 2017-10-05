@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Services;
+package by.madcat.development.f1newsreader.services;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.DateUtils;
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.utils.DateUtils;
+import by.madcat.development.f1newsreader.utils.DocParseUtils;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 
 public class TimerNextGpTask extends AsyncTask<View, String, Void>{

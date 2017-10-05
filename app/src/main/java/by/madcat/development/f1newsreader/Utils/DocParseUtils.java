@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import android.content.Context;
 import android.view.View;
@@ -27,8 +27,8 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
-import by.madcat.development.f1newsreader.Models.OnlinePost;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.models.OnlinePost;
 
 public final class DocParseUtils {
     private static final String DOCUMENT_ENCODING = "UTF-8";

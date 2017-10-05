@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Models;
+package by.madcat.development.f1newsreader.models;
 
 public class RaceMode {
     private String mode;

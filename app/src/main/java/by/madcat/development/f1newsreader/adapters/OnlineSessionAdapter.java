@@ -11,11 +11,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.LinkedList;
 
-import by.madcat.development.f1newsreader.Models.RacersDataModel;
+import by.madcat.development.f1newsreader.models.RacersDataModel;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.adapters.ViewHolders.SessionViewHolder;
-import by.madcat.development.f1newsreader.Models.RaceMode;
-import by.madcat.development.f1newsreader.Models.TimingElement;
+import by.madcat.development.f1newsreader.adapters.viewHolders.SessionViewHolder;
+import by.madcat.development.f1newsreader.models.RaceMode;
+import by.madcat.development.f1newsreader.models.TimingElement;
 
 public class OnlineSessionAdapter extends RecyclerView.Adapter<SessionViewHolder>{
 

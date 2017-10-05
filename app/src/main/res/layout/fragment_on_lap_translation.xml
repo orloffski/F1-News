@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <by.madcat.development.f1newsreader.styling.CustomViews.RaceTrackView
+        <by.madcat.development.f1newsreader.styling.customViews.RaceTrackView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"

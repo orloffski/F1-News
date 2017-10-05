@@ -20,7 +20,7 @@
         android:title="@string/category_hide_news"
         android:layout="@layout/preferences_category_style">
 
-        <by.madcat.development.f1newsreader.styling.CustomViews.ImageListPreference
+        <by.madcat.development.f1newsreader.styling.customViews.ImageListPreference
             android:key="main_image_choose"
             android:title="@string/main_image_choose_title"
             android:summary=""

@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.DateUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoMediumTextView;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.utils.DateUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.styling.customViews.RobotoMediumTextView;
+import by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView;
 
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 

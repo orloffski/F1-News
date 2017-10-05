@@ -1,10 +1,10 @@
-package by.madcat.development.f1newsreader.data;
+package by.madcat.development.f1newsreader.dataSQLite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import by.madcat.development.f1newsreader.data.DatabaseDescription.*;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.*;
 
 public class F1NewsReaderDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "F1NewsReader.db";

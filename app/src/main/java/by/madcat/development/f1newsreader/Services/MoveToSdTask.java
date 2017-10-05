@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Services;
+package by.madcat.development.f1newsreader.services;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.Utils.ViewCreator;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
+import by.madcat.development.f1newsreader.utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
 
 public class MoveToSdTask extends AsyncTask<Void, Integer, Void> {

@@ -25,7 +25,7 @@
                 android:layout_height="70dp"
                 android:layout_weight="1" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
                 android:id="@+id/position"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
@@ -45,7 +45,7 @@
             android:paddingRight="15dp"
             android:paddingTop="5dp">
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

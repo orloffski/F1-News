@@ -1,10 +1,10 @@
-package by.madcat.development.f1newsreader.Services;
+package by.madcat.development.f1newsreader.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.classesUI.NewsListFragment;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;

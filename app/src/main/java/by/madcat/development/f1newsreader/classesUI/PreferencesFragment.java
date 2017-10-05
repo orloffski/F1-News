@@ -19,12 +19,12 @@ import android.support.design.widget.Snackbar;
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.ReminderService;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.Utils.ViewCreator;
+import by.madcat.development.f1newsreader.services.ReminderService;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
+import by.madcat.development.f1newsreader.utils.ViewCreator;
 import by.madcat.development.f1newsreader.dataInet.NewsLinkListToLoad;
-import by.madcat.development.f1newsreader.styling.CustomViews.ImageListPreference;
+import by.madcat.development.f1newsreader.styling.customViews.ImageListPreference;
 
 public class PreferencesFragment extends PreferenceFragment {
 

@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Receivers;
+package by.madcat.development.f1newsreader.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.ReminderService;
+import by.madcat.development.f1newsreader.services.ReminderService;
 
 public class ReminderBootBroadcastReceiver extends BroadcastReceiver {
     @Override

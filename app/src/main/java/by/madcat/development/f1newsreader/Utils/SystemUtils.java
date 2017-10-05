@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -26,11 +26,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.BackgroundLoadNewsService;
-import by.madcat.development.f1newsreader.Services.MoveToSdTask;
-import by.madcat.development.f1newsreader.Services.ReminderService;
+import by.madcat.development.f1newsreader.services.BackgroundLoadNewsService;
+import by.madcat.development.f1newsreader.services.MoveToSdTask;
+import by.madcat.development.f1newsreader.services.ReminderService;
 
-import static by.madcat.development.f1newsreader.Utils.PreferencesUtils.IMAGE_PATH;
+import static by.madcat.development.f1newsreader.utils.PreferencesUtils.IMAGE_PATH;
 
 public class SystemUtils {
     public static final String APP_ON_SD_PATH = "F1NewsReader";

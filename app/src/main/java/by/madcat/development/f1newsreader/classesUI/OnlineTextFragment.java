@@ -22,15 +22,15 @@ import com.webianks.library.PopupBubble;
 import java.util.LinkedList;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Services.OnlinePostsLoadService;
-import by.madcat.development.f1newsreader.Utils.JsonParseUtils;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.services.OnlinePostsLoadService;
+import by.madcat.development.f1newsreader.utils.JsonParseUtils;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.adapters.OnlinePostsAdapter;
-import by.madcat.development.f1newsreader.Models.OnlinePost;
+import by.madcat.development.f1newsreader.models.OnlinePost;
 
 import static android.content.Context.BIND_AUTO_CREATE;
-import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_ACTION_DATA;
-import static by.madcat.development.f1newsreader.Services.OnlinePostsLoadService.BROADCAST_SERVICE_ACTION;
+import static by.madcat.development.f1newsreader.services.OnlinePostsLoadService.BROADCAST_ACTION_DATA;
+import static by.madcat.development.f1newsreader.services.OnlinePostsLoadService.BROADCAST_SERVICE_ACTION;
 
 public class OnlineTextFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 

@@ -1,12 +1,12 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import by.madcat.development.f1newsreader.data.DatabaseDescription;
-import by.madcat.development.f1newsreader.data.F1NewsReaderDatabaseHelper;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription;
+import by.madcat.development.f1newsreader.dataSQLite.F1NewsReaderDatabaseHelper;
 
 public class DBUtils {
     public static boolean checkIssetNewsLinkInDB(Context context, String link){

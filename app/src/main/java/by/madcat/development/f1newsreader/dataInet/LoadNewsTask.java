@@ -17,12 +17,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-import by.madcat.development.f1newsreader.Utils.DateUtils;
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.StringUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.utils.DateUtils;
+import by.madcat.development.f1newsreader.utils.DocParseUtils;
+import by.madcat.development.f1newsreader.utils.StringUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.News;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
 
 public class LoadNewsTask extends AsyncTask<Void, Void, Void> {
 

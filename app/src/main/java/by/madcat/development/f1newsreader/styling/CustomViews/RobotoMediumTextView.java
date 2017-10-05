@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.styling.CustomViews;
+package by.madcat.development.f1newsreader.styling.customViews;
 
 import android.content.Context;
 import android.graphics.Typeface;

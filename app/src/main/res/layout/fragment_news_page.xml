@@ -27,7 +27,7 @@
                 android:paddingTop="@dimen/text_padding"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
                 android:id="@+id/content_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 android:textStyle="bold"
                 android:layout_below="@+id/content_image"/>
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoMediumTextView
+            <by.madcat.development.f1newsreader.styling.customViews.RobotoMediumTextView
                 android:id="@+id/content_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

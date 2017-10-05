@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,9 +7,9 @@ import org.jsoup.select.Elements;
 
 import java.util.Calendar;
 
-import by.madcat.development.f1newsreader.Models.RaceDataModel;
-import by.madcat.development.f1newsreader.data.DatabaseDescription;
-import by.madcat.development.f1newsreader.Models.TimingElement;
+import by.madcat.development.f1newsreader.models.RaceDataModel;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription;
+import by.madcat.development.f1newsreader.models.TimingElement;
 
 public final class StringUtils {
     private static final String NEWS_PREFIX = "f1news.ru/news/f1-";

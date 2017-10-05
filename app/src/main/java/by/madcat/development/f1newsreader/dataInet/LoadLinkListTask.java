@@ -9,11 +9,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
-import by.madcat.development.f1newsreader.Utils.DBUtils;
-import by.madcat.development.f1newsreader.Utils.DocParseUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.utils.DBUtils;
+import by.madcat.development.f1newsreader.utils.DocParseUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
+import by.madcat.development.f1newsreader.dataSQLite.DatabaseDescription.NewsTypes;
 
 public class LoadLinkListTask extends AsyncTask<Void, Void, Map<String, Map<NewsTypes, Date>>> {
 

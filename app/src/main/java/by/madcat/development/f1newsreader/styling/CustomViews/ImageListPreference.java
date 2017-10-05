@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.styling.CustomViews;
+package by.madcat.development.f1newsreader.styling.customViews;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Utils;
+package by.madcat.development.f1newsreader.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

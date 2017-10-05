@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
 import me.riddhimanadib.library.BottomBarHolderActivity;
 import me.riddhimanadib.library.NavigationPage;
 

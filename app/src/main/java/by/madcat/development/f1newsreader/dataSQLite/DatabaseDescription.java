@@ -1,11 +1,11 @@
-package by.madcat.development.f1newsreader.data;
+package by.madcat.development.f1newsreader.dataSQLite;
 
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class DatabaseDescription {
-    public static final String AUTHORITY = "by.madcat.development.f1newsreader.data";
+    public static final String AUTHORITY = "by.madcat.development.f1newsreader.dataSQLite";
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final class News implements BaseColumns{

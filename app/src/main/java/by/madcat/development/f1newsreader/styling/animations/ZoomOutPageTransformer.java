@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.classesUI;
+package by.madcat.development.f1newsreader.styling.animations;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

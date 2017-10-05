@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.Services;
+package by.madcat.development.f1newsreader.services;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -12,11 +12,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import by.madcat.development.f1newsreader.Interfaces.NewsLoadSender;
+import by.madcat.development.f1newsreader.interfaces.NewsLoadSender;
 import by.madcat.development.f1newsreader.R;
-import by.madcat.development.f1newsreader.Receivers.NotificationDismissedReceiver;
-import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
+import by.madcat.development.f1newsreader.receivers.NotificationDismissedReceiver;
+import by.madcat.development.f1newsreader.utils.PreferencesUtils;
+import by.madcat.development.f1newsreader.utils.SystemUtils;
 import by.madcat.development.f1newsreader.classesUI.NewsListActivity;
 import by.madcat.development.f1newsreader.dataInet.InternetDataRouting;
 import by.madcat.development.f1newsreader.dataInet.LoadLinkListTask;
