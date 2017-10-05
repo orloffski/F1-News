@@ -18,8 +18,8 @@ import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.DateUtils;
 import by.madcat.development.f1newsreader.Utils.SystemUtils;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoMediumTextView;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoMediumTextView;
+import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView;
 
 public class NewsPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 

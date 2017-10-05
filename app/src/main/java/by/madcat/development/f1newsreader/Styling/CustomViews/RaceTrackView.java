@@ -1,4 +1,4 @@
-package by.madcat.development.f1newsreader.styling.CustomViews;
+package by.madcat.development.f1newsreader.Styling.CustomViews;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import by.madcat.development.f1newsreader.Models.TracksPoints;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
 import by.madcat.development.f1newsreader.Models.TimingElement;
-import by.madcat.development.f1newsreader.styling.DrawingThread.RacerDrawOnLap;
+import by.madcat.development.f1newsreader.Styling.DrawingThread.RacerDrawOnLap;
 
 public class RaceTrackView extends SurfaceView implements SurfaceHolder.Callback {
 

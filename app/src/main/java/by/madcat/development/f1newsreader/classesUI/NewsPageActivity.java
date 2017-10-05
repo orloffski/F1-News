@@ -17,6 +17,7 @@ import by.madcat.development.f1newsreader.Utils.DBUtils;
 import by.madcat.development.f1newsreader.adapters.NewsPageAdapter;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.News;
 import by.madcat.development.f1newsreader.data.DatabaseDescription.NewsTypes;
+import by.madcat.development.f1newsreader.Styling.Animations.ZoomOutPageTransformer;
 
 public class NewsPageActivity extends AppCompatActivity {
 

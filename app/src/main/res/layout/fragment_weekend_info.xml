@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/weekend_title"
                 style="@style/WeekendTitleStyle"
                 android:layout_width="match_parent"
@@ -30,14 +30,14 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/f1_logo" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.PerfogramaTextView
                 android:id="@+id/first_day_title"
                 style="@style/WeekendDateStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/first_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"
@@ -49,14 +49,14 @@
                 android:background="@drawable/separator"
                 android:layout_height="1dp" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.PerfogramaTextView
                 android:id="@+id/second_day_title"
                 style="@style/WeekendDateStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/second_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"
@@ -68,14 +68,14 @@
                 android:background="@drawable/separator"
                 android:layout_height="1dp" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.PerfogramaTextView
                 android:id="@+id/third_day_title"
                 style="@style/WeekendDateStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="28 июля пятница" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/third_day_text"
                 style="@style/WeekendDayStyle"
                 android:layout_width="match_parent"

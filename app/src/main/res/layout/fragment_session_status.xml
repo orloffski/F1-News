@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.SpeedwayTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.SpeedwayTextView
                 android:id="@+id/race_mode_symbol"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

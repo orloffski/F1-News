@@ -15,9 +15,8 @@ import java.util.Map;
 import by.madcat.development.f1newsreader.Models.TracksDataModel;
 import by.madcat.development.f1newsreader.R;
 import by.madcat.development.f1newsreader.Utils.PreferencesUtils;
-import by.madcat.development.f1newsreader.Utils.SystemUtils;
-import by.madcat.development.f1newsreader.styling.CustomViews.PerfogramaTextView;
-import by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView;
+import by.madcat.development.f1newsreader.Styling.CustomViews.PerfogramaTextView;
+import by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView;
 
 public class WeekendInfoFragment extends Fragment {
 

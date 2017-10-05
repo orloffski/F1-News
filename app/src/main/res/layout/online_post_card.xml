@@ -15,14 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/online_post_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/DateTextSmallTitle"
                 android:text="16:58:13" />
 
-            <by.madcat.development.f1newsreader.styling.CustomViews.RobotoRegularTextView
+            <by.madcat.development.f1newsreader.Styling.CustomViews.RobotoRegularTextView
                 android:id="@+id/online_post_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
