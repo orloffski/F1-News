@@ -8,86 +8,17 @@
     android:layout_marginBottom="5dp"
     tools:context="by.madcat.development.f1newsreader.classesUI.WeekendInfoFragment">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/weekend_track"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/f1_logo" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
-                android:id="@+id/weekend_title"
-                style="@style/WeekendTitleStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <ImageView
-                android:id="@+id/weekend_track"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/f1_logo" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.PerfogramaTextView
-                android:id="@+id/first_day_title"
-                style="@style/WeekendDateStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="28 июля пятница" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
-                android:id="@+id/first_day_text"
-                style="@style/WeekendDayStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="10:00 1st practice\n15:00 2nd practice" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:background="@drawable/separator"
-                android:layout_height="1dp" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.PerfogramaTextView
-                android:id="@+id/second_day_title"
-                style="@style/WeekendDateStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="28 июля пятница" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
-                android:id="@+id/second_day_text"
-                style="@style/WeekendDayStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="10:00 1st practice\n15:00 2nd practice" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:background="@drawable/separator"
-                android:layout_height="1dp" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.PerfogramaTextView
-                android:id="@+id/third_day_title"
-                style="@style/WeekendDateStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="28 июля пятница" />
-
-            <by.madcat.development.f1newsreader.styling.customViews.RobotoRegularTextView
-                android:id="@+id/third_day_text"
-                style="@style/WeekendDayStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="10:00 1st practice\n15:00 2nd practice" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:background="@drawable/separator"
-                android:layout_height="1dp" />
-
-        </LinearLayout>
-    </ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/weekend_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:clipToPadding="false"/>
 
 </LinearLayout>
