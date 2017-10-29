@@ -102,10 +102,16 @@ public final class StringUtils {
     private static float getSeconds(String secondsString){
         float tmpSeconds = 0;
 
-        if(!secondsString.equals("STOP")) {
-            tmpSeconds += Integer.valueOf(secondsString.split(":")[0]) * 60;
-            tmpSeconds += Float.valueOf(secondsString.split(":")[1]);
-        }
+        if(secondsString.equals("STOP"))
+            return tmpSeconds;
+        if(secondsString.equals("IN PIT"))
+            return tmpSeconds;
+        if(secondsString.equals("OUT"))
+            return tmpSeconds;
+
+        tmpSeconds += Integer.valueOf(secondsString.split(":")[0]) * 60;
+        tmpSeconds += Float.valueOf(secondsString.split(":")[1]);
+
 
         return tmpSeconds;
     }
