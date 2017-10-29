@@ -21,7 +21,8 @@ public enum RacersDataModel {
     STR ("Стролл"),
     WEH ("Верляйн"),
     ERI ("Эриксон"),
-    GAS("Гасли");
+    GAS("Гасли"),
+    HAR("Хартли");
 
     private final String name;
 
@@ -112,6 +113,9 @@ public enum RacersDataModel {
             case "Гасли":
                 racerAbr = "GAS";
                 break;
+            case "Хартли":
+                racerAbr = "HAR";
+                break;
         }
 
         return racerAbr;
@@ -192,6 +196,9 @@ public enum RacersDataModel {
                 break;
             case "Гасли":
                 helmet += "gasly.webp";
+                break;
+            case "Хартли":
+                helmet += "hartley.webp";
                 break;
             default:
                 helmet += "helmets/default.webp";
