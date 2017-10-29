@@ -83,6 +83,7 @@ public final class DocParseUtils {
     static final String ONLINE_JSON_ARRAY_SESSION_BESTLAP = "best_lap";
 
     public static String getJsonString(String urlString) throws IOException {
+        // to retrofit reader
         String line;
         StringBuilder doc = new StringBuilder();
 
@@ -97,20 +98,7 @@ public final class DocParseUtils {
     }
 
     public static org.jsoup.nodes.Document getJsDoc(String urlString) throws IOException {
-        String line;
-        StringBuilder doc = new StringBuilder();
-
-        URL url = new URL(urlString);
-        InputStreamReader isReader = new InputStreamReader(url.openStream());
-        BufferedReader reader = new BufferedReader(isReader);
-
-        while((line = reader.readLine()) != null)
-            doc.append(line);
-
-        org.jsoup.nodes.Document jsDoc = Jsoup.parse(doc.toString(), DOCUMENT_ENCODING);
-
-        reader.close();
-        isReader.close();
+        org.jsoup.nodes.Document jsDoc = Jsoup.connect(urlString).get();
 
         return jsDoc;
     }
